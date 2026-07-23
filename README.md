@@ -1,36 +1,96 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Fred's Plumbing — Commercial Plumbing Homepage
 
-## Getting Started
+A premium, conversion-focused homepage for Fred's Plumbing, a 24/7 commercial and
+multi-family plumbing company serving the Dallas–Fort Worth Metroplex.
 
-First, run the development server:
+Built with **Next.js (App Router) · TypeScript · Tailwind CSS v4 · Framer Motion ·
+React Hook Form · Zod · Lucide icons**.
+
+## Getting started
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open http://localhost:3000.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Other scripts:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run build     # production build
+npm run start     # serve the production build
+npm run lint      # ESLint
+npx tsc --noEmit  # type check
+```
 
-## Learn More
+## Project structure
 
-To learn more about Next.js, take a look at the following resources:
+```
+app/
+  layout.tsx          Root layout: fonts, metadata, header/footer, JSON-LD, skip link
+  page.tsx            Homepage — composes the section components in order
+  globals.css         Tailwind v4 theme tokens (brand palette, fonts, shadows)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+components/
+  layout/             Header (sticky, dropdowns), MobileMenu, Footer, MobileCallBar
+  sections/           One component per homepage section
+  forms/              EmergencyContactForm (hero), QuoteRequestForm (final CTA)
+  ui/                 Container, Button, SectionHeading, Badge, cards, Reveal, etc.
+  seo/JsonLd.tsx      LocalBusiness (Plumber) structured data
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+data/
+  site.ts             Phone, email, service-area cities, brand constants
+  services.ts         Six services (title, slug, copy, image path, icon)
+  industries.ts       Six property types with bullets
+  testimonials.ts     Reviews (one featured)
+  navigation.ts       Header/footer nav + vendor-system logo list
+  faqs.ts             FAQ accordion content
 
-## Deploy on Vercel
+lib/
+  utils.ts            cn() — clsx + tailwind-merge
+  validations.ts      Zod schemas + mock async submit handler
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Deploying to Vercel
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. Push this repository to GitHub:
+
+   ```bash
+   git remote add origin https://github.com/<your-username>/<repo-name>.git
+   git push -u origin main
+   ```
+
+2. Go to [vercel.com/new](https://vercel.com/new), import the GitHub repository,
+   and click **Deploy** — Vercel auto-detects Next.js; no configuration or
+   environment variables are required.
+
+3. Every push to `main` will redeploy automatically. Use the generated
+   `*.vercel.app` URL to share the site with the client, or attach a custom
+   domain in the Vercel project settings.
+
+## Key implementation notes
+
+- **Images** — production photography isn't included, so every image slot uses the
+  `ImagePlaceholder` component (branded gradient + blueprint texture + a caption
+  naming the expected shot). The intended file names (e.g.
+  `/images/hero-commercial-plumbing.webp`) live in the data files and in component
+  comments. To go live: drop files into `public/images/` and replace each
+  `<ImagePlaceholder />` with `next/image`.
+- **Forms** — both forms validate with Zod via React Hook Form and submit to
+  `submitLead()` in `lib/validations.ts`, a mock async handler. Point that function
+  at a real API route to wire them up.
+- **Vendor logos** — rendered as monochrome wordmarks. Swap for `<Image />` files in
+  `public/logos/` when real logo assets are available.
+- **Animation** — a single `Reveal` wrapper (Framer Motion) drives fade-and-rise
+  entrances; it renders statically when `prefers-reduced-motion` is set.
+- **Accessibility** — skip link, one `h1`, labeled landmarks, keyboard-navigable
+  dropdowns/tabs/accordions with `aria-expanded`/`aria-controls`, inline form
+  errors tied to inputs via `aria-describedby`, 44px+ touch targets.
+- **Mobile conversion** — a sticky bottom "24/7 Emergency · Call Now" bar shows on
+  screens below `lg`; the body carries matching bottom padding so nothing is
+  obscured.
+- **SEO** — full metadata (Open Graph, Twitter, canonical placeholder) in
+  `app/layout.tsx`; `Plumber` JSON-LD in `components/seo/JsonLd.tsx`. No street
+  address is published intentionally. Set the production domain in `data/site.ts`.
+# fredplumging
