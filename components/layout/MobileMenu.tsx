@@ -1,10 +1,12 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { ChevronDown, Clock, Phone, X } from "lucide-react";
-import { navigation } from "@/data/navigation";
+import type { Navigation } from "@/data/navigation";
+import { isExactActive, isSectionActive } from "@/components/layout/navActive";
 import { site } from "@/data/site";
 import { Logo } from "@/components/ui/Logo";
 import { Button } from "@/components/ui/Button";
@@ -13,11 +15,15 @@ import { cn } from "@/lib/utils";
 interface MobileMenuProps {
   open: boolean;
   onClose: () => void;
+  navigation: Navigation;
 }
 
-export function MobileMenu({ open, onClose }: MobileMenuProps) {
+export function MobileMenu({ open, onClose, navigation }: MobileMenuProps) {
+  const pathname = usePathname();
   const [expanded, setExpanded] = useState<string | null>(null);
   const reduceMotion = useReducedMotion();
+  const closeRef = useRef(onClose);
+  closeRef.current = onClose;
 
   // Lock body scroll while the menu is open
   useEffect(() => {
@@ -39,6 +45,20 @@ export function MobileMenu({ open, onClose }: MobileMenuProps) {
       return () => document.removeEventListener("keydown", onKeyDown);
     }
   }, [open, onClose]);
+
+  // Close on route change
+  useEffect(() => {
+    closeRef.current();
+  }, [pathname]);
+
+  // Open the accordion for the section the visitor is currently in.
+  useEffect(() => {
+    if (!open) return;
+    const current = navigation.items.find((group) =>
+      isSectionActive(pathname, group.href),
+    );
+    setExpanded(current?._key ?? null);
+  }, [open, pathname, navigation.items]);
 
   return (
     <AnimatePresence>
@@ -75,43 +95,80 @@ export function MobileMenu({ open, onClose }: MobileMenuProps) {
               </button>
             </div>
 
-            <nav aria-label="Mobile navigation" className="flex-1 overflow-y-auto px-3 py-4">
+            <nav
+              aria-label="Mobile navigation"
+              className="flex-1 overflow-y-auto px-3 py-4"
+            >
               <ul className="space-y-1">
-                {navigation.map((item) =>
-                  item.children ? (
-                    <li key={item.label}>
-                      <button
-                        type="button"
-                        aria-expanded={expanded === item.label}
-                        onClick={() =>
-                          setExpanded(expanded === item.label ? null : item.label)
-                        }
-                        className="flex min-h-12 w-full items-center justify-between rounded-xl px-4 py-3 text-left text-[17px] font-semibold text-white transition-colors hover:bg-white/6"
-                      >
-                        {item.label}
-                        <ChevronDown
-                          aria-hidden="true"
+                {navigation.items.map((group) => {
+                  const isExpanded = expanded === group._key;
+                  const sectionActive = isSectionActive(pathname, group.href);
+                  const panelId = `mobile-panel-${group._key}`;
+
+                  return (
+                    <li key={group._key}>
+                      {/* Label and chevron are separate tap targets: the label
+                          navigates to the section landing page, the chevron
+                          only expands the children. */}
+                      <div className="flex items-center gap-1">
+                        <Link
+                          href={group.href}
+                          onClick={onClose}
+                          aria-current={sectionActive ? "page" : undefined}
                           className={cn(
-                            "size-5 text-grey-300 transition-transform duration-200",
-                            expanded === item.label && "rotate-180",
+                            "flex min-h-12 flex-1 items-center rounded-xl px-4 py-3 text-[17px] font-semibold transition-colors hover:bg-white/6",
+                            sectionActive ? "bg-white/6 text-white" : "text-white",
                           )}
-                        />
-                      </button>
+                        >
+                          {group.label}
+                        </Link>
+                        <button
+                          type="button"
+                          aria-expanded={isExpanded}
+                          aria-controls={panelId}
+                          aria-label={`${isExpanded ? "Collapse" : "Expand"} ${group.label} submenu`}
+                          onClick={() =>
+                            setExpanded(isExpanded ? null : group._key)
+                          }
+                          className="flex size-12 shrink-0 items-center justify-center rounded-xl text-grey-300 transition-colors hover:bg-white/6 hover:text-white"
+                        >
+                          <ChevronDown
+                            aria-hidden="true"
+                            className={cn(
+                              "size-5 transition-transform duration-200",
+                              isExpanded && "rotate-180",
+                            )}
+                          />
+                        </button>
+                      </div>
                       <div
+                        id={panelId}
                         className={cn(
-                          "grid transition-[grid-template-rows] duration-300",
-                          expanded === item.label
-                            ? "grid-rows-[1fr]"
-                            : "grid-rows-[0fr]",
+                          "grid transition-[grid-template-rows] duration-300 motion-reduce:transition-none",
+                          isExpanded ? "grid-rows-[1fr]" : "grid-rows-[0fr]",
                         )}
                       >
-                        <ul className="overflow-hidden pl-4">
-                          {item.children.map((child) => (
-                            <li key={child.label}>
+                        <ul
+                          className="overflow-hidden pl-4"
+                          aria-hidden={!isExpanded}
+                        >
+                          {group.children.map((child) => (
+                            <li key={child._key}>
                               <Link
                                 href={child.href}
                                 onClick={onClose}
-                                className="flex min-h-11 items-center gap-2.5 rounded-lg px-4 py-2.5 text-[15px] font-medium text-grey-300 transition-colors hover:bg-white/6 hover:text-white"
+                                tabIndex={isExpanded ? undefined : -1}
+                                aria-current={
+                                  isExactActive(pathname, child.href)
+                                    ? "page"
+                                    : undefined
+                                }
+                                className={cn(
+                                  "flex min-h-11 items-center gap-2.5 rounded-lg px-4 py-2.5 text-[15px] font-medium transition-colors hover:bg-white/6 hover:text-white",
+                                  isExactActive(pathname, child.href)
+                                    ? "text-white"
+                                    : "text-grey-300",
+                                )}
                               >
                                 <span
                                   aria-hidden="true"
@@ -124,18 +181,8 @@ export function MobileMenu({ open, onClose }: MobileMenuProps) {
                         </ul>
                       </div>
                     </li>
-                  ) : (
-                    <li key={item.label}>
-                      <Link
-                        href={item.href}
-                        onClick={onClose}
-                        className="flex min-h-12 items-center rounded-xl px-4 py-3 text-[17px] font-semibold text-white transition-colors hover:bg-white/6"
-                      >
-                        {item.label}
-                      </Link>
-                    </li>
-                  ),
-                )}
+                  );
+                })}
               </ul>
             </nav>
 
@@ -151,8 +198,13 @@ export function MobileMenu({ open, onClose }: MobileMenuProps) {
                 <Clock aria-hidden="true" className="size-3.5 text-red-500" />
                 24/7 Emergency Service · DFW Metroplex
               </p>
-              <Button href="/contact" className="w-full" withArrow onClick={onClose}>
-                Request Service
+              <Button
+                href={navigation.cta.href}
+                className="w-full"
+                withArrow
+                onClick={onClose}
+              >
+                {navigation.cta.label}
               </Button>
             </div>
           </motion.div>
