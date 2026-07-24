@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
@@ -20,10 +20,21 @@ interface MobileMenuProps {
 
 export function MobileMenu({ open, onClose, navigation }: MobileMenuProps) {
   const pathname = usePathname();
-  const [expanded, setExpanded] = useState<string | null>(null);
   const reduceMotion = useReducedMotion();
-  const closeRef = useRef(onClose);
-  closeRef.current = onClose;
+
+  /** Section the visitor is currently inside — expanded by default. */
+  const activeKey =
+    navigation.items.find((group) => isSectionActive(pathname, group.href))
+      ?._key ?? null;
+
+  const [expanded, setExpanded] = useState<string | null>(activeKey);
+
+  // Re-sync the open accordion when the route changes.
+  const [lastPathname, setLastPathname] = useState(pathname);
+  if (pathname !== lastPathname) {
+    setLastPathname(pathname);
+    setExpanded(activeKey);
+  }
 
   // Lock body scroll while the menu is open
   useEffect(() => {
@@ -45,20 +56,6 @@ export function MobileMenu({ open, onClose, navigation }: MobileMenuProps) {
       return () => document.removeEventListener("keydown", onKeyDown);
     }
   }, [open, onClose]);
-
-  // Close on route change
-  useEffect(() => {
-    closeRef.current();
-  }, [pathname]);
-
-  // Open the accordion for the section the visitor is currently in.
-  useEffect(() => {
-    if (!open) return;
-    const current = navigation.items.find((group) =>
-      isSectionActive(pathname, group.href),
-    );
-    setExpanded(current?._key ?? null);
-  }, [open, pathname, navigation.items]);
 
   return (
     <AnimatePresence>

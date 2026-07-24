@@ -21,11 +21,19 @@ export function DesktopNav({ navigation }: DesktopNavProps) {
   const pathname = usePathname();
   const reduceMotion = useReducedMotion();
   const [openKey, setOpenKey] = useState<string | null>(null);
-  const [pendingFocus, setPendingFocus] = useState(false);
 
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const panelRef = useRef<HTMLDivElement | null>(null);
+  /** Set when a panel is opened from the keyboard, so focus moves into it. */
+  const focusPanelOnMount = useRef(false);
   const triggerRefs = useRef(new Map<string, HTMLButtonElement | null>());
+
+  // Close whenever the route changes (React's render-time state reset pattern).
+  const [lastPathname, setLastPathname] = useState(pathname);
+  if (pathname !== lastPathname) {
+    setLastPathname(pathname);
+    setOpenKey(null);
+  }
 
   const clearTimer = useCallback(() => {
     if (timerRef.current) {
@@ -54,18 +62,14 @@ export function DesktopNav({ navigation }: DesktopNavProps) {
 
   useEffect(() => clearTimer, [clearTimer]);
 
-  // Close whenever the route changes.
-  useEffect(() => {
-    setOpenKey(null);
-  }, [pathname]);
-
-  // Move focus into a panel opened from the keyboard.
-  useEffect(() => {
-    if (!openKey || !pendingFocus) return;
-    const first = panelRef.current?.querySelector<HTMLAnchorElement>("[data-nav-item]");
-    first?.focus();
-    setPendingFocus(false);
-  }, [openKey, pendingFocus]);
+  /** Runs after the panel is committed to the DOM. */
+  const attachPanel = useCallback((node: HTMLDivElement | null) => {
+    panelRef.current = node;
+    if (node && focusPanelOnMount.current) {
+      focusPanelOnMount.current = false;
+      node.querySelector<HTMLAnchorElement>("[data-nav-item]")?.focus();
+    }
+  }, []);
 
   const focusTrigger = useCallback((key: string) => {
     triggerRefs.current.get(key)?.focus();
@@ -75,8 +79,15 @@ export function DesktopNav({ navigation }: DesktopNavProps) {
     if (e.key === "ArrowDown") {
       e.preventDefault();
       clearTimer();
+      if (openKey === group._key) {
+        // Already open (e.g. from hover) — no remount, so focus directly.
+        panelRef.current
+          ?.querySelector<HTMLAnchorElement>("[data-nav-item]")
+          ?.focus();
+        return;
+      }
+      focusPanelOnMount.current = true;
       setOpenKey(group._key);
-      setPendingFocus(true);
     } else if (e.key === "Escape") {
       closeNow();
     }
@@ -182,7 +193,7 @@ export function DesktopNav({ navigation }: DesktopNavProps) {
               {open && (
                 <motion.div
                   id={panelId}
-                  ref={panelRef}
+                  ref={attachPanel}
                   aria-labelledby={triggerId}
                   onKeyDown={(e) => onPanelKeyDown(e, group)}
                   initial={reduceMotion ? { opacity: 1 } : { opacity: 0, y: 6 }}

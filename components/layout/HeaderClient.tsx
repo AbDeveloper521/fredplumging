@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import { Clock, Mail, MapPin, Menu, Phone } from "lucide-react";
 import type { Navigation } from "@/data/navigation";
 import { site } from "@/data/site";
@@ -15,8 +16,16 @@ interface HeaderClientProps {
 }
 
 export function HeaderClient({ navigation }: HeaderClientProps) {
+  const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+
+  // Close the drawer on route change, including back/forward navigation.
+  const [lastPathname, setLastPathname] = useState(pathname);
+  if (pathname !== lastPathname) {
+    setLastPathname(pathname);
+    setMobileOpen(false);
+  }
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
