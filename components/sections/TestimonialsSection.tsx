@@ -9,12 +9,19 @@ import type { SiteContent } from "@/data/site";
 interface TestimonialsSectionProps {
   testimonials: Testimonial[];
   site: SiteContent;
+  /** Section heading — defaults to the homepage wording. */
+  heading?: string;
+  /** id for aria-labelledby — override when the section appears off-homepage. */
+  titleId?: string;
 }
 
 export function TestimonialsSection({
   testimonials,
   site,
+  heading = "Trusted by Property Managers Across DFW",
+  titleId = "testimonials-heading",
 }: TestimonialsSectionProps) {
+  if (testimonials.length === 0) return null;
   const summaryMetrics = [
     { icon: Star, label: "5-star client feedback" },
     { icon: MapPin, label: `${site.yearsInBusiness} years serving DFW` },
@@ -26,16 +33,16 @@ export function TestimonialsSection({
 
   return (
     <section
-      aria-labelledby="testimonials-heading"
+      aria-labelledby={titleId}
       className="bg-white py-16 sm:py-24 lg:py-28"
     >
       <Container>
         <div className="flex flex-col justify-between gap-8 lg:flex-row lg:items-end">
           <Reveal>
             <SectionHeading
-              titleId="testimonials-heading"
+              titleId={titleId}
               eyebrow="Client Feedback"
-              title="Trusted by Property Managers Across DFW"
+              title={heading}
             />
           </Reveal>
           <Reveal delay={0.1}>
@@ -58,9 +65,11 @@ export function TestimonialsSection({
           <Reveal className="lg:col-span-2">
             <TestimonialCard testimonial={featured} featured className="h-full" />
           </Reveal>
-          <Reveal delay={0.08}>
-            <TestimonialCard testimonial={supporting[0]} className="h-full" />
-          </Reveal>
+          {supporting[0] && (
+            <Reveal delay={0.08}>
+              <TestimonialCard testimonial={supporting[0]} className="h-full" />
+            </Reveal>
+          )}
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:col-span-3">
             {supporting.slice(1, 3).map((t, i) => (
               <Reveal key={t.name} delay={0.08 + i * 0.06}>

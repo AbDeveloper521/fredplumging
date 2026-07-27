@@ -46,9 +46,31 @@ export const service = defineType({
           .max(200)
           .error("Keep it under 200 characters so it fits on the card."),
     }),
+    defineField({
+      name: "sections",
+      title: "Page sections",
+      description:
+        "The service page, built section by section, in order. Remove a section and the page simply renders without it. Leave the whole list empty to use the simple “Page content” layout below instead.",
+      type: "array",
+      of: [
+        { type: "serviceHero" },
+        { type: "serviceAbout" },
+        { type: "whatsIncluded" },
+        { type: "signsYouNeed" },
+        { type: "processSteps" },
+        { type: "comparisonTable" },
+        { type: "serviceTrust" },
+        { type: "serviceTestimonials" },
+        { type: "propertyTypes" },
+        { type: "serviceFaq" },
+        { type: "serviceArea" },
+        { type: "relatedServices" },
+        { type: "finalCta" },
+      ],
+    }),
     richBody({
       description:
-        "The main content of the service's own page: headings, paragraphs, lists, links, and call-us boxes. Optional — if empty, the page shows the short description and an invitation to call.",
+        "The main content of the service's own page: headings, paragraphs, lists, links, and call-us boxes. Only used when “Page sections” above is empty — if that list has sections, this field is ignored.",
     }),
     imageWithAlt({
       name: "photo",

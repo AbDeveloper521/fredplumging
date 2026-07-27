@@ -1,8 +1,13 @@
 import {
+  Award,
   Building,
   Building2,
   CalendarCheck,
+  Clock,
   Cog,
+  Droplets,
+  Flame,
+  Gauge,
   ShieldCheck,
   GraduationCap,
   HeartHandshake,
@@ -36,4 +41,9 @@ export const navIcons: Record<NavIconName, LucideIcon> = {
   "heart-handshake": HeartHandshake,
   stethoscope: Stethoscope,
   "map-pin": MapPin,
+  clock: Clock,
+  droplets: Droplets,
+  flame: Flame,
+  gauge: Gauge,
+  award: Award,
 };

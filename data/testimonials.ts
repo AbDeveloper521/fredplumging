@@ -41,4 +41,40 @@ export const testimonials: Testimonial[] = [
       "Straightforward pricing, courteous technicians, and they actually show up when they say they will. Exactly what we need in a commercial vendor.",
     date: "September 2025",
   },
+  /*
+   * The four reviewers below are transcribed from the client's existing
+   * public page. Their review TEXT and DATES were not provided to this repo
+   * and must NOT be invented — the client fills in the bracketed fields in
+   * the Studio (and confirms the reviews are theirs to republish). Ordered
+   * after the entries above so the bracketed placeholders never render:
+   * the testimonials section only shows the featured review plus three.
+   */
+  {
+    name: "Lamar",
+    rating: 5,
+    quote:
+      "[REVIEW TEXT — transcribe from the client's existing page; do not publish until confirmed]",
+    date: "[REVIEW DATE]",
+  },
+  {
+    name: "Roosevelt Womack",
+    rating: 5,
+    quote:
+      "[REVIEW TEXT — transcribe from the client's existing page; do not publish until confirmed]",
+    date: "[REVIEW DATE]",
+  },
+  {
+    name: "moises plata",
+    rating: 5,
+    quote:
+      "[REVIEW TEXT — transcribe from the client's existing page; do not publish until confirmed]",
+    date: "[REVIEW DATE]",
+  },
+  {
+    name: "Cristian Alvarez",
+    rating: 5,
+    quote:
+      "[REVIEW TEXT — transcribe from the client's existing page; do not publish until confirmed]",
+    date: "[REVIEW DATE]",
+  },
 ];

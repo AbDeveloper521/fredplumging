@@ -53,6 +53,7 @@ function diff(fallback: unknown, published: unknown, path: string, out: Diff[]):
         key === "imageAlt" ||
         key === "photo" ||
         key === "body" ||
+        key === "sections" ||
         key === "seoTitle" ||
         key === "seoDescription"
       )

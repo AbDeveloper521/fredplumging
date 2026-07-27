@@ -1,4 +1,5 @@
 import type { NavIconName } from "./navigation";
+import type { ServiceSection } from "./serviceSections";
 
 /** A resolved Sanity image: URL built server-side, alt from the CMS. */
 export interface CmsPhoto {
@@ -24,6 +25,11 @@ export interface Service {
   shortDescription: string;
   /** Optional rich detail-page content (Portable Text). */
   body?: RichBody;
+  /**
+   * Optional ordered section stack from the constrained section library.
+   * When present the detail page renders these instead of `body`.
+   */
+  sections?: ServiceSection[];
   /** Optional per-page SEO overrides. */
   seoTitle?: string;
   seoDescription?: string;

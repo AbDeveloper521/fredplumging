@@ -15,11 +15,232 @@
 export declare const internalGroqTypeReferenceTo: unique symbol;
 
 // Source: sanity/extract.json
+export type FinalCta = {
+  _type: "finalCta";
+  heading?: string;
+  body?: string;
+  secondaryCtaLabel?: string;
+  secondaryCtaHref?: string;
+};
+
+export type RelatedServices = {
+  _type: "relatedServices";
+  heading?: string;
+  serviceSlugs?: Array<string>;
+};
+
 export type SanityImageAssetReference = {
   _ref: string;
   _type: "reference";
   _weak?: boolean;
   [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+};
+
+export type ServiceArea = {
+  _type: "serviceArea";
+  heading?: string;
+  body?: string;
+  photo?: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  };
+};
+
+export type ServiceFaq = {
+  _type: "serviceFaq";
+  heading?: string;
+  faqs?: Array<{
+    question?: string;
+    answer?: string;
+    _type: "faq";
+    _key: string;
+  }>;
+};
+
+export type PropertyTypes = {
+  _type: "propertyTypes";
+  heading?: string;
+  cards?: Array<{
+    title?: string;
+    blurb?: string;
+    slug?: string;
+    icon?: "building" | "hotel" | "heart-handshake" | "stethoscope";
+    _type: "card";
+    _key: string;
+  }>;
+};
+
+export type ServiceTestimonials = {
+  _type: "serviceTestimonials";
+  heading?: string;
+};
+
+export type ServiceTrust = {
+  _type: "serviceTrust";
+  heading?: string;
+  items?: Array<{
+    title?: string;
+    description?: string;
+    icon?:
+      | "droplets"
+      | "wrench"
+      | "building-2"
+      | "flame"
+      | "shield-check"
+      | "calendar-check"
+      | "gauge"
+      | "waves"
+      | "siren"
+      | "clock"
+      | "award"
+      | "cog"
+      | "map-pin";
+    _type: "item";
+    _key: string;
+  }>;
+  showLogos?: boolean;
+};
+
+export type ComparisonTable = {
+  _type: "comparisonTable";
+  heading?: string;
+  rows?: Array<{
+    situation?: string;
+    recommendation?: string;
+    why?: string;
+    _type: "row";
+    _key: string;
+  }>;
+  footnote?: string;
+};
+
+export type ProcessSteps = {
+  _type: "processSteps";
+  heading?: string;
+  steps?: Array<{
+    title?: string;
+    description?: string;
+    _type: "step";
+    _key: string;
+  }>;
+};
+
+export type SignsYouNeed = {
+  _type: "signsYouNeed";
+  heading?: string;
+  cards?: Array<{
+    question?: string;
+    answer?: string;
+    icon?:
+      | "droplets"
+      | "wrench"
+      | "building-2"
+      | "flame"
+      | "shield-check"
+      | "calendar-check"
+      | "gauge"
+      | "waves"
+      | "siren"
+      | "clock"
+      | "award"
+      | "cog"
+      | "map-pin";
+    _type: "card";
+    _key: string;
+  }>;
+  ctaLabel?: string;
+  ctaHref?: string;
+};
+
+export type WhatsIncluded = {
+  _type: "whatsIncluded";
+  heading?: string;
+  intro?: string;
+  items?: Array<{
+    title?: string;
+    description?: string;
+    icon?:
+      | "droplets"
+      | "wrench"
+      | "building-2"
+      | "flame"
+      | "shield-check"
+      | "calendar-check"
+      | "gauge"
+      | "waves"
+      | "siren"
+      | "clock"
+      | "award"
+      | "cog"
+      | "map-pin";
+    href?: string;
+    _type: "item";
+    _key: string;
+  }>;
+};
+
+export type ServiceAbout = {
+  _type: "serviceAbout";
+  heading?: string;
+  paragraphs?: Array<string>;
+  ctaLabel?: string;
+  ctaHref?: string;
+  photoPrimary?: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  };
+  photoSecondary?: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  };
+};
+
+export type ServiceHero = {
+  _type: "serviceHero";
+  heading?: string;
+  subheading?: string;
+  secondaryCtaLabel?: string;
+  secondaryCtaHref?: string;
+  credentials?: Array<{
+    icon?:
+      | "droplets"
+      | "wrench"
+      | "building-2"
+      | "flame"
+      | "shield-check"
+      | "calendar-check"
+      | "gauge"
+      | "waves"
+      | "siren"
+      | "clock"
+      | "award"
+      | "cog"
+      | "map-pin";
+    label?: string;
+    _type: "credential";
+    _key: string;
+  }>;
+  eyebrow?: string;
+  photo?: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  };
 };
 
 export type TrustLogo = {
@@ -120,6 +341,47 @@ export type Service = {
   _rev: string;
   title?: string;
   shortDescription?: string;
+  sections?: Array<
+    | ({
+        _key: string;
+      } & ServiceHero)
+    | ({
+        _key: string;
+      } & ServiceAbout)
+    | ({
+        _key: string;
+      } & WhatsIncluded)
+    | ({
+        _key: string;
+      } & SignsYouNeed)
+    | ({
+        _key: string;
+      } & ProcessSteps)
+    | ({
+        _key: string;
+      } & ComparisonTable)
+    | ({
+        _key: string;
+      } & ServiceTrust)
+    | ({
+        _key: string;
+      } & ServiceTestimonials)
+    | ({
+        _key: string;
+      } & PropertyTypes)
+    | ({
+        _key: string;
+      } & ServiceFaq)
+    | ({
+        _key: string;
+      } & ServiceArea)
+    | ({
+        _key: string;
+      } & RelatedServices)
+    | ({
+        _key: string;
+      } & FinalCta)
+  >;
   body?: Array<
     | {
         children?: Array<{
@@ -374,7 +636,20 @@ export type Geopoint = {
 };
 
 export type AllSanitySchemaTypes =
+  | FinalCta
+  | RelatedServices
   | SanityImageAssetReference
+  | ServiceArea
+  | ServiceFaq
+  | PropertyTypes
+  | ServiceTestimonials
+  | ServiceTrust
+  | ComparisonTable
+  | ProcessSteps
+  | SignsYouNeed
+  | WhatsIncluded
+  | ServiceAbout
+  | ServiceHero
   | TrustLogo
   | SanityImageCrop
   | SanityImageHotspot
@@ -528,7 +803,7 @@ export type SERVICES_QUERY_RESULT = Array<{
 
 // Source: sanity/queries.ts
 // Variable: SERVICE_BY_SLUG_QUERY
-// Query: *[_type == "service" && slug.current == $slug][0]{    title,    "slug": slug.current,    shortDescription,    icon,    featured,    photo{ asset, hotspot, crop, alt },    body,    seoTitle,    seoDescription  }
+// Query: *[_type == "service" && slug.current == $slug][0]{    title,    "slug": slug.current,    shortDescription,    icon,    featured,    photo{ asset, hotspot, crop, alt },    body,    sections[]{      ...,      photo{ asset, hotspot, crop, alt },      photoPrimary{ asset, hotspot, crop, alt },      photoSecondary{ asset, hotspot, crop, alt }    },    seoTitle,    seoDescription  }
 export type SERVICE_BY_SLUG_QUERY_RESULT = {
   title: string | null;
   slug: string | null;
@@ -576,6 +851,256 @@ export type SERVICE_BY_SLUG_QUERY_RESULT = {
         showPhoneButton?: boolean;
         _type: "callout";
         _key: string;
+      }
+  > | null;
+  sections: Array<
+    | {
+        _key: string;
+        _type: "comparisonTable";
+        heading?: string;
+        rows?: Array<{
+          situation?: string;
+          recommendation?: string;
+          why?: string;
+          _type: "row";
+          _key: string;
+        }>;
+        footnote?: string;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+      }
+    | {
+        _key: string;
+        _type: "finalCta";
+        heading?: string;
+        body?: string;
+        secondaryCtaLabel?: string;
+        secondaryCtaHref?: string;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+      }
+    | {
+        _key: string;
+        _type: "processSteps";
+        heading?: string;
+        steps?: Array<{
+          title?: string;
+          description?: string;
+          _type: "step";
+          _key: string;
+        }>;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+      }
+    | {
+        _key: string;
+        _type: "propertyTypes";
+        heading?: string;
+        cards?: Array<{
+          title?: string;
+          blurb?: string;
+          slug?: string;
+          icon?: "building" | "heart-handshake" | "hotel" | "stethoscope";
+          _type: "card";
+          _key: string;
+        }>;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+      }
+    | {
+        _key: string;
+        _type: "relatedServices";
+        heading?: string;
+        serviceSlugs?: Array<string>;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+      }
+    | {
+        _key: string;
+        _type: "serviceAbout";
+        heading?: string;
+        paragraphs?: Array<string>;
+        ctaLabel?: string;
+        ctaHref?: string;
+        photoPrimary: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+        } | null;
+        photoSecondary: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+        } | null;
+        photo: null;
+      }
+    | {
+        _key: string;
+        _type: "serviceArea";
+        heading?: string;
+        body?: string;
+        photo: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+        } | null;
+        photoPrimary: null;
+        photoSecondary: null;
+      }
+    | {
+        _key: string;
+        _type: "serviceFaq";
+        heading?: string;
+        faqs?: Array<{
+          question?: string;
+          answer?: string;
+          _type: "faq";
+          _key: string;
+        }>;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+      }
+    | {
+        _key: string;
+        _type: "serviceHero";
+        heading?: string;
+        subheading?: string;
+        secondaryCtaLabel?: string;
+        secondaryCtaHref?: string;
+        credentials?: Array<{
+          icon?:
+            | "award"
+            | "building-2"
+            | "calendar-check"
+            | "clock"
+            | "cog"
+            | "droplets"
+            | "flame"
+            | "gauge"
+            | "map-pin"
+            | "shield-check"
+            | "siren"
+            | "waves"
+            | "wrench";
+          label?: string;
+          _type: "credential";
+          _key: string;
+        }>;
+        eyebrow?: string;
+        photo: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+        } | null;
+        photoPrimary: null;
+        photoSecondary: null;
+      }
+    | {
+        _key: string;
+        _type: "serviceTestimonials";
+        heading?: string;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+      }
+    | {
+        _key: string;
+        _type: "serviceTrust";
+        heading?: string;
+        items?: Array<{
+          title?: string;
+          description?: string;
+          icon?:
+            | "award"
+            | "building-2"
+            | "calendar-check"
+            | "clock"
+            | "cog"
+            | "droplets"
+            | "flame"
+            | "gauge"
+            | "map-pin"
+            | "shield-check"
+            | "siren"
+            | "waves"
+            | "wrench";
+          _type: "item";
+          _key: string;
+        }>;
+        showLogos?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+      }
+    | {
+        _key: string;
+        _type: "signsYouNeed";
+        heading?: string;
+        cards?: Array<{
+          question?: string;
+          answer?: string;
+          icon?:
+            | "award"
+            | "building-2"
+            | "calendar-check"
+            | "clock"
+            | "cog"
+            | "droplets"
+            | "flame"
+            | "gauge"
+            | "map-pin"
+            | "shield-check"
+            | "siren"
+            | "waves"
+            | "wrench";
+          _type: "card";
+          _key: string;
+        }>;
+        ctaLabel?: string;
+        ctaHref?: string;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+      }
+    | {
+        _key: string;
+        _type: "whatsIncluded";
+        heading?: string;
+        intro?: string;
+        items?: Array<{
+          title?: string;
+          description?: string;
+          icon?:
+            | "award"
+            | "building-2"
+            | "calendar-check"
+            | "clock"
+            | "cog"
+            | "droplets"
+            | "flame"
+            | "gauge"
+            | "map-pin"
+            | "shield-check"
+            | "siren"
+            | "waves"
+            | "wrench";
+          href?: string;
+          _type: "item";
+          _key: string;
+        }>;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
       }
   > | null;
   seoTitle: string | null;
@@ -714,7 +1239,7 @@ declare module "@sanity/client" {
     '*[_type == "faq"] | order(order asc){ question, answer }': FAQS_QUERY_RESULT;
     '*[_type == "testimonial"] | order(order asc){\n    name, role, rating, quote, date, featured\n  }': TESTIMONIALS_QUERY_RESULT;
     '*[_type == "service"] | order(order asc){\n    title,\n    "slug": slug.current,\n    shortDescription,\n    icon,\n    featured,\n    photo{ asset, hotspot, crop, alt },\n    body,\n    seoTitle,\n    seoDescription\n  }': SERVICES_QUERY_RESULT;
-    '*[_type == "service" && slug.current == $slug][0]{\n    title,\n    "slug": slug.current,\n    shortDescription,\n    icon,\n    featured,\n    photo{ asset, hotspot, crop, alt },\n    body,\n    seoTitle,\n    seoDescription\n  }': SERVICE_BY_SLUG_QUERY_RESULT;
+    '*[_type == "service" && slug.current == $slug][0]{\n    title,\n    "slug": slug.current,\n    shortDescription,\n    icon,\n    featured,\n    photo{ asset, hotspot, crop, alt },\n    body,\n    sections[]{\n      ...,\n      photo{ asset, hotspot, crop, alt },\n      photoPrimary{ asset, hotspot, crop, alt },\n      photoSecondary{ asset, hotspot, crop, alt }\n    },\n    seoTitle,\n    seoDescription\n  }': SERVICE_BY_SLUG_QUERY_RESULT;
     '*[_type == "industry"] | order(order asc){\n    title,\n    "slug": slug.current,\n    description,\n    bulletPoints,\n    photo{ asset, hotspot, crop, alt },\n    body,\n    seoTitle,\n    seoDescription\n  }': INDUSTRIES_QUERY_RESULT;
     '*[_type == "industry" && slug.current == $slug][0]{\n    title,\n    "slug": slug.current,\n    description,\n    bulletPoints,\n    photo{ asset, hotspot, crop, alt },\n    body,\n    seoTitle,\n    seoDescription\n  }': INDUSTRY_BY_SLUG_QUERY_RESULT;
     '*[_type == "trustLogo"] | order(order asc){\n    name,\n    logo{ asset, hotspot, crop, alt }\n  }': TRUST_LOGOS_QUERY_RESULT;

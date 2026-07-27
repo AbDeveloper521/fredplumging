@@ -31,6 +31,11 @@ export const NAV_ICON_NAMES = [
   "heart-handshake",
   "stethoscope",
   "map-pin",
+  "clock",
+  "droplets",
+  "flame",
+  "gauge",
+  "award",
 ] as const;
 
 export type NavIconName = (typeof NAV_ICON_NAMES)[number];

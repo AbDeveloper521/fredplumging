@@ -3,12 +3,17 @@ import { serverClient } from "@/sanity/lib/serverClient";
 import { resolvePhoto } from "@/sanity/lib/image";
 import { logEmpty, logFallback } from "@/sanity/lib/fallbackLog";
 import { SERVICES_QUERY, SERVICE_BY_SLUG_QUERY } from "@/sanity/queries";
-import type { SERVICES_QUERY_RESULT } from "@/sanity.types";
+import type {
+  SERVICES_QUERY_RESULT,
+  SERVICE_BY_SLUG_QUERY_RESULT,
+} from "@/sanity.types";
 import {
   services as fallbackServices,
+  type CmsPhoto,
   type RichBody,
   type Service,
 } from "@/data/services";
+import type { ServiceSection } from "@/data/serviceSections";
 import { NAV_ICON_NAMES, type NavIconName } from "@/data/navigation";
 
 /** Cache tag invalidated by the /api/revalidate webhook. */
@@ -24,13 +29,236 @@ function toIcon(value: string | null | undefined): NavIconName {
     : "wrench";
 }
 
-function toService(item: SERVICES_QUERY_RESULT[number]): Service | null {
+/* ------------------------------------------------------------------ */
+/* Section mapping — validates raw CMS sections into the typed union.  */
+/* Malformed or incomplete sections are dropped (a broken section must */
+/* never crash the page); each mapper mirrors data/serviceSections.ts. */
+/* ------------------------------------------------------------------ */
+
+type Raw = Record<string, unknown>;
+
+function str(value: unknown): string | undefined {
+  return typeof value === "string" && value.trim() !== "" ? value : undefined;
+}
+
+function key(item: Raw, index: number): string {
+  return str(item._key) ?? `section-${index}`;
+}
+
+function photoOf(item: Raw, field: string): CmsPhoto | undefined {
+  const value = item[field];
+  return value && typeof value === "object"
+    ? resolvePhoto(value as { asset?: unknown; alt?: string | null })
+    : undefined;
+}
+
+/** Maps an array of raw child objects, dropping entries missing required strings. */
+function children<T>(
+  value: unknown,
+  build: (child: Raw, i: number) => T | null,
+): T[] {
+  if (!Array.isArray(value)) return [];
+  return value
+    .map((child, i) => (child && typeof child === "object" ? build(child as Raw, i) : null))
+    .filter((c): c is T => c !== null);
+}
+
+function iconItem(child: Raw, i: number) {
+  const title = str(child.title);
+  const description = str(child.description);
+  if (!title || !description) return null;
+  return {
+    _key: key(child, i),
+    icon: toIcon(str(child.icon)),
+    title,
+    description,
+    href: str(child.href),
+  };
+}
+
+function toSection(raw: Raw, index: number): ServiceSection | null {
+  const _key = key(raw, index);
+  const heading = str(raw.heading);
+  if (!heading) return null;
+
+  switch (raw._type) {
+    case "serviceHero": {
+      const subheading = str(raw.subheading);
+      const secondaryCtaLabel = str(raw.secondaryCtaLabel);
+      const secondaryCtaHref = str(raw.secondaryCtaHref);
+      if (!subheading || !secondaryCtaLabel || !secondaryCtaHref) return null;
+      return {
+        _type: "serviceHero",
+        _key,
+        eyebrow: str(raw.eyebrow),
+        heading,
+        subheading,
+        secondaryCtaLabel,
+        secondaryCtaHref,
+        credentials: children(raw.credentials, (c, i) => {
+          const label = str(c.label);
+          return label
+            ? { _key: key(c, i), icon: toIcon(str(c.icon)), label }
+            : null;
+        }),
+        photo: photoOf(raw, "photo"),
+      };
+    }
+    case "serviceAbout": {
+      const paragraphs = Array.isArray(raw.paragraphs)
+        ? raw.paragraphs.filter((p): p is string => typeof p === "string" && p.trim() !== "")
+        : [];
+      const ctaLabel = str(raw.ctaLabel);
+      const ctaHref = str(raw.ctaHref);
+      if (paragraphs.length === 0 || !ctaLabel || !ctaHref) return null;
+      return {
+        _type: "serviceAbout",
+        _key,
+        heading,
+        paragraphs,
+        ctaLabel,
+        ctaHref,
+        photoPrimary: photoOf(raw, "photoPrimary"),
+        photoSecondary: photoOf(raw, "photoSecondary"),
+      };
+    }
+    case "whatsIncluded": {
+      const intro = str(raw.intro);
+      const items = children(raw.items, iconItem);
+      if (!intro || items.length === 0) return null;
+      return { _type: "whatsIncluded", _key, heading, intro, items };
+    }
+    case "signsYouNeed": {
+      const ctaLabel = str(raw.ctaLabel);
+      const ctaHref = str(raw.ctaHref);
+      const cards = children(raw.cards, (c, i) => {
+        const question = str(c.question);
+        const answer = str(c.answer);
+        return question && answer
+          ? { _key: key(c, i), icon: toIcon(str(c.icon)), question, answer }
+          : null;
+      });
+      if (!ctaLabel || !ctaHref || cards.length === 0) return null;
+      return { _type: "signsYouNeed", _key, heading, cards, ctaLabel, ctaHref };
+    }
+    case "processSteps": {
+      const steps = children(raw.steps, (c, i) => {
+        const title = str(c.title);
+        const description = str(c.description);
+        return title && description
+          ? { _key: key(c, i), title, description }
+          : null;
+      });
+      if (steps.length === 0) return null;
+      return { _type: "processSteps", _key, heading, steps };
+    }
+    case "comparisonTable": {
+      const rows = children(raw.rows, (c, i) => {
+        const situation = str(c.situation);
+        const recommendation = str(c.recommendation);
+        const why = str(c.why);
+        return situation && recommendation && why
+          ? { _key: key(c, i), situation, recommendation, why }
+          : null;
+      });
+      if (rows.length === 0) return null;
+      return {
+        _type: "comparisonTable",
+        _key,
+        heading,
+        rows,
+        footnote: str(raw.footnote),
+      };
+    }
+    case "serviceTrust": {
+      const items = children(raw.items, iconItem);
+      if (items.length === 0) return null;
+      return {
+        _type: "serviceTrust",
+        _key,
+        heading,
+        items,
+        showLogos: raw.showLogos !== false,
+      };
+    }
+    case "serviceTestimonials":
+      return { _type: "serviceTestimonials", _key, heading };
+    case "propertyTypes": {
+      const cards = children(raw.cards, (c, i) => {
+        const title = str(c.title);
+        const blurb = str(c.blurb);
+        const slug = str(c.slug);
+        return title && blurb && slug
+          ? { _key: key(c, i), icon: toIcon(str(c.icon)), title, blurb, slug }
+          : null;
+      });
+      if (cards.length === 0) return null;
+      return { _type: "propertyTypes", _key, heading, cards };
+    }
+    case "serviceFaq": {
+      const faqs = children(raw.faqs, (c, i) => {
+        const question = str(c.question);
+        const answer = str(c.answer);
+        return question && answer ? { _key: key(c, i), question, answer } : null;
+      });
+      if (faqs.length === 0) return null;
+      return { _type: "serviceFaq", _key, heading, faqs };
+    }
+    case "serviceArea": {
+      const body = str(raw.body);
+      if (!body) return null;
+      return { _type: "serviceArea", _key, heading, body, photo: photoOf(raw, "photo") };
+    }
+    case "relatedServices": {
+      const serviceSlugs = Array.isArray(raw.serviceSlugs)
+        ? raw.serviceSlugs.filter((s): s is string => typeof s === "string" && s.trim() !== "")
+        : [];
+      if (serviceSlugs.length === 0) return null;
+      return { _type: "relatedServices", _key, heading, serviceSlugs };
+    }
+    case "finalCta": {
+      const body = str(raw.body);
+      const secondaryCtaLabel = str(raw.secondaryCtaLabel);
+      const secondaryCtaHref = str(raw.secondaryCtaHref);
+      if (!body || !secondaryCtaLabel || !secondaryCtaHref) return null;
+      return {
+        _type: "finalCta",
+        _key,
+        heading,
+        body,
+        secondaryCtaLabel,
+        secondaryCtaHref,
+      };
+    }
+    default:
+      return null;
+  }
+}
+
+function toSections(value: unknown): ServiceSection[] | undefined {
+  if (!Array.isArray(value)) return undefined;
+  const sections = value
+    .map((raw, i) =>
+      raw && typeof raw === "object" ? toSection(raw as Raw, i) : null,
+    )
+    .filter((s): s is ServiceSection => s !== null);
+  return sections.length > 0 ? sections : undefined;
+}
+
+type ServiceListItem = SERVICES_QUERY_RESULT[number];
+type ServiceDetailItem = NonNullable<SERVICE_BY_SLUG_QUERY_RESULT>;
+
+function toService(item: ServiceListItem | ServiceDetailItem): Service | null {
   if (!item.title || !item.slug || !item.shortDescription) return null;
   return {
     title: item.title,
     slug: item.slug,
     shortDescription: item.shortDescription,
     body: item.body?.length ? (item.body as RichBody) : undefined,
+    sections:
+      "sections" in item && item.sections
+        ? toSections(item.sections as unknown)
+        : undefined,
     seoTitle: item.seoTitle ?? undefined,
     seoDescription: item.seoDescription ?? undefined,
     image: "",

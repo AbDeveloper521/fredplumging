@@ -6,6 +6,7 @@ import { testimonial } from "./testimonial";
 import { service } from "./service";
 import { industry } from "./industry";
 import { trustLogo } from "./trustLogo";
+import { serviceSectionTypes } from "./serviceSections";
 
 export const schemaTypes: SchemaTypeDefinition[] = [
   siteSettings,
@@ -15,4 +16,5 @@ export const schemaTypes: SchemaTypeDefinition[] = [
   service,
   industry,
   trustLogo,
+  ...serviceSectionTypes,
 ];
