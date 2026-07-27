@@ -1,4 +1,5 @@
-import { Plus } from "lucide-react";
+import Link from "next/link";
+import { ArrowUpRight, Plus } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
@@ -42,9 +43,23 @@ export function ServiceFaqSection({ section, id }: ServiceFaqSectionProps) {
                     <Plus className="size-4" />
                   </span>
                 </summary>
-                <p className="px-6 pb-5 text-[15px] leading-relaxed text-grey-500">
-                  {faq.answer}
-                </p>
+                <div className="px-6 pb-5">
+                  <p className="text-[15px] leading-relaxed text-grey-500">
+                    {faq.answer}
+                  </p>
+                  {faq.href && (
+                    <Link
+                      href={faq.href}
+                      className="group/faqlink mt-3 inline-flex items-center gap-1.5 text-[14px] font-bold text-navy-900 underline decoration-red-600/50 underline-offset-4 transition-colors hover:text-red-600"
+                    >
+                      {faq.linkLabel ?? "Learn more"}
+                      <ArrowUpRight
+                        aria-hidden="true"
+                        className="size-4 text-red-600 transition-transform duration-200 group-hover/faqlink:translate-x-0.5 group-hover/faqlink:-translate-y-0.5"
+                      />
+                    </Link>
+                  )}
+                </div>
               </details>
             </Reveal>
           ))}

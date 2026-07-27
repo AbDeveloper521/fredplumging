@@ -38,6 +38,10 @@ export interface ServiceHeroSection extends SectionBase {
   photo?: CmsPhoto;
   /** Intended photo subject — placeholder caption until a photo exists. */
   photoSubject?: string;
+  /** Call-button text; "{phone}" is replaced with the siteSettings number. */
+  phoneCtaLabel?: string;
+  /** Pulsing red dot on the first credential (24/7-availability pages). */
+  showAvailabilityDot?: boolean;
 }
 
 export interface ServiceAboutSection extends SectionBase {
@@ -116,7 +120,14 @@ export interface PropertyTypesSection extends SectionBase {
 export interface ServiceFaqSection extends SectionBase {
   _type: "serviceFaq";
   heading: string;
-  faqs: Array<{ _key: string; question: string; answer: string }>;
+  faqs: Array<{
+    _key: string;
+    question: string;
+    answer: string;
+    /** Optional related-page link rendered after the answer. */
+    href?: string;
+    linkLabel?: string;
+  }>;
 }
 
 export interface ServiceAreaSection extends SectionBase {
@@ -141,6 +152,10 @@ export interface FinalCtaSection extends SectionBase {
   body: string;
   secondaryCtaLabel: string;
   secondaryCtaHref: string;
+  /** Call-button text; "{phone}" is replaced with the siteSettings number. */
+  phoneCtaLabel?: string;
+  /** Pulsing red dot beside the call button (24/7-availability pages). */
+  showAvailabilityDot?: boolean;
 }
 
 export type ServiceSection =

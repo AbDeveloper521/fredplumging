@@ -15,6 +15,10 @@ interface ServiceFinalCtaSectionProps {
  * vertical rhythm, no image, no form.
  */
 export function ServiceFinalCtaSection({ section, site, id }: ServiceFinalCtaSectionProps) {
+  const phoneCtaLabel = (section.phoneCtaLabel ?? "Call {phone} Now").replace(
+    "{phone}",
+    site.phone,
+  );
   return (
     <section
       id={id}
@@ -43,10 +47,18 @@ export function ServiceFinalCtaSection({ section, site, id }: ServiceFinalCtaSec
           </p>
         </Reveal>
         <Reveal delay={0.16}>
-          <div className="mt-9 flex flex-col justify-center gap-4 sm:flex-row">
-            <Button href={site.phoneHref} size="lg" withPhoneIcon>
-              Call {site.phone} Now
-            </Button>
+          <div className="mt-9 flex flex-col items-center justify-center gap-4 sm:flex-row">
+            <span className="flex items-center gap-3">
+              {section.showAvailabilityDot && (
+                <span
+                  aria-hidden="true"
+                  className="availability-dot size-2 shrink-0 rounded-full bg-red-500"
+                />
+              )}
+              <Button href={site.phoneHref} size="lg" withPhoneIcon>
+                {phoneCtaLabel}
+              </Button>
+            </span>
             <Button
               href={section.secondaryCtaHref}
               variant="outline"

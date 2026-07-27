@@ -143,6 +143,21 @@ export const serviceHero = defineType({
       description: "Tiny uppercase label above the headline, e.g. “FRED'S PLUMBING”. Leave empty to hide.",
       type: "string",
     }),
+    defineField({
+      name: "phoneCtaLabel",
+      title: "Call-button text",
+      description:
+        "Text on the red call button. Write {phone} where the number goes — it's filled in from Site Settings, e.g. “Emergency? Call {phone}”. Leave empty for “Call 24/7: {phone}”.",
+      type: "string",
+    }),
+    defineField({
+      name: "showAvailabilityDot",
+      title: "Show the pulsing availability dot",
+      description:
+        "Adds the small pulsing red dot next to the first credential — use on pages where 24/7 availability is the message.",
+      type: "boolean",
+      initialValue: false,
+    }),
     imageWithAlt({
       name: "photo",
       title: "Banner photo",
@@ -577,6 +592,26 @@ export const serviceFaq = defineType({
           fields: [
             requiredString("question", "Question", "As a person would ask it, e.g. “Do you work on occupied apartment buildings?”", "Write the question."),
             requiredText("answer", "Answer", "Open with the direct answer, then elaborate. Don't leave [BRACKETED] gaps in place when the real fact is known — replace them.", "Write the answer.", 4),
+            defineField({
+              name: "href",
+              title: "Link under the answer (optional)",
+              description:
+                "A related page to point readers at, e.g. /services/maintenance. Leave empty for no link.",
+              type: "string",
+              validation: (rule) =>
+                rule.custom((value?: string) =>
+                  !value || value.startsWith("/")
+                    ? true
+                    : "Use a page on this site, starting with a slash.",
+                ),
+            }),
+            defineField({
+              name: "linkLabel",
+              title: "Link text",
+              description:
+                "The words the link shows, e.g. “See Maintenance Programs”. Only used when a link is set.",
+              type: "string",
+            }),
           ],
           preview: {
             select: { title: "question" },
@@ -667,6 +702,21 @@ export const finalCta = defineType({
       "The second button needs its own label.",
     ),
     internalHref("secondaryCtaHref", "Second button link", "Where the second button goes — usually /contact."),
+    defineField({
+      name: "phoneCtaLabel",
+      title: "Call-button text",
+      description:
+        "Text on the red call button. Write {phone} where the number goes — it's filled in from Site Settings, e.g. “Call {phone} — Available Now”. Leave empty for “Call {phone} Now”.",
+      type: "string",
+    }),
+    defineField({
+      name: "showAvailabilityDot",
+      title: "Show the pulsing availability dot",
+      description:
+        "Adds the small pulsing red dot beside the call button — use on pages where 24/7 availability is the message.",
+      type: "boolean",
+      initialValue: false,
+    }),
   ],
   preview: {
     select: { heading: "heading" },

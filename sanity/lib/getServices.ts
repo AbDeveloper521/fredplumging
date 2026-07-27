@@ -103,6 +103,8 @@ function toSection(raw: Raw, index: number): ServiceSection | null {
         }),
         photo: photoOf(raw, "photo"),
         photoSubject: str(raw.photoSubject),
+        phoneCtaLabel: str(raw.phoneCtaLabel),
+        showAvailabilityDot: raw.showAvailabilityDot === true,
       };
     }
     case "serviceAbout": {
@@ -211,7 +213,15 @@ function toSection(raw: Raw, index: number): ServiceSection | null {
       const faqs = children(raw.faqs, (c, i) => {
         const question = str(c.question);
         const answer = str(c.answer);
-        return question && answer ? { _key: key(c, i), question, answer } : null;
+        return question && answer
+          ? {
+              _key: key(c, i),
+              question,
+              answer,
+              href: str(c.href),
+              linkLabel: str(c.linkLabel),
+            }
+          : null;
       });
       if (faqs.length === 0) return null;
       return { _type: "serviceFaq", _key, heading, faqs };
@@ -247,6 +257,8 @@ function toSection(raw: Raw, index: number): ServiceSection | null {
         body,
         secondaryCtaLabel,
         secondaryCtaHref,
+        phoneCtaLabel: str(raw.phoneCtaLabel),
+        showAvailabilityDot: raw.showAvailabilityDot === true,
       };
     }
     default:

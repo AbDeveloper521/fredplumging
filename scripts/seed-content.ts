@@ -1266,6 +1266,241 @@ function maintenanceSections() {
   ];
 }
 
+/**
+ * Section stack for /services/emergency-plumbing — deliberately SHORTER
+ * (8 sections): many visitors have an active emergency, so the number and
+ * the what-to-do-now steps sit in the first two screens. Tone rule: urgency
+ * without alarmism. Crisis-guidance copy covers ONLY shutoff valves and
+ * breakers — gas, sewage contact, and structural water route to "call us".
+ */
+function emergencyPlumbingSections() {
+  return [
+    {
+      _type: "serviceHero",
+      _key: "seed-hero",
+      eyebrow: "FRED'S PLUMBING",
+      heading: "Emergency Plumbing Services In The Dallas–Fort Worth Metroplex",
+      subheading:
+        "Fred's Plumbing provides around-the-clock emergency plumbing services for multi-family and commercial properties throughout the Dallas–Fort Worth Metroplex. When leaks, backups, or system failures threaten your property, our licensed technicians respond quickly with the skill and equipment needed to protect your residents and minimize damage.",
+      phoneCtaLabel: "Emergency? Call {phone}",
+      secondaryCtaLabel: "Request Non-Urgent Service",
+      secondaryCtaHref: "/contact",
+      showAvailabilityDot: true,
+      credentials: [
+        { _type: "credential", _key: "seed-cred-1", icon: "clock", label: "Answered 24/7/365" },
+        { _type: "credential", _key: "seed-cred-2", icon: "shield-check", label: "Licensed & Insured" },
+        { _type: "credential", _key: "seed-cred-3", icon: "map-pin", label: "Serving All of DFW" },
+      ],
+      photoSubject:
+        "A technician's hands closing a main water shutoff valve — vertical orientation",
+    },
+    {
+      _type: "serviceAbout",
+      _key: "seed-about",
+      heading: "About Our Emergency Plumbing Services",
+      paragraphs: [
+        "Emergency plumbing situations can disrupt daily operations, impact resident comfort, and cause costly damage. Fred's Plumbing has extensive experience handling urgent issues for apartments, condos, assisted living communities, student housing, nursing homes, and commercial facilities. Our emergency team understands the importance of immediate response and accurate diagnostics in these environments.",
+        "We use advanced tools and proven repair methods to address emergencies quickly and effectively. From burst pipes and flooding to sewer backups and major leaks, our technicians deliver reliable solutions that protect your property and prevent further damage. When you need help fast, our team is ready to respond.",
+      ],
+      ctaLabel: "Talk to Our Team",
+      ctaHref: "/contact",
+      photoSubjectPrimary:
+        "Copper and PVC supply lines in a mechanical room, tools laid out mid-job",
+      photoSubjectSecondary: "The Fred's Plumbing crew in front of a branded van",
+    },
+    {
+      // Crisis guidance sits high on purpose — what to do before the truck
+      // arrives. Copy stays within shutoff valves and breakers only.
+      _type: "processSteps",
+      _key: "seed-process",
+      heading: "What to Do While We're On the Way",
+      steps: [
+        {
+          _type: "step",
+          _key: "seed-step-1",
+          title: "Stop the Water",
+          description:
+            "Close the nearest shutoff valve, or the building main if you can reach it safely. Every minute of flow is damage.",
+        },
+        {
+          _type: "step",
+          _key: "seed-step-2",
+          title: "Kill Power to Affected Areas",
+          description:
+            "If water is near outlets, appliances, or electrical panels, shut off the breaker for that area — don't touch electrics standing in water.",
+        },
+        {
+          _type: "step",
+          _key: "seed-step-3",
+          title: "Call Us",
+          description: `Call ${site.phone} and tell us what you see. We'll tell you what to do next for your specific situation and dispatch a technician.`,
+        },
+        {
+          _type: "step",
+          _key: "seed-step-4",
+          title: "Clear and Document",
+          description:
+            "Move what you can out of the water's path and photograph the damage — your insurer will want the pictures.",
+        },
+      ],
+    },
+    {
+      _type: "whatsIncluded",
+      _key: "seed-included",
+      heading: "Emergencies We Respond To",
+      intro:
+        "If it can't wait until morning, it's our call to take. Fred's Plumbing dispatches for:",
+      items: [
+        {
+          _type: "item",
+          _key: "seed-inc-1",
+          icon: "droplets",
+          title: "Burst Pipes & Major Leaks",
+          description:
+            "Supply-line failures that are actively flooding units, ceilings, or mechanical rooms.",
+        },
+        {
+          _type: "item",
+          _key: "seed-inc-2",
+          icon: "waves",
+          title: "Sewer Backups",
+          description:
+            "Sewage in units or common areas — a health hazard we treat as a priority dispatch.",
+        },
+        {
+          _type: "item",
+          _key: "seed-inc-3",
+          icon: "building-2",
+          title: "Building-Wide Water Loss",
+          description:
+            "No water across a floor or building — diagnosis and restoration as fast as the failure allows.",
+        },
+        {
+          _type: "item",
+          _key: "seed-inc-4",
+          icon: "gauge",
+          title: "Water Heater Failures",
+          description:
+            "Tank ruptures and total hot-water loss for properties that can't leave residents without it.",
+        },
+        {
+          _type: "item",
+          _key: "seed-inc-5",
+          icon: "siren",
+          title: "Flooding & Drainage Emergencies",
+          description:
+            "Water rising where it shouldn't be, from storm backflow to failed sump systems.",
+        },
+        {
+          // Utility-first framing is non-negotiable, same as the specialty page.
+          _type: "item",
+          _key: "seed-inc-6",
+          icon: "flame",
+          title: "Suspected Gas Leaks",
+          description:
+            "Leave the area and call your gas utility's emergency line first — then call us for detection and repair.",
+          href: "/services/specialty-services",
+        },
+      ],
+    },
+    {
+      _type: "serviceTrust",
+      _key: "seed-trust",
+      heading: "Trusted Emergency Plumbing Professionals In The DFW Metroplex",
+      items: [
+        {
+          _type: "item",
+          _key: "seed-trust-1",
+          icon: "clock",
+          title: "Immediate Response",
+          description:
+            "Our technicians are available 24 hours a day to handle urgent plumbing issues throughout Dallas and Fort Worth.",
+        },
+        {
+          _type: "item",
+          _key: "seed-trust-2",
+          icon: "award",
+          title: "Experienced Team",
+          description:
+            "We bring decades of knowledge to every emergency, allowing us to diagnose and resolve issues with precision.",
+        },
+        {
+          _type: "item",
+          _key: "seed-trust-3",
+          icon: "cog",
+          title: "Advanced Equipment",
+          description:
+            "Our tools and inspection technology help us identify problems quickly and complete repairs that last.",
+        },
+      ],
+      showLogos: true,
+    },
+    {
+      _type: "serviceFaq",
+      _key: "seed-faq",
+      heading: "Emergency Service Questions, Answered",
+      faqs: [
+        {
+          _type: "faq",
+          _key: "seed-faq-1",
+          question: "How fast can you get to my property?",
+          answer:
+            "Fred's Plumbing answers emergency calls 24/7 across the Dallas–Fort Worth Metroplex. [RESPONSE-TIME COMMITMENT — client to confirm; do not invent.]",
+        },
+        {
+          // If the client declines to answer publicly, DELETE this question
+          // rather than publish a dodge.
+          _type: "faq",
+          _key: "seed-faq-2",
+          question: "Do you charge more for nights and weekends?",
+          answer:
+            "[AFTER-HOURS PRICING POLICY — client to confirm; do not invent. If the client declines to answer publicly, drop this question rather than publish a dodge.]",
+        },
+        {
+          _type: "faq",
+          _key: "seed-faq-3",
+          question: "What counts as a plumbing emergency?",
+          answer:
+            "Anything actively causing damage or a health risk: burst pipes, sewage backups, flooding, total water loss, or a suspected gas leak. If you're unsure, call — Fred's Plumbing will tell you honestly whether it can wait for a scheduled visit.",
+        },
+        {
+          _type: "faq",
+          _key: "seed-faq-4",
+          question: "Can you handle emergencies in occupied buildings?",
+          answer:
+            "Yes. Most of Fred's Plumbing's emergency work is in occupied multi-family properties — technicians contain the problem first, then coordinate access and cleanup with your management office.",
+        },
+        {
+          _type: "faq",
+          _key: "seed-faq-5",
+          question: "Should we set something up before an emergency happens?",
+          answer:
+            "It helps. Maintenance program members get priority emergency scheduling, and having your property's shutoff locations documented in advance saves critical minutes.",
+          href: "/services/maintenance",
+          linkLabel: "See Maintenance Programs",
+        },
+      ],
+    },
+    {
+      _type: "relatedServices",
+      _key: "seed-related",
+      heading: "Related Services",
+      serviceSlugs: ["maintenance", "drain-sewer", "specialty-services"],
+    },
+    {
+      _type: "finalCta",
+      _key: "seed-final",
+      heading: "It's an Emergency. We're Already Awake.",
+      body:
+        "One number reaches a licensed DFW emergency crew — day, night, weekend, or holiday.",
+      phoneCtaLabel: "Call {phone} — Available Now",
+      showAvailabilityDot: true,
+      secondaryCtaLabel: "Ask About Priority Response",
+      secondaryCtaHref: "/contact",
+    },
+  ];
+}
+
 /** Per-slug section stacks + SEO overrides for section-library pages. */
 const SERVICE_EXTRAS: Record<
   string,
@@ -1288,6 +1523,12 @@ const SERVICE_EXTRAS: Record<
     seoTitle: "Backflow, Boiler & Gas Lines in DFW | Fred's Plumbing",
     seoDescription:
       "Backflow testing, commercial boiler service, and gas line repair for multi-family and commercial properties across Dallas–Fort Worth — available 24/7.",
+  },
+  "emergency-plumbing": {
+    sections: emergencyPlumbingSections,
+    seoTitle: "24/7 Emergency Plumber in DFW | Fred's Plumbing",
+    seoDescription:
+      "24/7 emergency plumbing for DFW multi-family and commercial properties — burst pipes, sewer backups, flooding, and water loss answered day and night.",
   },
   maintenance: {
     sections: maintenanceSections,

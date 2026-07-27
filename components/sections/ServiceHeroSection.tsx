@@ -53,6 +53,10 @@ export function ServiceHeroSection({
   breadcrumbs,
   id,
 }: ServiceHeroSectionProps) {
+  const phoneCtaLabel = (section.phoneCtaLabel ?? "Call 24/7: {phone}").replace(
+    "{phone}",
+    site.phone,
+  );
   return (
     <section
       id={id}
@@ -130,7 +134,7 @@ export function ServiceHeroSection({
           <Rise delay={0.24}>
             <div className="mt-9 flex flex-col gap-4 sm:flex-row">
               <Button href={site.phoneHref} size="lg" withPhoneIcon>
-                Call 24/7: {site.phone}
+                {phoneCtaLabel}
               </Button>
               <Button
                 href={section.secondaryCtaHref}
@@ -146,13 +150,19 @@ export function ServiceHeroSection({
           {section.credentials.length > 0 && (
             <Rise delay={0.32}>
               <ul className="mt-10 flex flex-col gap-4 border-t border-white/10 pt-7 sm:flex-row sm:flex-wrap sm:gap-x-8">
-                {section.credentials.map((credential) => {
+                {section.credentials.map((credential, i) => {
                   const Icon = navIcons[credential.icon];
                   return (
                     <li
                       key={credential._key}
                       className="flex items-center gap-2.5 text-[14px] font-semibold text-white/90"
                     >
+                      {section.showAvailabilityDot && i === 0 && (
+                        <span
+                          aria-hidden="true"
+                          className="availability-dot size-1.5 shrink-0 rounded-full bg-red-500"
+                        />
+                      )}
                       <Icon
                         aria-hidden="true"
                         className="size-[18px] text-red-500"

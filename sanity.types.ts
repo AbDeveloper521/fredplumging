@@ -21,6 +21,8 @@ export type FinalCta = {
   body?: string;
   secondaryCtaLabel?: string;
   secondaryCtaHref?: string;
+  phoneCtaLabel?: string;
+  showAvailabilityDot?: boolean;
 };
 
 export type RelatedServices = {
@@ -57,6 +59,8 @@ export type ServiceFaq = {
   faqs?: Array<{
     question?: string;
     answer?: string;
+    href?: string;
+    linkLabel?: string;
     _type: "faq";
     _key: string;
   }>;
@@ -237,6 +241,8 @@ export type ServiceHero = {
     _key: string;
   }>;
   eyebrow?: string;
+  phoneCtaLabel?: string;
+  showAvailabilityDot?: boolean;
   photo?: {
     asset?: SanityImageAssetReference;
     media?: unknown;
@@ -883,6 +889,8 @@ export type SERVICE_BY_SLUG_QUERY_RESULT = {
         body?: string;
         secondaryCtaLabel?: string;
         secondaryCtaHref?: string;
+        phoneCtaLabel?: string;
+        showAvailabilityDot?: boolean;
         photo: null;
         photoPrimary: null;
         photoSecondary: null;
@@ -971,6 +979,8 @@ export type SERVICE_BY_SLUG_QUERY_RESULT = {
         faqs?: Array<{
           question?: string;
           answer?: string;
+          href?: string;
+          linkLabel?: string;
           _type: "faq";
           _key: string;
         }>;
@@ -1005,6 +1015,8 @@ export type SERVICE_BY_SLUG_QUERY_RESULT = {
           _key: string;
         }>;
         eyebrow?: string;
+        phoneCtaLabel?: string;
+        showAvailabilityDot?: boolean;
         photo: {
           asset: SanityImageAssetReference | null;
           hotspot: SanityImageHotspot | null;
