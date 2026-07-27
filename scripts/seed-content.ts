@@ -2129,6 +2129,314 @@ function condosSections() {
   ];
 }
 
+/**
+ * Section stack for /multifamily/assisted-living. Lane discipline: this
+ * page covers how Fred's Plumbing OPERATES inside a care community
+ * (scheduling, discretion, documentation); technical service detail lives
+ * on /services/senior-care-facilities, cross-linked in the router section.
+ * Tone rules: never imply clinical or care expertise — a plumbing
+ * contractor experienced in care environments; no fear-based copy; no
+ * named regulations, codes, or agency requirements anywhere.
+ */
+function assistedLivingSections() {
+  return [
+    {
+      _type: "serviceHero",
+      _key: "seed-hero",
+      eyebrow: "FRED'S PLUMBING",
+      heading: "Assisted Living Plumbing Services In The Dallas Fort Worth Metroplex",
+      subheading:
+        "Plumbing work in a community where people live full-time takes more than technical skill — it takes a crew that schedules around care routines, works quietly, and documents everything for your records.",
+      secondaryCtaLabel: "Schedule a Facility Walkthrough",
+      secondaryCtaHref: "/contact",
+      credentials: [
+        { _type: "credential", _key: "seed-cred-1", icon: "shield-check", label: "Licensed & Insured" },
+        { _type: "credential", _key: "seed-cred-2", icon: "map-pin", label: "Serving DFW Since 1996" },
+        { _type: "credential", _key: "seed-cred-3", icon: "clock", label: "24/7 Emergency Response" },
+      ],
+      photoSubject:
+        "Sunlit common lounge of an assisted living community, unoccupied — vertical orientation",
+    },
+    {
+      _type: "serviceAbout",
+      _key: "seed-about",
+      heading: "Trusted Plumbing Support For Assisted Living Communities Since 1996",
+      paragraphs: [
+        "For nearly three decades, Fred's Plumbing has supported assisted living communities across the Dallas Fort Worth Metroplex. Our technicians are trained to work in sensitive environments where safety and reliability are essential.",
+        "We deliver high quality service supported by advanced tools, professional expertise, and a strong commitment to protecting residents. Whether handling routine maintenance or urgent repairs, our goal is to provide consistent, dependable care for every facility we serve.",
+      ],
+      ctaLabel: "Talk to Our Team",
+      ctaHref: "/contact",
+      photoSubjectPrimary:
+        "Accessible bathroom in a care community with grab bars and walk-in shower, unoccupied",
+      photoSubjectSecondary: "The Fred's Plumbing crew in front of a branded van",
+    },
+    {
+      _type: "whatsIncluded",
+      _key: "seed-included",
+      heading: "Reliable Plumbing Services In Dallas & Fort Worth",
+      intro:
+        "Every service below is available to assisted living communities — each links to the full detail:",
+      items: [
+        {
+          _type: "item",
+          _key: "seed-inc-1",
+          icon: "wrench",
+          title: "Plumbing",
+          description:
+            "From routine maintenance to full system installations, our licensed team handles all types of plumbing projects for commercial and multi-family buildings across DFW.",
+          href: "/services/plumbing",
+        },
+        {
+          _type: "item",
+          _key: "seed-inc-2",
+          icon: "waves",
+          title: "Drain & Sewer",
+          description:
+            "Professional drain cleaning, hydro jetting, and sewer line repair to prevent backups and keep your property's systems flowing smoothly.",
+          href: "/services/drain-sewer",
+        },
+        {
+          _type: "item",
+          _key: "seed-inc-3",
+          icon: "cog",
+          title: "Specialty Services",
+          description:
+            "Boiler systems, backflow, gas, and advanced diagnostics for complex plumbing challenges.",
+          href: "/services/specialty-services",
+        },
+        {
+          _type: "item",
+          _key: "seed-inc-4",
+          icon: "calendar-check",
+          title: "Maintenance",
+          description:
+            "Scheduled maintenance plans designed to protect your infrastructure and ensure compliance with local codes.",
+          href: "/services/maintenance",
+        },
+        {
+          _type: "item",
+          _key: "seed-inc-5",
+          icon: "siren",
+          title: "Emergency Plumbing",
+          description:
+            "Available 24/7 for burst pipes, leaks, and urgent repairs — immediate response when your tenants or facilities need it most.",
+          href: "/services/emergency-plumbing",
+        },
+        {
+          // Lane-discipline cross-link: the technical depth lives there.
+          _type: "item",
+          _key: "seed-inc-6",
+          icon: "heart-pulse",
+          title: "Senior Care Facility Plumbing",
+          description:
+            "The technical detail: fixtures, systems, and compliance work specific to senior living environments.",
+          href: "/services/senior-care-facilities",
+        },
+      ],
+    },
+    {
+      // The centerpiece: operational choreography inside a care community.
+      _type: "processSteps",
+      _key: "seed-process",
+      heading: "How We Work Inside an Operating Community",
+      steps: [
+        {
+          _type: "step",
+          _key: "seed-step-1",
+          title: "Plan With Your Staff",
+          description:
+            "Work is scheduled with your director or maintenance lead around meal times, activities, and care routines — never sprung on your team.",
+        },
+        {
+          _type: "step",
+          _key: "seed-step-2",
+          title: "Contain the Work Area",
+          description:
+            "Clean protective coverings, clear signage, and equipment that never blocks a corridor or exit.",
+        },
+        {
+          _type: "step",
+          _key: "seed-step-3",
+          title: "Work Quietly, Introduce Ourselves",
+          description:
+            "Technicians are uniformed, badged, and briefed that they're working in someone's home — noisy work is scheduled for the windows you choose.",
+        },
+        {
+          _type: "step",
+          _key: "seed-step-4",
+          title: "Restore and Document",
+          description:
+            "The area is returned to service the same visit wherever possible, and you receive written records for your facility file [SURVEY-DOCUMENTATION SPECIFICS — client to confirm what facilities typically request].",
+        },
+      ],
+    },
+    {
+      _type: "signsYouNeed",
+      _key: "seed-signs",
+      heading: "Situations Assisted Living Operators Bring Us Most",
+      cards: [
+        {
+          _type: "card",
+          _key: "seed-sign-1",
+          icon: "clock",
+          question: "Do you need water shutoffs kept short and scheduled?",
+          answer:
+            "In a community that can't simply close, shutoff windows are planned with your staff, announced in advance, and kept as short as the work allows.",
+        },
+        {
+          _type: "card",
+          _key: "seed-sign-2",
+          icon: "flame",
+          question: "Is hot water reliability non-negotiable?",
+          answer:
+            "It is here. Fred's Plumbing maintains and repairs the water heating systems residents depend on daily, and treats hot-water loss as a priority call.",
+        },
+        {
+          _type: "card",
+          _key: "seed-sign-3",
+          icon: "heart-pulse",
+          question: "Are accessible fixtures due for repair or upgrade?",
+          answer:
+            "Grab-bar-era bathrooms need parts and care standard crews don't carry. We service accessible fixtures with the right components the first time.",
+        },
+        {
+          _type: "card",
+          _key: "seed-sign-4",
+          icon: "award",
+          question: "Does your maintenance file need to be survey-ready?",
+          answer:
+            "Every job closes with written documentation for your records [LICENSING-SURVEY SPECIFICS — client to confirm], so plumbing is never the loose end in an inspection.",
+        },
+      ],
+      ctaLabel: "Describe Your Issue — Get a Callback",
+      ctaHref: "/contact",
+    },
+    {
+      _type: "serviceTrust",
+      _key: "seed-trust",
+      heading: "Why Choose Us For Assisted Living Plumbing Services",
+      items: [
+        {
+          _type: "item",
+          _key: "seed-trust-1",
+          icon: "heart-handshake",
+          title: "Experience In Senior Living",
+          description:
+            "We understand the plumbing needs of assisted living facilities and provide solutions that support resident safety and facility operations.",
+        },
+        {
+          _type: "item",
+          _key: "seed-trust-2",
+          icon: "clock",
+          title: "Fast And Reliable Service",
+          description:
+            "Our technicians respond quickly to prevent disruptions and maintain a comfortable environment for residents.",
+        },
+        {
+          _type: "item",
+          _key: "seed-trust-3",
+          icon: "award",
+          title: "Quality Driven Results",
+          description:
+            "Every service is performed with care and accuracy to ensure long lasting performance and consistent reliability.",
+        },
+      ],
+      showLogos: true,
+    },
+    {
+      _type: "serviceFaq",
+      _key: "seed-faq",
+      heading: "Assisted Living Plumbing Questions, Answered",
+      background: "white",
+      faqs: [
+        {
+          _type: "faq",
+          _key: "seed-faq-1",
+          question: "Can you work while residents are present?",
+          answer:
+            "Yes — that's the normal case, not the exception. Fred's Plumbing contains work areas, keeps corridors clear, and schedules disruptive work for the windows your staff chooses.",
+        },
+        {
+          // If the client won't state a screening policy publicly, DELETE
+          // this question — a vague answer here is worse than none.
+          _type: "faq",
+          _key: "seed-faq-2",
+          question: "Are your technicians screened for work in care communities?",
+          answer:
+            "[BACKGROUND-CHECK / SCREENING POLICY — client to confirm; do not invent. If the client won't state a policy publicly, drop this question — a vague answer here is worse than none.]",
+        },
+        {
+          _type: "faq",
+          _key: "seed-faq-3",
+          question: "How do you handle emergencies overnight?",
+          answer:
+            "Fred's Plumbing answers 24/7, and overnight work in a care community follows the same rules as daytime work: coordinate with the staff on duty, contain the area, keep the noise down.",
+        },
+        {
+          _type: "faq",
+          _key: "seed-faq-4",
+          question: "Can you put our community on a maintenance schedule?",
+          answer:
+            "Yes. Scheduled programs catch failures before residents notice them, and program members get priority emergency response.",
+          href: "/services/maintenance",
+          linkLabel: "See Maintenance Programs",
+        },
+        {
+          _type: "faq",
+          _key: "seed-faq-5",
+          question: "Do you also serve nursing homes and memory care?",
+          answer:
+            "Yes. Fred's Plumbing serves the full range of senior living communities across DFW, including skilled nursing facilities.",
+          href: "/multifamily/nursing-homes",
+          linkLabel: "See Nursing Home Plumbing",
+        },
+      ],
+    },
+    {
+      _type: "propertyTypes",
+      _key: "seed-siblings",
+      heading: "Other Properties We Serve",
+      background: "offwhite",
+      cards: [
+        {
+          _type: "card",
+          _key: "seed-sib-1",
+          icon: "stethoscope",
+          title: "Nursing Homes",
+          blurb: "Health-code compliant plumbing with zero-downtime planning.",
+          slug: "nursing-homes",
+        },
+        {
+          _type: "card",
+          _key: "seed-sib-2",
+          icon: "building",
+          title: "Apartments",
+          blurb: "High-occupancy systems, unit-turn plumbing, and building-wide maintenance.",
+          slug: "apartments",
+        },
+        {
+          _type: "card",
+          _key: "seed-sib-3",
+          icon: "hotel",
+          title: "Condos",
+          blurb: "HOA-ready documentation and owner-coordinated scheduling.",
+          slug: "condos",
+        },
+      ],
+    },
+    {
+      _type: "finalCta",
+      _key: "seed-final",
+      heading: "Plumbing That Respects the People Who Live There",
+      body:
+        "Planned around care routines, contained, documented, and answered 24/7 — one contractor for assisted living communities across DFW.",
+      secondaryCtaLabel: "Request a Quote",
+      secondaryCtaHref: "/contact",
+    },
+  ];
+}
+
 /** Per-slug section stacks + SEO overrides for industry pages. */
 const INDUSTRY_EXTRAS: Record<
   string,
@@ -2145,6 +2453,12 @@ const INDUSTRY_EXTRAS: Record<
     seoTitle: "Condo & HOA Plumbing Services in DFW | Fred's Plumbing",
     seoDescription:
       "Condo plumbing for HOAs and associations across Dallas–Fort Worth — shared mains, in-unit repairs, and written documentation for every board file. 24/7.",
+  },
+  "assisted-living": {
+    sections: assistedLivingSections,
+    seoTitle: "Assisted Living Plumbing in DFW | Fred's Plumbing",
+    seoDescription:
+      "Assisted living plumbing across Dallas–Fort Worth — scheduled around care routines, contained work areas, and documented for your facility file. Answered 24/7.",
   },
 };
 
