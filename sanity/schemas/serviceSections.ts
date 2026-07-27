@@ -345,6 +345,19 @@ export const signsYouNeed = defineType({
       "The button needs a label.",
     ),
     internalHref("ctaHref", "Button link", "Where the button goes — usually /contact."),
+    defineField({
+      name: "background",
+      title: "Background",
+      description:
+        "Which band this section sits on. Pick to keep the page alternating light and dark.",
+      type: "string",
+      options: {
+        list: [
+          { title: "White (default)", value: "white" },
+          { title: "Dark navy", value: "dark" },
+        ],
+      },
+    }),
   ],
   preview: {
     select: { heading: "heading", cards: "cards" },
@@ -518,9 +531,10 @@ export const serviceTestimonials = defineType({
 
 export const propertyTypes = defineType({
   name: "propertyTypes",
-  title: "Property types",
+  title: "Property cards",
   type: "object",
-  description: "Link cards into the property-type pages (/multifamily/…).",
+  description:
+    "A grid of property cards — link cards into the property-type pages, or informational cards (no link) with photos.",
   fields: [
     requiredString("heading", "Heading", "Section heading, e.g. “Built for the Properties You Manage”.", "The section needs a heading."),
     defineField({
@@ -538,20 +552,30 @@ export const propertyTypes = defineType({
             requiredText("blurb", "One-liner", "A single line about this property type.", "The card needs its one-liner.", 2),
             defineField({
               name: "slug",
-              title: "Property-type page",
-              description: "The web-address ending of the property type this card opens, e.g. “apartments” for /multifamily/apartments.",
+              title: "Property-type page (optional)",
+              description:
+                "The web-address ending of the property-type page this card opens, e.g. “apartments” for /multifamily/apartments. Leave empty for an informational card with no link.",
               type: "string",
               validation: (rule) =>
-                rule
-                  .required()
-                  .error("Pick which property-type page the card opens.")
-                  .custom((value?: string) =>
-                    value && /^[a-z0-9-]+$/.test(value)
-                      ? true
-                      : "Just the address ending — lowercase letters and dashes, e.g. “assisted-living”.",
-                  ),
+                rule.custom((value?: string) =>
+                  !value || /^[a-z0-9-]+$/.test(value)
+                    ? true
+                    : "Just the address ending — lowercase letters and dashes, e.g. “assisted-living”.",
+                ),
             }),
-            iconField({ description: "Small symbol on the card.", choices: PROPERTY_ICONS }),
+            iconField({ description: "Small symbol on the card — hidden when the card has a photo.", choices: PROPERTY_ICONS }),
+            imageWithAlt({
+              name: "photo",
+              title: "Card photo (optional)",
+              description: "Photo across the top of the card. Cards without one show the icon instead.",
+            }),
+            defineField({
+              name: "photoSubject",
+              title: "Intended photo subject",
+              description:
+                "What the card photo should eventually show. Shown inside a styled placeholder until a real photo is uploaded — leave empty (with no photo) for an icon card.",
+              type: "string",
+            }),
           ],
           preview: {
             select: { title: "title", subtitle: "blurb" },
@@ -560,6 +584,39 @@ export const propertyTypes = defineType({
         }),
       ],
       validation: (rule) => rule.required().min(1).error("Add at least one property type card."),
+    }),
+    defineField({
+      name: "background",
+      title: "Background",
+      description:
+        "Which band this section sits on. Pick to keep the page alternating light and dark.",
+      type: "string",
+      options: {
+        list: [
+          { title: "Dark navy (default)", value: "dark" },
+          { title: "White", value: "white" },
+          { title: "Off-white", value: "offwhite" },
+        ],
+      },
+    }),
+    defineField({
+      name: "ctaLabel",
+      title: "Button under the grid (optional)",
+      description:
+        "Text for a single button under the cards, e.g. “Tell Us About Your Property”. Leave empty for no button. Keep every button label on the page different.",
+      type: "string",
+    }),
+    defineField({
+      name: "ctaHref",
+      title: "Button link",
+      description: "Where the button goes — usually /contact. Only used when button text is set.",
+      type: "string",
+      validation: (rule) =>
+        rule.custom((value?: string) =>
+          !value || value.startsWith("/")
+            ? true
+            : "Use a page on this site, starting with a slash — e.g. /contact.",
+        ),
     }),
   ],
   preview: {
@@ -620,6 +677,19 @@ export const serviceFaq = defineType({
         }),
       ],
       validation: (rule) => rule.required().min(1).error("Add at least one question."),
+    }),
+    defineField({
+      name: "background",
+      title: "Background",
+      description:
+        "Which band this section sits on. Pick to keep the page alternating light and dark.",
+      type: "string",
+      options: {
+        list: [
+          { title: "Off-white (default)", value: "offwhite" },
+          { title: "White", value: "white" },
+        ],
+      },
     }),
   ],
   preview: {
@@ -742,3 +812,12 @@ export const serviceSectionTypes = [
   relatedServices,
   finalCta,
 ];
+
+/**
+ * The section array's member list — shared by every document type that
+ * carries a `sections` field (service, industry), so the library stays one
+ * set of types with no per-document duplication.
+ */
+export const sectionArrayMembers = serviceSectionTypes.map((type) => ({
+  type: type.name,
+}));

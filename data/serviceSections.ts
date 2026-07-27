@@ -70,6 +70,8 @@ export interface SignsYouNeedSection extends SectionBase {
   cards: Array<{ _key: string; icon: NavIconName; question: string; answer: string }>;
   ctaLabel: string;
   ctaHref: string;
+  /** Section background — defaults to white. */
+  background?: "white" | "dark";
 }
 
 export interface ProcessStepsSection extends SectionBase {
@@ -112,9 +114,20 @@ export interface PropertyTypesSection extends SectionBase {
     icon: NavIconName;
     title: string;
     blurb: string;
-    /** Industry slug — resolved to /multifamily/[slug] via industryHref(). */
-    slug: string;
+    /**
+     * Industry slug — resolved to /multifamily/[slug] via industryHref().
+     * Optional: a card without a slug renders as informational (no link).
+     */
+    slug?: string;
+    /** Optional card image; falls back to a placeholder with photoSubject. */
+    photo?: CmsPhoto;
+    photoSubject?: string;
   }>;
+  /** Section background — defaults to the dark navy band. */
+  background?: "dark" | "white" | "offwhite";
+  /** Optional single CTA under the grid. */
+  ctaLabel?: string;
+  ctaHref?: string;
 }
 
 export interface ServiceFaqSection extends SectionBase {
@@ -128,6 +141,8 @@ export interface ServiceFaqSection extends SectionBase {
     href?: string;
     linkLabel?: string;
   }>;
+  /** Section background — defaults to offwhite. */
+  background?: "offwhite" | "white";
 }
 
 export interface ServiceAreaSection extends SectionBase {

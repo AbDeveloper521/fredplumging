@@ -1501,6 +1501,337 @@ function emergencyPlumbingSections() {
   ];
 }
 
+/**
+ * Section stack for /multifamily/apartments — the first industry-document
+ * page on the section library. Industry framing: "we understand YOUR
+ * property type"; the what's-included section routes outward to the service
+ * pages instead of re-explaining each service. The class-segmentation grid
+ * (Class A/B/C/garden-style) is the centerpiece, high on the page.
+ */
+function apartmentsSections() {
+  return [
+    {
+      _type: "serviceHero",
+      _key: "seed-hero",
+      eyebrow: "FRED'S PLUMBING",
+      heading: "Apartment Plumbing Services In The Dallas Fort Worth Metroplex",
+      subheading:
+        "From high-rise towers to garden-style communities, Fred's Plumbing keeps apartment properties across DFW running — repairs, maintenance, and emergency response built for multi-unit buildings.",
+      secondaryCtaLabel: "Get a Portfolio Quote",
+      secondaryCtaHref: "/contact",
+      credentials: [
+        { _type: "credential", _key: "seed-cred-1", icon: "shield-check", label: "Licensed & Insured" },
+        { _type: "credential", _key: "seed-cred-2", icon: "map-pin", label: "Serving DFW Since 1996" },
+        { _type: "credential", _key: "seed-cred-3", icon: "clock", label: "24/7 Emergency Response" },
+      ],
+      photoSubject:
+        "Exterior of a modern mid-rise apartment community at golden hour — vertical orientation",
+    },
+    {
+      // The centerpiece: class segmentation, in the audience's own vocabulary.
+      // Informational cards (no slugs), one CTA under the grid — the
+      // reference page's four identical "GET STARTED" links are exactly the
+      // duplicate-label pattern the build standards ban.
+      _type: "propertyTypes",
+      _key: "seed-classes",
+      heading: "Plumbing Solutions For Every Type Of Apartment Property",
+      background: "white",
+      cards: [
+        {
+          _type: "card",
+          _key: "seed-class-a",
+          icon: "building-2",
+          title: "Class A High Rise and Skyscraper Apartments",
+          blurb:
+            "Advanced plumbing expertise for vertical systems, pressure management, and centralized infrastructure.",
+          photoSubject: "Glass high-rise apartment tower against a blue sky",
+        },
+        {
+          _type: "card",
+          _key: "seed-class-b",
+          icon: "building",
+          title: "Class B Mid Rise Communities",
+          blurb:
+            "Consistent plumbing support that balances efficiency, durability, and minimal resident disruption.",
+          photoSubject: "Three-story garden apartment building with landscaped lawn",
+        },
+        {
+          _type: "card",
+          _key: "seed-class-c",
+          icon: "building",
+          title: "Class C and Legacy Properties",
+          blurb:
+            "Targeted repairs and upgrades for aging systems to improve reliability and reduce recurring issues.",
+          photoSubject: "Older two-story brick apartment complex",
+        },
+        {
+          _type: "card",
+          _key: "seed-class-garden",
+          icon: "hotel",
+          title: "Single Story and Garden Style Apartments",
+          blurb:
+            "Reliable service for properties with shared underground lines and high demand usage.",
+          photoSubject: "Single-story garden-style apartment court with walkways",
+        },
+      ],
+      ctaLabel: "Tell Us About Your Property",
+      ctaHref: "/contact",
+    },
+    {
+      // The outward router — each row links to its full service page.
+      _type: "whatsIncluded",
+      _key: "seed-included",
+      heading: "What We Handle for Apartment Communities",
+      intro:
+        "One contractor for everything behind the walls — each of these links to the full service:",
+      items: [
+        {
+          _type: "item",
+          _key: "seed-inc-1",
+          icon: "wrench",
+          title: "Unit & Building Plumbing Repairs",
+          description:
+            "Leaks, fixtures, supply lines, and unit-turn plumbing across your buildings.",
+          href: "/services/plumbing",
+        },
+        {
+          _type: "item",
+          _key: "seed-inc-2",
+          icon: "waves",
+          title: "Drain & Sewer Service",
+          description:
+            "Main-line clearing, hydrojetting, and camera inspections for shared lines.",
+          href: "/services/drain-sewer",
+        },
+        {
+          _type: "item",
+          _key: "seed-inc-3",
+          icon: "siren",
+          title: "24/7 Emergency Response",
+          description:
+            "Burst pipes, backups, and floods — answered around the clock.",
+          href: "/services/emergency-plumbing",
+        },
+        {
+          _type: "item",
+          _key: "seed-inc-4",
+          icon: "calendar-check",
+          title: "Preventive Maintenance Programs",
+          description:
+            "Scheduled inspections and priority service across your portfolio.",
+          href: "/services/maintenance",
+        },
+        {
+          _type: "item",
+          _key: "seed-inc-5",
+          icon: "shield-check",
+          title: "Backflow, Boilers & Gas",
+          description:
+            "Compliance testing and critical-system work, documented for your records.",
+          href: "/services/specialty-services",
+        },
+        {
+          _type: "item",
+          _key: "seed-inc-6",
+          icon: "building-2",
+          title: "Commercial Common Areas",
+          description:
+            "Clubhouses, pools, laundry rooms, and leasing offices.",
+          href: "/services/commercial-plumbing",
+        },
+      ],
+    },
+    {
+      _type: "signsYouNeed",
+      _key: "seed-signs",
+      heading: "Problems Apartment Managers Bring Us Most",
+      background: "dark",
+      cards: [
+        {
+          _type: "card",
+          _key: "seed-sign-1",
+          icon: "clock",
+          question: "Are unit turns stalled waiting on plumbing?",
+          answer:
+            "Slow make-ready plumbing costs you rent days. Fred's Plumbing schedules unit-turn work in batches so vacant units get back on the market fast.",
+        },
+        {
+          _type: "card",
+          _key: "seed-sign-2",
+          icon: "waves",
+          question: "Is one riser or stack causing repeat complaints?",
+          answer:
+            "Recurring problems on the same line usually mean the line itself is failing — a camera inspection settles it, and a targeted repair ends the ticket cycle.",
+        },
+        {
+          _type: "card",
+          _key: "seed-sign-3",
+          icon: "droplets",
+          question: "Are water bills climbing across the property?",
+          answer:
+            "In master-metered buildings, hidden leaks are silent budget drains. Leak detection finds them before the slab or the foundation pays the price.",
+        },
+        {
+          _type: "card",
+          _key: "seed-sign-4",
+          icon: "wrench",
+          question: "Is aging galvanized or polybutylene pipe in your walls?",
+          answer:
+            "Legacy piping fails on its own schedule. A repipe plan phased around occupancy beats an emergency reroute every time.",
+        },
+      ],
+      ctaLabel: "Describe Your Issue — Get a Callback",
+      ctaHref: "/contact",
+    },
+    {
+      _type: "serviceAbout",
+      _key: "seed-about",
+      heading: "Experienced Apartment Plumbing Specialists Since 1996",
+      paragraphs: [
+        "Fred's Plumbing has supported apartment communities throughout the Dallas Fort Worth Metroplex for nearly three decades. Our technicians are trained to handle the unique needs of multi unit buildings, from shared systems to high demand service environments.",
+        "We take pride in delivering dependable, high quality service backed by experience, advanced tools, and a strong commitment to resident satisfaction. Whether your community needs emergency repairs, routine maintenance, or complex plumbing system support, our team is ready to assist.",
+      ],
+      ctaLabel: "Talk to Our Team",
+      ctaHref: "/contact",
+      photoSubjectPrimary:
+        "Rooftop pool deck of a high-rise apartment building at dusk",
+      photoSubjectSecondary: "The Fred's Plumbing crew in front of a branded van",
+    },
+    {
+      _type: "serviceTrust",
+      _key: "seed-trust",
+      heading: "Why Choose Us For Apartment Plumbing Services",
+      items: [
+        {
+          _type: "item",
+          _key: "seed-trust-1",
+          icon: "building-2",
+          title: "Multi Unit Expertise",
+          description:
+            "Our technicians understand the plumbing challenges that come with large apartment communities and provide solutions tailored to the needs of multi unit living.",
+        },
+        {
+          _type: "item",
+          _key: "seed-trust-2",
+          icon: "clock",
+          title: "Fast and Efficient Service",
+          description:
+            "We respond quickly to limit disruptions and maintain resident satisfaction across the property.",
+        },
+        {
+          _type: "item",
+          _key: "seed-trust-3",
+          icon: "award",
+          title: "Quality and Long Lasting Repairs",
+          description:
+            "Every service is completed with precision to ensure dependable performance and reduced maintenance needs over time.",
+        },
+      ],
+      showLogos: true,
+    },
+    {
+      _type: "serviceFaq",
+      _key: "seed-faq",
+      heading: "Apartment Plumbing Questions, Answered",
+      background: "white",
+      faqs: [
+        {
+          _type: "faq",
+          _key: "seed-faq-1",
+          question: "Do you coordinate directly with our on-site staff?",
+          answer:
+            "Yes. Fred's Plumbing works through your property manager or maintenance supervisor — one point of contact on each side, so nothing gets lost between the office and the units.",
+        },
+        {
+          _type: "faq",
+          _key: "seed-faq-2",
+          question: "Can you handle unit access and resident notices?",
+          answer:
+            "Fred's Plumbing schedules through your office and works within your notice procedures. Technicians arrive in uniform, in marked vans, at the agreed windows.",
+        },
+        {
+          _type: "faq",
+          _key: "seed-faq-3",
+          question: "Do you service both individual units and building systems?",
+          answer:
+            "Yes — from a single unit's fixture to risers, mains, and central water heating, the same crew covers the whole building.",
+        },
+        {
+          _type: "faq",
+          _key: "seed-faq-4",
+          question: "Can one account cover several properties?",
+          answer:
+            "Yes. Portfolio accounts get consolidated records per property and a single contact for everything, and maintenance program members get priority emergency scheduling.",
+          href: "/services/maintenance",
+          linkLabel: "See Maintenance Programs",
+        },
+        {
+          _type: "faq",
+          _key: "seed-faq-5",
+          question: "What apartment classes do you work with?",
+          answer:
+            "All of them. Fred's Plumbing services Class A high-rises, Class B mid-rise communities, Class C and legacy properties, and garden-style apartments across the Dallas–Fort Worth Metroplex.",
+        },
+      ],
+    },
+    {
+      // Siblings only — never a self-link.
+      _type: "propertyTypes",
+      _key: "seed-siblings",
+      heading: "Other Properties We Serve",
+      background: "offwhite",
+      cards: [
+        {
+          _type: "card",
+          _key: "seed-sib-1",
+          icon: "hotel",
+          title: "Condos",
+          blurb: "HOA-ready documentation and owner-coordinated scheduling.",
+          slug: "condos",
+        },
+        {
+          _type: "card",
+          _key: "seed-sib-2",
+          icon: "heart-handshake",
+          title: "Assisted Living",
+          blurb: "Code-sensitive work completed around residents who can't relocate.",
+          slug: "assisted-living",
+        },
+        {
+          _type: "card",
+          _key: "seed-sib-3",
+          icon: "stethoscope",
+          title: "Nursing Homes",
+          blurb: "Health-code compliant plumbing with zero-downtime planning.",
+          slug: "nursing-homes",
+        },
+      ],
+    },
+    {
+      _type: "finalCta",
+      _key: "seed-final",
+      heading: "Every Building. Every Unit. One Number.",
+      body:
+        "From the penthouse riser to the garden-court main, Fred's Plumbing keeps apartment communities across DFW flowing — on schedule and on call.",
+      secondaryCtaLabel: "Request a Quote",
+      secondaryCtaHref: "/contact",
+    },
+  ];
+}
+
+/** Per-slug section stacks + SEO overrides for industry pages. */
+const INDUSTRY_EXTRAS: Record<
+  string,
+  { sections: () => unknown[]; seoTitle: string; seoDescription: string }
+> = {
+  apartments: {
+    sections: apartmentsSections,
+    seoTitle: "Apartment Plumbing Services in DFW | Fred's Plumbing",
+    seoDescription:
+      "Apartment plumbing across Dallas–Fort Worth — Class A high-rises to garden-style communities. Unit turns, risers, mains, and 24/7 emergency response.",
+  },
+};
+
 /** Per-slug section stacks + SEO overrides for section-library pages. */
 const SERVICE_EXTRAS: Record<
   string,
@@ -1653,6 +1984,7 @@ async function main() {
   });
 
   industries.forEach((industry, i) => {
+    const extras = INDUSTRY_EXTRAS[industry.slug];
     tx.createOrReplace({
       _id: `industry-${industry.slug}`,
       _type: "industry",
@@ -1662,6 +1994,13 @@ async function main() {
       bulletPoints: [...industry.bulletPoints],
       order: (i + 1) * 10,
       body: placeholderBody(industry.title),
+      ...(extras
+        ? {
+            sections: extras.sections(),
+            seoTitle: extras.seoTitle,
+            seoDescription: extras.seoDescription,
+          }
+        : {}),
     });
   });
 

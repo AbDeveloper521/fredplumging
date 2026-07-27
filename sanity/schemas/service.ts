@@ -1,6 +1,7 @@
 import { defineField, defineType } from "sanity";
 import type { NavIconName } from "@/data/navigation";
 import { imageWithAlt, lockedSlug, richBody, seoFields } from "./fields";
+import { sectionArrayMembers } from "./serviceSections";
 
 const ICON_CHOICES: Array<{ title: string; value: NavIconName }> = [
   { title: "Wrench (general plumbing)", value: "wrench" },
@@ -52,21 +53,7 @@ export const service = defineType({
       description:
         "The service page, built section by section, in order. Remove a section and the page simply renders without it. Leave the whole list empty to use the simple “Page content” layout below instead.",
       type: "array",
-      of: [
-        { type: "serviceHero" },
-        { type: "serviceAbout" },
-        { type: "whatsIncluded" },
-        { type: "signsYouNeed" },
-        { type: "processSteps" },
-        { type: "comparisonTable" },
-        { type: "serviceTrust" },
-        { type: "serviceTestimonials" },
-        { type: "propertyTypes" },
-        { type: "serviceFaq" },
-        { type: "serviceArea" },
-        { type: "relatedServices" },
-        { type: "finalCta" },
-      ],
+      of: sectionArrayMembers,
     }),
     richBody({
       description:

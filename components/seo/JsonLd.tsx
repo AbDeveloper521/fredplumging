@@ -35,10 +35,13 @@ export async function ServiceJsonLd({
   name,
   description,
   path,
+  audienceType,
 }: {
   name: string;
   description: string;
   path: string;
+  /** Optional schema.org Audience — used on industry pages. */
+  audienceType?: string;
 }) {
   const site = await getSite();
   return (
@@ -50,6 +53,9 @@ export async function ServiceJsonLd({
         description,
         url: `${site.url}${path}`,
         serviceType: name,
+        ...(audienceType
+          ? { audience: { "@type": "Audience", audienceType } }
+          : {}),
         provider: localBusiness(site),
         areaServed: [
           { "@type": "AdministrativeArea", name: site.serviceArea },

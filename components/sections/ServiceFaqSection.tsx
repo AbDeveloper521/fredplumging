@@ -18,7 +18,11 @@ interface ServiceFaqSectionProps {
  */
 export function ServiceFaqSection({ section, id }: ServiceFaqSectionProps) {
   return (
-    <section id={id} aria-labelledby={`${id}-heading`} className="bg-offwhite py-16 sm:py-24 lg:py-28">
+    <section
+      id={id}
+      aria-labelledby={`${id}-heading`}
+      className={`py-16 sm:py-24 lg:py-28 ${section.background === "white" ? "bg-white" : "bg-offwhite"}`}
+    >
       <Container className="max-w-[880px]">
         <Reveal>
           <SectionHeading

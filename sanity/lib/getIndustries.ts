@@ -2,8 +2,12 @@ import "server-only";
 import { serverClient } from "@/sanity/lib/serverClient";
 import { resolvePhoto } from "@/sanity/lib/image";
 import { logEmpty, logFallback } from "@/sanity/lib/fallbackLog";
+import { toSections } from "@/sanity/lib/sections";
 import { INDUSTRIES_QUERY, INDUSTRY_BY_SLUG_QUERY } from "@/sanity/queries";
-import type { INDUSTRIES_QUERY_RESULT } from "@/sanity.types";
+import type {
+  INDUSTRIES_QUERY_RESULT,
+  INDUSTRY_BY_SLUG_QUERY_RESULT,
+} from "@/sanity.types";
 import { industries as fallbackIndustries, type Industry } from "@/data/industries";
 import type { RichBody } from "@/data/services";
 
@@ -14,7 +18,10 @@ const FETCH_OPTIONS = {
   next: { revalidate: 86400, tags: [INDUSTRY_TAG] },
 };
 
-function toIndustry(item: INDUSTRIES_QUERY_RESULT[number]): Industry | null {
+type IndustryListItem = INDUSTRIES_QUERY_RESULT[number];
+type IndustryDetailItem = NonNullable<INDUSTRY_BY_SLUG_QUERY_RESULT>;
+
+function toIndustry(item: IndustryListItem | IndustryDetailItem): Industry | null {
   if (!item.title || !item.slug || !item.description || !item.bulletPoints?.length) {
     return null;
   }
@@ -23,6 +30,10 @@ function toIndustry(item: INDUSTRIES_QUERY_RESULT[number]): Industry | null {
     slug: item.slug,
     description: item.description,
     body: item.body?.length ? (item.body as RichBody) : undefined,
+    sections:
+      "sections" in item && item.sections
+        ? toSections(item.sections as unknown)
+        : undefined,
     seoTitle: item.seoTitle ?? undefined,
     seoDescription: item.seoDescription ?? undefined,
     image: "",

@@ -102,6 +102,12 @@ export const INDUSTRY_BY_SLUG_QUERY = defineQuery(
     bulletPoints,
     photo{ asset, hotspot, crop, alt },
     body,
+    sections[]{
+      ...,
+      photo{ asset, hotspot, crop, alt },
+      photoPrimary{ asset, hotspot, crop, alt },
+      photoSecondary{ asset, hotspot, crop, alt }
+    },
     seoTitle,
     seoDescription
   }`,
