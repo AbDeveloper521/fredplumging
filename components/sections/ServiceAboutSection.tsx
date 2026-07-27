@@ -53,7 +53,10 @@ export function ServiceAboutSection({ section, id }: ServiceAboutSectionProps) {
               <div className="relative aspect-[4/3] overflow-hidden rounded-2xl shadow-(--shadow-card-lg)">
                 <CollagePhoto
                   photo={section.photoPrimary}
-                  fallbackLabel="Close-up of a technician's gloved hands soldering copper pipe under a commercial sink"
+                  fallbackLabel={
+                    section.photoSubjectPrimary ??
+                    "A Fred's Plumbing technician on the job"
+                  }
                   sizes="(min-width: 1024px) 50vw, 100vw"
                 />
               </div>
@@ -61,7 +64,10 @@ export function ServiceAboutSection({ section, id }: ServiceAboutSectionProps) {
                 <div className="relative aspect-[4/3]">
                   <CollagePhoto
                     photo={section.photoSecondary}
-                    fallbackLabel="The Fred's Plumbing crew standing in front of a branded service van"
+                    fallbackLabel={
+                      section.photoSubjectSecondary ??
+                      "The Fred's Plumbing crew with a branded service van"
+                    }
                     sizes="(min-width: 1024px) 23vw, 46vw"
                     showCaption={false}
                   />

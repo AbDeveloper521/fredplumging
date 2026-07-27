@@ -36,6 +36,8 @@ export interface ServiceHeroSection extends SectionBase {
   secondaryCtaHref: string;
   credentials: Array<{ _key: string; icon: NavIconName; label: string }>;
   photo?: CmsPhoto;
+  /** Intended photo subject — placeholder caption until a photo exists. */
+  photoSubject?: string;
 }
 
 export interface ServiceAboutSection extends SectionBase {
@@ -46,6 +48,9 @@ export interface ServiceAboutSection extends SectionBase {
   ctaHref: string;
   photoPrimary?: CmsPhoto;
   photoSecondary?: CmsPhoto;
+  /** Intended photo subjects — placeholder captions until photos exist. */
+  photoSubjectPrimary?: string;
+  photoSubjectSecondary?: string;
 }
 
 export interface WhatsIncludedSection extends SectionBase {
@@ -117,6 +122,8 @@ export interface ServiceAreaSection extends SectionBase {
   heading: string;
   body: string;
   photo?: CmsPhoto;
+  /** Intended photo subject — placeholder caption until a photo exists. */
+  photoSubject?: string;
 }
 
 export interface RelatedServicesSection extends SectionBase {

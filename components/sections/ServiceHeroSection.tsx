@@ -179,7 +179,12 @@ export function ServiceHeroSection({
                 className="object-cover"
               />
             ) : (
-              <ImagePlaceholder label="A Fred's Plumbing technician working on commercial pipework in a mechanical room — vertical orientation" />
+              <ImagePlaceholder
+                label={
+                  section.photoSubject ??
+                  "A Fred's Plumbing technician at work — vertical orientation"
+                }
+              />
             )}
           </div>
         </Rise>

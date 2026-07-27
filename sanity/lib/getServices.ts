@@ -102,6 +102,7 @@ function toSection(raw: Raw, index: number): ServiceSection | null {
             : null;
         }),
         photo: photoOf(raw, "photo"),
+        photoSubject: str(raw.photoSubject),
       };
     }
     case "serviceAbout": {
@@ -120,6 +121,8 @@ function toSection(raw: Raw, index: number): ServiceSection | null {
         ctaHref,
         photoPrimary: photoOf(raw, "photoPrimary"),
         photoSecondary: photoOf(raw, "photoSecondary"),
+        photoSubjectPrimary: str(raw.photoSubjectPrimary),
+        photoSubjectSecondary: str(raw.photoSubjectSecondary),
       };
     }
     case "whatsIncluded": {
@@ -207,7 +210,14 @@ function toSection(raw: Raw, index: number): ServiceSection | null {
     case "serviceArea": {
       const body = str(raw.body);
       if (!body) return null;
-      return { _type: "serviceArea", _key, heading, body, photo: photoOf(raw, "photo") };
+      return {
+        _type: "serviceArea",
+        _key,
+        heading,
+        body,
+        photo: photoOf(raw, "photo"),
+        photoSubject: str(raw.photoSubject),
+      };
     }
     case "relatedServices": {
       const serviceSlugs = Array.isArray(raw.serviceSlugs)

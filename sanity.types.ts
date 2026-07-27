@@ -48,6 +48,7 @@ export type ServiceArea = {
     alt?: string;
     _type: "image";
   };
+  photoSubject?: string;
 };
 
 export type ServiceFaq = {
@@ -197,6 +198,7 @@ export type ServiceAbout = {
     alt?: string;
     _type: "image";
   };
+  photoSubjectPrimary?: string;
   photoSecondary?: {
     asset?: SanityImageAssetReference;
     media?: unknown;
@@ -205,6 +207,7 @@ export type ServiceAbout = {
     alt?: string;
     _type: "image";
   };
+  photoSubjectSecondary?: string;
 };
 
 export type ServiceHero = {
@@ -241,6 +244,7 @@ export type ServiceHero = {
     alt?: string;
     _type: "image";
   };
+  photoSubject?: string;
 };
 
 export type TrustLogo = {
@@ -933,12 +937,14 @@ export type SERVICE_BY_SLUG_QUERY_RESULT = {
           crop: SanityImageCrop | null;
           alt: string | null;
         } | null;
+        photoSubjectPrimary?: string;
         photoSecondary: {
           asset: SanityImageAssetReference | null;
           hotspot: SanityImageHotspot | null;
           crop: SanityImageCrop | null;
           alt: string | null;
         } | null;
+        photoSubjectSecondary?: string;
         photo: null;
       }
     | {
@@ -952,6 +958,7 @@ export type SERVICE_BY_SLUG_QUERY_RESULT = {
           crop: SanityImageCrop | null;
           alt: string | null;
         } | null;
+        photoSubject?: string;
         photoPrimary: null;
         photoSecondary: null;
       }
@@ -1002,6 +1009,7 @@ export type SERVICE_BY_SLUG_QUERY_RESULT = {
           crop: SanityImageCrop | null;
           alt: string | null;
         } | null;
+        photoSubject?: string;
         photoPrimary: null;
         photoSecondary: null;
       }

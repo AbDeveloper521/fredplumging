@@ -147,7 +147,14 @@ export const serviceHero = defineType({
       name: "photo",
       title: "Banner photo",
       description:
-        "Tall photo on the right of the banner. Best: a Fred's Plumbing technician working on commercial pipework in a mechanical room — vertical orientation. Until one is uploaded the site shows a styled placeholder.",
+        "Tall photo on the right of the banner — vertical orientation works best. Until one is uploaded the site shows a styled placeholder.",
+    }),
+    defineField({
+      name: "photoSubject",
+      title: "Intended photo subject",
+      description:
+        "What the banner photo should eventually show, e.g. “A technician feeding a sewer camera line into a cleanout”. Shown inside the styled placeholder until a real photo is uploaded.",
+      type: "string",
     }),
   ],
   preview: {
@@ -185,14 +192,26 @@ export const serviceAbout = defineType({
     imageWithAlt({
       name: "photoPrimary",
       title: "Main photo",
+      description: "The large photo in the collage.",
+    }),
+    defineField({
+      name: "photoSubjectPrimary",
+      title: "Intended main-photo subject",
       description:
-        "The large photo in the collage. Best: close-up of a technician's gloved hands soldering copper pipe under a commercial sink.",
+        "What the main photo should eventually show. Shown inside the styled placeholder until a real photo is uploaded.",
+      type: "string",
     }),
     imageWithAlt({
       name: "photoSecondary",
       title: "Small overlapping photo",
+      description: "The smaller photo overlapping the main one.",
+    }),
+    defineField({
+      name: "photoSubjectSecondary",
+      title: "Intended small-photo subject",
       description:
-        "The smaller photo overlapping the main one. Best: the Fred's Plumbing crew standing in front of a branded service van.",
+        "What the small photo should eventually show. Shown inside the styled placeholder until a real photo is uploaded.",
+      type: "string",
     }),
   ],
   preview: {
@@ -577,7 +596,14 @@ export const serviceArea = defineType({
     imageWithAlt({
       name: "photo",
       title: "Photo",
-      description: "Photo on the right. Best: Dallas or Fort Worth skyline at dusk.",
+      description: "Photo on the right, e.g. a Dallas or Fort Worth skyline.",
+    }),
+    defineField({
+      name: "photoSubject",
+      title: "Intended photo subject",
+      description:
+        "What the photo should eventually show. Shown inside the styled placeholder until a real photo is uploaded.",
+      type: "string",
     }),
   ],
   preview: {

@@ -81,7 +81,7 @@ export function ServiceAreaCmsSection({ section, site, id }: ServiceAreaCmsSecti
               />
             ) : (
               <ImagePlaceholder
-                label="Dallas or Fort Worth skyline at dusk"
+                label={section.photoSubject ?? "The Dallas–Fort Worth skyline"}
                 icon={MapPin}
               />
             )}
