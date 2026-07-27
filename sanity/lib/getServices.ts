@@ -165,10 +165,19 @@ function toSection(raw: Raw, index: number): ServiceSection | null {
           : null;
       });
       if (rows.length === 0) return null;
+      const labels = Array.isArray(raw.columnLabels)
+        ? raw.columnLabels.filter(
+            (l): l is string => typeof l === "string" && l.trim() !== "",
+          )
+        : [];
       return {
         _type: "comparisonTable",
         _key,
         heading,
+        columnLabels:
+          labels.length === 3
+            ? (labels as [string, string, string])
+            : undefined,
         rows,
         footnote: str(raw.footnote),
       };

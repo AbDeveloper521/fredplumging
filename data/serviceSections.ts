@@ -77,6 +77,8 @@ export interface ProcessStepsSection extends SectionBase {
 export interface ComparisonTableSection extends SectionBase {
   _type: "comparisonTable";
   heading: string;
+  /** Optional column headings — defaults to Situation | Typical Recommendation | Why. */
+  columnLabels?: [string, string, string];
   rows: Array<{
     _key: string;
     situation: string;

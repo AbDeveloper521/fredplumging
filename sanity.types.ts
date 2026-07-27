@@ -109,6 +109,7 @@ export type ServiceTrust = {
 export type ComparisonTable = {
   _type: "comparisonTable";
   heading?: string;
+  columnLabels?: Array<string>;
   rows?: Array<{
     situation?: string;
     recommendation?: string;
@@ -862,6 +863,7 @@ export type SERVICE_BY_SLUG_QUERY_RESULT = {
         _key: string;
         _type: "comparisonTable";
         heading?: string;
+        columnLabels?: Array<string>;
         rows?: Array<{
           situation?: string;
           recommendation?: string;

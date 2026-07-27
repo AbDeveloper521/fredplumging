@@ -8,12 +8,29 @@ interface ComparisonTableSectionProps {
   id: string;
 }
 
+const DEFAULT_COLUMN_LABELS: [string, string, string] = [
+  "Situation",
+  "Typical Recommendation",
+  "Why",
+];
+
+/**
+ * When every column-2 value is short ("Repair", "Repipe") they render as
+ * badges; if any is prose-length the whole column renders as plain text so
+ * the table stays visually consistent.
+ */
+const BADGE_MAX_LENGTH = 32;
+
 /**
  * A real <table> — tables extract cleanly for AI search; prose does not.
  * Horizontally scrollable inside its own container on mobile so the page
  * body never scrolls sideways.
  */
 export function ComparisonTableSection({ section, id }: ComparisonTableSectionProps) {
+  const columnLabels = section.columnLabels ?? DEFAULT_COLUMN_LABELS;
+  const useBadges = section.rows.every(
+    (row) => row.recommendation.length <= BADGE_MAX_LENGTH,
+  );
   return (
     <section id={id} aria-labelledby={`${id}-heading`} className="bg-white py-16 sm:py-24 lg:py-28">
       <Container className="max-w-[1000px]">
@@ -26,15 +43,15 @@ export function ComparisonTableSection({ section, id }: ComparisonTableSectionPr
             <table className="w-full min-w-[640px] border-collapse text-left">
               <thead>
                 <tr className="bg-navy-900">
-                  <th scope="col" className="px-6 py-4 text-[13px] font-bold tracking-[0.1em] text-white uppercase">
-                    Situation
-                  </th>
-                  <th scope="col" className="px-6 py-4 text-[13px] font-bold tracking-[0.1em] text-white uppercase">
-                    Typical Recommendation
-                  </th>
-                  <th scope="col" className="px-6 py-4 text-[13px] font-bold tracking-[0.1em] text-white uppercase">
-                    Why
-                  </th>
+                  {columnLabels.map((label) => (
+                    <th
+                      key={label}
+                      scope="col"
+                      className="px-6 py-4 text-[13px] font-bold tracking-[0.1em] text-white uppercase"
+                    >
+                      {label}
+                    </th>
+                  ))}
                 </tr>
               </thead>
               <tbody>
@@ -50,9 +67,15 @@ export function ComparisonTableSection({ section, id }: ComparisonTableSectionPr
                       {row.situation}
                     </th>
                     <td className="px-6 py-5 align-top">
-                      <span className="inline-block rounded-full bg-red-100 px-3.5 py-1 text-[13px] font-bold whitespace-nowrap text-red-600">
-                        {row.recommendation}
-                      </span>
+                      {useBadges ? (
+                        <span className="inline-block rounded-full bg-red-100 px-3.5 py-1 text-[13px] font-bold whitespace-nowrap text-red-600">
+                          {row.recommendation}
+                        </span>
+                      ) : (
+                        <span className="text-[15px] leading-relaxed text-grey-700">
+                          {row.recommendation}
+                        </span>
+                      )}
                     </td>
                     <td className="px-6 py-5 align-top text-[15px] leading-relaxed text-grey-700">
                       {row.why}

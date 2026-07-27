@@ -387,9 +387,20 @@ export const comparisonTable = defineType({
   fields: [
     requiredString("heading", "Heading", "Section heading, e.g. “Repair or Replace? How We Advise Property Owners”.", "The section needs a heading."),
     defineField({
+      name: "columnLabels",
+      title: "Column headings (optional)",
+      description:
+        "Three headings for the table columns, in order. Leave empty to use “Situation | Typical Recommendation | Why”.",
+      type: "array",
+      of: [defineArrayMember({ type: "string" })],
+      validation: (rule) =>
+        rule.max(3).error("The table has three columns — three headings at most."),
+    }),
+    defineField({
       name: "rows",
       title: "Table rows",
-      description: "One row per situation. The columns are fixed: Situation | Typical Recommendation | Why.",
+      description:
+        "One row per situation: the first field fills column 1, the second column 2, the third column 3.",
       type: "array",
       of: [
         defineArrayMember({

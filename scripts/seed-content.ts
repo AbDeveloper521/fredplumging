@@ -986,6 +986,286 @@ function specialtyServicesSections() {
   ];
 }
 
+/**
+ * Section stack for /services/maintenance. This page sells an ongoing
+ * PROGRAM, not one-time repairs — copy frames benefits as program-membership
+ * benefits (priority scheduling, tracked deadlines, budgeting). "Backflow
+ * Plus Plan" and "Boiler Plus Plan" are the client's existing product names
+ * (VERBATIM). Pricing, terms, visit frequency, and review cadence are
+ * [BRACKETED] client-only facts.
+ */
+function maintenanceSections() {
+  return [
+    {
+      _type: "serviceHero",
+      _key: "seed-hero",
+      eyebrow: "FRED'S PLUMBING",
+      heading: "Plumbing Maintenance Services In The Dallas–Fort Worth Metroplex",
+      subheading:
+        "Fred's Plumbing provides ongoing maintenance programs designed to protect multi-family and commercial properties throughout the Dallas–Fort Worth Metroplex. Our preferred customer plans offer proactive care, priority service, and long-term savings for properties that rely on safe, efficient, and fully compliant plumbing systems.",
+      secondaryCtaLabel: "Get a Program Quote",
+      secondaryCtaHref: "/contact",
+      credentials: [
+        { _type: "credential", _key: "seed-cred-1", icon: "shield-check", label: "Licensed & Insured" },
+        { _type: "credential", _key: "seed-cred-2", icon: "map-pin", label: "Serving DFW Since 1996" },
+        { _type: "credential", _key: "seed-cred-3", icon: "clock", label: "24/7 Emergency Response" },
+      ],
+      photoSubject:
+        "A technician with a clipboard inspecting copper supply lines in a well-lit commercial mechanical room — vertical orientation",
+    },
+    {
+      _type: "serviceAbout",
+      _key: "seed-about",
+      heading: "About Our Maintenance Services",
+      paragraphs: [
+        "Plumbing systems in multi-family and commercial properties experience constant use, which increases the risk of leaks, breakdowns, and compliance failures. Our maintenance services are designed to anticipate problems before they disrupt your property, saving you time, money, and operational stress.",
+        "Through detailed inspections, scheduled service, and specialized testing, our maintenance plans keep your plumbing systems functioning at peak performance. By choosing one of our Preferred Customer Programs, you gain ongoing protection, priority scheduling, and consistent support from a team that understands the needs of large-scale properties.",
+      ],
+      ctaLabel: "Talk to Our Team",
+      ctaHref: "/contact",
+      photoSubjectPrimary:
+        "Neatly organized copper and PEX piping runs in a commercial mechanical room",
+      photoSubjectSecondary: "The Fred's Plumbing crew in front of a branded van",
+    },
+    {
+      _type: "whatsIncluded",
+      _key: "seed-included",
+      heading: "What Our Maintenance Programs Cover",
+      intro:
+        "Every Preferred Customer Program is built around one idea: find problems on a schedule you control, instead of at 2 AM on a holiday weekend.",
+      items: [
+        {
+          _type: "item",
+          _key: "seed-inc-1",
+          icon: "shield-check",
+          title: "Backflow Plus Plan",
+          description:
+            "Annual testing, inspection, and compliance checks that keep your backflow prevention systems safe and fully operational. We monitor scheduling deadlines, complete required documentation, and handle repairs quickly to maintain water safety and regulatory compliance year-round.",
+          href: "/services/specialty-services",
+        },
+        {
+          _type: "item",
+          _key: "seed-inc-2",
+          icon: "gauge",
+          title: "Boiler Plus Plan",
+          description:
+            "Regular boiler inspections, performance checks, cleaning, and maintenance for properties that rely on consistent hot water and heat — reducing unexpected breakdowns and extending equipment lifespan.",
+          href: "/services/specialty-services",
+        },
+        {
+          _type: "item",
+          _key: "seed-inc-3",
+          icon: "calendar-check",
+          title: "Scheduled Property Inspections",
+          description:
+            "Routine walkthroughs of supply lines, drains, water heaters, and fixtures across your buildings — documented every visit.",
+        },
+        {
+          _type: "item",
+          _key: "seed-inc-4",
+          icon: "clock",
+          title: "Deadline Tracking",
+          description:
+            "Compliance testing dates tracked by our office, not yours. We schedule before deadlines, not after notices.",
+        },
+        {
+          _type: "item",
+          _key: "seed-inc-5",
+          icon: "siren",
+          title: "Priority Emergency Response",
+          description:
+            "Program members go to the front of the line when something does break — including nights and weekends.",
+          href: "/services/emergency-plumbing",
+        },
+        {
+          _type: "item",
+          _key: "seed-inc-6",
+          icon: "award",
+          title: "Maintenance Records & Reporting",
+          description:
+            "A service history for every property, ready for owners, boards, insurers, and inspectors.",
+        },
+      ],
+    },
+    {
+      _type: "comparisonTable",
+      _key: "seed-table",
+      heading: "Reactive Repairs vs. A Maintenance Program",
+      columnLabels: [
+        "Situation",
+        "Without a Program",
+        "With a Preferred Customer Program",
+      ],
+      rows: [
+        {
+          _type: "row",
+          _key: "seed-row-1",
+          situation: "A water heater starts failing",
+          recommendation:
+            "Discovered when tenants lose hot water; emergency rates and same-day scrambling",
+          why: "Caught at inspection; replacement planned and budgeted in advance",
+        },
+        {
+          _type: "row",
+          _key: "seed-row-2",
+          situation: "Backflow test deadline",
+          recommendation:
+            "Tracked by your office; a missed date risks fines or water shutoff",
+          why: "Tracked and scheduled by Fred's Plumbing before the deadline",
+        },
+        {
+          _type: "row",
+          _key: "seed-row-3",
+          situation: "Small leak in a mechanical room",
+          recommendation:
+            "Found when it reaches a ceiling below; drywall, mold, and tenant claims",
+          why: "Found on a routine walkthrough; fixed the same visit",
+        },
+        {
+          _type: "row",
+          _key: "seed-row-4",
+          situation: "Emergency call on a weekend",
+          recommendation: "Standard queue",
+          why: "Priority scheduling ahead of non-program calls",
+        },
+        {
+          _type: "row",
+          _key: "seed-row-5",
+          situation: "Annual plumbing spend",
+          recommendation: "Unpredictable spikes",
+          why: "Steady, budgetable, and typically lower over time",
+        },
+      ],
+      footnote:
+        "Maintenance doesn't eliminate emergencies — it makes them rare, small, and never a surprise.",
+    },
+    {
+      _type: "processSteps",
+      _key: "seed-process",
+      heading: "How a Maintenance Program Starts",
+      steps: [
+        {
+          _type: "step",
+          _key: "seed-step-1",
+          title: "Property Assessment",
+          description:
+            "We walk your buildings and document the current condition of every plumbing system — the baseline your program is built on.",
+        },
+        {
+          _type: "step",
+          _key: "seed-step-2",
+          title: "Custom Program Design",
+          description:
+            "You get a plan matched to your properties' age, equipment, and compliance obligations — not a one-size template.",
+        },
+        {
+          _type: "step",
+          _key: "seed-step-3",
+          title: "Scheduled Service Begins",
+          description:
+            "Visits happen on the calendar we agree, coordinated with your office, with findings reported after each one.",
+        },
+        {
+          _type: "step",
+          _key: "seed-step-4",
+          title: "Review & Adjust",
+          description:
+            "We review the service history with you [REVIEW CADENCE — client to confirm] and adjust the program as your portfolio changes.",
+        },
+      ],
+    },
+    {
+      _type: "serviceTrust",
+      _key: "seed-trust",
+      heading: "Trusted Maintenance Professionals In The DFW Metroplex",
+      items: [
+        {
+          _type: "item",
+          _key: "seed-trust-1",
+          icon: "siren",
+          title: "Priority Response",
+          description:
+            "Maintenance customers receive faster scheduling and top priority for emergency service calls in Dallas and Fort Worth.",
+        },
+        {
+          _type: "item",
+          _key: "seed-trust-2",
+          icon: "award",
+          title: "Long-Term Savings",
+          description:
+            "Routine inspections and preventive care reduce costly repairs and extend the life of your plumbing systems.",
+        },
+        {
+          _type: "item",
+          _key: "seed-trust-3",
+          icon: "shield-check",
+          title: "Expert Oversight",
+          description:
+            "Our experienced technicians deliver consistent, high-quality maintenance based on decades of serving multi-family and commercial properties.",
+        },
+      ],
+      showLogos: true,
+    },
+    {
+      _type: "serviceFaq",
+      _key: "seed-faq",
+      heading: "Maintenance Program Questions, Answered",
+      faqs: [
+        {
+          _type: "faq",
+          _key: "seed-faq-1",
+          question: "What does a plumbing maintenance program cost?",
+          answer:
+            "[PRICING APPROACH — client to confirm; do not invent numbers or ranges. Frame around how pricing is determined — property count, equipment, visit frequency — once the client supplies specifics.]",
+        },
+        {
+          _type: "faq",
+          _key: "seed-faq-2",
+          question: "What does 'priority service' actually mean?",
+          answer:
+            "Program members are scheduled ahead of non-program calls, including for emergencies. [SPECIFIC COMMITMENT — client to confirm whether this includes a response-time target.]",
+        },
+        {
+          _type: "faq",
+          _key: "seed-faq-3",
+          question: "Can one program cover multiple properties?",
+          answer:
+            "Yes. Fred's Plumbing builds programs across entire portfolios, with per-property records and a single point of contact for your whole account.",
+        },
+        {
+          _type: "faq",
+          _key: "seed-faq-4",
+          question: "Do maintenance visits disturb tenants?",
+          answer:
+            "Rarely. Most inspection work happens in mechanical rooms and common areas. When unit access is needed, Fred's Plumbing coordinates notice through your management office.",
+        },
+        {
+          _type: "faq",
+          _key: "seed-faq-5",
+          question: "We already call a plumber when something breaks — why change?",
+          answer:
+            "Reactive-only service means every problem is discovered at its most expensive stage. A program finds the same problems earlier, when they're small, scheduled, and budgeted — and it moves you to the front of the line when a real emergency happens.",
+        },
+      ],
+    },
+    {
+      _type: "relatedServices",
+      _key: "seed-related",
+      heading: "Related Services",
+      serviceSlugs: ["specialty-services", "emergency-plumbing", "commercial-plumbing"],
+    },
+    {
+      _type: "finalCta",
+      _key: "seed-final",
+      heading: "Stop Budgeting for Surprises",
+      body:
+        "A Preferred Customer Program puts every property you manage on a schedule — inspected, documented, compliant, and first in line when it matters.",
+      secondaryCtaLabel: "Request a Quote",
+      secondaryCtaHref: "/contact",
+    },
+  ];
+}
+
 /** Per-slug section stacks + SEO overrides for section-library pages. */
 const SERVICE_EXTRAS: Record<
   string,
@@ -1008,6 +1288,12 @@ const SERVICE_EXTRAS: Record<
     seoTitle: "Backflow, Boiler & Gas Lines in DFW | Fred's Plumbing",
     seoDescription:
       "Backflow testing, commercial boiler service, and gas line repair for multi-family and commercial properties across Dallas–Fort Worth — available 24/7.",
+  },
+  maintenance: {
+    sections: maintenanceSections,
+    seoTitle: "Plumbing Maintenance Programs in DFW | Fred's Plumbing",
+    seoDescription:
+      "Preferred Customer maintenance programs for DFW multi-family and commercial properties — scheduled inspections, compliance deadline tracking, priority response.",
   },
 };
 
