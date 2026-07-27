@@ -93,6 +93,31 @@ h4 {
   }
 }
 
+/* Staggered entrance for dropdown/mega-menu items. Panels mount on open, so
+   this runs as pure CSS — no Framer Motion in the per-item path. Set
+   `--nav-item-index` inline to position an item in the stagger. */
+@keyframes nav-item-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.animate-nav-item {
+  animation: nav-item-in 0.25s cubic-bezier(0.21, 0.47, 0.32, 0.98) both;
+  animation-delay: calc(var(--nav-item-index, 0) * 20ms);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-nav-item {
+    animation: none;
+  }
+}
+
 /* Slow pulse for the 24/7 availability dot */
 @keyframes availability-pulse {
   0%,

@@ -6,12 +6,17 @@ import { usePathname } from "next/navigation";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { ChevronDown } from "lucide-react";
 import type { NavGroup, Navigation } from "@/data/navigation";
-import { isExactActive, isSectionActive } from "@/components/layout/navActive";
+import { isSectionActive } from "@/components/layout/navActive";
+import { MegaPanel } from "@/components/layout/MegaPanel";
+import { NavListPanel } from "@/components/layout/NavListPanel";
 import { cn } from "@/lib/utils";
 
 /** Hover intent: slow enough that crossing items doesn't flicker a panel open. */
 const OPEN_DELAY = 120;
 const CLOSE_DELAY = 200;
+
+/** Same curve as `Reveal.tsx` and `.animate-rise`. */
+const PANEL_EASE = [0.21, 0.47, 0.32, 0.98] as const;
 
 interface DesktopNavProps {
   navigation: Navigation;
@@ -23,6 +28,7 @@ export function DesktopNav({ navigation }: DesktopNavProps) {
   const [openKey, setOpenKey] = useState<string | null>(null);
 
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const navRef = useRef<HTMLUListElement | null>(null);
   const panelRef = useRef<HTMLDivElement | null>(null);
   /** Set when a panel is opened from the keyboard, so focus moves into it. */
   const focusPanelOnMount = useRef(false);
@@ -62,12 +68,25 @@ export function DesktopNav({ navigation }: DesktopNavProps) {
 
   useEffect(() => clearTimer, [clearTimer]);
 
+  // Close on any pointer press outside the nav (hover close doesn't cover
+  // touch or pen input on desktop-width viewports).
+  useEffect(() => {
+    if (!openKey) return;
+    function onPointerDown(e: PointerEvent) {
+      if (navRef.current && !navRef.current.contains(e.target as Node)) {
+        closeNow();
+      }
+    }
+    document.addEventListener("pointerdown", onPointerDown);
+    return () => document.removeEventListener("pointerdown", onPointerDown);
+  }, [openKey, closeNow]);
+
   /** Runs after the panel is committed to the DOM. */
   const attachPanel = useCallback((node: HTMLDivElement | null) => {
     panelRef.current = node;
     if (node && focusPanelOnMount.current) {
       focusPanelOnMount.current = false;
-      node.querySelector<HTMLAnchorElement>("[data-nav-item]")?.focus();
+      node.querySelector<HTMLAnchorElement>("a[href]")?.focus();
     }
   }, []);
 
@@ -81,9 +100,7 @@ export function DesktopNav({ navigation }: DesktopNavProps) {
       clearTimer();
       if (openKey === group._key) {
         // Already open (e.g. from hover) — no remount, so focus directly.
-        panelRef.current
-          ?.querySelector<HTMLAnchorElement>("[data-nav-item]")
-          ?.focus();
+        panelRef.current?.querySelector<HTMLAnchorElement>("a[href]")?.focus();
         return;
       }
       focusPanelOnMount.current = true;
@@ -100,13 +117,10 @@ export function DesktopNav({ navigation }: DesktopNavProps) {
       focusTrigger(group._key);
       return;
     }
-    if (e.key === "Tab") {
-      // Let focus leave naturally, but don't leave a panel hanging open.
-      closeNow();
-      return;
-    }
+    // Tab moves through panel items naturally; the group's onBlur closes the
+    // panel once focus leaves it entirely.
     const items = Array.from(
-      panelRef.current?.querySelectorAll<HTMLAnchorElement>("[data-nav-item]") ?? [],
+      panelRef.current?.querySelectorAll<HTMLAnchorElement>("a[href]") ?? [],
     );
     if (items.length === 0) return;
     const index = items.indexOf(document.activeElement as HTMLAnchorElement);
@@ -127,17 +141,21 @@ export function DesktopNav({ navigation }: DesktopNavProps) {
   }
 
   return (
-    <ul className="hidden items-center gap-1 lg:flex">
+    <ul ref={navRef} className="relative hidden items-center gap-1 lg:flex">
       {navigation.items.map((group) => {
         const open = openKey === group._key;
+        const isMega = group.layout === "mega";
         const sectionActive = isSectionActive(pathname, group.href);
         const panelId = `nav-panel-${group._key}`;
         const triggerId = `nav-trigger-${group._key}`;
+        // Mega panels center under the whole nav (anchored to the ul) so they
+        // never clip the viewport edge; list panels hang off their trigger.
+        const panelX = isMega ? "-50%" : 0;
 
         return (
           <li
             key={group._key}
-            className="relative"
+            className={cn(!isMega && "relative")}
             onMouseEnter={() => scheduleOpen(group._key)}
             onMouseLeave={scheduleClose}
             onBlur={(e) => {
@@ -196,55 +214,44 @@ export function DesktopNav({ navigation }: DesktopNavProps) {
                   ref={attachPanel}
                   aria-labelledby={triggerId}
                   onKeyDown={(e) => onPanelKeyDown(e, group)}
-                  initial={reduceMotion ? { opacity: 1 } : { opacity: 0, y: 6 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 6 }}
-                  transition={{ duration: reduceMotion ? 0 : 0.18, ease: "easeOut" }}
+                  initial={
+                    reduceMotion
+                      ? { opacity: 1, x: panelX }
+                      : { opacity: 0, y: 8, x: panelX }
+                  }
+                  animate={{ opacity: 1, y: 0, x: panelX }}
+                  exit={
+                    reduceMotion
+                      ? { opacity: 0, x: panelX }
+                      : { opacity: 0, y: 8, x: panelX }
+                  }
+                  transition={{
+                    duration: reduceMotion ? 0 : 0.18,
+                    ease: PANEL_EASE,
+                  }}
                   className={cn(
-                    "absolute top-full left-0 z-50 mt-1 rounded-xl border border-white/8 bg-navy-900 p-2 shadow-(--shadow-card-lg)",
-                    group.layout === "mega"
-                      ? "w-[min(640px,calc(100vw-3rem))] max-w-[calc(100vw-3rem)]"
-                      : "w-64",
+                    // pt-3 keeps a hoverable bridge between trigger and card.
+                    "absolute top-full z-50 pt-3",
+                    isMega
+                      ? "left-1/2 w-[min(840px,calc(100vw-4rem))]"
+                      : "left-0",
+                    !isMega &&
+                      (group.showServiceAreaCities ? "w-80" : "w-72"),
                   )}
                 >
-                  <ul
-                    className={cn(
-                      group.layout === "mega" && "grid grid-cols-2 gap-x-1",
-                    )}
-                  >
-                    {group.children.map((child) => {
-                      const childActive = isExactActive(pathname, child.href);
-                      return (
-                        <li key={child._key}>
-                          <Link
-                            href={child.href}
-                            data-nav-item=""
-                            aria-current={childActive ? "page" : undefined}
-                            onClick={closeNow}
-                            className={cn(
-                              "flex items-start gap-2.5 rounded-lg px-3.5 py-2.5 text-[14px] font-medium transition-colors hover:bg-white/6 hover:text-white",
-                              childActive
-                                ? "bg-white/6 text-white"
-                                : "text-grey-300",
-                            )}
-                          >
-                            <span
-                              aria-hidden="true"
-                              className="mt-[7px] size-1 shrink-0 rounded-full bg-red-500"
-                            />
-                            <span>
-                              {child.label}
-                              {group.layout === "mega" && child.description && (
-                                <span className="mt-0.5 block text-[12.5px] leading-snug font-normal text-grey-300/75">
-                                  {child.description}
-                                </span>
-                              )}
-                            </span>
-                          </Link>
-                        </li>
-                      );
-                    })}
-                  </ul>
+                  {isMega ? (
+                    <MegaPanel
+                      group={group}
+                      pathname={pathname}
+                      onNavigate={closeNow}
+                    />
+                  ) : (
+                    <NavListPanel
+                      group={group}
+                      pathname={pathname}
+                      onNavigate={closeNow}
+                    />
+                  )}
                 </motion.div>
               )}
             </AnimatePresence>

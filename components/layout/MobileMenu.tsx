@@ -4,10 +4,11 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { ChevronDown, Clock, Phone, X } from "lucide-react";
+import { ChevronDown, X } from "lucide-react";
 import type { Navigation } from "@/data/navigation";
 import { isExactActive, isSectionActive } from "@/components/layout/navActive";
-import { site } from "@/data/site";
+import { navIcons } from "@/components/layout/navIcons";
+import { NavFeaturedCard } from "@/components/layout/NavFeaturedCard";
 import { Logo } from "@/components/ui/Logo";
 import { Button } from "@/components/ui/Button";
 import { cn } from "@/lib/utils";
@@ -96,6 +97,9 @@ export function MobileMenu({ open, onClose, navigation }: MobileMenuProps) {
               aria-label="Mobile navigation"
               className="flex-1 overflow-y-auto px-3 py-4"
             >
+              {/* Conversion card first — thumb-reachable at the top of the list. */}
+              <NavFeaturedCard className="mb-4" onNavigate={onClose} />
+
               <ul className="space-y-1">
                 {navigation.items.map((group) => {
                   const isExpanded = expanded === group._key;
@@ -149,32 +153,62 @@ export function MobileMenu({ open, onClose, navigation }: MobileMenuProps) {
                           className="overflow-hidden pl-4"
                           aria-hidden={!isExpanded}
                         >
-                          {group.children.map((child) => (
-                            <li key={child._key}>
-                              <Link
-                                href={child.href}
-                                onClick={onClose}
-                                tabIndex={isExpanded ? undefined : -1}
-                                aria-current={
-                                  isExactActive(pathname, child.href)
-                                    ? "page"
-                                    : undefined
-                                }
-                                className={cn(
-                                  "flex min-h-11 items-center gap-2.5 rounded-lg px-4 py-2.5 text-[15px] font-medium transition-colors hover:bg-white/6 hover:text-white",
-                                  isExactActive(pathname, child.href)
-                                    ? "text-white"
-                                    : "text-grey-300",
-                                )}
-                              >
-                                <span
-                                  aria-hidden="true"
-                                  className="size-1 rounded-full bg-red-500"
-                                />
-                                {child.label}
-                              </Link>
-                            </li>
-                          ))}
+                          {group.children.map((child) => {
+                            const Icon = child.icon
+                              ? navIcons[child.icon]
+                              : null;
+                            const childActive = isExactActive(
+                              pathname,
+                              child.href,
+                            );
+                            return (
+                              <li key={child._key}>
+                                <Link
+                                  href={child.href}
+                                  onClick={onClose}
+                                  tabIndex={isExpanded ? undefined : -1}
+                                  aria-current={
+                                    childActive ? "page" : undefined
+                                  }
+                                  className={cn(
+                                    "flex min-h-11 items-start gap-3 rounded-lg px-4 py-2.5 transition-colors hover:bg-white/6",
+                                    childActive && "bg-white/6",
+                                  )}
+                                >
+                                  {Icon ? (
+                                    <span
+                                      aria-hidden="true"
+                                      className="mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-lg bg-navy-800"
+                                    >
+                                      <Icon className="size-4 text-red-500" />
+                                    </span>
+                                  ) : (
+                                    <span
+                                      aria-hidden="true"
+                                      className="mt-[9px] size-1 shrink-0 rounded-full bg-red-500"
+                                    />
+                                  )}
+                                  <span className="min-w-0">
+                                    <span
+                                      className={cn(
+                                        "block text-[15px] font-medium",
+                                        childActive
+                                          ? "text-white"
+                                          : "text-grey-300",
+                                      )}
+                                    >
+                                      {child.label}
+                                    </span>
+                                    {child.description && (
+                                      <span className="mt-0.5 block text-[12.5px] leading-snug text-grey-300/75">
+                                        {child.description}
+                                      </span>
+                                    )}
+                                  </span>
+                                </Link>
+                              </li>
+                            );
+                          })}
                         </ul>
                       </div>
                     </li>
@@ -183,18 +217,9 @@ export function MobileMenu({ open, onClose, navigation }: MobileMenuProps) {
               </ul>
             </nav>
 
-            <div className="shrink-0 space-y-3 border-t border-white/8 p-5">
-              <a
-                href={site.phoneHref}
-                className="flex items-center justify-center gap-2.5 text-lg font-extrabold text-white"
-              >
-                <Phone aria-hidden="true" className="size-5 text-red-500" />
-                {site.phone}
-              </a>
-              <p className="flex items-center justify-center gap-2 text-[13px] font-medium text-grey-300">
-                <Clock aria-hidden="true" className="size-3.5 text-red-500" />
-                24/7 Emergency Service · DFW Metroplex
-              </p>
+            {/* Phone lives in the featured card up top; only the quote CTA
+                stays pinned here. */}
+            <div className="shrink-0 border-t border-white/8 p-5">
               <Button
                 href={navigation.cta.href}
                 className="w-full"
