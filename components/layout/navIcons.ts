@@ -3,6 +3,7 @@ import {
   Building2,
   CalendarCheck,
   Cog,
+  ShieldCheck,
   GraduationCap,
   HeartHandshake,
   HeartPulse,
@@ -21,6 +22,7 @@ import type { NavIconName } from "@/data/navigation";
  * stay serializable across the Server→Client boundary) to lucide components.
  */
 export const navIcons: Record<NavIconName, LucideIcon> = {
+  "shield-check": ShieldCheck,
   wrench: Wrench,
   cog: Cog,
   siren: Siren,

@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { ChevronDown, X } from "lucide-react";
 import type { Navigation } from "@/data/navigation";
+import type { SiteContent } from "@/data/site";
 import { isExactActive, isSectionActive } from "@/components/layout/navActive";
 import { navIcons } from "@/components/layout/navIcons";
 import { NavFeaturedCard } from "@/components/layout/NavFeaturedCard";
@@ -17,9 +18,10 @@ interface MobileMenuProps {
   open: boolean;
   onClose: () => void;
   navigation: Navigation;
+  site: SiteContent;
 }
 
-export function MobileMenu({ open, onClose, navigation }: MobileMenuProps) {
+export function MobileMenu({ open, onClose, navigation, site }: MobileMenuProps) {
   const pathname = usePathname();
   const reduceMotion = useReducedMotion();
 
@@ -82,7 +84,7 @@ export function MobileMenu({ open, onClose, navigation }: MobileMenuProps) {
             transition={{ type: "tween", duration: 0.28, ease: [0.32, 0.72, 0, 1] }}
           >
             <div className="flex h-[76px] shrink-0 items-center justify-between border-b border-white/8 px-5">
-              <Logo theme="dark" />
+              <Logo siteName={site.name} />
               <button
                 type="button"
                 aria-label="Close menu"
@@ -98,7 +100,7 @@ export function MobileMenu({ open, onClose, navigation }: MobileMenuProps) {
               className="flex-1 overflow-y-auto px-3 py-4"
             >
               {/* Conversion card first — thumb-reachable at the top of the list. */}
-              <NavFeaturedCard className="mb-4" onNavigate={onClose} />
+              <NavFeaturedCard site={site} className="mb-4" onNavigate={onClose} />
 
               <ul className="space-y-1">
                 {navigation.items.map((group) => {

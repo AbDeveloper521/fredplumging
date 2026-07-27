@@ -10,7 +10,7 @@ import {
   type EmergencyContactValues,
 } from "@/lib/validations";
 import { Button } from "@/components/ui/Button";
-import { site } from "@/data/site";
+import type { SiteContent } from "@/data/site";
 import { cn } from "@/lib/utils";
 
 const serviceOptions = [
@@ -37,7 +37,7 @@ function FieldError({ id, message }: { id: string; message?: string }) {
   );
 }
 
-export function EmergencyContactForm() {
+export function EmergencyContactForm({ site }: { site: SiteContent }) {
   const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
 
   const {

@@ -1,0 +1,55 @@
+import "server-only";
+import { serverClient } from "@/sanity/lib/serverClient";
+import { logEmpty, logFallback } from "@/sanity/lib/fallbackLog";
+import { TESTIMONIALS_QUERY } from "@/sanity/queries";
+import {
+  testimonials as fallbackTestimonials,
+  type Testimonial,
+} from "@/data/testimonials";
+
+/** Cache tag invalidated by the /api/revalidate webhook. */
+export const TESTIMONIAL_TAG = "testimonial";
+
+/**
+ * Testimonials ordered by the client-controlled `order` field. Falls back to
+ * `data/testimonials.ts` on fetch failure or when nothing is published yet.
+ */
+export async function getTestimonials(): Promise<Testimonial[]> {
+  try {
+    const result = await serverClient.fetch(
+      TESTIMONIALS_QUERY,
+      {},
+      { next: { revalidate: 86400, tags: [TESTIMONIAL_TAG] } },
+    );
+
+    const testimonials: Testimonial[] = [];
+    for (const item of result) {
+      if (item.name && item.quote && item.date) {
+        testimonials.push({
+          name: item.name,
+          role: item.role ?? undefined,
+          rating: item.rating ?? 5,
+          quote: item.quote,
+          date: item.date,
+          featured: item.featured ?? undefined,
+        });
+      }
+    }
+
+    if (testimonials.length === 0) {
+      // Deliberately NOT the fallback: if the client deletes their last
+      // testimonial, the deleted quote must not resurrect from the static
+      // file — that's a consent problem. The section hides instead.
+      logEmpty("getTestimonials", "the homepage testimonials section is hidden.");
+    }
+    return testimonials;
+  } catch (error) {
+    logFallback({
+      fetcher: "getTestimonials",
+      fallbackFile: "data/testimonials.ts",
+      affects: "homepage testimonials section",
+      error,
+    });
+    return fallbackTestimonials;
+  }
+}

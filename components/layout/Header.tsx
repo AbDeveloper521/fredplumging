@@ -1,12 +1,13 @@
-import { getNavigation } from "@/data/navigation";
+import { getNavigation } from "@/sanity/lib/getNavigation";
+import { getSite } from "@/sanity/lib/getSite";
 import { HeaderClient } from "@/components/layout/HeaderClient";
 
 /**
- * Server component — resolves the navigation once per request so the menu can
- * later be driven by a CMS without touching the interactive components.
+ * Server component — resolves navigation and site settings once per request
+ * so the interactive header tree receives plain serializable props.
  */
 export async function Header() {
-  const navigation = await getNavigation();
+  const [navigation, site] = await Promise.all([getNavigation(), getSite()]);
 
-  return <HeaderClient navigation={navigation} />;
+  return <HeaderClient navigation={navigation} site={site} />;
 }

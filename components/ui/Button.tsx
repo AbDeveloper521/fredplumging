@@ -38,7 +38,7 @@ type ButtonProps = ButtonAsButton | ButtonAsLink;
 
 const variantClasses: Record<ButtonVariant, string> = {
   primary:
-    "bg-red-600 text-white hover:bg-red-500 active:bg-red-600 shadow-[0_8px_20px_rgb(217_39_46/0.28)]",
+    "bg-red-600 text-white hover:bg-red-500 active:bg-red-600 shadow-[0_8px_20px_rgb(211_33_39/0.28)]",
   secondary:
     "bg-white text-navy-900 hover:bg-grey-100 border border-grey-300",
   outline:

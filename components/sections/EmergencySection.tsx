@@ -3,7 +3,7 @@ import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
 import { ImagePlaceholder } from "@/components/ui/ImagePlaceholder";
-import { site } from "@/data/site";
+import type { SiteContent } from "@/data/site";
 
 const benefits = [
   { icon: Truck, label: "Fast dispatch" },
@@ -12,7 +12,7 @@ const benefits = [
   { icon: MapPin, label: "DFW-wide coverage" },
 ];
 
-export function EmergencySection() {
+export function EmergencySection({ site }: { site: SiteContent }) {
   return (
     <section
       aria-labelledby="emergency-heading"
@@ -22,7 +22,7 @@ export function EmergencySection() {
       <div aria-hidden="true" className="bg-grid-dark absolute inset-0" />
       <div
         aria-hidden="true"
-        className="absolute inset-0 bg-[radial-gradient(ellipse_55%_60%_at_15%_50%,rgb(217_39_46/0.18),transparent_60%)]"
+        className="absolute inset-0 bg-[radial-gradient(ellipse_55%_60%_at_15%_50%,rgb(211_33_39/0.18),transparent_60%)]"
       />
       <div
         aria-hidden="true"

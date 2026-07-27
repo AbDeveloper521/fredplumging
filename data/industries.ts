@@ -1,12 +1,31 @@
+import type { CmsPhoto, RichBody } from "./services";
+
+/**
+ * As of Sanity phase 3 these constants are the FALLBACK: read via
+ * `getIndustries()` in `sanity/lib/getIndustries.ts`. Slugs drive live URLs
+ * at /multifamily/[slug] — every fallback slug matches a real route, so the
+ * homepage industry cards can never point at a page that doesn't exist.
+ */
 export interface Industry {
   title: string;
   slug: string;
   description: string;
-  /** Expected photography subject — used by the image placeholder system. */
+  /** Expected photography subject — placeholder caption until a photo exists. */
   image: string;
   imageAlt: string;
   bulletPoints: string[];
-  href: string;
+  /** Real photo uploaded in the Studio, resolved to a URL server-side. */
+  photo?: CmsPhoto;
+  /** Optional rich detail-page content (Portable Text). */
+  body?: RichBody;
+  /** Optional per-page SEO overrides. */
+  seoTitle?: string;
+  seoDescription?: string;
+}
+
+/** The one place an industry's URL is derived from its slug. */
+export function industryHref(slug: string): string {
+  return `/multifamily/${slug}`;
 }
 
 export const industries: Industry[] = [
@@ -24,7 +43,6 @@ export const industries: Industry[] = [
       "Turnover repairs",
       "Preventive maintenance",
     ],
-    href: "/industries/apartments",
   },
   {
     title: "Condominiums",
@@ -40,13 +58,12 @@ export const industries: Industry[] = [
       "Scheduled maintenance",
       "Documented service records",
     ],
-    href: "/industries/condos",
   },
   {
-    title: "Senior Care Facilities",
-    slug: "senior-care",
+    title: "Assisted Living",
+    slug: "assisted-living",
     description:
-      "Careful, low-disruption plumbing service for assisted living and senior care communities, where resident comfort, safety, and reliability come first.",
+      "Careful, low-disruption plumbing service for assisted living communities, where resident comfort, safety, and reliability come first.",
     image: "/images/technician-working.webp",
     imageAlt: "Technician working quietly in an occupied senior living facility",
     bulletPoints: [
@@ -56,54 +73,20 @@ export const industries: Industry[] = [
       "Rapid emergency response",
       "Ongoing maintenance programs",
     ],
-    href: "/industries/senior-care",
   },
   {
-    title: "Student Housing",
-    slug: "student-housing",
+    title: "Nursing Homes",
+    slug: "nursing-homes",
     description:
-      "High-occupancy plumbing support for student housing properties — fast turnover work, semester-break project scheduling, and dependable emergency coverage.",
-    image: "/images/multifamily-property.webp",
-    imageAlt: "Student housing community near a university campus",
+      "Code-compliant plumbing for 24/7 care settings — planned around care schedules, documented for compliance, and backed by around-the-clock emergency coverage.",
+    image: "/images/technician-working.webp",
+    imageAlt: "Technician coordinating scheduled work with nursing home staff",
     bulletPoints: [
-      "High-volume turnover repairs",
-      "Break-period project work",
-      "Common-area systems",
+      "Code-compliant workmanship",
+      "Care-schedule coordination",
+      "Water temperature and safety systems",
       "24/7 emergency coverage",
-      "Preventive inspections",
+      "Compliance documentation",
     ],
-    href: "/industries/student-housing",
-  },
-  {
-    title: "Commercial Buildings",
-    slug: "commercial-buildings",
-    description:
-      "Full-service plumbing for offices, retail, restaurants, and mixed-use commercial facilities — from tenant improvements to building-wide system maintenance.",
-    image: "/images/service-commercial-plumbing.webp",
-    imageAlt: "Commercial office building lobby and mechanical systems",
-    bulletPoints: [
-      "Tenant improvement plumbing",
-      "Building-wide systems",
-      "Code and compliance support",
-      "After-hours scheduling",
-      "Emergency repairs",
-    ],
-    href: "/industries/commercial-buildings",
-  },
-  {
-    title: "Property Management Portfolios",
-    slug: "property-management",
-    description:
-      "A single, vendor-compliant plumbing partner across your entire portfolio — consistent pricing, consistent communication, and consistent documentation at every property.",
-    image: "/images/vendor-compliance.webp",
-    imageAlt: "Property manager reviewing service documentation across a portfolio",
-    bulletPoints: [
-      "Portfolio-wide coverage",
-      "Vendor portal compliance",
-      "Consistent reporting",
-      "Priority dispatch",
-      "Dedicated account contact",
-    ],
-    href: "/industries/property-management",
   },
 ];

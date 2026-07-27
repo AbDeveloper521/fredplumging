@@ -1,13 +1,14 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import type { NavGroup } from "@/data/navigation";
-import { serviceAreaCities } from "@/data/site";
+import type { SiteContent } from "@/data/site";
 import { navIcons } from "@/components/layout/navIcons";
 import { isExactActive } from "@/components/layout/navActive";
 import { cn } from "@/lib/utils";
 
 interface NavListPanelProps {
   group: NavGroup;
+  site: SiteContent;
   pathname: string;
   onNavigate: () => void;
 }
@@ -17,7 +18,7 @@ interface NavListPanelProps {
  * `showServiceAreaCities`, the service-area city list from `data/site.ts`
  * renders beneath the links to give the panel a geographic footprint.
  */
-export function NavListPanel({ group, pathname, onNavigate }: NavListPanelProps) {
+export function NavListPanel({ group, site, pathname, onNavigate }: NavListPanelProps) {
   return (
     <div className="rounded-xl border border-white/8 bg-navy-900 p-2 shadow-(--shadow-card-lg)">
       <ul>
@@ -74,7 +75,7 @@ export function NavListPanel({ group, pathname, onNavigate }: NavListPanelProps)
             Cities we cover
           </p>
           <ul className="mt-2 grid grid-cols-2 gap-x-5 gap-y-1.5">
-            {serviceAreaCities.map((city) => (
+            {site.serviceAreaCities.map((city) => (
               <li
                 key={city}
                 className="flex items-center gap-2 text-[13px] text-grey-300"

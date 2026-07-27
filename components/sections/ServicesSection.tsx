@@ -3,9 +3,9 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
 import { ServiceCard } from "@/components/ui/ServiceCard";
-import { services } from "@/data/services";
+import type { Service } from "@/data/services";
 
-export function ServicesSection() {
+export function ServicesSection({ services }: { services: Service[] }) {
   const featured = services.filter((s) => s.featured);
   const supporting = services.filter((s) => !s.featured);
 

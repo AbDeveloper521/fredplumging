@@ -4,9 +4,9 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
 import { QuoteRequestForm } from "@/components/forms/QuoteRequestForm";
-import { site } from "@/data/site";
+import type { SiteContent } from "@/data/site";
 
-export function FinalCTASection() {
+export function FinalCTASection({ site }: { site: SiteContent }) {
   return (
     <section
       aria-labelledby="finalcta-heading"
@@ -23,7 +23,7 @@ export function FinalCTASection() {
       />
       <div
         aria-hidden="true"
-        className="absolute inset-0 bg-[radial-gradient(ellipse_45%_50%_at_90%_85%,rgb(217_39_46/0.15),transparent_60%)]"
+        className="absolute inset-0 bg-[radial-gradient(ellipse_45%_50%_at_90%_85%,rgb(211_33_39/0.15),transparent_60%)]"
       />
       {/* Thin red top divider */}
       <div aria-hidden="true" className="absolute inset-x-0 top-0 h-1 bg-red-600" />
@@ -71,7 +71,7 @@ export function FinalCTASection() {
         </div>
 
         <Reveal delay={0.15} className="lg:justify-self-end lg:w-full lg:max-w-[500px]">
-          <QuoteRequestForm />
+          <QuoteRequestForm site={site} />
         </Reveal>
       </Container>
     </section>

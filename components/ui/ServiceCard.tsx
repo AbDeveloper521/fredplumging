@@ -1,6 +1,8 @@
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
-import type { Service } from "@/data/services";
+import { serviceHref, type Service } from "@/data/services";
+import { navIcons } from "@/components/layout/navIcons";
 import { ImagePlaceholder } from "@/components/ui/ImagePlaceholder";
 import { cn } from "@/lib/utils";
 
@@ -11,20 +13,30 @@ interface ServiceCardProps {
 }
 
 export function ServiceCard({ service, featured = false, className }: ServiceCardProps) {
-  const Icon = service.icon;
+  const Icon = navIcons[service.icon];
 
   return (
     <Link
-      href={service.href}
+      href={serviceHref(service.slug)}
       className={cn(
         "group relative isolate flex flex-col overflow-hidden rounded-2xl bg-navy-900 shadow-(--shadow-card) transition-shadow duration-300 hover:shadow-(--shadow-card-lg)",
         featured ? "min-h-[340px] sm:min-h-[400px]" : "min-h-[300px] sm:min-h-[340px]",
         className,
       )}
     >
-      {/* Photography layer (placeholder until production assets land) */}
+      {/* Photography layer — real CMS photo when set, placeholder otherwise */}
       <div className="absolute inset-0 transition-transform duration-500 ease-out group-hover:scale-[1.04]">
-        <ImagePlaceholder label={service.imageAlt} icon={service.icon} showCaption={false} />
+        {service.photo ? (
+          <Image
+            src={service.photo.url}
+            alt={service.photo.alt}
+            fill
+            sizes={featured ? "(min-width: 768px) 50vw, 100vw" : "(min-width: 1280px) 25vw, (min-width: 640px) 50vw, 100vw"}
+            className="object-cover"
+          />
+        ) : (
+          <ImagePlaceholder label={service.imageAlt} icon={Icon} showCaption={false} />
+        )}
       </div>
 
       {/* Legibility overlay — deepens on hover */}

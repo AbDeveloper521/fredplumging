@@ -2,13 +2,7 @@ import { Award, Clock, MapPin, ShieldCheck } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
 import { EmergencyContactForm } from "@/components/forms/EmergencyContactForm";
-import { site } from "@/data/site";
-
-const trustIndicators = [
-  { icon: Clock, label: "24/7 Emergency Response" },
-  { icon: ShieldCheck, label: "Licensed & Insured" },
-  { icon: MapPin, label: `Serving DFW Since ${site.foundedYear}` },
-];
+import type { SiteContent } from "@/data/site";
 
 /** CSS-animated wrapper — hero entrances must not wait on JS hydration. */
 function Rise({
@@ -30,7 +24,13 @@ function Rise({
   );
 }
 
-export function HeroSection() {
+export function HeroSection({ site }: { site: SiteContent }) {
+  const trustIndicators = [
+    { icon: Clock, label: "24/7 Emergency Response" },
+    { icon: ShieldCheck, label: "Licensed & Insured" },
+    { icon: MapPin, label: `Serving DFW Since ${site.foundedYear}` },
+  ];
+
   return (
     <section
       aria-labelledby="hero-heading"
@@ -49,7 +49,7 @@ export function HeroSection() {
       />
       <div
         aria-hidden="true"
-        className="absolute inset-0 bg-[radial-gradient(ellipse_50%_45%_at_85%_80%,rgb(217_39_46/0.16),transparent_65%)]"
+        className="absolute inset-0 bg-[radial-gradient(ellipse_50%_45%_at_85%_80%,rgb(211_33_39/0.16),transparent_65%)]"
       />
       {/* Skyline-suggestion band along the base */}
       <div
@@ -135,7 +135,7 @@ export function HeroSection() {
 
         {/* Conversion card */}
         <Rise delay={0.2} className="lg:w-full lg:max-w-[520px] lg:justify-self-end">
-          <EmergencyContactForm />
+          <EmergencyContactForm site={site} />
         </Rise>
       </Container>
 

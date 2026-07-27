@@ -43,7 +43,7 @@ export function ImagePlaceholder({
       />
       <div
         aria-hidden="true"
-        className="absolute inset-0 bg-[radial-gradient(ellipse_at_80%_90%,rgb(234_48_56/0.14),transparent_55%)]"
+        className="absolute inset-0 bg-[radial-gradient(ellipse_at_80%_90%,rgb(228_42_49/0.14),transparent_55%)]"
       />
       {/* Diagonal pipe-run accent lines */}
       <div

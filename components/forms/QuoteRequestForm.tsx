@@ -10,7 +10,7 @@ import {
   type QuoteRequestValues,
 } from "@/lib/validations";
 import { Button } from "@/components/ui/Button";
-import { site } from "@/data/site";
+import type { SiteContent } from "@/data/site";
 import { cn } from "@/lib/utils";
 
 const inputClasses =
@@ -27,7 +27,7 @@ function FieldError({ id, message }: { id: string; message?: string }) {
   );
 }
 
-export function QuoteRequestForm() {
+export function QuoteRequestForm({ site }: { site: SiteContent }) {
   const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
 
   const {

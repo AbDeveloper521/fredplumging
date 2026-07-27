@@ -7,9 +7,9 @@
   --color-navy-800: #122238;
   --color-navy-700: #1b3049;
 
-  --color-red-600: #d9272e;
-  --color-red-500: #ea3038;
-  --color-red-100: #fdebec;
+  --color-red-600: #d32127;
+  --color-red-500: #e42a31;
+  --color-red-100: #fbedee;
 
   --color-offwhite: #f7f8fa;
   --color-grey-100: #eef1f4;
@@ -122,10 +122,10 @@ h4 {
 @keyframes availability-pulse {
   0%,
   100% {
-    box-shadow: 0 0 0 0 rgb(234 48 56 / 0.5);
+    box-shadow: 0 0 0 0 rgb(228 42 49 / 0.5);
   }
   50% {
-    box-shadow: 0 0 0 6px rgb(234 48 56 / 0);
+    box-shadow: 0 0 0 6px rgb(228 42 49 / 0);
   }
 }
 

@@ -1,10 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, Manrope } from "next/font/google";
-import { Header } from "@/components/layout/Header";
-import { Footer } from "@/components/layout/Footer";
-import { MobileCallBar } from "@/components/layout/MobileCallBar";
-import { JsonLd } from "@/components/seo/JsonLd";
-import { site } from "@/data/site";
+import { getSite } from "@/sanity/lib/getSite";
 import "./globals.css";
 
 const inter = Inter({
@@ -19,33 +15,39 @@ const manrope = Manrope({
   display: "swap",
 });
 
-const title = "Commercial Plumbing Services in Dallas–Fort Worth | Fred's Plumbing";
-const description =
-  "Fred's Plumbing provides 24/7 commercial, multi-family, drain, sewer, maintenance, and emergency plumbing services across the Dallas–Fort Worth Metroplex.";
+export async function generateMetadata(): Promise<Metadata> {
+  const site = await getSite();
+  const title = `Commercial Plumbing Services in Dallas–Fort Worth | ${site.name}`;
+  const description = `${site.name} provides 24/7 commercial, multi-family, drain, sewer, maintenance, and emergency plumbing services across the ${site.serviceArea}.`;
 
-export const metadata: Metadata = {
-  metadataBase: new URL(site.url),
-  title,
-  description,
-  alternates: {
-    // Canonical placeholder — confirm the production domain in data/site.ts.
-    canonical: "/",
-  },
-  openGraph: {
-    type: "website",
-    siteName: site.name,
+  return {
+    metadataBase: new URL(site.url),
     title,
     description,
-    url: "/",
-    locale: "en_US",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title,
-    description,
-  },
-};
+    alternates: {
+      // Canonical placeholder — confirm the production domain before launch.
+      canonical: "/",
+    },
+    openGraph: {
+      type: "website",
+      siteName: site.name,
+      title,
+      description,
+      url: "/",
+      locale: "en_US",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+    },
+  };
+}
 
+/**
+ * Root layout is chrome-free so the embedded Sanity Studio at /studio doesn't
+ * inherit the marketing header/footer. Site chrome lives in (site)/layout.tsx.
+ */
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -53,21 +55,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${inter.variable} ${manrope.variable} h-full antialiased`}>
-      <body className="flex min-h-full flex-col pb-[68px] lg:pb-0">
-        <a
-          href="#main-content"
-          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[60] focus:rounded-lg focus:bg-red-600 focus:px-5 focus:py-3 focus:font-bold focus:text-white"
-        >
-          Skip to main content
-        </a>
-        <Header />
-        <main id="main-content" className="flex-1">
-          {children}
-        </main>
-        <Footer />
-        <MobileCallBar />
-        <JsonLd />
-      </body>
+      <body className="flex min-h-full flex-col">{children}</body>
     </html>
   );
 }

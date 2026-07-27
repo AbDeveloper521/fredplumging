@@ -1,0 +1,92 @@
+import "server-only";
+import { serverClient } from "@/sanity/lib/serverClient";
+import { resolvePhoto } from "@/sanity/lib/image";
+import { logEmpty, logFallback } from "@/sanity/lib/fallbackLog";
+import { SERVICES_QUERY, SERVICE_BY_SLUG_QUERY } from "@/sanity/queries";
+import type { SERVICES_QUERY_RESULT } from "@/sanity.types";
+import {
+  services as fallbackServices,
+  type RichBody,
+  type Service,
+} from "@/data/services";
+import { NAV_ICON_NAMES, type NavIconName } from "@/data/navigation";
+
+/** Cache tag invalidated by the /api/revalidate webhook. */
+export const SERVICE_TAG = "service";
+
+const FETCH_OPTIONS = {
+  next: { revalidate: 86400, tags: [SERVICE_TAG] },
+};
+
+function toIcon(value: string | null | undefined): NavIconName {
+  return value && (NAV_ICON_NAMES as readonly string[]).includes(value)
+    ? (value as NavIconName)
+    : "wrench";
+}
+
+function toService(item: SERVICES_QUERY_RESULT[number]): Service | null {
+  if (!item.title || !item.slug || !item.shortDescription) return null;
+  return {
+    title: item.title,
+    slug: item.slug,
+    shortDescription: item.shortDescription,
+    body: item.body?.length ? (item.body as RichBody) : undefined,
+    seoTitle: item.seoTitle ?? undefined,
+    seoDescription: item.seoDescription ?? undefined,
+    image: "",
+    imageAlt: `${item.title} at a commercial property`,
+    icon: toIcon(item.icon),
+    featured: item.featured ?? undefined,
+    photo: resolvePhoto(item.photo),
+  };
+}
+
+/**
+ * Services ordered by the client-controlled `order` field.
+ * FAILED fetch → static fallback (loud). Successful EMPTY result → empty
+ * array: the homepage grid hides and no /services/[slug] pages generate —
+ * deleted services must not resurrect from the static file.
+ */
+export async function getServices(): Promise<Service[]> {
+  let result: SERVICES_QUERY_RESULT;
+  try {
+    result = await serverClient.fetch(SERVICES_QUERY, {}, FETCH_OPTIONS);
+  } catch (error) {
+    logFallback({
+      fetcher: "getServices",
+      fallbackFile: "data/services.ts",
+      affects: "homepage services grid + all /services/[slug] pages",
+      error,
+    });
+    return fallbackServices;
+  }
+
+  const services = result
+    .map(toService)
+    .filter((s): s is Service => s !== null);
+
+  if (services.length === 0) {
+    logEmpty("getServices", "the homepage services grid is hidden and no service pages are generated.");
+  }
+  return services;
+}
+
+/** Single service for /services/[slug]. Null = genuinely not found (404). */
+export async function getServiceBySlug(slug: string): Promise<Service | null> {
+  try {
+    const result = await serverClient.fetch(
+      SERVICE_BY_SLUG_QUERY,
+      { slug },
+      FETCH_OPTIONS,
+    );
+    return result ? toService(result) : null;
+  } catch (error) {
+    logFallback({
+      fetcher: `getServiceBySlug(${slug})`,
+      fallbackFile: "data/services.ts",
+      affects: `/services/${slug}`,
+      error,
+    });
+    return fallbackServices.find((s) => s.slug === slug) ?? null;
+  }
+}

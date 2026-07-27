@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import type { NavGroup } from "@/data/navigation";
+import type { SiteContent } from "@/data/site";
 import { navIcons } from "@/components/layout/navIcons";
 import { isExactActive } from "@/components/layout/navActive";
 import { NavFeaturedCard } from "@/components/layout/NavFeaturedCard";
@@ -8,6 +9,7 @@ import { cn } from "@/lib/utils";
 
 interface MegaPanelProps {
   group: NavGroup;
+  site: SiteContent;
   pathname: string;
   onNavigate: () => void;
 }
@@ -17,7 +19,7 @@ interface MegaPanelProps {
  * its dropdown is open; item entrances are CSS (`.animate-nav-item`) so the
  * stagger costs no extra JS.
  */
-export function MegaPanel({ group, pathname, onNavigate }: MegaPanelProps) {
+export function MegaPanel({ group, site, pathname, onNavigate }: MegaPanelProps) {
   return (
     <div className="grid grid-cols-[1fr_248px] gap-2 rounded-xl border border-white/8 bg-navy-900 p-2 shadow-(--shadow-card-lg)">
       <ul className="grid grid-cols-2 content-start gap-1">
@@ -75,6 +77,7 @@ export function MegaPanel({ group, pathname, onNavigate }: MegaPanelProps) {
         })}
       </ul>
       <NavFeaturedCard
+        site={site}
         className="animate-nav-item"
         onNavigate={onNavigate}
       />

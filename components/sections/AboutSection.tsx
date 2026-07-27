@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
 import { StatCard } from "@/components/ui/StatCard";
 import { ImagePlaceholder } from "@/components/ui/ImagePlaceholder";
-import { site } from "@/data/site";
+import type { SiteContent } from "@/data/site";
 
 const highlights = [
   "Commercial and multi-family specialists",
@@ -13,14 +13,14 @@ const highlights = [
   "Clear communication from start to finish",
 ];
 
-const metrics = [
-  { value: "27+", label: "Years of Experience", icon: Award },
-  { value: "24/7", label: "Emergency Availability", icon: Clock },
-  { value: "DFW", label: "Metroplex-Wide Coverage", icon: MapPin },
-  { value: "100%", label: "Licensed and Insured", icon: ShieldCheck },
-];
+export function AboutSection({ site }: { site: SiteContent }) {
+  const metrics = [
+    { value: site.yearsInBusiness, label: "Years of Experience", icon: Award },
+    { value: "24/7", label: "Emergency Availability", icon: Clock },
+    { value: "DFW", label: "Metroplex-Wide Coverage", icon: MapPin },
+    { value: "100%", label: "Licensed and Insured", icon: ShieldCheck },
+  ];
 
-export function AboutSection() {
   return (
     <section aria-labelledby="about-heading" className="bg-offwhite py-16 sm:py-24 lg:py-28">
       <Container>
@@ -45,7 +45,7 @@ export function AboutSection() {
                 </div>
               </div>
               {/* Experience badge */}
-              <div className="absolute -top-5 -left-3 rounded-xl bg-red-600 px-5 py-3.5 text-white shadow-[0_12px_28px_rgb(217_39_46/0.4)] lg:-left-6">
+              <div className="absolute -top-5 -left-3 rounded-xl bg-red-600 px-5 py-3.5 text-white shadow-[0_12px_28px_rgb(211_33_39/0.4)] lg:-left-6">
                 <p className="font-heading text-2xl leading-none font-extrabold">
                   Since {site.foundedYear}
                 </p>

@@ -1,9 +1,10 @@
+import Image from "next/image";
 import { BadgeCheck, CheckCircle2 } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
-import { trustLogos } from "@/data/navigation";
+import type { TrustLogo } from "@/data/navigation";
 
 const complianceItems = [
   "Licensing documentation",
@@ -22,7 +23,7 @@ const dashboardRows = [
   { label: "Background-check program", status: "Active" },
 ];
 
-export function ComplianceSection() {
+export function ComplianceSection({ logos }: { logos: TrustLogo[] }) {
   return (
     <section
       aria-labelledby="compliance-heading"
@@ -109,21 +110,33 @@ export function ComplianceSection() {
           </Reveal>
         </div>
 
-        {/* Vendor-system wordmarks */}
-        <Reveal delay={0.1}>
-          <ul className="mt-16 flex flex-wrap items-center justify-center gap-x-12 gap-y-5 border-t border-white/8 pt-10 lg:mt-20">
-            {trustLogos.map((name) => (
-              <li key={name}>
-                <span
-                  aria-label={`${name} logo`}
-                  className="font-heading text-lg font-extrabold tracking-tight text-white/30 transition-colors duration-200 select-none hover:text-white/80"
-                >
-                  {name}
-                </span>
-              </li>
-            ))}
-          </ul>
-        </Reveal>
+        {/* Vendor-system wordmarks — hidden entirely when no logos exist */}
+        {logos.length > 0 && (
+          <Reveal delay={0.1}>
+            <ul className="mt-16 flex flex-wrap items-center justify-center gap-x-12 gap-y-5 border-t border-white/8 pt-10 lg:mt-20">
+              {logos.map((logo) => (
+                <li key={logo.name}>
+                  {logo.photo ? (
+                    <Image
+                      src={logo.photo.url}
+                      alt={logo.photo.alt}
+                      width={200}
+                      height={48}
+                      className="h-8 w-auto opacity-40 brightness-0 invert transition-opacity duration-200 hover:opacity-80"
+                    />
+                  ) : (
+                    <span
+                      aria-label={`${logo.name} logo`}
+                      className="font-heading text-lg font-extrabold tracking-tight text-white/30 transition-colors duration-200 select-none hover:text-white/80"
+                    >
+                      {logo.name}
+                    </span>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </Reveal>
+        )}
       </Container>
     </section>
   );

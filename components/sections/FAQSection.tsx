@@ -5,10 +5,10 @@ import { Plus } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Reveal } from "@/components/ui/Reveal";
-import { faqs } from "@/data/faqs";
+import type { Faq } from "@/data/faqs";
 import { cn } from "@/lib/utils";
 
-export function FAQSection() {
+export function FAQSection({ faqs }: { faqs: Faq[] }) {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (

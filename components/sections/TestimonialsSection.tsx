@@ -3,15 +3,24 @@ import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Reveal } from "@/components/ui/Reveal";
 import { TestimonialCard } from "@/components/ui/TestimonialCard";
-import { testimonials } from "@/data/testimonials";
+import type { Testimonial } from "@/data/testimonials";
+import type { SiteContent } from "@/data/site";
 
-const summaryMetrics = [
-  { icon: Star, label: "5-star client feedback" },
-  { icon: MapPin, label: "27+ years serving DFW" },
-  { icon: Clock, label: "24/7 response availability" },
-];
+interface TestimonialsSectionProps {
+  testimonials: Testimonial[];
+  site: SiteContent;
+}
 
-export function TestimonialsSection() {
+export function TestimonialsSection({
+  testimonials,
+  site,
+}: TestimonialsSectionProps) {
+  const summaryMetrics = [
+    { icon: Star, label: "5-star client feedback" },
+    { icon: MapPin, label: `${site.yearsInBusiness} years serving DFW` },
+    { icon: Clock, label: "24/7 response availability" },
+  ];
+
   const featured = testimonials.find((t) => t.featured) ?? testimonials[0];
   const supporting = testimonials.filter((t) => t !== featured).slice(0, 3);
 

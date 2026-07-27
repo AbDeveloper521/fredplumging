@@ -37,6 +37,9 @@ yarn-error.log*
 # vercel
 .vercel
 
+# sanity (typegen intermediate — sanity.types.ts IS committed)
+/sanity/extract.json
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts

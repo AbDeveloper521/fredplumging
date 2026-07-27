@@ -9,24 +9,31 @@
  */
 
 /**
- * Icon token for a nav link — a string (CMS-serializable, and safe to pass
- * across the Server→Client component boundary) resolved to a lucide icon by
- * the registry in `components/layout/navIcons.ts`.
+ * Icon tokens shared by navigation AND service cards — strings
+ * (CMS-serializable, safe to pass across the Server→Client boundary)
+ * resolved to lucide icons by the registry in
+ * `components/layout/navIcons.ts`. The runtime array exists so Sanity
+ * schemas and the fetch layer can validate icon values. This is the single
+ * icon system for all CMS content — do not add another.
  */
-export type NavIconName =
-  | "wrench"
-  | "cog"
-  | "siren"
-  | "waves"
-  | "calendar-check"
-  | "building-2"
-  | "heart-pulse"
-  | "graduation-cap"
-  | "building"
-  | "hotel"
-  | "heart-handshake"
-  | "stethoscope"
-  | "map-pin";
+export const NAV_ICON_NAMES = [
+  "shield-check",
+  "wrench",
+  "cog",
+  "siren",
+  "waves",
+  "calendar-check",
+  "building-2",
+  "heart-pulse",
+  "graduation-cap",
+  "building",
+  "hotel",
+  "heart-handshake",
+  "stethoscope",
+  "map-pin",
+] as const;
+
+export type NavIconName = (typeof NAV_ICON_NAMES)[number];
 
 export type NavLink = {
   _key: string;
@@ -199,50 +206,96 @@ const STATIC_NAVIGATION: Navigation = {
 };
 
 /**
- * Navigation accessor — the seam a CMS plugs into.
- * Later: `return await sanityClient.fetch(navQuery)`.
+ * As of Sanity phase 2, `STATIC_NAVIGATION` is the FALLBACK. Components must
+ * consume `getNavigation()` from `sanity/lib/getNavigation.ts`, which sources
+ * the `navigation` singleton from Sanity and falls back to this constant.
+ * (The fetcher can't live here: client components import values from this
+ * module, and a Sanity import would leak server code into their bundle.)
  */
-export async function getNavigation(): Promise<Navigation> {
-  return STATIC_NAVIGATION;
-}
+export { STATIC_NAVIGATION };
 
-export const footerNavigation = {
-  services: [
-    { label: "Plumbing", href: "/services/plumbing" },
-    { label: "Emergency Plumbing", href: "/services/emergency-plumbing" },
-    { label: "Drain & Sewer", href: "/services/drain-sewer" },
-    { label: "Maintenance", href: "/services/maintenance" },
-    { label: "Commercial Plumbing", href: "/services/commercial-plumbing" },
-    { label: "Specialty Services", href: "/services/specialty-services" },
-  ],
-  industries: [
-    { label: "Apartments", href: "/multifamily/apartments" },
-    { label: "Condos", href: "/multifamily/condos" },
-    { label: "Assisted Living", href: "/multifamily/assisted-living" },
-    { label: "Nursing Homes", href: "/multifamily/nursing-homes" },
-    { label: "Senior Care Facilities", href: "/services/senior-care-facilities" },
-  ],
-  company: [
-    { label: "About Us", href: "/about" },
-    { label: "Areas We Serve", href: "/areas-we-serve" },
-    { label: "Testimonials", href: "/about/testimonials" },
-    { label: "Careers", href: "/about/careers" },
-    { label: "Contact", href: "/contact" },
+export type FooterLink = {
+  _key: string;
+  label: string;
+  href: string;
+};
+
+export type FooterColumn = {
+  _key: string;
+  heading: string;
+  links: FooterLink[];
+};
+
+export type FooterNavigation = {
+  columns: FooterColumn[];
+  legal: FooterLink[];
+};
+
+/**
+ * Footer fallback — read via `getFooterNavigation()` in
+ * `sanity/lib/getFooterNavigation.ts` (stored on the `navigation` singleton).
+ */
+export const STATIC_FOOTER_NAVIGATION: FooterNavigation = {
+  columns: [
+    {
+      _key: "footer-services",
+      heading: "Services",
+      links: [
+        { _key: "f-plumbing", label: "Plumbing", href: "/services/plumbing" },
+        { _key: "f-emergency", label: "Emergency Plumbing", href: "/services/emergency-plumbing" },
+        { _key: "f-drain", label: "Drain & Sewer", href: "/services/drain-sewer" },
+        { _key: "f-maintenance", label: "Maintenance", href: "/services/maintenance" },
+        { _key: "f-commercial", label: "Commercial Plumbing", href: "/services/commercial-plumbing" },
+        { _key: "f-specialty", label: "Specialty Services", href: "/services/specialty-services" },
+      ],
+    },
+    {
+      _key: "footer-industries",
+      heading: "Industries",
+      links: [
+        { _key: "f-apartments", label: "Apartments", href: "/multifamily/apartments" },
+        { _key: "f-condos", label: "Condos", href: "/multifamily/condos" },
+        { _key: "f-assisted", label: "Assisted Living", href: "/multifamily/assisted-living" },
+        { _key: "f-nursing", label: "Nursing Homes", href: "/multifamily/nursing-homes" },
+        { _key: "f-senior", label: "Senior Care Facilities", href: "/services/senior-care-facilities" },
+      ],
+    },
+    {
+      _key: "footer-company",
+      heading: "Company",
+      links: [
+        { _key: "f-about", label: "About Us", href: "/about" },
+        { _key: "f-areas", label: "Areas We Serve", href: "/areas-we-serve" },
+        { _key: "f-testimonials", label: "Testimonials", href: "/about/testimonials" },
+        { _key: "f-careers", label: "Careers", href: "/about/careers" },
+        { _key: "f-contact", label: "Contact", href: "/contact" },
+      ],
+    },
   ],
   legal: [
-    { label: "Privacy Policy", href: "/privacy-policy" },
-    { label: "Terms of Service", href: "/terms-of-service" },
-    { label: "Accessibility", href: "/accessibility" },
+    { _key: "f-privacy", label: "Privacy Policy", href: "/privacy-policy" },
+    { _key: "f-terms", label: "Terms of Service", href: "/terms-of-service" },
+    { _key: "f-accessibility", label: "Accessibility", href: "/accessibility" },
   ],
 };
 
-/** Vendor systems and associations shown in the trust bar and compliance section. */
-export const trustLogos = [
-  "VendorCafe",
-  "Greystar",
-  "Nexus",
-  "NetVendor",
-  "Yardi",
-  "AAGD",
-  "TDLR",
+export interface TrustLogo {
+  name: string;
+  /** Real logo image resolved server-side; falls back to a styled wordmark. */
+  photo?: { url: string; alt: string };
+}
+
+/**
+ * Trust-logo fallback — read via `getTrustLogos()` in
+ * `sanity/lib/getTrustLogos.ts`. Vendor systems and associations shown in
+ * the trust bar and compliance section.
+ */
+export const STATIC_TRUST_LOGOS: TrustLogo[] = [
+  { name: "VendorCafe" },
+  { name: "Greystar" },
+  { name: "Nexus" },
+  { name: "NetVendor" },
+  { name: "Yardi" },
+  { name: "AAGD" },
+  { name: "TDLR" },
 ];

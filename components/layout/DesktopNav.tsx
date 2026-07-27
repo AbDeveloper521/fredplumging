@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { ChevronDown } from "lucide-react";
 import type { NavGroup, Navigation } from "@/data/navigation";
+import type { SiteContent } from "@/data/site";
 import { isSectionActive } from "@/components/layout/navActive";
 import { MegaPanel } from "@/components/layout/MegaPanel";
 import { NavListPanel } from "@/components/layout/NavListPanel";
@@ -20,9 +21,10 @@ const PANEL_EASE = [0.21, 0.47, 0.32, 0.98] as const;
 
 interface DesktopNavProps {
   navigation: Navigation;
+  site: SiteContent;
 }
 
-export function DesktopNav({ navigation }: DesktopNavProps) {
+export function DesktopNav({ navigation, site }: DesktopNavProps) {
   const pathname = usePathname();
   const reduceMotion = useReducedMotion();
   const [openKey, setOpenKey] = useState<string | null>(null);
@@ -242,12 +244,14 @@ export function DesktopNav({ navigation }: DesktopNavProps) {
                   {isMega ? (
                     <MegaPanel
                       group={group}
+                      site={site}
                       pathname={pathname}
                       onNavigate={closeNow}
                     />
                   ) : (
                     <NavListPanel
                       group={group}
+                      site={site}
                       pathname={pathname}
                       onNavigate={closeNow}
                     />

@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { Clock, Mail, MapPin, Menu, Phone } from "lucide-react";
 import type { Navigation } from "@/data/navigation";
-import { site } from "@/data/site";
+import type { SiteContent } from "@/data/site";
 import { Logo } from "@/components/ui/Logo";
 import { Button } from "@/components/ui/Button";
 import { DesktopNav } from "@/components/layout/DesktopNav";
@@ -13,9 +13,10 @@ import { cn } from "@/lib/utils";
 
 interface HeaderClientProps {
   navigation: Navigation;
+  site: SiteContent;
 }
 
-export function HeaderClient({ navigation }: HeaderClientProps) {
+export function HeaderClient({ navigation, site }: HeaderClientProps) {
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -63,7 +64,7 @@ export function HeaderClient({ navigation }: HeaderClientProps) {
           <div className="flex items-center gap-6">
             <span className="flex items-center gap-2">
               <MapPin aria-hidden="true" className="size-3.5 text-red-500" />
-              Serving Dallas–Fort Worth Metroplex
+              Serving {site.serviceArea}
             </span>
             <span className="flex items-center gap-2">
               <span
@@ -90,9 +91,9 @@ export function HeaderClient({ navigation }: HeaderClientProps) {
           aria-label="Main navigation"
           className="mx-auto flex h-[76px] max-w-[1320px] items-center justify-between gap-4 px-5 sm:px-6 lg:px-8 xl:px-10"
         >
-          <Logo theme="dark" />
+          <Logo siteName={site.name} />
 
-          <DesktopNav navigation={navigation} />
+          <DesktopNav navigation={navigation} site={site} />
 
           {/* Desktop actions */}
           <div className="hidden items-center gap-4 lg:flex">
@@ -116,7 +117,7 @@ export function HeaderClient({ navigation }: HeaderClientProps) {
           <div className="flex items-center gap-2 lg:hidden">
             <a
               href={site.phoneHref}
-              aria-label={`Call Fred's Plumbing at ${site.phone}`}
+              aria-label={`Call ${site.name} at ${site.phone}`}
               className="flex size-11 items-center justify-center rounded-xl bg-red-600 text-white transition-colors hover:bg-red-500"
             >
               <Phone aria-hidden="true" className="size-5" />
@@ -139,6 +140,7 @@ export function HeaderClient({ navigation }: HeaderClientProps) {
         open={mobileOpen}
         onClose={() => setMobileOpen(false)}
         navigation={navigation}
+        site={site}
       />
     </header>
   );

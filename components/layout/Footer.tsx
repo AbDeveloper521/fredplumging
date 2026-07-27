@@ -1,23 +1,19 @@
 import Link from "next/link";
 import { Clock, Mail, MapPin, Phone } from "lucide-react";
-import { footerNavigation } from "@/data/navigation";
-import { site } from "@/data/site";
+import { getSite } from "@/sanity/lib/getSite";
+import { getFooterNavigation } from "@/sanity/lib/getFooterNavigation";
 import { Logo } from "@/components/ui/Logo";
 import { Container } from "@/components/ui/Container";
 
-const columns = [
-  { heading: "Services", links: footerNavigation.services },
-  { heading: "Industries", links: footerNavigation.industries },
-  { heading: "Company", links: footerNavigation.company },
-];
-
-export function Footer() {
+export async function Footer() {
+  const [site, footer] = await Promise.all([getSite(), getFooterNavigation()]);
+  const columns = footer.columns;
   return (
     <footer className="bg-navy-950 text-grey-300">
       <Container className="grid grid-cols-1 gap-12 py-16 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr_1.2fr] lg:gap-8 lg:py-20">
         {/* Brand */}
         <div className="sm:col-span-2 lg:col-span-1">
-          <Logo theme="dark" />
+          <Logo siteName={site.name} />
           <p className="mt-5 max-w-xs text-[15px] leading-relaxed">
             Commercial and multi-family plumbing specialists serving property
             managers and facilities across the Dallas–Fort Worth Metroplex
@@ -26,7 +22,7 @@ export function Footer() {
           <div className="mt-6 flex gap-3">
             <a
               href="https://www.facebook.com"
-              aria-label="Fred's Plumbing on Facebook"
+              aria-label={`${site.name} on Facebook`}
               className="flex size-10 items-center justify-center rounded-lg border border-white/12 transition-colors hover:border-red-500 hover:text-white"
             >
               <svg
@@ -40,7 +36,7 @@ export function Footer() {
             </a>
             <a
               href="https://www.linkedin.com"
-              aria-label="Fred's Plumbing on LinkedIn"
+              aria-label={`${site.name} on LinkedIn`}
               className="flex size-10 items-center justify-center rounded-lg border border-white/12 transition-colors hover:border-red-500 hover:text-white"
             >
               <svg
@@ -63,7 +59,7 @@ export function Footer() {
             </h2>
             <ul className="mt-5 space-y-3">
               {column.links.map((link) => (
-                <li key={link.label}>
+                <li key={link._key}>
                   <Link
                     href={link.href}
                     className="text-[15px] transition-colors hover:text-white"
@@ -102,7 +98,7 @@ export function Footer() {
             </li>
             <li className="flex items-center gap-3">
               <MapPin aria-hidden="true" className="size-4 shrink-0 text-red-500" />
-              Dallas–Fort Worth Metroplex
+              {site.serviceArea}
             </li>
             <li className="flex items-start gap-3">
               <Clock aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-red-500" />
@@ -126,8 +122,8 @@ export function Footer() {
             · Licensed &amp; Insured · TX Master Plumber License
           </p>
           <ul className="flex flex-wrap items-center gap-x-6 gap-y-2">
-            {footerNavigation.legal.map((link) => (
-              <li key={link.label}>
+            {footer.legal.map((link) => (
+              <li key={link._key}>
                 <Link href={link.href} className="transition-colors hover:text-white">
                   {link.label}
                 </Link>

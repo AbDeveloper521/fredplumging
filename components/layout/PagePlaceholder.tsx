@@ -1,6 +1,6 @@
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
-import { site } from "@/data/site";
+import { getSite } from "@/sanity/lib/getSite";
 
 interface PagePlaceholderProps {
   eyebrow: string;
@@ -12,12 +12,16 @@ interface PagePlaceholderProps {
  * Shared shell for routes that exist in the navigation but have no content
  * written yet. Header and footer come from the root layout; this supplies the
  * dark hero band and a short holding paragraph.
+ *
+ * Async on purpose: it fetches site settings itself so the ~16 placeholder
+ * pages that render it don't each need to become async and thread props.
  */
-export function PagePlaceholder({
+export async function PagePlaceholder({
   eyebrow,
   title,
   description,
 }: PagePlaceholderProps) {
+  const site = await getSite();
   return (
     <>
       <section
@@ -31,7 +35,7 @@ export function PagePlaceholder({
         />
         <div
           aria-hidden="true"
-          className="absolute inset-0 bg-[radial-gradient(ellipse_50%_45%_at_85%_80%,rgb(217_39_46/0.16),transparent_65%)]"
+          className="absolute inset-0 bg-[radial-gradient(ellipse_50%_45%_at_85%_80%,rgb(211_33_39/0.16),transparent_65%)]"
         />
 
         <Container className="relative pt-[120px] pb-16 lg:pt-[190px] lg:pb-24">

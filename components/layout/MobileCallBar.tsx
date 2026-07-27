@@ -1,8 +1,9 @@
 import { Phone } from "lucide-react";
-import { site } from "@/data/site";
+import { getSite } from "@/sanity/lib/getSite";
 
 /** Sticky bottom emergency call bar — mobile and tablet only. */
-export function MobileCallBar() {
+export async function MobileCallBar() {
+  const site = await getSite();
   return (
     <div className="fixed inset-x-0 bottom-0 z-40 border-t border-white/10 bg-navy-950/95 backdrop-blur-md lg:hidden">
       <div className="mx-auto flex h-[68px] max-w-[1320px] items-center justify-between gap-4 px-5">

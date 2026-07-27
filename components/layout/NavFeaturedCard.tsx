@@ -1,8 +1,9 @@
-import { site } from "@/data/site";
+import type { SiteContent } from "@/data/site";
 import { Button } from "@/components/ui/Button";
 import { cn } from "@/lib/utils";
 
 interface NavFeaturedCardProps {
+  site: SiteContent;
   className?: string;
   onNavigate?: () => void;
 }
@@ -11,7 +12,7 @@ interface NavFeaturedCardProps {
  * Emergency-dispatch conversion card shared by the desktop mega panels and
  * the mobile menu. Pure markup — safe inside any client tree.
  */
-export function NavFeaturedCard({ className, onNavigate }: NavFeaturedCardProps) {
+export function NavFeaturedCard({ site, className, onNavigate }: NavFeaturedCardProps) {
   return (
     <div
       className={cn(

@@ -1,19 +1,20 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { Building2, Check, ChevronDown } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
 import { ImagePlaceholder } from "@/components/ui/ImagePlaceholder";
-import { industries } from "@/data/industries";
+import { industryHref, type Industry } from "@/data/industries";
 import { cn } from "@/lib/utils";
 
-export function IndustriesSection() {
+export function IndustriesSection({ industries }: { industries: Industry[] }) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [openAccordion, setOpenAccordion] = useState<number | null>(0);
-  const active = industries[activeIndex];
+  const active = industries[Math.min(activeIndex, industries.length - 1)];
 
   return (
     <section
@@ -89,8 +90,18 @@ export function IndustriesSection() {
             aria-labelledby={`industry-tab-${active.slug}`}
             className="overflow-hidden rounded-2xl bg-white shadow-(--shadow-card)"
           >
-            <div className="h-60 overflow-hidden">
-              <ImagePlaceholder label={active.imageAlt} icon={Building2} showCaption={false} />
+            <div className="relative h-60 overflow-hidden">
+              {active.photo ? (
+                <Image
+                  src={active.photo.url}
+                  alt={active.photo.alt}
+                  fill
+                  sizes="(min-width: 1024px) 55vw, 100vw"
+                  className="object-cover"
+                />
+              ) : (
+                <ImagePlaceholder label={active.imageAlt} icon={Building2} showCaption={false} />
+              )}
             </div>
             <div className="p-8 lg:p-10">
               <h3 className="text-2xl font-extrabold tracking-tight text-navy-900">
@@ -109,7 +120,7 @@ export function IndustriesSection() {
                 ))}
               </ul>
               <div className="mt-8">
-                <Button href={active.href} variant="dark" withArrow>
+                <Button href={industryHref(active.slug)} variant="dark" withArrow>
                   Explore {active.title}
                 </Button>
               </div>
@@ -168,7 +179,7 @@ export function IndustriesSection() {
                         ))}
                       </ul>
                       <div className="mt-5">
-                        <Button href={industry.href} variant="dark" withArrow className="w-full">
+                        <Button href={industryHref(industry.slug)} variant="dark" withArrow className="w-full">
                           Explore {industry.title}
                         </Button>
                       </div>
