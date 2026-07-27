@@ -78,6 +78,8 @@ export interface ProcessStepsSection extends SectionBase {
   _type: "processSteps";
   heading: string;
   steps: Array<{ _key: string; title: string; description: string }>;
+  /** Section background — defaults to the dark navy band. */
+  background?: "dark" | "white";
 }
 
 export interface ComparisonTableSection extends SectionBase {

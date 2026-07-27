@@ -150,6 +150,7 @@ export type ProcessSteps = {
     _type: "step";
     _key: string;
   }>;
+  background?: "dark" | "white";
 };
 
 export type SignsYouNeed = {
@@ -967,6 +968,7 @@ export type SERVICE_BY_SLUG_QUERY_RESULT = {
           _type: "step";
           _key: string;
         }>;
+        background?: "dark" | "white";
         photo: null;
         photoPrimary: null;
         photoSecondary: null;
@@ -1327,6 +1329,7 @@ export type INDUSTRY_BY_SLUG_QUERY_RESULT = {
           _type: "step";
           _key: string;
         }>;
+        background?: "dark" | "white";
         photo: null;
         photoPrimary: null;
         photoSecondary: null;

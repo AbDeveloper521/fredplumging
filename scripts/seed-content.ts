@@ -2437,6 +2437,324 @@ function assistedLivingSections() {
   ];
 }
 
+/**
+ * Section stack for /multifamily/nursing-homes. Sibling to assisted-living
+ * with a distinct emphasis: clinical-environment OPERATIONS (24/7 facility
+ * rhythm, sanitation adjacency, zero water/sanitation downtime) vs.
+ * assisted-living's resident-home sensitivity. Hard rules: never imply
+ * clinical/medical/infection-control expertise — the facility runs its own
+ * protocols, we keep water and drainage working; NO mention of medical gas
+ * anywhere (separately certified trade); no named regulations or agencies.
+ */
+function nursingHomesSections() {
+  return [
+    {
+      _type: "serviceHero",
+      _key: "seed-hero",
+      eyebrow: "FRED'S PLUMBING",
+      heading: "Nursing Home Plumbing Services In The Dallas Fort Worth Metroplex",
+      subheading:
+        "Skilled nursing facilities never close — so their plumbing can't either. Fred's Plumbing works inside operating clinical environments with the planning, containment, and documentation that setting demands.",
+      secondaryCtaLabel: "Schedule a Facility Walkthrough",
+      secondaryCtaHref: "/contact",
+      credentials: [
+        { _type: "credential", _key: "seed-cred-1", icon: "shield-check", label: "Licensed & Insured" },
+        { _type: "credential", _key: "seed-cred-2", icon: "map-pin", label: "Serving DFW Since 1996" },
+        { _type: "credential", _key: "seed-cred-3", icon: "clock", label: "24/7 Emergency Response" },
+      ],
+      photoSubject:
+        "Bright, clean corridor of a modern care facility, unoccupied — vertical orientation",
+    },
+    {
+      _type: "serviceAbout",
+      _key: "seed-about",
+      heading: "Trusted Plumbing Specialists For Nursing Homes Since 1996",
+      paragraphs: [
+        "Fred's Plumbing has supported nursing homes and skilled care facilities throughout the Dallas Fort Worth Metroplex for nearly thirty years. Our team is trained to work in environments where sanitation, safety, and reliability are vital.",
+        "We provide high quality service supported by advanced equipment, experienced technicians, and a commitment to protecting residents. From preventive maintenance to urgent repairs, we deliver solutions that keep your facility operating safely and efficiently.",
+      ],
+      ctaLabel: "Talk to Our Team",
+      ctaHref: "/contact",
+      photoSubjectPrimary:
+        "Commercial-grade water heaters and mixing valves in a facility mechanical room",
+      photoSubjectSecondary: "The Fred's Plumbing crew in front of a branded van",
+    },
+    {
+      _type: "whatsIncluded",
+      _key: "seed-included",
+      heading: "Reliable Plumbing Services In Dallas & Fort Worth",
+      intro:
+        "Every service below is available to skilled nursing facilities — each links to the full detail:",
+      items: [
+        {
+          _type: "item",
+          _key: "seed-inc-1",
+          icon: "wrench",
+          title: "Plumbing",
+          description:
+            "From routine maintenance to full system installations, our licensed team handles all types of plumbing projects for commercial and multi-family buildings across DFW.",
+          href: "/services/plumbing",
+        },
+        {
+          _type: "item",
+          _key: "seed-inc-2",
+          icon: "waves",
+          title: "Drain & Sewer",
+          description:
+            "Professional drain cleaning, hydro jetting, and sewer line repair to prevent backups and keep your property's systems flowing smoothly.",
+          href: "/services/drain-sewer",
+        },
+        {
+          _type: "item",
+          _key: "seed-inc-3",
+          icon: "cog",
+          title: "Specialty Services",
+          description:
+            "Boiler systems, backflow, gas, and advanced diagnostics for complex plumbing challenges.",
+          href: "/services/specialty-services",
+        },
+        {
+          _type: "item",
+          _key: "seed-inc-4",
+          icon: "calendar-check",
+          title: "Maintenance",
+          description:
+            "Scheduled maintenance plans designed to protect your infrastructure and ensure compliance with local codes.",
+          href: "/services/maintenance",
+        },
+        {
+          _type: "item",
+          _key: "seed-inc-5",
+          icon: "siren",
+          title: "Emergency Plumbing",
+          description:
+            "Available 24/7 for burst pipes, leaks, and urgent repairs — immediate response when your tenants or facilities need it most.",
+          href: "/services/emergency-plumbing",
+        },
+        {
+          _type: "item",
+          _key: "seed-inc-6",
+          icon: "heart-pulse",
+          title: "Senior Care Facility Plumbing",
+          description:
+            "The technical detail: fixtures, systems, and compliance work specific to senior living and care environments.",
+          href: "/services/senior-care-facilities",
+        },
+      ],
+    },
+    {
+      // The centerpiece: environment fluency, zero bracketed facts.
+      _type: "comparisonTable",
+      _key: "seed-table",
+      heading: "The Same Job Is a Different Job in a Skilled Nursing Facility",
+      background: "dark",
+      columnLabels: [
+        "The Job",
+        "In a Standard Building",
+        "In a Skilled Nursing Facility — How We Do It",
+      ],
+      rows: [
+        {
+          _type: "row",
+          _key: "seed-row-1",
+          situation: "A planned water shutoff",
+          recommendation: "Post a notice, shut it off",
+          why: "Windowed with nursing leadership around care schedules, announced to staff, and kept as short as the work allows",
+        },
+        {
+          _type: "row",
+          _key: "seed-row-2",
+          situation: "Repairing a resident-room fixture",
+          recommendation: "Enter, repair, leave",
+          why: "Coordinated with the charge nurse, work area contained, resident privacy and routines respected throughout",
+        },
+        {
+          _type: "row",
+          _key: "seed-row-3",
+          situation: "A drain backup in a common area",
+          recommendation: "Clear it during business hours",
+          why: "Treated as a sanitation priority — contained immediately, cleared, and documented for the facility's records",
+        },
+        {
+          _type: "row",
+          _key: "seed-row-4",
+          situation: "Water heater maintenance",
+          recommendation: "Schedule when convenient",
+          why: "Planned so hot water — bathing, dietary, laundry — is never interrupted facility-wide",
+        },
+        {
+          _type: "row",
+          _key: "seed-row-5",
+          situation: "Noisy work (cutting, jetting)",
+          recommendation: "Whenever the crew arrives",
+          why: "Scheduled for the windows your administrators choose, away from rest hours",
+        },
+      ],
+      footnote:
+        "None of this is extra. It's what working in a building that's also a home and a care setting requires — and it's how Fred's Plumbing works by default.",
+    },
+    {
+      _type: "processSteps",
+      _key: "seed-process",
+      heading: "How a Facility Engagement Runs",
+      background: "white",
+      steps: [
+        {
+          _type: "step",
+          _key: "seed-step-1",
+          title: "Walk the Facility First",
+          description:
+            "We document your mechanical systems, shutoff locations, and access constraints before any work is needed — so an emergency call starts with a map, not a search.",
+        },
+        {
+          _type: "step",
+          _key: "seed-step-2",
+          title: "Plan With Administration",
+          description:
+            "Every planned job is scheduled with your administrator or maintenance director around the facility's rhythm.",
+        },
+        {
+          _type: "step",
+          _key: "seed-step-3",
+          title: "Contain, Work, Restore",
+          description:
+            "Work areas are protected and signed, corridors stay clear, and spaces return to service the same visit wherever possible.",
+        },
+        {
+          _type: "step",
+          _key: "seed-step-4",
+          title: "Document for Your File",
+          description:
+            "Written records of every job [SURVEY-DOCUMENTATION SPECIFICS — client to confirm], so plumbing is a closed file when surveyors arrive.",
+        },
+      ],
+    },
+    {
+      _type: "serviceTrust",
+      _key: "seed-trust",
+      heading: "Why Choose Us For Nursing Home Plumbing Services",
+      items: [
+        {
+          _type: "item",
+          _key: "seed-trust-1",
+          icon: "stethoscope",
+          title: "Senior Care Experience",
+          description:
+            "Our technicians understand the needs of nursing homes and deliver solutions that support resident safety and facility operations.",
+        },
+        {
+          _type: "item",
+          _key: "seed-trust-2",
+          icon: "clock",
+          title: "Fast Response Times",
+          description:
+            "We respond quickly to prevent disruptions to care routines and maintain sanitary living environments.",
+        },
+        {
+          _type: "item",
+          _key: "seed-trust-3",
+          icon: "award",
+          title: "Long Lasting Repairs",
+          description:
+            "Every repair is completed with accuracy to ensure reliable system performance and reduced downtime.",
+        },
+      ],
+      showLogos: true,
+    },
+    {
+      _type: "serviceFaq",
+      _key: "seed-faq",
+      heading: "Nursing Home Plumbing Questions, Answered",
+      background: "white",
+      faqs: [
+        {
+          // Pricing half of the specified answer is UNCONFIRMED — per the
+          // brief's conditional, the answer ends after "facility rhythm."
+          // until the client confirms the after-hours policy.
+          _type: "faq",
+          _key: "seed-faq-1",
+          question: "Can you work in a facility that never closes?",
+          answer:
+            "Yes — that's the defining condition of this work. Fred's Plumbing plans every job around a 24/7 facility rhythm.",
+        },
+        {
+          _type: "faq",
+          _key: "seed-faq-2",
+          question: "How do you handle a sanitation emergency like a sewage backup?",
+          answer:
+            "As a priority dispatch. The area is contained first, cleared, and documented — Fred's Plumbing handles the plumbing side while your staff applies the facility's own protocols.",
+        },
+        {
+          // Drop this question entirely if the client won't answer,
+          // as on the assisted-living page.
+          _type: "faq",
+          _key: "seed-faq-3",
+          question: "Are your technicians screened for work in care facilities?",
+          answer:
+            "[SCREENING POLICY — client to confirm; drop this question entirely if unanswered, as on the assisted-living page.]",
+        },
+        {
+          _type: "faq",
+          _key: "seed-faq-4",
+          question: "Can you keep hot water running during water heater work?",
+          answer:
+            "That's the plan every time. Phased work, temporary capacity where needed, and scheduling that protects bathing, dietary, and laundry operations.",
+        },
+        {
+          _type: "faq",
+          _key: "seed-faq-5",
+          question: "Do you serve assisted living and memory care too?",
+          answer:
+            "Yes. Fred's Plumbing serves the full range of senior living communities across DFW.",
+          href: "/multifamily/assisted-living",
+          linkLabel: "See Assisted Living Plumbing",
+        },
+      ],
+    },
+    {
+      _type: "propertyTypes",
+      _key: "seed-siblings",
+      heading: "Other Properties We Serve",
+      background: "offwhite",
+      cards: [
+        {
+          _type: "card",
+          _key: "seed-sib-1",
+          icon: "heart-handshake",
+          title: "Assisted Living",
+          blurb: "Code-sensitive work completed around residents who can't relocate.",
+          slug: "assisted-living",
+        },
+        {
+          _type: "card",
+          _key: "seed-sib-2",
+          icon: "building",
+          title: "Apartments",
+          blurb: "High-occupancy systems, unit-turn plumbing, and building-wide maintenance.",
+          slug: "apartments",
+        },
+        {
+          _type: "card",
+          _key: "seed-sib-3",
+          icon: "hotel",
+          title: "Condos",
+          blurb: "HOA-ready documentation and owner-coordinated scheduling.",
+          slug: "condos",
+        },
+      ],
+    },
+    {
+      _type: "finalCta",
+      _key: "seed-final",
+      heading: "Your Facility Doesn't Stop. Neither Do We.",
+      body:
+        "Planned with your staff, contained, documented, and answered around the clock — one plumbing contractor for skilled nursing facilities across DFW.",
+      secondaryCtaLabel: "Request a Quote",
+      secondaryCtaHref: "/contact",
+    },
+  ];
+}
+
 /** Per-slug section stacks + SEO overrides for industry pages. */
 const INDUSTRY_EXTRAS: Record<
   string,
@@ -2459,6 +2777,12 @@ const INDUSTRY_EXTRAS: Record<
     seoTitle: "Assisted Living Plumbing in DFW | Fred's Plumbing",
     seoDescription:
       "Assisted living plumbing across Dallas–Fort Worth — scheduled around care routines, contained work areas, and documented for your facility file. Answered 24/7.",
+  },
+  "nursing-homes": {
+    sections: nursingHomesSections,
+    seoTitle: "Nursing Home Plumbing in DFW | Fred's Plumbing",
+    seoDescription:
+      "Nursing home plumbing across Dallas–Fort Worth — planned around 24/7 skilled nursing operations, sanitation-priority response, and documented for surveys.",
   },
 };
 

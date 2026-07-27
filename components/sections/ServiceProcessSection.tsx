@@ -1,6 +1,7 @@
 import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import { cn } from "@/lib/utils";
 import type { ProcessStepsSection as ProcessData } from "@/data/serviceSections";
 
 interface ServiceProcessSectionProps {
@@ -9,28 +10,35 @@ interface ServiceProcessSectionProps {
 }
 
 /**
- * Numbered timeline on a dark band: red numbered circles joined by a
- * connecting line on desktop, stacked with a vertical rail on mobile.
- * (No grid overlay here — the page's .bg-grid budget goes to the hero,
- * what's-included, and final CTA.)
+ * Numbered timeline: red numbered circles joined by a connecting line on
+ * desktop, stacked with a vertical rail on mobile. Background configurable
+ * (dark navy default, white variant styled after the homepage process
+ * section). Neither variant carries a grid overlay — the page's .bg-grid
+ * budget goes to the hero, what's-included, and final CTA.
  */
 export function ServiceProcessSection({ section, id }: ServiceProcessSectionProps) {
+  const dark = section.background !== "white";
   return (
     <section
       id={id}
       aria-labelledby={`${id}-heading`}
-      className="relative isolate overflow-hidden bg-navy-900 py-16 sm:py-24 lg:py-28"
+      className={cn(
+        "relative isolate overflow-hidden py-16 sm:py-24 lg:py-28",
+        dark ? "bg-navy-900" : "bg-white",
+      )}
     >
-      <div
-        aria-hidden="true"
-        className="absolute inset-0 bg-[radial-gradient(ellipse_55%_60%_at_15%_20%,rgb(27_48_73/0.9),transparent_65%)]"
-      />
+      {dark && (
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 bg-[radial-gradient(ellipse_55%_60%_at_15%_20%,rgb(27_48_73/0.9),transparent_65%)]"
+        />
+      )}
       <Container className="relative">
         <Reveal>
           <SectionHeading
             titleId={`${id}-heading`}
             title={section.heading}
-            theme="dark"
+            theme={dark ? "dark" : "light"}
             align="center"
           />
         </Reveal>
@@ -39,7 +47,12 @@ export function ServiceProcessSection({ section, id }: ServiceProcessSectionProp
           {/* Connecting line — desktop */}
           <div
             aria-hidden="true"
-            className="absolute top-7 right-[12.5%] left-[12.5%] hidden h-px bg-gradient-to-r from-white/10 via-red-500/60 to-white/10 lg:block"
+            className={cn(
+              "absolute top-7 right-[12.5%] left-[12.5%] hidden h-px lg:block",
+              dark
+                ? "bg-gradient-to-r from-white/10 via-red-500/60 to-white/10"
+                : "bg-gradient-to-r from-grey-300 via-red-500/50 to-grey-300",
+            )}
           />
           <ol className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
             {section.steps.map((step, i) => (
@@ -48,7 +61,10 @@ export function ServiceProcessSection({ section, id }: ServiceProcessSectionProp
                 {i < section.steps.length - 1 && (
                   <div
                     aria-hidden="true"
-                    className="absolute top-16 left-7 h-[calc(100%-2.5rem)] w-px bg-white/15 lg:hidden"
+                    className={cn(
+                      "absolute top-16 left-7 h-[calc(100%-2.5rem)] w-px lg:hidden",
+                      dark ? "bg-white/15" : "bg-grey-300",
+                    )}
                   />
                 )}
                 <Reveal
@@ -61,10 +77,20 @@ export function ServiceProcessSection({ section, id }: ServiceProcessSectionProp
                     </span>
                   </div>
                   <div className="lg:mt-6">
-                    <h3 className="text-lg font-bold tracking-tight text-white">
+                    <h3
+                      className={cn(
+                        "text-lg font-bold tracking-tight",
+                        dark ? "text-white" : "text-navy-900",
+                      )}
+                    >
                       {step.title}
                     </h3>
-                    <p className="mt-2 text-[15px] leading-relaxed text-grey-300">
+                    <p
+                      className={cn(
+                        "mt-2 text-[15px] leading-relaxed",
+                        dark ? "text-grey-300" : "text-grey-500",
+                      )}
+                    >
                       {step.description}
                     </p>
                   </div>

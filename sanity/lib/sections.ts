@@ -154,7 +154,13 @@ function toSection(raw: Raw, index: number): ServiceSection | null {
           : null;
       });
       if (steps.length === 0) return null;
-      return { _type: "processSteps", _key, heading, steps };
+      return {
+        _type: "processSteps",
+        _key,
+        heading,
+        steps,
+        background: choice(raw.background, ["dark", "white"] as const),
+      };
     }
     case "comparisonTable": {
       const rows = children(raw.rows, (c, i) => {

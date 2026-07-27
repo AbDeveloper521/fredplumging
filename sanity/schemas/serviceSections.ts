@@ -397,6 +397,19 @@ export const processSteps = defineType({
       ],
       validation: (rule) => rule.required().min(2).error("A process needs at least two steps."),
     }),
+    defineField({
+      name: "background",
+      title: "Background",
+      description:
+        "Which band this section sits on. Pick to keep the page alternating light and dark.",
+      type: "string",
+      options: {
+        list: [
+          { title: "Dark navy (default)", value: "dark" },
+          { title: "White", value: "white" },
+        ],
+      },
+    }),
   ],
   preview: {
     select: { heading: "heading", steps: "steps" },
