@@ -1819,6 +1819,316 @@ function apartmentsSections() {
   ];
 }
 
+/**
+ * Section stack for /multifamily/condos. Audience: HOA boards, association
+ * managers, management companies. The governance split (association vs.
+ * owner responsibility) is the centerpiece. Copy constraint: never assert
+ * what any specific association's documents say — "typically", "in most
+ * communities", and "your governing documents determine" are load-bearing.
+ * We diagnose systems; we do not interpret CC&Rs.
+ */
+function condosSections() {
+  return [
+    {
+      _type: "serviceHero",
+      _key: "seed-hero",
+      eyebrow: "FRED'S PLUMBING",
+      heading: "Condo Plumbing Services In The Dallas Fort Worth Metroplex",
+      subheading:
+        "From association-owned mains to in-unit repairs, Fred's Plumbing gives condo communities across DFW one accountable contractor — with the documentation your board needs for every job.",
+      secondaryCtaLabel: "Get an Association Quote",
+      secondaryCtaHref: "/contact",
+      credentials: [
+        { _type: "credential", _key: "seed-cred-1", icon: "shield-check", label: "Licensed & Insured" },
+        { _type: "credential", _key: "seed-cred-2", icon: "map-pin", label: "Serving DFW Since 1996" },
+        { _type: "credential", _key: "seed-cred-3", icon: "clock", label: "24/7 Emergency Response" },
+      ],
+      photoSubject:
+        "Exterior of a modern condo tower with balconies at dusk — vertical orientation",
+    },
+    {
+      _type: "signsYouNeed",
+      _key: "seed-signs",
+      heading: "Problems Condo Boards Bring Us Most",
+      cards: [
+        {
+          _type: "card",
+          _key: "seed-sign-1",
+          icon: "droplets",
+          question: "Is a leak crossing between units?",
+          answer:
+            "Water from one unit damaging another is the classic condo dispute. Fred's Plumbing locates the source, documents which system it belongs to, and gives the board a written finding both owners can rely on.",
+        },
+        {
+          _type: "card",
+          _key: "seed-sign-2",
+          icon: "shield-check",
+          question: "Are owners disputing whose repair it is?",
+          answer:
+            "Most fights end when the diagnosis is clear. A camera inspection and a written scope establish whether the failure sits in the shared line or the unit branch.",
+        },
+        {
+          _type: "card",
+          _key: "seed-sign-3",
+          icon: "wrench",
+          question: "Is the association's aging riser or main overdue?",
+          answer:
+            "Original systems in 1980s–90s buildings fail on their own schedule. A phased replacement plan lets the board budget reserves instead of levying a surprise assessment.",
+        },
+        {
+          _type: "card",
+          _key: "seed-sign-4",
+          icon: "award",
+          question: "Did an inspection or insurer flag your plumbing?",
+          answer:
+            "Fred's Plumbing completes the flagged work and delivers the documentation your insurer or inspector wants to see — closed out, in writing.",
+        },
+      ],
+      ctaLabel: "Describe Your Issue — Get a Callback",
+      ctaHref: "/contact",
+    },
+    {
+      _type: "whatsIncluded",
+      _key: "seed-included",
+      heading: "Reliable Plumbing Services In Dallas & Fort Worth",
+      intro:
+        "Every service below is available to condo communities — each links to the full detail:",
+      items: [
+        {
+          _type: "item",
+          _key: "seed-inc-1",
+          icon: "wrench",
+          title: "Plumbing",
+          description:
+            "From routine maintenance to full system installations, our licensed team handles all types of plumbing projects for commercial and multi-family buildings across DFW.",
+          href: "/services/plumbing",
+        },
+        {
+          _type: "item",
+          _key: "seed-inc-2",
+          icon: "waves",
+          title: "Drain & Sewer",
+          description:
+            "Professional drain cleaning, hydro jetting, and sewer line repair to prevent backups and keep your property's systems flowing smoothly.",
+          href: "/services/drain-sewer",
+        },
+        {
+          _type: "item",
+          _key: "seed-inc-3",
+          icon: "cog",
+          title: "Specialty Services",
+          description:
+            "Boiler systems, backflow, gas, and advanced diagnostics for complex plumbing challenges.",
+          href: "/services/specialty-services",
+        },
+        {
+          _type: "item",
+          _key: "seed-inc-4",
+          icon: "calendar-check",
+          title: "Maintenance",
+          description:
+            "Scheduled maintenance plans designed to protect your infrastructure and ensure compliance with local codes.",
+          href: "/services/maintenance",
+        },
+        {
+          _type: "item",
+          _key: "seed-inc-5",
+          icon: "siren",
+          title: "Emergency Plumbing",
+          description:
+            "Available 24/7 for burst pipes, leaks, and urgent repairs — immediate response when your tenants or facilities need it most.",
+          href: "/services/emergency-plumbing",
+        },
+        {
+          _type: "item",
+          _key: "seed-inc-6",
+          icon: "building-2",
+          title: "Common-Area & Amenity Plumbing",
+          description:
+            "Pool equipment rooms, clubhouses, fitness centers, and shared laundry — the association-owned spaces owners actually see.",
+          href: "/services/commercial-plumbing",
+        },
+      ],
+    },
+    {
+      // The centerpiece. The "typically / your governing documents" framing
+      // appears in BOTH intro and footer by design — do not remove either.
+      _type: "comparisonTable",
+      _key: "seed-table",
+      heading: "Association or Owner? Where Responsibility Usually Falls",
+      intro:
+        "Every association's governing documents differ — but in most DFW condo communities, the split looks like this:",
+      background: "dark",
+      columnLabels: ["System", "Typically Maintained By", "What Fred's Plumbing Provides"],
+      rows: [
+        {
+          _type: "row",
+          _key: "seed-row-1",
+          situation: "Building mains, risers & shared drains",
+          recommendation: "The association",
+          why: "Inspection, repair, and replacement planning, invoiced to the association",
+        },
+        {
+          _type: "row",
+          _key: "seed-row-2",
+          situation: "In-unit branch lines, fixtures & water heaters",
+          recommendation: "The unit owner",
+          why: "Direct-to-owner service with documentation the board can keep on file",
+        },
+        {
+          _type: "row",
+          _key: "seed-row-3",
+          situation: "The line BETWEEN shared and unit systems",
+          recommendation: "Depends on your governing documents",
+          why: "A written diagnosis of where the failure sits — the evidence both sides need",
+        },
+        {
+          _type: "row",
+          _key: "seed-row-4",
+          situation: "Common-area amenities (pool, clubhouse, laundry)",
+          recommendation: "The association",
+          why: "Scheduled maintenance and repair as part of an association program",
+        },
+      ],
+      footnote:
+        "Fred's Plumbing documents which system a failure belongs to — your governing documents determine who pays. We provide the facts; your board applies the rules.",
+    },
+    {
+      _type: "serviceAbout",
+      _key: "seed-about",
+      heading: "Trusted Plumbing Experts For Condo Communities Since 1996",
+      paragraphs: [
+        "Fred's Plumbing has supported condo communities in the Dallas Fort Worth Metroplex for nearly thirty years. Our technicians are trained to handle both individual unit concerns and complex building wide plumbing systems.",
+        "We are committed to delivering high quality service backed by advanced tools, professional experience, and a strong focus on resident comfort. Whether your community needs routine maintenance, emergency repair, or system upgrades, our team is prepared to provide reliable and efficient support.",
+      ],
+      ctaLabel: "Talk to Our Team",
+      ctaHref: "/contact",
+      photoSubjectPrimary: "Condo building courtyard with pool at dusk",
+      photoSubjectSecondary: "The Fred's Plumbing crew in front of a branded van",
+    },
+    {
+      _type: "serviceTrust",
+      _key: "seed-trust",
+      heading: "Why Choose Us For Condo Plumbing Services",
+      items: [
+        {
+          _type: "item",
+          _key: "seed-trust-1",
+          icon: "building-2",
+          title: "Expert Support For Shared Systems",
+          description:
+            "Our team understands the plumbing structure of condo communities and provides solutions that protect both individual units and common areas.",
+        },
+        {
+          _type: "item",
+          _key: "seed-trust-2",
+          icon: "clock",
+          title: "Prompt And Efficient Response",
+          description:
+            "We act quickly to limit water damage, reduce inconvenience, and maintain resident satisfaction throughout the community.",
+        },
+        {
+          _type: "item",
+          _key: "seed-trust-3",
+          icon: "award",
+          title: "Quality Driven Repairs",
+          description:
+            "Every repair and service is completed with precision to ensure long term reliability and reduced maintenance needs.",
+        },
+      ],
+      showLogos: true,
+    },
+    {
+      _type: "serviceFaq",
+      _key: "seed-faq",
+      heading: "Condo Plumbing Questions, Answered",
+      background: "white",
+      faqs: [
+        {
+          _type: "faq",
+          _key: "seed-faq-1",
+          question: "Do you work for the association, the owner, or both?",
+          answer:
+            "Both. Fred's Plumbing serves associations for shared systems and individual owners for in-unit work — with separate invoicing and records, so the board's file stays clean.",
+        },
+        {
+          // Never asserts what any specific association's documents say.
+          _type: "faq",
+          _key: "seed-faq-2",
+          question:
+            "Can you tell us whether a leak is the HOA's responsibility or the owner's?",
+          answer:
+            "Fred's Plumbing determines which system failed and puts it in writing. Who pays is set by your governing documents — but the diagnosis is the evidence that settles most disputes.",
+        },
+        {
+          _type: "faq",
+          _key: "seed-faq-3",
+          question: "Do you provide reports our board can file?",
+          answer:
+            "Yes. Every job closes with written documentation — findings, work performed, and photos where useful — suitable for board minutes, insurers, and reserve planning.",
+        },
+        {
+          _type: "faq",
+          _key: "seed-faq-4",
+          question: "Can you help our board plan for aging plumbing?",
+          answer:
+            "Yes. Fred's Plumbing inspects the building's shared systems and provides a condition report with phased replacement options, so the reserve study reflects reality.",
+          href: "/services/maintenance",
+          linkLabel: "See Maintenance Programs",
+        },
+        {
+          _type: "faq",
+          _key: "seed-faq-5",
+          question: "How do you handle access to individually owned units?",
+          answer:
+            "Through your association's notice procedures. Fred's Plumbing coordinates scheduling with your manager, and technicians arrive uniformed, in marked vans, at the agreed windows.",
+        },
+      ],
+    },
+    {
+      _type: "propertyTypes",
+      _key: "seed-siblings",
+      heading: "Other Properties We Serve",
+      background: "offwhite",
+      cards: [
+        {
+          _type: "card",
+          _key: "seed-sib-1",
+          icon: "building",
+          title: "Apartments",
+          blurb: "High-occupancy systems, unit-turn plumbing, and building-wide maintenance.",
+          slug: "apartments",
+        },
+        {
+          _type: "card",
+          _key: "seed-sib-2",
+          icon: "heart-handshake",
+          title: "Assisted Living",
+          blurb: "Code-sensitive work completed around residents who can't relocate.",
+          slug: "assisted-living",
+        },
+        {
+          _type: "card",
+          _key: "seed-sib-3",
+          icon: "stethoscope",
+          title: "Nursing Homes",
+          blurb: "Health-code compliant plumbing with zero-downtime planning.",
+          slug: "nursing-homes",
+        },
+      ],
+    },
+    {
+      _type: "finalCta",
+      _key: "seed-final",
+      heading: "Give Your Board One Less Thing to Debate",
+      body:
+        "Shared systems, unit repairs, and the documentation that keeps everyone on the same page — one contractor for condo communities across DFW.",
+      secondaryCtaLabel: "Request a Quote",
+      secondaryCtaHref: "/contact",
+    },
+  ];
+}
+
 /** Per-slug section stacks + SEO overrides for industry pages. */
 const INDUSTRY_EXTRAS: Record<
   string,
@@ -1829,6 +2139,12 @@ const INDUSTRY_EXTRAS: Record<
     seoTitle: "Apartment Plumbing Services in DFW | Fred's Plumbing",
     seoDescription:
       "Apartment plumbing across Dallas–Fort Worth — Class A high-rises to garden-style communities. Unit turns, risers, mains, and 24/7 emergency response.",
+  },
+  condos: {
+    sections: condosSections,
+    seoTitle: "Condo & HOA Plumbing Services in DFW | Fred's Plumbing",
+    seoDescription:
+      "Condo plumbing for HOAs and associations across Dallas–Fort Worth — shared mains, in-unit repairs, and written documentation for every board file. 24/7.",
   },
 };
 

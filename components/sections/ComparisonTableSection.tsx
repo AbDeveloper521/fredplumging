@@ -1,6 +1,7 @@
 import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import { cn } from "@/lib/utils";
 import type { ComparisonTableSection as TableData } from "@/data/serviceSections";
 
 interface ComparisonTableSectionProps {
@@ -31,15 +32,36 @@ export function ComparisonTableSection({ section, id }: ComparisonTableSectionPr
   const useBadges = section.rows.every(
     (row) => row.recommendation.length <= BADGE_MAX_LENGTH,
   );
+  const dark = section.background === "dark";
   return (
-    <section id={id} aria-labelledby={`${id}-heading`} className="bg-white py-16 sm:py-24 lg:py-28">
-      <Container className="max-w-[1000px]">
+    <section
+      id={id}
+      aria-labelledby={`${id}-heading`}
+      className={cn(
+        "relative isolate overflow-hidden py-16 sm:py-24 lg:py-28",
+        dark ? "bg-navy-900" : "bg-white",
+      )}
+    >
+      {dark && <div aria-hidden="true" className="bg-grid-dark absolute inset-0" />}
+      <Container className="relative max-w-[1000px]">
         <Reveal>
-          <SectionHeading titleId={`${id}-heading`} title={section.heading} />
+          <SectionHeading
+            titleId={`${id}-heading`}
+            title={section.heading}
+            description={section.intro}
+            theme={dark ? "dark" : "light"}
+          />
         </Reveal>
 
         <Reveal delay={0.1}>
-          <div className="mt-10 overflow-x-auto rounded-2xl border border-grey-100 shadow-(--shadow-card)">
+          <div
+            className={cn(
+              "mt-10 overflow-x-auto rounded-2xl border",
+              dark
+                ? "border-white/10 bg-white"
+                : "border-grey-100 shadow-(--shadow-card)",
+            )}
+          >
             <table className="w-full min-w-[640px] border-collapse text-left">
               <thead>
                 <tr className="bg-navy-900">
@@ -89,7 +111,12 @@ export function ComparisonTableSection({ section, id }: ComparisonTableSectionPr
 
         {section.footnote && (
           <Reveal delay={0.16}>
-            <p className="mt-6 text-[15px] leading-relaxed text-grey-500">
+            <p
+              className={cn(
+                "mt-6 text-[15px] leading-relaxed",
+                dark ? "text-grey-300" : "text-grey-500",
+              )}
+            >
               {section.footnote}
             </p>
           </Reveal>

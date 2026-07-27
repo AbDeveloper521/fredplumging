@@ -415,6 +415,14 @@ export const comparisonTable = defineType({
   fields: [
     requiredString("heading", "Heading", "Section heading, e.g. “Repair or Replace? How We Advise Property Owners”.", "The section needs a heading."),
     defineField({
+      name: "intro",
+      title: "Line above the table (optional)",
+      description:
+        "One sentence framing the table, e.g. a “requirements vary” disclaimer. Leave empty for no intro.",
+      type: "text",
+      rows: 2,
+    }),
+    defineField({
       name: "columnLabels",
       title: "Column headings (optional)",
       description:
@@ -454,6 +462,19 @@ export const comparisonTable = defineType({
       description: "Optional single sentence under the table, e.g. how recommendations are decided.",
       type: "text",
       rows: 2,
+    }),
+    defineField({
+      name: "background",
+      title: "Background",
+      description:
+        "Which band this section sits on. Pick to keep the page alternating light and dark.",
+      type: "string",
+      options: {
+        list: [
+          { title: "White (default)", value: "white" },
+          { title: "Dark navy", value: "dark" },
+        ],
+      },
     }),
   ],
   preview: {

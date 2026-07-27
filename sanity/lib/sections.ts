@@ -175,6 +175,8 @@ function toSection(raw: Raw, index: number): ServiceSection | null {
         _type: "comparisonTable",
         _key,
         heading,
+        intro: str(raw.intro),
+        background: choice(raw.background, ["white", "dark"] as const),
         columnLabels:
           labels.length === 3
             ? (labels as [string, string, string])

@@ -83,6 +83,8 @@ export interface ProcessStepsSection extends SectionBase {
 export interface ComparisonTableSection extends SectionBase {
   _type: "comparisonTable";
   heading: string;
+  /** Optional framing sentence above the table (e.g. a disclaimer). */
+  intro?: string;
   /** Optional column headings — defaults to Situation | Typical Recommendation | Why. */
   columnLabels?: [string, string, string];
   rows: Array<{
@@ -92,6 +94,8 @@ export interface ComparisonTableSection extends SectionBase {
     why: string;
   }>;
   footnote?: string;
+  /** Section background — defaults to white. */
+  background?: "white" | "dark";
 }
 
 export interface ServiceTrustSection extends SectionBase {

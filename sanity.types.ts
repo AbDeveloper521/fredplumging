@@ -128,6 +128,7 @@ export type ServiceTrust = {
 export type ComparisonTable = {
   _type: "comparisonTable";
   heading?: string;
+  intro?: string;
   columnLabels?: Array<string>;
   rows?: Array<{
     situation?: string;
@@ -137,6 +138,7 @@ export type ComparisonTable = {
     _key: string;
   }>;
   footnote?: string;
+  background?: "white" | "dark";
 };
 
 export type ProcessSteps = {
@@ -927,6 +929,7 @@ export type SERVICE_BY_SLUG_QUERY_RESULT = {
         _key: string;
         _type: "comparisonTable";
         heading?: string;
+        intro?: string;
         columnLabels?: Array<string>;
         rows?: Array<{
           situation?: string;
@@ -936,6 +939,7 @@ export type SERVICE_BY_SLUG_QUERY_RESULT = {
           _key: string;
         }>;
         footnote?: string;
+        background?: "dark" | "white";
         photo: null;
         photoPrimary: null;
         photoSecondary: null;
@@ -1285,6 +1289,7 @@ export type INDUSTRY_BY_SLUG_QUERY_RESULT = {
         _key: string;
         _type: "comparisonTable";
         heading?: string;
+        intro?: string;
         columnLabels?: Array<string>;
         rows?: Array<{
           situation?: string;
@@ -1294,6 +1299,7 @@ export type INDUSTRY_BY_SLUG_QUERY_RESULT = {
           _key: string;
         }>;
         footnote?: string;
+        background?: "dark" | "white";
         photo: null;
         photoPrimary: null;
         photoSecondary: null;
