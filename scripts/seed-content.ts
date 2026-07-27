@@ -719,6 +719,273 @@ function drainSewerSections() {
   ];
 }
 
+/**
+ * Compliance table for /services/specialty-services — CONFIGURED BUT HELD
+ * BACK. Every regulatory cell is a [BRACKETED] fact only the client can
+ * supply, and a compliance table full of visible placeholders must not go
+ * live. Once the client fills the brackets below, add
+ * `specialtyComplianceTable()` to the specialty section array after the
+ * whatsIncluded entry and re-seed.
+ */
+export function specialtyComplianceTable() {
+  return {
+    _type: "comparisonTable",
+    _key: "seed-compliance",
+    heading: "Compliance Requirements at a Glance",
+    rows: [
+      {
+        _type: "row",
+        _key: "seed-comp-1",
+        situation: "Backflow preventer",
+        recommendation: "[TESTING FREQUENCY — client/jurisdiction to confirm]",
+        why: "Certified testing, tagging, and submission of results. [AUTHORITY — e.g. city water utility, client to confirm]",
+      },
+      {
+        _type: "row",
+        _key: "seed-comp-2",
+        situation: "Commercial boiler",
+        recommendation: "[INSPECTION REQUIREMENT — client to confirm]",
+        why: "Inspection-ready maintenance and repair records. [AUTHORITY — client to confirm]",
+      },
+      {
+        _type: "row",
+        _key: "seed-comp-3",
+        situation: "Gas lines",
+        recommendation: "[TESTING/PERMIT REQUIREMENT — client to confirm]",
+        why: "Leak detection, pressure testing, and documented repairs. [AUTHORITY — client to confirm]",
+      },
+    ],
+    footnote:
+      "Requirements vary by city and property type — Fred's Plumbing tracks what applies to your buildings so you don't have to.",
+  };
+}
+
+/**
+ * Section stack for /services/specialty-services (backflow, boilers, gas
+ * lines). Safety rule for this page: gas content is strictly
+ * "call a licensed professional" framed — no copy may imply DIY gas work.
+ * "Certified"/"licensed" appear only in copy transcribed VERBATIM from the
+ * client's existing page.
+ */
+function specialtyServicesSections() {
+  return [
+    {
+      _type: "serviceHero",
+      _key: "seed-hero",
+      eyebrow: "FRED'S PLUMBING",
+      heading: "Specialty Plumbing Services In The Dallas–Fort Worth Metroplex",
+      subheading:
+        "Fred's Plumbing provides advanced specialty services for multi-family and commercial properties throughout the Dallas–Fort Worth Metroplex. Our team handles complex plumbing systems with precision, safety, and the expertise required to support high-demand environments.",
+      secondaryCtaLabel: "Schedule a Compliance Check",
+      secondaryCtaHref: "/contact",
+      credentials: [
+        { _type: "credential", _key: "seed-cred-1", icon: "shield-check", label: "Licensed & Insured" },
+        { _type: "credential", _key: "seed-cred-2", icon: "map-pin", label: "Serving DFW Since 1996" },
+        { _type: "credential", _key: "seed-cred-3", icon: "clock", label: "24/7 Emergency Response" },
+      ],
+      photoSubject:
+        "A technician testing a commercial backflow preventer assembly in a mechanical room — vertical orientation",
+    },
+    {
+      _type: "serviceAbout",
+      _key: "seed-about",
+      heading: "About Our Specialty Plumbing Services",
+      paragraphs: [
+        "Fred's Plumbing provides specialized services designed to meet the needs of multi-family and commercial properties. Our technicians are trained to handle critical systems that require strict oversight, compliance, and technical accuracy.",
+        "From backflow prevention to commercial boiler work, we use advanced diagnostic tools and industry-approved methods to deliver safe and reliable solutions. Whether your property needs inspection, repair, or replacement, our team ensures your systems remain code compliant and fully operational.",
+      ],
+      ctaLabel: "Talk to Our Team",
+      ctaHref: "/contact",
+      photoSubjectPrimary: "Close-up of gauges on a commercial boiler",
+      photoSubjectSecondary: "The Fred's Plumbing crew in front of a branded van",
+    },
+    {
+      _type: "whatsIncluded",
+      _key: "seed-included",
+      heading: "What Our Specialty Services Cover",
+      intro:
+        "These are the systems where mistakes are expensive and compliance is not optional — Fred's Plumbing handles them with trained technicians and full documentation.",
+      items: [
+        {
+          _type: "item",
+          _key: "seed-inc-1",
+          icon: "shield-check",
+          title: "Backflow Testing & Prevention",
+          description:
+            "Comprehensive backflow testing, repair, replacement, and installation that keeps your property compliant with local and state requirements while protecting your water supply from contamination.",
+        },
+        {
+          _type: "item",
+          _key: "seed-inc-2",
+          icon: "gauge",
+          title: "Commercial Boiler Services",
+          description:
+            "Repair, maintenance, and complete boiler system installation for properties that rely on consistent hot water and heat — experienced with both modern and legacy systems.",
+        },
+        {
+          _type: "item",
+          _key: "seed-inc-3",
+          icon: "flame",
+          title: "Gas Line Services",
+          description:
+            "Expert gas leak detection, system testing, and precise pipe repair to ensure optimal safety and compliance, with 24/7 emergency response for urgent gas leak issues.",
+        },
+        {
+          _type: "item",
+          _key: "seed-inc-4",
+          icon: "award",
+          title: "Compliance Documentation",
+          description:
+            "Test reports and service records delivered after every job — ready for city inspectors, insurers, and property files.",
+        },
+        {
+          _type: "item",
+          _key: "seed-inc-5",
+          icon: "cog",
+          title: "System Upgrades & Replacements",
+          description:
+            "When legacy equipment reaches end of life, we plan and execute replacements with minimal downtime for residents.",
+        },
+        {
+          _type: "item",
+          _key: "seed-inc-6",
+          icon: "siren",
+          title: "Emergency Response for Critical Systems",
+          description:
+            "Boiler failures and suspected gas leaks are answered 24/7 — these are the calls that can't wait for morning.",
+          href: "/services/emergency-plumbing",
+        },
+      ],
+    },
+    // specialtyComplianceTable() goes here once the client fills its brackets.
+    {
+      _type: "processSteps",
+      _key: "seed-process",
+      heading: "How Specialty Work Gets Done",
+      steps: [
+        {
+          _type: "step",
+          _key: "seed-step-1",
+          title: "Inspect & Test",
+          description:
+            "We evaluate the system against current code and its actual condition — not just the symptom that triggered the call.",
+        },
+        {
+          _type: "step",
+          _key: "seed-step-2",
+          title: "Report & Recommend",
+          description:
+            "You get written findings and a clear recommendation: repair, replace, or monitor.",
+        },
+        {
+          _type: "step",
+          _key: "seed-step-3",
+          title: "Perform to Code",
+          description:
+            "Work is completed by trained technicians using industry-approved methods, scheduled around your residents.",
+        },
+        {
+          _type: "step",
+          _key: "seed-step-4",
+          title: "Document & File",
+          description:
+            "Every job closes with the paperwork your property needs — test tags, service records, and compliance reports.",
+        },
+      ],
+    },
+    {
+      _type: "serviceTrust",
+      _key: "seed-trust",
+      heading: "Trusted Specialty Plumbing Experts In The DFW Metroplex",
+      items: [
+        {
+          _type: "item",
+          _key: "seed-trust-1",
+          icon: "award",
+          title: "Certified Specialists",
+          description:
+            "Our team is trained and certified to handle backflow systems, boilers, and high-demand plumbing infrastructure for large properties.",
+        },
+        {
+          _type: "item",
+          _key: "seed-trust-2",
+          icon: "clock",
+          title: "Fast Emergency Response",
+          description:
+            "We are available 24 hours a day to resolve complex issues that impact safety and system functionality.",
+        },
+        {
+          _type: "item",
+          _key: "seed-trust-3",
+          icon: "cog",
+          title: "Accurate Diagnostics",
+          description:
+            "Our advanced tools and inspection methods ensure precise troubleshooting and long-lasting repair solutions.",
+        },
+      ],
+      showLogos: true,
+    },
+    {
+      _type: "serviceFaq",
+      _key: "seed-faq",
+      heading: "Specialty Service Questions, Answered",
+      faqs: [
+        {
+          // Safety framing is deliberate and non-negotiable: utility first,
+          // evacuate, never DIY. Do not soften into a sales-only answer.
+          _type: "faq",
+          _key: "seed-faq-1",
+          question: "What should I do if I smell gas at my property?",
+          answer: `Leave the area, keep others away, and call your gas utility's emergency line first — then call Fred's Plumbing at ${site.phone} for 24/7 leak detection and repair. Never attempt to locate a gas leak yourself.`,
+        },
+        {
+          _type: "faq",
+          _key: "seed-faq-2",
+          question: "What is backflow testing and why does my property need it?",
+          answer:
+            "Backflow testing verifies that the device preventing contaminated water from flowing back into the drinking supply is working. Water utilities require it for commercial and multi-family properties, and Fred's Plumbing handles the test, the tag, and the paperwork.",
+        },
+        {
+          _type: "faq",
+          _key: "seed-faq-3",
+          question: "Do you work on older boiler systems?",
+          answer:
+            "Yes. Fred's Plumbing services both modern and legacy boiler systems — many DFW properties run equipment that's decades old, and our technicians are experienced with both.",
+        },
+        {
+          _type: "faq",
+          _key: "seed-faq-4",
+          question: "Will specialty work disrupt my residents?",
+          answer:
+            "Fred's Plumbing schedules inspections and planned work through your management office and sequences it to keep any service interruption short and announced in advance.",
+        },
+        {
+          _type: "faq",
+          _key: "seed-faq-5",
+          question: "Can you handle all our properties' compliance testing on a schedule?",
+          answer:
+            "Yes. Fred's Plumbing offers scheduled compliance programs across multiple properties, so testing deadlines are tracked and met without your office chasing them.",
+        },
+      ],
+    },
+    {
+      _type: "relatedServices",
+      _key: "seed-related",
+      heading: "Related Services",
+      serviceSlugs: ["maintenance", "emergency-plumbing", "commercial-plumbing"],
+    },
+    {
+      _type: "finalCta",
+      _key: "seed-final",
+      heading: "Keep Your Critical Systems Compliant and Running",
+      body:
+        "Backflow, boilers, and gas lines — one contractor who tests, fixes, and files the paperwork for every property you manage in the DFW Metroplex.",
+      secondaryCtaLabel: "Request a Quote",
+      secondaryCtaHref: "/contact",
+    },
+  ];
+}
+
 /** Per-slug section stacks + SEO overrides for section-library pages. */
 const SERVICE_EXTRAS: Record<
   string,
@@ -735,6 +1002,12 @@ const SERVICE_EXTRAS: Record<
     seoTitle: "Drain & Sewer Service in Dallas–Fort Worth | Fred's Plumbing",
     seoDescription:
       "Sewer camera inspections, hydrojetting, backup clearing, and sewer line repair for commercial and multi-family properties across DFW — emergency service 24/7.",
+  },
+  "specialty-services": {
+    sections: specialtyServicesSections,
+    seoTitle: "Backflow, Boiler & Gas Lines in DFW | Fred's Plumbing",
+    seoDescription:
+      "Backflow testing, commercial boiler service, and gas line repair for multi-family and commercial properties across Dallas–Fort Worth — available 24/7.",
   },
 };
 
