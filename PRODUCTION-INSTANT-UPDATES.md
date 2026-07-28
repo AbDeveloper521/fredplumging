@@ -11,50 +11,86 @@ is a hosting/runtime question, not a missing-code question.
 
 ## 1. Owner checklist — five minutes, no developer needed
 
-Work through these in order. Each has a yes/no answer; stop at the first "no"
-— that is the problem.
+The site lives on Vercel, project **`fredplumging`** (note the spelling —
+there is no `b` before the `u`), at `https://fredplumging.vercel.app`. Every
+URL below uses that exact host; a webhook or CORS entry typed as
+`fredplumbing.vercel.app` will silently fail forever.
 
-**Q1. Is production actually running the latest code?**
-Open the hosting dashboard (e.g. Vercel → the project → Deployments) and look
-at the commit hash on the newest *Production* deployment. Is it `7d66ee4` or
-newer? Pushed to GitHub and deployed are **different things** — a push does
-nothing until the host builds and promotes it. If the hash is older, press
-"Redeploy" (or merge/promote) and re-check.
+Work through these in order. Each has a yes/no answer; **stop at the first
+"no" — that is the problem.** Items Q2, Q4 and Q5 are also *blocking
+prerequisites* for the instant-updates (Sanity Live) code: until they are
+"yes", publishes will not appear instantly no matter what the code does.
 
-**Q2. Are the three Sanity variables set in the production environment?**
-Hosting dashboard → Settings → Environment Variables. All three must exist
-for **Production**:
+**Q1. Is production running the latest code?**
+[vercel.com](https://vercel.com) → the `fredplumging` project →
+**Deployments**. Does the newest deployment marked *Production* show the
+newest commit from this repo? Pushed to GitHub and deployed are **different
+things** — a push does nothing until Vercel builds and promotes it. If it is
+older: press **Redeploy**, and in the redeploy dialog **untick "Use existing
+Build Cache"**, then re-check.
+
+**Q2. Are all four variables set for Production, and was there a redeploy
+afterwards?**
+Vercel → `fredplumging` → **Settings → Environment Variables**, scope
+**Production**. All four must exist:
 
 - `NEXT_PUBLIC_SANITY_PROJECT_ID`
 - `NEXT_PUBLIC_SANITY_DATASET`
 - `SANITY_API_READ_TOKEN`
+- `SANITY_REVALIDATE_SECRET`
 
-⚠️ The two `NEXT_PUBLIC_*` values are baked into the site **at build time**.
-Adding or fixing them and clicking Save is **not enough** — you must trigger a
-**redeploy** afterwards or the running site never sees them. This catches
-people constantly.
+⚠️ **The two `NEXT_PUBLIC_*` values are compiled into the site at build
+time. Saving them is not enough — you must redeploy afterwards or the
+running site never sees them.** This is the single most common cause of
+"works on localhost, not in production".
 
-**Q3. What does the health check say?**
-Load `https://<production-domain>/api/health/sanity?secret=<SANITY_REVALIDATE_SECRET>`
-in a browser (never share that URL — it contains the secret). Read three
-fields:
+**Q3. Is Deployment Protection off (or bypassed) for Production?**
+Vercel → `fredplumging` → **Settings → Deployment Protection**. Is Vercel
+Authentication / password protection **disabled** for the Production
+environment? If it is on, Sanity's webhook POST to `/api/revalidate` is
+rejected before it ever reaches the site, and the failure looks identical to
+"no webhook at all". Either turn protection off for Production, or create a
+**Protection Bypass for Automation** token and add it to the webhook's
+custom headers. This is invisible from inside the code — only this dashboard
+shows it.
 
-- `tokenPresent` — must be `true`. If `false`, Q2 failed: the token is missing
-  on the host, and **no Sanity content can ever reach production**.
+**Q4. Does the publish webhook exist, and is its Attempts log green?**
+[sanity.io/manage](https://sanity.io/manage) → this project → **API →
+Webhooks**. Is there a webhook pointing at exactly
+`https://fredplumging.vercel.app/api/revalidate`, with its secret matching
+`SANITY_REVALIDATE_SECRET` on Vercel? Create it per `WEBHOOK-SETUP.md` if
+not. Then **test it**: publish any small change in the Studio and open the
+webhook's **Attempts** log — is the newest delivery a green **200**? An
+untested webhook is not a webhook. (401 = secrets don't match; 400 = a
+projection was set that shouldn't be; nothing arriving = Q3.)
+
+**Q5. Is the production domain a CORS origin in Sanity?**
+[sanity.io/manage](https://sanity.io/manage) → this project → **API → CORS
+origins**. Is `https://fredplumging.vercel.app` listed, with **Allow
+credentials** ticked? Both the embedded Studio at
+`https://fredplumging.vercel.app/studio` and the site's live-update
+connection talk to Sanity from the browser on that origin — without this
+entry the browser blocks them.
+
+**Q6. What does the health check say?**
+Load
+`https://fredplumging.vercel.app/api/health/sanity?secret=<SANITY_REVALIDATE_SECRET>`
+in a browser. **Never paste that URL anywhere — it contains the secret.**
+Read four things:
+
+- `tokenPresent` — must be `true`. If `false`, Q2 failed: the token is
+  missing on Vercel, and **no Sanity content can ever reach production**.
 - `sanityReachable` — must be `true`. If `false`, the `error` field says why
   (wrong project ID, revoked token, network).
-- `_updatedAt` on the document you just published — publish something in the
+- `_updatedAt` on a document you just published — publish something in the
   Studio, reload the health URL, and check that document's `_updatedAt`
   changed to just now. If it did, Sanity has your change and any remaining
-  delay is caching (Q4). If it didn't, the publish didn't land (wrong dataset,
-  or the change is still an unpublished draft).
-
-**Q4. Does the publish webhook exist in sanity.io/manage?**
-[sanity.io/manage](https://sanity.io/manage) → project → API → Webhooks. Is
-there a webhook pointing at `https://<production-domain>/api/revalidate` with
-a green recent delivery in its Attempts log? If not, follow
-`WEBHOOK-SETUP.md`. This is a step only you can perform — no code change can
-create it.
+  delay is caching. If it didn't, the publish didn't land (wrong dataset, or
+  the change is still an unpublished draft).
+- `sections` on each service/industry document — every entry should say
+  `dropped: []`. If a section is listed under `dropped`, the page is
+  publishing but that section is not rendering; the `fillInStudio` list
+  names the exact Studio fields to fill to bring it back.
 
 ---
 
@@ -106,12 +142,22 @@ checked against the skill's anti-pattern list and the vendored Next 16 docs:
 
 ## 5. What only the site owner can do (nothing in this repo can)
 
-1. Verify/press **deploy** so production runs the latest commit (Q1).
-2. Set `SANITY_API_READ_TOKEN` (+ the two `NEXT_PUBLIC_*` vars) in the
-   production environment, then **redeploy** (Q2).
-3. Create the **publish webhook** in sanity.io/manage per `WEBHOOK-SETUP.md`
-   (Q4) — still worth doing even after Sanity Live ships, as the independent
-   second path.
-4. In sanity.io/manage → API → CORS origins: make sure the production domain
-   is listed (with credentials allowed). The Studio at `/studio` and the Live
-   connection both talk to Sanity from the browser on that domain.
+These are the checklist items from §1, as actions, in the order to do them.
+Items 2 and 4 are **blocking** for Sanity Live — until they are done, the
+instant-update connection cannot open in production at all.
+
+1. **Deploy the latest commit** (Q1): Vercel → `fredplumging` →
+   Deployments → Redeploy, unticking "Use existing Build Cache".
+2. **Set the four environment variables** for Production (Q2), then
+   **redeploy again** — the `NEXT_PUBLIC_*` pair only takes effect at build
+   time. *(Blocking for Live: `SANITY_API_READ_TOKEN`.)*
+3. **Check Deployment Protection** (Q3): off for Production, or add a
+   Protection Bypass for Automation to the webhook.
+4. **Add the CORS origin** (Q5): `https://fredplumging.vercel.app` with
+   credentials allowed, in sanity.io/manage → API → CORS origins.
+   *(Blocking for Live and for the embedded Studio.)*
+5. **Create and test the publish webhook** (Q4) per `WEBHOOK-SETUP.md`,
+   targeting `https://fredplumging.vercel.app/api/revalidate` — still worth
+   having after Sanity Live ships, as the independent second freshness path.
+   Confirm a green 200 in the Attempts log after publishing something.
+6. **Read the health check** (Q6) and keep its URL private.

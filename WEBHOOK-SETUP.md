@@ -32,8 +32,10 @@ once.
 3. Click **Webhooks**, then **Create webhook**.
 4. Fill in the form exactly like this:
    - **Name:** `Revalidate live site` (or anything you like).
-   - **URL:** `https://<production-domain>/api/revalidate` — replace
-     `<production-domain>` with the site's real address. No trailing slash.
+   - **URL:** `https://fredplumging.vercel.app/api/revalidate` — exactly
+     this, no trailing slash. Note the spelling of `fredplumging` (no `b`
+     before the `u`) — that is the real Vercel project name; the "corrected"
+     spelling would silently 404 forever.
    - **Dataset:** `production` (the dataset the site reads from).
    - **Trigger on:** tick all three — **Create**, **Update**, and **Delete**.
      Deletions matter: removing a service must remove its page too.
@@ -60,7 +62,7 @@ paste into a plain text editor first to check for stray spaces.
 
 ## How to check it's working
 
-1. Paste `https://<production-domain>/api/revalidate` into a browser. You
+1. Paste `https://fredplumging.vercel.app/api/revalidate` into a browser. You
    should see a small confirmation that the route is deployed and
    `"revalidateSecretPresent": true`. If you see `false`, the secret is
    missing on the hosting platform.
