@@ -276,19 +276,6 @@ export const serviceAbout = defineType({
         "What the main photo should eventually show. Shown inside the styled placeholder until a real photo is uploaded.",
       type: "string",
     }),
-    imageWithAlt({
-      name: "photoSecondary",
-      title: "Small overlapping photo",
-      description:
-        "The smaller photo in the About band's collage — it overlaps the bottom corner of the main photo.",
-    }),
-    defineField({
-      name: "photoSubjectSecondary",
-      title: "Intended small-photo subject",
-      description:
-        "What the small photo should eventually show. Shown inside the styled placeholder until a real photo is uploaded.",
-      type: "string",
-    }),
   ],
   preview: {
     select: { heading: "heading", paragraphs: "paragraphs" },

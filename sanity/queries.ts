@@ -117,8 +117,7 @@ export const SERVICE_BY_SLUG_QUERY = defineQuery(
     sections[]{
       ...,
       photo{ asset, hotspot, crop, alt },
-      photoPrimary{ asset, hotspot, crop, alt },
-      photoSecondary{ asset, hotspot, crop, alt }
+      photoPrimary{ asset, hotspot, crop, alt }
     },
     seoTitle,
     seoDescription
@@ -149,8 +148,7 @@ export const INDUSTRY_BY_SLUG_QUERY = defineQuery(
     sections[]{
       ...,
       photo{ asset, hotspot, crop, alt },
-      photoPrimary{ asset, hotspot, crop, alt },
-      photoSecondary{ asset, hotspot, crop, alt }
+      photoPrimary{ asset, hotspot, crop, alt }
     },
     seoTitle,
     seoDescription

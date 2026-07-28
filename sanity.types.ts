@@ -225,15 +225,6 @@ export type ServiceAbout = {
     _type: "image";
   };
   photoSubjectPrimary?: string;
-  photoSecondary?: {
-    asset?: SanityImageAssetReference;
-    media?: unknown;
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    alt?: string;
-    _type: "image";
-  };
-  photoSubjectSecondary?: string;
 };
 
 export type ServiceHero = {
@@ -998,7 +989,7 @@ export type SERVICES_QUERY_RESULT = Array<{
 
 // Source: sanity/queries.ts
 // Variable: SERVICE_BY_SLUG_QUERY
-// Query: *[_type == "service" && slug.current == $slug][0]{    title,    "slug": slug.current,    shortDescription,    icon,    featured,    photo{ asset, hotspot, crop, alt },    body,    sections[]{      ...,      photo{ asset, hotspot, crop, alt },      photoPrimary{ asset, hotspot, crop, alt },      photoSecondary{ asset, hotspot, crop, alt }    },    seoTitle,    seoDescription  }
+// Query: *[_type == "service" && slug.current == $slug][0]{    title,    "slug": slug.current,    shortDescription,    icon,    featured,    photo{ asset, hotspot, crop, alt },    body,    sections[]{      ...,      photo{ asset, hotspot, crop, alt },      photoPrimary{ asset, hotspot, crop, alt }    },    seoTitle,    seoDescription  }
 export type SERVICE_BY_SLUG_QUERY_RESULT = {
   title: string | null;
   slug: string | null;
@@ -1066,7 +1057,6 @@ export type SERVICE_BY_SLUG_QUERY_RESULT = {
         background?: "dark" | "white";
         photo: null;
         photoPrimary: null;
-        photoSecondary: null;
       }
     | {
         _key: string;
@@ -1079,7 +1069,6 @@ export type SERVICE_BY_SLUG_QUERY_RESULT = {
         showAvailabilityDot?: boolean;
         photo: null;
         photoPrimary: null;
-        photoSecondary: null;
       }
     | {
         _key: string;
@@ -1094,7 +1083,6 @@ export type SERVICE_BY_SLUG_QUERY_RESULT = {
         background?: "dark" | "white";
         photo: null;
         photoPrimary: null;
-        photoSecondary: null;
       }
     | {
         _key: string;
@@ -1115,7 +1103,6 @@ export type SERVICE_BY_SLUG_QUERY_RESULT = {
         ctaHref?: string;
         photo: null;
         photoPrimary: null;
-        photoSecondary: null;
       }
     | {
         _key: string;
@@ -1124,7 +1111,6 @@ export type SERVICE_BY_SLUG_QUERY_RESULT = {
         serviceSlugs?: Array<string>;
         photo: null;
         photoPrimary: null;
-        photoSecondary: null;
       }
     | {
         _key: string;
@@ -1140,13 +1126,6 @@ export type SERVICE_BY_SLUG_QUERY_RESULT = {
           alt: string | null;
         } | null;
         photoSubjectPrimary?: string;
-        photoSecondary: {
-          asset: SanityImageAssetReference | null;
-          hotspot: SanityImageHotspot | null;
-          crop: SanityImageCrop | null;
-          alt: string | null;
-        } | null;
-        photoSubjectSecondary?: string;
         photo: null;
       }
     | {
@@ -1162,7 +1141,6 @@ export type SERVICE_BY_SLUG_QUERY_RESULT = {
         } | null;
         photoSubject?: string;
         photoPrimary: null;
-        photoSecondary: null;
       }
     | {
         _key: string;
@@ -1179,7 +1157,6 @@ export type SERVICE_BY_SLUG_QUERY_RESULT = {
         background?: "offwhite" | "white";
         photo: null;
         photoPrimary: null;
-        photoSecondary: null;
       }
     | {
         _key: string;
@@ -1218,7 +1195,6 @@ export type SERVICE_BY_SLUG_QUERY_RESULT = {
         } | null;
         photoSubject?: string;
         photoPrimary: null;
-        photoSecondary: null;
       }
     | {
         _key: string;
@@ -1228,7 +1204,6 @@ export type SERVICE_BY_SLUG_QUERY_RESULT = {
         limit?: number;
         photo: null;
         photoPrimary: null;
-        photoSecondary: null;
       }
     | {
         _key: string;
@@ -1257,7 +1232,6 @@ export type SERVICE_BY_SLUG_QUERY_RESULT = {
         showLogos?: boolean;
         photo: null;
         photoPrimary: null;
-        photoSecondary: null;
       }
     | {
         _key: string;
@@ -1288,7 +1262,6 @@ export type SERVICE_BY_SLUG_QUERY_RESULT = {
         background?: "dark" | "white";
         photo: null;
         photoPrimary: null;
-        photoSecondary: null;
       }
     | {
         _key: string;
@@ -1318,7 +1291,6 @@ export type SERVICE_BY_SLUG_QUERY_RESULT = {
         }>;
         photo: null;
         photoPrimary: null;
-        photoSecondary: null;
       }
   > | null;
   seoTitle: string | null;
@@ -1372,7 +1344,7 @@ export type INDUSTRIES_QUERY_RESULT = Array<{
 
 // Source: sanity/queries.ts
 // Variable: INDUSTRY_BY_SLUG_QUERY
-// Query: *[_type == "industry" && slug.current == $slug][0]{    title,    "slug": slug.current,    description,    bulletPoints,    photo{ asset, hotspot, crop, alt },    body,    sections[]{      ...,      photo{ asset, hotspot, crop, alt },      photoPrimary{ asset, hotspot, crop, alt },      photoSecondary{ asset, hotspot, crop, alt }    },    seoTitle,    seoDescription  }
+// Query: *[_type == "industry" && slug.current == $slug][0]{    title,    "slug": slug.current,    description,    bulletPoints,    photo{ asset, hotspot, crop, alt },    body,    sections[]{      ...,      photo{ asset, hotspot, crop, alt },      photoPrimary{ asset, hotspot, crop, alt }    },    seoTitle,    seoDescription  }
 export type INDUSTRY_BY_SLUG_QUERY_RESULT = {
   title: string | null;
   slug: string | null;
@@ -1429,7 +1401,6 @@ export type INDUSTRY_BY_SLUG_QUERY_RESULT = {
         background?: "dark" | "white";
         photo: null;
         photoPrimary: null;
-        photoSecondary: null;
       }
     | {
         _key: string;
@@ -1442,7 +1413,6 @@ export type INDUSTRY_BY_SLUG_QUERY_RESULT = {
         showAvailabilityDot?: boolean;
         photo: null;
         photoPrimary: null;
-        photoSecondary: null;
       }
     | {
         _key: string;
@@ -1457,7 +1427,6 @@ export type INDUSTRY_BY_SLUG_QUERY_RESULT = {
         background?: "dark" | "white";
         photo: null;
         photoPrimary: null;
-        photoSecondary: null;
       }
     | {
         _key: string;
@@ -1478,7 +1447,6 @@ export type INDUSTRY_BY_SLUG_QUERY_RESULT = {
         ctaHref?: string;
         photo: null;
         photoPrimary: null;
-        photoSecondary: null;
       }
     | {
         _key: string;
@@ -1487,7 +1455,6 @@ export type INDUSTRY_BY_SLUG_QUERY_RESULT = {
         serviceSlugs?: Array<string>;
         photo: null;
         photoPrimary: null;
-        photoSecondary: null;
       }
     | {
         _key: string;
@@ -1503,13 +1470,6 @@ export type INDUSTRY_BY_SLUG_QUERY_RESULT = {
           alt: string | null;
         } | null;
         photoSubjectPrimary?: string;
-        photoSecondary: {
-          asset: SanityImageAssetReference | null;
-          hotspot: SanityImageHotspot | null;
-          crop: SanityImageCrop | null;
-          alt: string | null;
-        } | null;
-        photoSubjectSecondary?: string;
         photo: null;
       }
     | {
@@ -1525,7 +1485,6 @@ export type INDUSTRY_BY_SLUG_QUERY_RESULT = {
         } | null;
         photoSubject?: string;
         photoPrimary: null;
-        photoSecondary: null;
       }
     | {
         _key: string;
@@ -1542,7 +1501,6 @@ export type INDUSTRY_BY_SLUG_QUERY_RESULT = {
         background?: "offwhite" | "white";
         photo: null;
         photoPrimary: null;
-        photoSecondary: null;
       }
     | {
         _key: string;
@@ -1581,7 +1539,6 @@ export type INDUSTRY_BY_SLUG_QUERY_RESULT = {
         } | null;
         photoSubject?: string;
         photoPrimary: null;
-        photoSecondary: null;
       }
     | {
         _key: string;
@@ -1591,7 +1548,6 @@ export type INDUSTRY_BY_SLUG_QUERY_RESULT = {
         limit?: number;
         photo: null;
         photoPrimary: null;
-        photoSecondary: null;
       }
     | {
         _key: string;
@@ -1620,7 +1576,6 @@ export type INDUSTRY_BY_SLUG_QUERY_RESULT = {
         showLogos?: boolean;
         photo: null;
         photoPrimary: null;
-        photoSecondary: null;
       }
     | {
         _key: string;
@@ -1651,7 +1606,6 @@ export type INDUSTRY_BY_SLUG_QUERY_RESULT = {
         background?: "dark" | "white";
         photo: null;
         photoPrimary: null;
-        photoSecondary: null;
       }
     | {
         _key: string;
@@ -1681,7 +1635,6 @@ export type INDUSTRY_BY_SLUG_QUERY_RESULT = {
         }>;
         photo: null;
         photoPrimary: null;
-        photoSecondary: null;
       }
   > | null;
   seoTitle: string | null;
@@ -1743,9 +1696,9 @@ declare module "@sanity/client" {
     '*[_type == "testimonial"] | order(order asc){\n    "id": _id, name, role, rating, quote, date, featured,\n    source, reviewerMeta, sourceUrl, serviceTags, verified\n  }': TESTIMONIALS_QUERY_RESULT;
     '*[_type == "reviewSettings" && _id == "reviewSettings"][0]{\n    rating,\n    reviewCount,\n    verifiedOn,\n    reviewsUrl,\n    writeReviewUrl,\n    headline\n  }': REVIEW_SETTINGS_QUERY_RESULT;
     '*[_type == "service"] | order(order asc){\n    title,\n    "slug": slug.current,\n    shortDescription,\n    icon,\n    featured,\n    photo{ asset, hotspot, crop, alt },\n    body,\n    seoTitle,\n    seoDescription\n  }': SERVICES_QUERY_RESULT;
-    '*[_type == "service" && slug.current == $slug][0]{\n    title,\n    "slug": slug.current,\n    shortDescription,\n    icon,\n    featured,\n    photo{ asset, hotspot, crop, alt },\n    body,\n    sections[]{\n      ...,\n      photo{ asset, hotspot, crop, alt },\n      photoPrimary{ asset, hotspot, crop, alt },\n      photoSecondary{ asset, hotspot, crop, alt }\n    },\n    seoTitle,\n    seoDescription\n  }': SERVICE_BY_SLUG_QUERY_RESULT;
+    '*[_type == "service" && slug.current == $slug][0]{\n    title,\n    "slug": slug.current,\n    shortDescription,\n    icon,\n    featured,\n    photo{ asset, hotspot, crop, alt },\n    body,\n    sections[]{\n      ...,\n      photo{ asset, hotspot, crop, alt },\n      photoPrimary{ asset, hotspot, crop, alt }\n    },\n    seoTitle,\n    seoDescription\n  }': SERVICE_BY_SLUG_QUERY_RESULT;
     '*[_type == "industry"] | order(order asc){\n    title,\n    "slug": slug.current,\n    description,\n    bulletPoints,\n    photo{ asset, hotspot, crop, alt },\n    body,\n    seoTitle,\n    seoDescription\n  }': INDUSTRIES_QUERY_RESULT;
-    '*[_type == "industry" && slug.current == $slug][0]{\n    title,\n    "slug": slug.current,\n    description,\n    bulletPoints,\n    photo{ asset, hotspot, crop, alt },\n    body,\n    sections[]{\n      ...,\n      photo{ asset, hotspot, crop, alt },\n      photoPrimary{ asset, hotspot, crop, alt },\n      photoSecondary{ asset, hotspot, crop, alt }\n    },\n    seoTitle,\n    seoDescription\n  }': INDUSTRY_BY_SLUG_QUERY_RESULT;
+    '*[_type == "industry" && slug.current == $slug][0]{\n    title,\n    "slug": slug.current,\n    description,\n    bulletPoints,\n    photo{ asset, hotspot, crop, alt },\n    body,\n    sections[]{\n      ...,\n      photo{ asset, hotspot, crop, alt },\n      photoPrimary{ asset, hotspot, crop, alt }\n    },\n    seoTitle,\n    seoDescription\n  }': INDUSTRY_BY_SLUG_QUERY_RESULT;
     '*[_type == "trustLogo"] | order(order asc){\n    name,\n    logo{ asset, hotspot, crop, alt },\n    headline,\n    blurb,\n    category,\n    url,\n    verified\n  }': TRUST_LOGOS_QUERY_RESULT;
     '*[_type == "navigation" && _id == "navigation"][0]{\n    footerColumns[]{\n      _key,\n      heading,\n      links[]{ _key, label, href }\n    },\n    legalLinks[]{ _key, label, href }\n  }': FOOTER_NAVIGATION_QUERY_RESULT;
   }

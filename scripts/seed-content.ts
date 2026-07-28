@@ -155,8 +155,6 @@ function plumbingSections() {
       ctaHref: "/contact",
       photoSubjectPrimary:
         "Close-up of a technician's gloved hands soldering copper pipe under a commercial sink",
-      photoSubjectSecondary:
-        "The Fred's Plumbing crew standing in front of a branded service van",
     },
     {
       _type: "whatsIncluded",
@@ -527,7 +525,6 @@ function drainSewerSections() {
       ctaLabel: "Talk to Our Team",
       ctaHref: "/contact",
       photoSubjectPrimary: "A storm drain grate set in cobblestones, leaves around it",
-      photoSubjectSecondary: "The Fred's Plumbing crew in front of a branded van",
     },
     {
       _type: "whatsIncluded",
@@ -833,7 +830,6 @@ function specialtyServicesSections() {
       ctaLabel: "Talk to Our Team",
       ctaHref: "/contact",
       photoSubjectPrimary: "Close-up of gauges on a commercial boiler",
-      photoSubjectSecondary: "The Fred's Plumbing crew in front of a branded van",
     },
     {
       _type: "whatsIncluded",
@@ -1061,7 +1057,6 @@ function maintenanceSections() {
       ctaHref: "/contact",
       photoSubjectPrimary:
         "Neatly organized copper and PEX piping runs in a commercial mechanical room",
-      photoSubjectSecondary: "The Fred's Plumbing crew in front of a branded van",
     },
     {
       _type: "whatsIncluded",
@@ -1342,7 +1337,6 @@ function emergencyPlumbingSections() {
       ctaHref: "/contact",
       photoSubjectPrimary:
         "Copper and PVC supply lines in a mechanical room, tools laid out mid-job",
-      photoSubjectSecondary: "The Fred's Plumbing crew in front of a branded van",
     },
     {
       // Crisis guidance sits high on purpose — what to do before the truck
@@ -1731,7 +1725,6 @@ function apartmentsSections() {
       ctaHref: "/contact",
       photoSubjectPrimary:
         "Rooftop pool deck of a high-rise apartment building at dusk",
-      photoSubjectSecondary: "The Fred's Plumbing crew in front of a branded van",
     },
     {
       _type: "serviceTrust",
@@ -2040,7 +2033,6 @@ function condosSections() {
       ctaLabel: "Talk to Our Team",
       ctaHref: "/contact",
       photoSubjectPrimary: "Condo building courtyard with pool at dusk",
-      photoSubjectSecondary: "The Fred's Plumbing crew in front of a branded van",
     },
     {
       _type: "serviceTrust",
@@ -2205,7 +2197,6 @@ function assistedLivingSections() {
       ctaHref: "/contact",
       photoSubjectPrimary:
         "Accessible bathroom in a care community with grab bars and walk-in shower, unoccupied",
-      photoSubjectSecondary: "The Fred's Plumbing crew in front of a branded van",
     },
     {
       _type: "whatsIncluded",
@@ -2513,7 +2504,6 @@ function nursingHomesSections() {
       ctaHref: "/contact",
       photoSubjectPrimary:
         "Commercial-grade water heaters and mixing valves in a facility mechanical room",
-      photoSubjectSecondary: "The Fred's Plumbing crew in front of a branded van",
     },
     {
       _type: "whatsIncluded",

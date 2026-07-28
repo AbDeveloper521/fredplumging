@@ -136,9 +136,7 @@ function toSection(raw: Raw, index: number): ServiceSection | null {
         ctaLabel: cta?.label,
         ctaHref: cta?.href,
         photoPrimary: photoOf(raw, "photoPrimary"),
-        photoSecondary: photoOf(raw, "photoSecondary"),
         photoSubjectPrimary: str(raw.photoSubjectPrimary),
-        photoSubjectSecondary: str(raw.photoSubjectSecondary),
       };
     }
     case "whatsIncluded": {

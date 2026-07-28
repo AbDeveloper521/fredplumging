@@ -53,10 +53,8 @@ export interface ServiceAboutSection extends SectionBase {
   ctaLabel?: string;
   ctaHref?: string;
   photoPrimary?: CmsPhoto;
-  photoSecondary?: CmsPhoto;
-  /** Intended photo subjects — placeholder captions until photos exist. */
+  /** Intended photo subject — placeholder caption until a photo exists. */
   photoSubjectPrimary?: string;
-  photoSubjectSecondary?: string;
 }
 
 export interface WhatsIncludedSection extends SectionBase {

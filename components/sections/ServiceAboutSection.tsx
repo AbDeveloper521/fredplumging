@@ -17,12 +17,10 @@ function CollagePhoto({
   photo,
   fallbackLabel,
   sizes,
-  showCaption = true,
 }: {
   photo?: CmsPhoto;
   fallbackLabel: string;
   sizes: string;
-  showCaption?: boolean;
 }) {
   return photo ? (
     <Image
@@ -33,14 +31,14 @@ function CollagePhoto({
       className="object-cover"
     />
   ) : (
-    <ImagePlaceholder label={fallbackLabel} icon={Users} showCaption={showCaption} />
+    <ImagePlaceholder label={fallbackLabel} icon={Users} />
   );
 }
 
 /**
- * The ONE permitted use of the brand collage composition on a service page —
- * image cluster left with the red 24/7 Emergency badge, copy right. Every
- * other section must use its own distinct layout.
+ * About band: one photo with the red 24/7 Emergency badge on the left, copy
+ * right. (The small overlapping second photo was removed at the owner's
+ * request — the homepage AboutSection still carries the full collage.)
  */
 export function ServiceAboutSection({ section, id }: ServiceAboutSectionProps) {
   return (
@@ -59,19 +57,6 @@ export function ServiceAboutSection({ section, id }: ServiceAboutSectionProps) {
                   }
                   sizes="(min-width: 1024px) 50vw, 100vw"
                 />
-              </div>
-              <div className="absolute -bottom-8 -right-3 hidden w-[46%] overflow-hidden rounded-2xl border-4 border-white shadow-(--shadow-card-lg) sm:block lg:-right-8">
-                <div className="relative aspect-[4/3]">
-                  <CollagePhoto
-                    photo={section.photoSecondary}
-                    fallbackLabel={
-                      section.photoSubjectSecondary ??
-                      "The Fred's Plumbing crew with a branded service van"
-                    }
-                    sizes="(min-width: 1024px) 23vw, 46vw"
-                    showCaption={false}
-                  />
-                </div>
               </div>
               {/* Red 24/7 Emergency badge */}
               <div className="absolute -top-5 -left-3 flex items-center gap-3 rounded-xl bg-red-600 px-5 py-3.5 text-white shadow-[0_12px_28px_rgb(211_33_39/0.4)] lg:-left-6">

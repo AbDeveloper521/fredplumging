@@ -73,7 +73,6 @@ type RawSection = {
   _type?: string;
   photo?: RawImage;
   photoPrimary?: RawImage;
-  photoSecondary?: RawImage;
   cards?: Array<{ title?: string; photo?: RawImage }>;
 };
 
@@ -95,7 +94,6 @@ function imagesOf(doc: RawDoc): ImageReport[] {
     }
     if (section._type === "serviceAbout") {
       reports.push(reportImage(`${at}.photoPrimary`, section.photoPrimary ?? null));
-      reports.push(reportImage(`${at}.photoSecondary`, section.photoSecondary ?? null));
     }
     if (section._type === "propertyTypes") {
       (section.cards ?? []).forEach((card, j) => {
