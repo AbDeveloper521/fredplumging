@@ -106,13 +106,15 @@ export function ServiceAboutSection({ section, id }: ServiceAboutSectionProps) {
               </div>
             </Reveal>
 
-            <Reveal delay={0.18}>
-              <div className="mt-9">
-                <Button href={section.ctaHref} variant="dark" withArrow>
-                  {section.ctaLabel}
-                </Button>
-              </div>
-            </Reveal>
+            {section.ctaLabel && section.ctaHref && (
+              <Reveal delay={0.18}>
+                <div className="mt-9">
+                  <Button href={section.ctaHref} variant="dark" withArrow>
+                    {section.ctaLabel}
+                  </Button>
+                </div>
+              </Reveal>
+            )}
           </div>
         </div>
       </Container>

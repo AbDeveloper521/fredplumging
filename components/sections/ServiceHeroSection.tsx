@@ -125,25 +125,29 @@ export function ServiceHeroSection({
             </h1>
           </Rise>
 
-          <Rise delay={0.18}>
-            <p className="mt-6 max-w-xl text-[17px] leading-relaxed text-grey-300">
-              {section.subheading}
-            </p>
-          </Rise>
+          {section.subheading && (
+            <Rise delay={0.18}>
+              <p className="mt-6 max-w-xl text-[17px] leading-relaxed text-grey-300">
+                {section.subheading}
+              </p>
+            </Rise>
+          )}
 
           <Rise delay={0.24}>
             <div className="mt-9 flex flex-col gap-4 sm:flex-row">
               <Button href={site.phoneHref} size="lg" withPhoneIcon>
                 {phoneCtaLabel}
               </Button>
-              <Button
-                href={section.secondaryCtaHref}
-                variant="outline"
-                size="lg"
-                withArrow
-              >
-                {section.secondaryCtaLabel}
-              </Button>
+              {section.secondaryCtaLabel && section.secondaryCtaHref && (
+                <Button
+                  href={section.secondaryCtaHref}
+                  variant="outline"
+                  size="lg"
+                  withArrow
+                >
+                  {section.secondaryCtaLabel}
+                </Button>
+              )}
             </div>
           </Rise>
 

@@ -41,11 +41,13 @@ export function ServiceFinalCtaSection({ section, site, id }: ServiceFinalCtaSec
             {section.heading}
           </h2>
         </Reveal>
-        <Reveal delay={0.08}>
-          <p className="mx-auto mt-5 max-w-2xl text-[17px] leading-relaxed text-grey-300">
-            {section.body}
-          </p>
-        </Reveal>
+        {section.body && (
+          <Reveal delay={0.08}>
+            <p className="mx-auto mt-5 max-w-2xl text-[17px] leading-relaxed text-grey-300">
+              {section.body}
+            </p>
+          </Reveal>
+        )}
         <Reveal delay={0.16}>
           <div className="mt-9 flex flex-col items-center justify-center gap-4 sm:flex-row">
             <span className="flex items-center gap-3">
@@ -59,14 +61,16 @@ export function ServiceFinalCtaSection({ section, site, id }: ServiceFinalCtaSec
                 {phoneCtaLabel}
               </Button>
             </span>
-            <Button
-              href={section.secondaryCtaHref}
-              variant="outline"
-              size="lg"
-              withArrow
-            >
-              {section.secondaryCtaLabel}
-            </Button>
+            {section.secondaryCtaLabel && section.secondaryCtaHref && (
+              <Button
+                href={section.secondaryCtaHref}
+                variant="outline"
+                size="lg"
+                withArrow
+              >
+                {section.secondaryCtaLabel}
+              </Button>
+            )}
           </div>
         </Reveal>
       </Container>

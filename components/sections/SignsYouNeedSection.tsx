@@ -90,13 +90,15 @@ export function SignsYouNeedSection({ section, id }: SignsYouNeedSectionProps) {
           })}
         </div>
 
-        <Reveal delay={0.15}>
-          <div className="mt-11 flex justify-center">
-            <Button href={section.ctaHref} variant="secondary" size="lg" withArrow>
-              {section.ctaLabel}
-            </Button>
-          </div>
-        </Reveal>
+        {section.ctaLabel && section.ctaHref && (
+          <Reveal delay={0.15}>
+            <div className="mt-11 flex justify-center">
+              <Button href={section.ctaHref} variant="secondary" size="lg" withArrow>
+                {section.ctaLabel}
+              </Button>
+            </div>
+          </Reveal>
+        )}
       </Container>
     </section>
   );

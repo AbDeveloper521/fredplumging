@@ -74,25 +74,39 @@ function iconItem(child: Raw, i: number) {
   };
 }
 
+/**
+ * A CTA button renders only when BOTH label and href exist — a labelled
+ * button going nowhere is worse than no button. Returns the pair or nothing.
+ */
+function ctaPair(
+  label: unknown,
+  href: unknown,
+): { label: string; href: string } | undefined {
+  const l = str(label);
+  const h = str(href);
+  return l && h ? { label: l, href: h } : undefined;
+}
+
 function toSection(raw: Raw, index: number): ServiceSection | null {
   const _key = key(raw, index);
   const heading = str(raw.heading);
+  // Every type's minimum: the heading. It is the section's h2 (the hero's
+  // h1) and its aria-label — a section with no heading cannot render.
   if (!heading) return null;
 
   switch (raw._type) {
     case "serviceHero": {
-      const subheading = str(raw.subheading);
-      const secondaryCtaLabel = str(raw.secondaryCtaLabel);
-      const secondaryCtaHref = str(raw.secondaryCtaHref);
-      if (!subheading || !secondaryCtaLabel || !secondaryCtaHref) return null;
+      // Minimum to render: heading (the page H1). Subheading, secondary CTA
+      // and credentials all degrade to absent.
+      const secondaryCta = ctaPair(raw.secondaryCtaLabel, raw.secondaryCtaHref);
       return {
         _type: "serviceHero",
         _key,
         eyebrow: str(raw.eyebrow),
         heading,
-        subheading,
-        secondaryCtaLabel,
-        secondaryCtaHref,
+        subheading: str(raw.subheading),
+        secondaryCtaLabel: secondaryCta?.label,
+        secondaryCtaHref: secondaryCta?.href,
         credentials: children(raw.credentials, (c, i) => {
           const label = str(c.label);
           return label
@@ -106,19 +120,20 @@ function toSection(raw: Raw, index: number): ServiceSection | null {
       };
     }
     case "serviceAbout": {
+      // Minimum to render: heading + at least one paragraph (the copy IS the
+      // section). The CTA button degrades to absent.
       const paragraphs = Array.isArray(raw.paragraphs)
         ? raw.paragraphs.filter((p): p is string => typeof p === "string" && p.trim() !== "")
         : [];
-      const ctaLabel = str(raw.ctaLabel);
-      const ctaHref = str(raw.ctaHref);
-      if (paragraphs.length === 0 || !ctaLabel || !ctaHref) return null;
+      if (paragraphs.length === 0) return null;
+      const cta = ctaPair(raw.ctaLabel, raw.ctaHref);
       return {
         _type: "serviceAbout",
         _key,
         heading,
         paragraphs,
-        ctaLabel,
-        ctaHref,
+        ctaLabel: cta?.label,
+        ctaHref: cta?.href,
         photoPrimary: photoOf(raw, "photoPrimary"),
         photoSecondary: photoOf(raw, "photoSecondary"),
         photoSubjectPrimary: str(raw.photoSubjectPrimary),
@@ -126,14 +141,15 @@ function toSection(raw: Raw, index: number): ServiceSection | null {
       };
     }
     case "whatsIncluded": {
-      const intro = str(raw.intro);
+      // Minimum to render: heading + at least one valid item (a scope list
+      // with zero rows is nothing). The intro line degrades to absent.
       const items = children(raw.items, iconItem);
-      if (!intro || items.length === 0) return null;
-      return { _type: "whatsIncluded", _key, heading, intro, items };
+      if (items.length === 0) return null;
+      return { _type: "whatsIncluded", _key, heading, intro: str(raw.intro), items };
     }
     case "signsYouNeed": {
-      const ctaLabel = str(raw.ctaLabel);
-      const ctaHref = str(raw.ctaHref);
+      // Minimum to render: heading + at least one valid card. The CTA button
+      // under the cards degrades to absent.
       const cards = children(raw.cards, (c, i) => {
         const question = str(c.question);
         const answer = str(c.answer);
@@ -141,18 +157,21 @@ function toSection(raw: Raw, index: number): ServiceSection | null {
           ? { _key: key(c, i), icon: toIcon(str(c.icon)), question, answer }
           : null;
       });
-      if (!ctaLabel || !ctaHref || cards.length === 0) return null;
+      if (cards.length === 0) return null;
+      const cta = ctaPair(raw.ctaLabel, raw.ctaHref);
       return {
         _type: "signsYouNeed",
         _key,
         heading,
         cards,
-        ctaLabel,
-        ctaHref,
+        ctaLabel: cta?.label,
+        ctaHref: cta?.href,
         background: choice(raw.background, ["white", "dark"] as const),
       };
     }
     case "processSteps": {
+      // Minimum to render: heading + at least one valid step — a timeline
+      // with zero steps is genuinely un-renderable.
       const steps = children(raw.steps, (c, i) => {
         const title = str(c.title);
         const description = str(c.description);
@@ -170,6 +189,8 @@ function toSection(raw: Raw, index: number): ServiceSection | null {
       };
     }
     case "comparisonTable": {
+      // Minimum to render: heading + at least one complete row — an empty
+      // table is genuinely un-renderable. Intro/labels/footnote are optional.
       const rows = children(raw.rows, (c, i) => {
         const situation = str(c.situation);
         const recommendation = str(c.recommendation);
@@ -199,6 +220,7 @@ function toSection(raw: Raw, index: number): ServiceSection | null {
       };
     }
     case "serviceTrust": {
+      // Minimum to render: heading + at least one valid proof point.
       const items = children(raw.items, iconItem);
       if (items.length === 0) return null;
       return {
@@ -210,7 +232,8 @@ function toSection(raw: Raw, index: number): ServiceSection | null {
       };
     }
     case "serviceTestimonials": {
-      // An untagged section is valid — it shows the most recent reviews.
+      // Minimum to render: heading only — reviews come from the site-wide
+      // Testimonials collection. An untagged section shows the most recent.
       const filterTags = Array.isArray(raw.filterTags)
         ? raw.filterTags.filter(isReviewTag)
         : [];
@@ -227,6 +250,8 @@ function toSection(raw: Raw, index: number): ServiceSection | null {
       };
     }
     case "propertyTypes": {
+      // Minimum to render: heading + at least one valid card. The optional
+      // CTA under the grid already renders only when both label+href exist.
       const cards = children(raw.cards, (c, i) => {
         const title = str(c.title);
         const blurb = str(c.blurb);
@@ -254,6 +279,7 @@ function toSection(raw: Raw, index: number): ServiceSection | null {
       };
     }
     case "serviceFaq": {
+      // Minimum to render: heading + at least one complete Q&A pair.
       const faqs = children(raw.faqs, (c, i) => {
         const question = str(c.question);
         const answer = str(c.answer);
@@ -277,18 +303,19 @@ function toSection(raw: Raw, index: number): ServiceSection | null {
       };
     }
     case "serviceArea": {
-      const body = str(raw.body);
-      if (!body) return null;
+      // Minimum to render: heading only — the city chips come from Site
+      // Settings, so the section is meaningful even without its paragraph.
       return {
         _type: "serviceArea",
         _key,
         heading,
-        body,
+        body: str(raw.body),
         photo: photoOf(raw, "photo"),
         photoSubject: str(raw.photoSubject),
       };
     }
     case "relatedServices": {
+      // Minimum to render: heading + at least one slug — cards are the section.
       const serviceSlugs = Array.isArray(raw.serviceSlugs)
         ? raw.serviceSlugs.filter((s): s is string => typeof s === "string" && s.trim() !== "")
         : [];
@@ -296,17 +323,16 @@ function toSection(raw: Raw, index: number): ServiceSection | null {
       return { _type: "relatedServices", _key, heading, serviceSlugs };
     }
     case "finalCta": {
-      const body = str(raw.body);
-      const secondaryCtaLabel = str(raw.secondaryCtaLabel);
-      const secondaryCtaHref = str(raw.secondaryCtaHref);
-      if (!body || !secondaryCtaLabel || !secondaryCtaHref) return null;
+      // Minimum to render: heading — the phone button always renders from
+      // Site Settings. Body and the secondary CTA degrade to absent.
+      const secondaryCta = ctaPair(raw.secondaryCtaLabel, raw.secondaryCtaHref);
       return {
         _type: "finalCta",
         _key,
         heading,
-        body,
-        secondaryCtaLabel,
-        secondaryCtaHref,
+        body: str(raw.body),
+        secondaryCtaLabel: secondaryCta?.label,
+        secondaryCtaHref: secondaryCta?.href,
         phoneCtaLabel: str(raw.phoneCtaLabel),
         showAvailabilityDot: raw.showAvailabilityDot === true,
       };

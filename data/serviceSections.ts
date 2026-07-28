@@ -31,9 +31,10 @@ export interface ServiceHeroSection extends SectionBase {
   _type: "serviceHero";
   eyebrow?: string;
   heading: string;
-  subheading: string;
-  secondaryCtaLabel: string;
-  secondaryCtaHref: string;
+  subheading?: string;
+  /** Secondary button — set together or not at all (both-or-none). */
+  secondaryCtaLabel?: string;
+  secondaryCtaHref?: string;
   credentials: Array<{ _key: string; icon: NavIconName; label: string }>;
   photo?: CmsPhoto;
   /** Intended photo subject — placeholder caption until a photo exists. */
@@ -48,8 +49,9 @@ export interface ServiceAboutSection extends SectionBase {
   _type: "serviceAbout";
   heading: string;
   paragraphs: string[];
-  ctaLabel: string;
-  ctaHref: string;
+  /** CTA button — set together or not at all (both-or-none). */
+  ctaLabel?: string;
+  ctaHref?: string;
   photoPrimary?: CmsPhoto;
   photoSecondary?: CmsPhoto;
   /** Intended photo subjects — placeholder captions until photos exist. */
@@ -60,7 +62,7 @@ export interface ServiceAboutSection extends SectionBase {
 export interface WhatsIncludedSection extends SectionBase {
   _type: "whatsIncluded";
   heading: string;
-  intro: string;
+  intro?: string;
   items: IconItem[];
 }
 
@@ -68,8 +70,9 @@ export interface SignsYouNeedSection extends SectionBase {
   _type: "signsYouNeed";
   heading: string;
   cards: Array<{ _key: string; icon: NavIconName; question: string; answer: string }>;
-  ctaLabel: string;
-  ctaHref: string;
+  /** CTA button under the cards — set together or not at all (both-or-none). */
+  ctaLabel?: string;
+  ctaHref?: string;
   /** Section background — defaults to white. */
   background?: "white" | "dark";
 }
@@ -158,7 +161,7 @@ export interface ServiceFaqSection extends SectionBase {
 export interface ServiceAreaSection extends SectionBase {
   _type: "serviceArea";
   heading: string;
-  body: string;
+  body?: string;
   photo?: CmsPhoto;
   /** Intended photo subject — placeholder caption until a photo exists. */
   photoSubject?: string;
@@ -174,9 +177,10 @@ export interface RelatedServicesSection extends SectionBase {
 export interface FinalCtaSection extends SectionBase {
   _type: "finalCta";
   heading: string;
-  body: string;
-  secondaryCtaLabel: string;
-  secondaryCtaHref: string;
+  body?: string;
+  /** Secondary button — set together or not at all (both-or-none). */
+  secondaryCtaLabel?: string;
+  secondaryCtaHref?: string;
   /** Call-button text; "{phone}" is replaced with the siteSettings number. */
   phoneCtaLabel?: string;
   /** Pulsing red dot beside the call button (24/7-availability pages). */
