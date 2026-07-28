@@ -3,6 +3,7 @@ import { resolvePhoto } from "@/sanity/lib/image";
 import type { CmsPhoto } from "@/data/services";
 import type { ServiceSection } from "@/data/serviceSections";
 import { NAV_ICON_NAMES, type NavIconName } from "@/data/navigation";
+import { isReviewTag } from "@/data/googleReviews";
 
 /**
  * Section mapping shared by every document type that carries a `sections`
@@ -202,8 +203,23 @@ function toSection(raw: Raw, index: number): ServiceSection | null {
         showLogos: raw.showLogos !== false,
       };
     }
-    case "serviceTestimonials":
-      return { _type: "serviceTestimonials", _key, heading };
+    case "serviceTestimonials": {
+      // An untagged section is valid — it shows the most recent reviews.
+      const filterTags = Array.isArray(raw.filterTags)
+        ? raw.filterTags.filter(isReviewTag)
+        : [];
+      const limit =
+        typeof raw.limit === "number"
+          ? Math.min(6, Math.max(1, Math.round(raw.limit)))
+          : undefined;
+      return {
+        _type: "serviceTestimonials",
+        _key,
+        heading,
+        filterTags: filterTags.length > 0 ? filterTags : undefined,
+        limit,
+      };
+    }
     case "propertyTypes": {
       const cards = children(raw.cards, (c, i) => {
         const title = str(c.title);

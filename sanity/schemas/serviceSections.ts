@@ -553,12 +553,32 @@ export const serviceTestimonials = defineType({
   description: "Shows reviews from the site-wide Testimonials collection — edit the reviews there, not here.",
   fields: [
     requiredString("heading", "Heading", "Section heading, e.g. “What Our Clients Say”.", "The section needs a heading."),
+    defineField({
+      name: "filterTags",
+      title: "Preferred review tags",
+      description:
+        "Show reviews tagged with these service/property slugs first. Valid values: commercial-plumbing, emergency-plumbing, drain-sewer, maintenance, specialty-services, plumbing, senior-care-facilities, student-housing, apartments, condos, assisted-living, nursing-homes. Leave empty to show the most recent reviews overall.",
+      type: "array",
+      of: [defineArrayMember({ type: "string" })],
+      options: { layout: "tags" },
+    }),
+    defineField({
+      name: "limit",
+      title: "How many reviews",
+      description: "Maximum review cards shown, 1 to 6. Four fills the grid.",
+      type: "number",
+      initialValue: 4,
+      validation: (rule) =>
+        rule.integer().error("Whole cards only.").min(1).max(6).error("Between 1 and 6 cards."),
+    }),
   ],
   preview: {
-    select: { heading: "heading" },
-    prepare: ({ heading }) => ({
+    select: { heading: "heading", filterTags: "filterTags" },
+    prepare: ({ heading, filterTags }) => ({
       title: heading ?? "Client reviews",
-      subtitle: "Reviews — pulled from the Testimonials collection",
+      subtitle: filterTags?.length
+        ? `Reviews — prefers tags: ${filterTags.join(", ")}`
+        : "Reviews — pulled from the Testimonials collection",
     }),
   },
 });

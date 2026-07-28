@@ -17,6 +17,7 @@ import {
 } from "../data/navigation";
 import { faqs } from "../data/faqs";
 import { testimonials } from "../data/testimonials";
+import { googleReviews } from "../data/googleReviews";
 import { services } from "../data/services";
 import { industries } from "../data/industries";
 
@@ -49,6 +50,7 @@ function diff(fallback: unknown, published: unknown, path: string, out: Diff[]):
     for (const [key, value] of Object.entries(fallback as Record<string, unknown>)) {
       if (
         key === "_key" ||
+        key === "id" || // local React key — the CMS document has its own _id
         key === "image" ||
         key === "imageAlt" ||
         key === "photo" ||
@@ -95,9 +97,19 @@ async function main() {
       query: `*[_type=="faq"]|order(order asc){question,answer}`,
     },
     {
+      name: "reviewSettings (data/googleReviews.ts)",
+      fallback: {
+        rating: googleReviews.rating,
+        reviewCount: googleReviews.reviewCount,
+        verifiedOn: googleReviews.verifiedOn,
+        reviewsUrl: googleReviews.reviewsUrl,
+      },
+      query: `*[_type=="reviewSettings" && _id=="reviewSettings"][0]{rating,reviewCount,verifiedOn,reviewsUrl}`,
+    },
+    {
       name: "testimonials (data/testimonials.ts)",
       fallback: testimonials,
-      query: `*[_type=="testimonial"]|order(order asc){name,role,rating,quote,date,featured}`,
+      query: `*[_type=="testimonial"]|order(order asc){name,role,rating,quote,date,featured,source,reviewerMeta,sourceUrl,serviceTags}`,
     },
     {
       name: "services (data/services.ts)",

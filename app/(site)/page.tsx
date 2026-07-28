@@ -1,6 +1,7 @@
 import { getSite } from "@/sanity/lib/getSite";
 import { getFaqs } from "@/sanity/lib/getFaqs";
 import { getTestimonials } from "@/sanity/lib/getTestimonials";
+import { getReviewSettings } from "@/sanity/lib/getReviewSettings";
 import { getServices } from "@/sanity/lib/getServices";
 import { getIndustries } from "@/sanity/lib/getIndustries";
 import { getTrustLogos } from "@/sanity/lib/getTrustLogos";
@@ -20,11 +21,12 @@ import { FAQSection } from "@/components/sections/FAQSection";
 import { FinalCTASection } from "@/components/sections/FinalCTASection";
 
 export default async function HomePage() {
-  const [site, faqs, testimonials, services, industries, trustLogos] =
+  const [site, faqs, testimonials, profile, services, industries, trustLogos] =
     await Promise.all([
       getSite(),
       getFaqs(),
       getTestimonials(),
+      getReviewSettings(),
       getServices(),
       getIndustries(),
       getTrustLogos(),
@@ -44,7 +46,11 @@ export default async function HomePage() {
       <ProcessSection />
       <ComplianceSection logos={trustLogos} />
       {testimonials.length > 0 && (
-        <TestimonialsSection testimonials={testimonials} site={site} />
+        <TestimonialsSection
+          testimonials={testimonials}
+          site={site}
+          profile={profile}
+        />
       )}
       <CaseStudySection />
       <ServiceAreaSection site={site} />

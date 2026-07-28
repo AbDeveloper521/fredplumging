@@ -4,11 +4,14 @@ import { getIndustries, getIndustryBySlug } from "@/sanity/lib/getIndustries";
 import { getServices } from "@/sanity/lib/getServices";
 import { getSite } from "@/sanity/lib/getSite";
 import { getTestimonials } from "@/sanity/lib/getTestimonials";
+import { getReviewSettings } from "@/sanity/lib/getReviewSettings";
 import { getTrustLogos } from "@/sanity/lib/getTrustLogos";
 import { industryHref } from "@/data/industries";
+import { DEFAULT_PAGE_REVIEW_TAGS } from "@/data/googleReviews";
 import type { ServiceFaqSection } from "@/data/serviceSections";
 import { CmsDetailPage } from "@/components/layout/CmsDetailPage";
 import { ServiceSectionRenderer } from "@/components/sections/ServiceSectionRenderer";
+import { TestimonialsSection } from "@/components/sections/TestimonialsSection";
 import {
   BreadcrumbJsonLd,
   FaqJsonLd,
@@ -90,8 +93,14 @@ export default async function IndustryPage({
   );
 
   // Legacy path: documents without a section stack keep the shared
-  // body/CmsDetailPage layout — nothing breaks mid-migration.
+  // body/CmsDetailPage layout — nothing breaks mid-migration. Reviews still
+  // render, preferring this property type's default tags.
   if (!industry.sections) {
+    const [site, testimonials, profile] = await Promise.all([
+      getSite(),
+      getTestimonials(),
+      getReviewSettings(),
+    ]);
     return (
       <>
         {structuredData}
@@ -104,14 +113,23 @@ export default async function IndustryPage({
           photo={industry.photo}
           photoPlaceholderLabel={industry.imageAlt}
         />
+        <TestimonialsSection
+          testimonials={testimonials}
+          site={site}
+          profile={profile}
+          heading="What Our Clients Say"
+          titleId="client-reviews-heading"
+          filterTags={DEFAULT_PAGE_REVIEW_TAGS[industry.slug]}
+        />
       </>
     );
   }
 
-  const [site, services, testimonials, trustLogos] = await Promise.all([
+  const [site, services, testimonials, profile, trustLogos] = await Promise.all([
     getSite(),
     getServices(),
     getTestimonials(),
+    getReviewSettings(),
     getTrustLogos(),
   ]);
 
@@ -131,6 +149,7 @@ export default async function IndustryPage({
         breadcrumbs={breadcrumbs}
         services={services}
         testimonials={testimonials}
+        profile={profile}
         trustLogos={trustLogos}
       />
     </>

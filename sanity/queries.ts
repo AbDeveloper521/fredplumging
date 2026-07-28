@@ -43,7 +43,19 @@ export const FAQS_QUERY = defineQuery(
 
 export const TESTIMONIALS_QUERY = defineQuery(
   `*[_type == "testimonial"] | order(order asc){
-    name, role, rating, quote, date, featured
+    "id": _id, name, role, rating, quote, date, featured,
+    source, reviewerMeta, sourceUrl, serviceTags, verified
+  }`,
+);
+
+export const REVIEW_SETTINGS_QUERY = defineQuery(
+  `*[_type == "reviewSettings" && _id == "reviewSettings"][0]{
+    rating,
+    reviewCount,
+    verifiedOn,
+    reviewsUrl,
+    writeReviewUrl,
+    headline
   }`,
 );
 

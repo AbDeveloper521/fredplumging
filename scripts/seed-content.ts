@@ -26,11 +26,13 @@ import {
 } from "../data/navigation";
 import { faqs } from "../data/faqs";
 import { testimonials } from "../data/testimonials";
+import { googleReviews, DEFAULT_PAGE_REVIEW_TAGS } from "../data/googleReviews";
 import { services } from "../data/services";
 import { industries } from "../data/industries";
 
 const DOC_TYPES = [
   "siteSettings",
+  "reviewSettings",
   "navigation",
   "faq",
   "testimonial",
@@ -44,6 +46,38 @@ function slugify(value: string): string {
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-+|-+$/g, "");
+}
+
+/**
+ * Ensures a section stack carries a client-reviews section: tags an existing
+ * `serviceTestimonials` with the page's default review tags, or inserts one
+ * ahead of the closing relatedServices/finalCta run. Every service and
+ * property-type page must end up with a reviews section.
+ */
+function withReviews(sections: unknown[], slug: string): unknown[] {
+  const filterTags = DEFAULT_PAGE_REVIEW_TAGS[slug] ?? [slug];
+  const typeOf = (s: unknown) => (s as { _type?: string })._type;
+
+  if (sections.some((s) => typeOf(s) === "serviceTestimonials")) {
+    return sections.map((s) =>
+      typeOf(s) === "serviceTestimonials"
+        ? { filterTags, limit: 4, ...(s as Record<string, unknown>) }
+        : s,
+    );
+  }
+
+  const reviews = {
+    _type: "serviceTestimonials",
+    _key: "seed-reviews",
+    heading: "What Our Clients Say",
+    filterTags,
+    limit: 4,
+  };
+  const tail = sections.findIndex((s) =>
+    ["relatedServices", "finalCta"].includes(typeOf(s) ?? ""),
+  );
+  if (tail === -1) return [...sections, reviews];
+  return [...sections.slice(0, tail), reviews, ...sections.slice(tail)];
 }
 
 /** Short placeholder Portable Text body so the rich rendering is visible. */
@@ -2929,7 +2963,7 @@ async function main() {
       body: placeholderBody(service.title),
       ...(extras
         ? {
-            sections: extras.sections(),
+            sections: withReviews(extras.sections(), service.slug),
             seoTitle: extras.seoTitle,
             seoDescription: extras.seoDescription,
           }
@@ -2950,7 +2984,7 @@ async function main() {
       body: placeholderBody(industry.title),
       ...(extras
         ? {
-            sections: extras.sections(),
+            sections: withReviews(extras.sections(), industry.slug),
             seoTitle: extras.seoTitle,
             seoDescription: extras.seoDescription,
           }
@@ -2970,7 +3004,9 @@ async function main() {
 
   testimonials.forEach((testimonial, i) => {
     tx.createOrReplace({
-      _id: `testimonial-${slugify(testimonial.name)}`,
+      // The fallback's stable id (reviewer slug + month) — unique even when
+      // one reviewer leaves reviews in different months.
+      _id: `testimonial-${testimonial.id}`,
       _type: "testimonial",
       name: testimonial.name,
       ...(testimonial.role ? { role: testimonial.role } : {}),
@@ -2978,8 +3014,34 @@ async function main() {
       quote: testimonial.quote,
       date: testimonial.date,
       featured: testimonial.featured ?? false,
+      source: testimonial.source,
+      ...(testimonial.reviewerMeta
+        ? { reviewerMeta: testimonial.reviewerMeta }
+        : {}),
+      ...(testimonial.sourceUrl ? { sourceUrl: testimonial.sourceUrl } : {}),
+      ...(testimonial.serviceTags
+        ? { serviceTags: [...testimonial.serviceTags] }
+        : {}),
+      verified: true,
       order: (i + 1) * 10,
     });
+  });
+
+  // Retired testimonial documents (e.g. the invented pre-launch quotes, or a
+  // review the transcription dropped) must not linger next to the real ones.
+  const staleTestimonialIds = await client.fetch<string[]>(
+    `*[_type == "testimonial" && !(_id in $ids)]._id`,
+    { ids: testimonials.map((t) => `testimonial-${t.id}`) },
+  );
+  staleTestimonialIds.forEach((id) => tx.delete(id));
+
+  tx.createOrReplace({
+    _id: "reviewSettings",
+    _type: "reviewSettings",
+    rating: googleReviews.rating,
+    reviewCount: googleReviews.reviewCount,
+    verifiedOn: googleReviews.verifiedOn,
+    reviewsUrl: googleReviews.reviewsUrl,
   });
 
   STATIC_TRUST_LOGOS.forEach((logo, i) => {
@@ -2995,7 +3057,7 @@ async function main() {
 
   console.log(
     `✓ Seeded project "${projectId}", dataset "${dataset}":\n` +
-      `  1 siteSettings, 1 navigation (header + footer + legal),\n` +
+      `  1 siteSettings, 1 reviewSettings, 1 navigation (header + footer + legal),\n` +
       `  ${services.length} services, ${industries.length} industries, ${faqs.length} FAQs,\n` +
       `  ${testimonials.length} testimonials, ${STATIC_TRUST_LOGOS.length} trust logos.\n\n` +
       `  ⚠ Images were NOT seeded — no image assets exist yet. Upload photos and\n` +

@@ -3,11 +3,14 @@ import { notFound } from "next/navigation";
 import { getServiceBySlug, getServices } from "@/sanity/lib/getServices";
 import { getSite } from "@/sanity/lib/getSite";
 import { getTestimonials } from "@/sanity/lib/getTestimonials";
+import { getReviewSettings } from "@/sanity/lib/getReviewSettings";
 import { getTrustLogos } from "@/sanity/lib/getTrustLogos";
 import { serviceHref } from "@/data/services";
+import { DEFAULT_PAGE_REVIEW_TAGS } from "@/data/googleReviews";
 import type { ServiceFaqSection } from "@/data/serviceSections";
 import { CmsDetailPage } from "@/components/layout/CmsDetailPage";
 import { ServiceSectionRenderer } from "@/components/sections/ServiceSectionRenderer";
+import { TestimonialsSection } from "@/components/sections/TestimonialsSection";
 import {
   BreadcrumbJsonLd,
   FaqJsonLd,
@@ -86,8 +89,15 @@ export default async function ServicePage({
   );
 
   // Legacy path: documents without a section stack keep the shared
-  // body/CmsDetailPage layout — nothing breaks mid-migration.
+  // body/CmsDetailPage layout — nothing breaks mid-migration. Reviews still
+  // render (every service page must carry them), preferring this service's
+  // default tags.
   if (!service.sections) {
+    const [site, testimonials, profile] = await Promise.all([
+      getSite(),
+      getTestimonials(),
+      getReviewSettings(),
+    ]);
     return (
       <>
         {structuredData}
@@ -99,14 +109,23 @@ export default async function ServicePage({
           photo={service.photo}
           photoPlaceholderLabel={service.imageAlt}
         />
+        <TestimonialsSection
+          testimonials={testimonials}
+          site={site}
+          profile={profile}
+          heading="What Our Clients Say"
+          titleId="client-reviews-heading"
+          filterTags={DEFAULT_PAGE_REVIEW_TAGS[service.slug]}
+        />
       </>
     );
   }
 
-  const [site, services, testimonials, trustLogos] = await Promise.all([
+  const [site, services, testimonials, profile, trustLogos] = await Promise.all([
     getSite(),
     getServices(),
     getTestimonials(),
+    getReviewSettings(),
     getTrustLogos(),
   ]);
 
@@ -126,6 +145,7 @@ export default async function ServicePage({
         breadcrumbs={breadcrumbs}
         services={services}
         testimonials={testimonials}
+        profile={profile}
         trustLogos={trustLogos}
       />
     </>

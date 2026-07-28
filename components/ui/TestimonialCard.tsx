@@ -1,5 +1,6 @@
 import { Star } from "lucide-react";
 import type { Testimonial } from "@/data/testimonials";
+import { GoogleG } from "@/components/ui/GoogleRatingBadge";
 import { cn } from "@/lib/utils";
 
 interface TestimonialCardProps {
@@ -42,7 +43,14 @@ export function TestimonialCard({
         className,
       )}
     >
-      <Stars rating={testimonial.rating} />
+      <div className="flex items-center justify-between">
+        <Stars rating={testimonial.rating} />
+        {testimonial.source === "google" && (
+          <span role="img" aria-label="Posted on Google">
+            <GoogleG className="size-4" />
+          </span>
+        )}
+      </div>
       <blockquote
         className={cn(
           "mt-5 leading-relaxed text-grey-700",
@@ -63,8 +71,24 @@ export function TestimonialCard({
         <div>
           <p className="text-sm font-bold text-navy-900">{testimonial.name}</p>
           <p className="text-[13px] text-grey-500">
-            {testimonial.role ? `${testimonial.role} · ` : ""}
-            {testimonial.date}
+            {testimonial.role
+              ? `${testimonial.role} · `
+              : testimonial.reviewerMeta
+                ? `${testimonial.reviewerMeta} · `
+                : ""}
+            {testimonial.sourceUrl ? (
+              <a
+                href={testimonial.sourceUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline-offset-4 hover:text-navy-900 hover:underline"
+              >
+                {testimonial.date}
+                <span className="sr-only"> (opens in a new tab)</span>
+              </a>
+            ) : (
+              testimonial.date
+            )}
           </p>
         </div>
       </figcaption>

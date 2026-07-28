@@ -97,6 +97,8 @@ export type PropertyTypes = {
 export type ServiceTestimonials = {
   _type: "serviceTestimonials";
   heading?: string;
+  filterTags?: Array<string>;
+  limit?: number;
 };
 
 export type ServiceTrust = {
@@ -516,6 +518,11 @@ export type Testimonial = {
   role?: string;
   date?: string;
   rating?: number;
+  source?: "google" | "direct";
+  reviewerMeta?: string;
+  sourceUrl?: string;
+  serviceTags?: Array<string>;
+  verified?: boolean;
   featured?: boolean;
   order?: number;
 };
@@ -587,6 +594,20 @@ export type Navigation = {
     _type: "footerLink";
     _key: string;
   }>;
+};
+
+export type ReviewSettings = {
+  _id: string;
+  _type: "reviewSettings";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  rating?: number;
+  reviewCount?: number;
+  verifiedOn?: string;
+  reviewsUrl?: string;
+  writeReviewUrl?: string;
+  headline?: string;
 };
 
 export type SiteSettings = {
@@ -731,6 +752,7 @@ export type AllSanitySchemaTypes =
   | Testimonial
   | Faq
   | Navigation
+  | ReviewSettings
   | SiteSettings
   | SanityImagePaletteSwatch
   | SanityImagePalette
@@ -807,15 +829,33 @@ export type FAQS_QUERY_RESULT = Array<{
 
 // Source: sanity/queries.ts
 // Variable: TESTIMONIALS_QUERY
-// Query: *[_type == "testimonial"] | order(order asc){    name, role, rating, quote, date, featured  }
+// Query: *[_type == "testimonial"] | order(order asc){    "id": _id, name, role, rating, quote, date, featured,    source, reviewerMeta, sourceUrl, serviceTags, verified  }
 export type TESTIMONIALS_QUERY_RESULT = Array<{
+  id: string;
   name: string | null;
   role: string | null;
   rating: number | null;
   quote: string | null;
   date: string | null;
   featured: boolean | null;
+  source: "direct" | "google" | null;
+  reviewerMeta: string | null;
+  sourceUrl: string | null;
+  serviceTags: Array<string> | null;
+  verified: boolean | null;
 }>;
+
+// Source: sanity/queries.ts
+// Variable: REVIEW_SETTINGS_QUERY
+// Query: *[_type == "reviewSettings" && _id == "reviewSettings"][0]{    rating,    reviewCount,    verifiedOn,    reviewsUrl,    writeReviewUrl,    headline  }
+export type REVIEW_SETTINGS_QUERY_RESULT = {
+  rating: number | null;
+  reviewCount: number | null;
+  verifiedOn: string | null;
+  reviewsUrl: string | null;
+  writeReviewUrl: string | null;
+  headline: string | null;
+} | null;
 
 // Source: sanity/queries.ts
 // Variable: SERVICES_QUERY
@@ -1101,6 +1141,8 @@ export type SERVICE_BY_SLUG_QUERY_RESULT = {
         _key: string;
         _type: "serviceTestimonials";
         heading?: string;
+        filterTags?: Array<string>;
+        limit?: number;
         photo: null;
         photoPrimary: null;
         photoSecondary: null;
@@ -1462,6 +1504,8 @@ export type INDUSTRY_BY_SLUG_QUERY_RESULT = {
         _key: string;
         _type: "serviceTestimonials";
         heading?: string;
+        filterTags?: Array<string>;
+        limit?: number;
         photo: null;
         photoPrimary: null;
         photoSecondary: null;
@@ -1601,7 +1645,8 @@ declare module "@sanity/client" {
     '*[_type == "siteSettings" && _id == "siteSettings"][0]{\n    name,\n    legalName,\n    tagline,\n    phone,\n    phoneHref,\n    email,\n    emailHref,\n    serviceArea,\n    foundedYear,\n    yearsInBusiness,\n    url,\n    serviceAreaCities\n  }': SITE_SETTINGS_QUERY_RESULT;
     '*[_type == "navigation" && _id == "navigation"][0]{\n    items[]{\n      _key,\n      label,\n      href,\n      layout,\n      showServiceAreaCities,\n      children[]{\n        _key,\n        label,\n        href,\n        description,\n        icon\n      }\n    },\n    cta{ label, href }\n  }': NAVIGATION_QUERY_RESULT;
     '*[_type == "faq"] | order(order asc){ question, answer }': FAQS_QUERY_RESULT;
-    '*[_type == "testimonial"] | order(order asc){\n    name, role, rating, quote, date, featured\n  }': TESTIMONIALS_QUERY_RESULT;
+    '*[_type == "testimonial"] | order(order asc){\n    "id": _id, name, role, rating, quote, date, featured,\n    source, reviewerMeta, sourceUrl, serviceTags, verified\n  }': TESTIMONIALS_QUERY_RESULT;
+    '*[_type == "reviewSettings" && _id == "reviewSettings"][0]{\n    rating,\n    reviewCount,\n    verifiedOn,\n    reviewsUrl,\n    writeReviewUrl,\n    headline\n  }': REVIEW_SETTINGS_QUERY_RESULT;
     '*[_type == "service"] | order(order asc){\n    title,\n    "slug": slug.current,\n    shortDescription,\n    icon,\n    featured,\n    photo{ asset, hotspot, crop, alt },\n    body,\n    seoTitle,\n    seoDescription\n  }': SERVICES_QUERY_RESULT;
     '*[_type == "service" && slug.current == $slug][0]{\n    title,\n    "slug": slug.current,\n    shortDescription,\n    icon,\n    featured,\n    photo{ asset, hotspot, crop, alt },\n    body,\n    sections[]{\n      ...,\n      photo{ asset, hotspot, crop, alt },\n      photoPrimary{ asset, hotspot, crop, alt },\n      photoSecondary{ asset, hotspot, crop, alt }\n    },\n    seoTitle,\n    seoDescription\n  }': SERVICE_BY_SLUG_QUERY_RESULT;
     '*[_type == "industry"] | order(order asc){\n    title,\n    "slug": slug.current,\n    description,\n    bulletPoints,\n    photo{ asset, hotspot, crop, alt },\n    body,\n    seoTitle,\n    seoDescription\n  }': INDUSTRIES_QUERY_RESULT;

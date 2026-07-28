@@ -6,6 +6,7 @@ import {
   testimonials as fallbackTestimonials,
   type Testimonial,
 } from "@/data/testimonials";
+import { isReviewTag } from "@/data/googleReviews";
 
 /** Cache tag invalidated by the /api/revalidate webhook. */
 export const TESTIMONIAL_TAG = "testimonial";
@@ -26,12 +27,19 @@ export async function getTestimonials(): Promise<Testimonial[]> {
     for (const item of result) {
       if (item.name && item.quote && item.date) {
         testimonials.push({
+          id: item.id,
           name: item.name,
           role: item.role ?? undefined,
           rating: item.rating ?? 5,
           quote: item.quote,
           date: item.date,
           featured: item.featured ?? undefined,
+          source: item.source === "direct" ? "direct" : "google",
+          reviewerMeta: item.reviewerMeta ?? undefined,
+          sourceUrl: item.sourceUrl ?? undefined,
+          // Unknown slugs are dropped (a typo must not hide the review from
+          // every page); an empty result means "untagged", shown everywhere.
+          serviceTags: item.serviceTags?.filter(isReviewTag),
         });
       }
     }

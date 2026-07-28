@@ -110,6 +110,10 @@ export interface ServiceTrustSection extends SectionBase {
 export interface ServiceTestimonialsSection extends SectionBase {
   _type: "serviceTestimonials";
   heading: string;
+  /** Slugs to prefer; empty means "most recent overall". */
+  filterTags?: string[];
+  /** Max cards, 1–6. Defaults to 4. */
+  limit?: number;
 }
 
 export interface PropertyTypesSection extends SectionBase {

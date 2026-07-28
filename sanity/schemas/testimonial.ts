@@ -19,7 +19,7 @@ export const testimonial = defineType({
       name: "name",
       title: "Customer name",
       description:
-        "Shown under the quote. First name and last initial is fine, e.g. “Melissa R.”",
+        "Shown under the quote, exactly as the reviewer signs on Google — e.g. “John Hamm”.",
       type: "string",
       validation: (rule) =>
         rule.required().error("Every quote needs a name so visitors know who said it."),
@@ -57,6 +57,55 @@ export const testimonial = defineType({
           .error("Ratings run from 1 to 5 stars."),
     }),
     defineField({
+      name: "source",
+      title: "Where the review was posted",
+      description:
+        "Google reviews show a “Posted on Google” line on the card. Only mark a review as Google if it is actually published on the Google listing — visitors can click through and check.",
+      type: "string",
+      options: {
+        list: [
+          { title: "Google", value: "google" },
+          { title: "Direct / email", value: "direct" },
+        ],
+        layout: "radio",
+      },
+      initialValue: "google",
+      validation: (rule) =>
+        rule.required().error("Pick where the review came from."),
+    }),
+    defineField({
+      name: "reviewerMeta",
+      title: "Reviewer standing",
+      description:
+        "The reviewer's standing on Google, shown when there's no job title — e.g. “Local Guide · 32 reviews”.",
+      type: "string",
+    }),
+    defineField({
+      name: "sourceUrl",
+      title: "Link to the review",
+      description:
+        "A link to the review on the platform it was posted on. The date on the card links here when set.",
+      type: "url",
+      validation: (rule) => rule.uri({ scheme: ["https"] }),
+    }),
+    defineField({
+      name: "serviceTags",
+      title: "Service tags",
+      description:
+        "Which service and property-type pages this review appears on. Valid values: commercial-plumbing, emergency-plumbing, drain-sewer, maintenance, specialty-services, plumbing, senior-care-facilities, student-housing, apartments, condos, assisted-living, nursing-homes. Anything else is ignored.",
+      type: "array",
+      of: [{ type: "string" }],
+      options: { layout: "tags" },
+    }),
+    defineField({
+      name: "verified",
+      title: "Verified",
+      description:
+        "Means “someone confirmed this review exists on the public listing”. Untick if you can no longer find it there.",
+      type: "boolean",
+      initialValue: true,
+    }),
+    defineField({
       name: "featured",
       title: "Feature this review",
       description:
@@ -88,10 +137,15 @@ export const testimonial = defineType({
     },
   ],
   preview: {
-    select: { title: "name", subtitle: "role", featured: "featured" },
-    prepare: ({ title, subtitle, featured }) => ({
+    select: {
+      title: "name",
+      role: "role",
+      reviewerMeta: "reviewerMeta",
+      featured: "featured",
+    },
+    prepare: ({ title, role, reviewerMeta, featured }) => ({
       title: `${featured ? "★ " : ""}${title ?? "Unnamed reviewer"}`,
-      subtitle: subtitle ?? undefined,
+      subtitle: role ?? reviewerMeta ?? undefined,
     }),
   },
 });

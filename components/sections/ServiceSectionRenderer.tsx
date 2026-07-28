@@ -3,6 +3,7 @@ import type { Service } from "@/data/services";
 import type { SiteContent } from "@/data/site";
 import type { TrustLogo } from "@/data/navigation";
 import type { Testimonial } from "@/data/testimonials";
+import type { GoogleReviewProfile } from "@/data/googleReviews";
 import { ServiceHeroSection, type Breadcrumb } from "./ServiceHeroSection";
 import { ServiceAboutSection } from "./ServiceAboutSection";
 import { WhatsIncludedSection } from "./WhatsIncludedSection";
@@ -46,6 +47,7 @@ interface ServiceSectionRendererProps {
   breadcrumbs: Breadcrumb[];
   services: Service[];
   testimonials: Testimonial[];
+  profile: GoogleReviewProfile;
   trustLogos: TrustLogo[];
 }
 
@@ -61,6 +63,7 @@ export function ServiceSectionRenderer({
   breadcrumbs,
   services,
   testimonials,
+  profile,
   trustLogos,
 }: ServiceSectionRendererProps) {
   const seen = new Map<string, number>();
@@ -109,8 +112,11 @@ export function ServiceSectionRenderer({
                 key={section._key}
                 testimonials={testimonials}
                 site={site}
+                profile={profile}
                 heading={section.heading}
                 titleId={`${id}-heading`}
+                filterTags={section.filterTags}
+                limit={section.limit}
               />
             );
           case "propertyTypes":
