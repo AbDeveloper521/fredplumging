@@ -631,6 +631,32 @@ export type ReviewSettings = {
   headline?: string;
 };
 
+export type ContactPage = {
+  _id: string;
+  _type: "contactPage";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  heroEyebrow?: string;
+  heroHeading?: string;
+  heroIntro?: string;
+  responsePromise?: string;
+  hours?: Array<{
+    days?: string;
+    hours?: string;
+    _type: "row";
+    _key: string;
+  }>;
+  emergencyHeading?: string;
+  emergencyBody?: string;
+  faqs?: Array<{
+    question?: string;
+    answer?: string;
+    _type: "faq";
+    _key: string;
+  }>;
+};
+
 export type SiteSettings = {
   _id: string;
   _type: "siteSettings";
@@ -780,6 +806,7 @@ export type AllSanitySchemaTypes =
   | Faq
   | Navigation
   | ReviewSettings
+  | ContactPage
   | SiteSettings
   | SanityImagePaletteSwatch
   | SanityImagePalette
@@ -1665,6 +1692,26 @@ export type TRUST_LOGOS_QUERY_RESULT = Array<{
 }>;
 
 // Source: sanity/queries.ts
+// Variable: CONTACT_PAGE_QUERY
+// Query: *[_type == "contactPage" && _id == "contactPage"][0]{    heroEyebrow,    heroHeading,    heroIntro,    responsePromise,    hours[]{ days, hours },    emergencyHeading,    emergencyBody,    faqs[]{ question, answer }  }
+export type CONTACT_PAGE_QUERY_RESULT = {
+  heroEyebrow: string | null;
+  heroHeading: string | null;
+  heroIntro: string | null;
+  responsePromise: string | null;
+  hours: Array<{
+    days: string | null;
+    hours: string | null;
+  }> | null;
+  emergencyHeading: string | null;
+  emergencyBody: string | null;
+  faqs: Array<{
+    question: string | null;
+    answer: string | null;
+  }> | null;
+} | null;
+
+// Source: sanity/queries.ts
 // Variable: FOOTER_NAVIGATION_QUERY
 // Query: *[_type == "navigation" && _id == "navigation"][0]{    footerColumns[]{      _key,      heading,      links[]{ _key, label, href }    },    legalLinks[]{ _key, label, href }  }
 export type FOOTER_NAVIGATION_QUERY_RESULT = {
@@ -1700,6 +1747,7 @@ declare module "@sanity/client" {
     '*[_type == "industry"] | order(order asc){\n    title,\n    "slug": slug.current,\n    description,\n    bulletPoints,\n    photo{ asset, hotspot, crop, alt },\n    body,\n    seoTitle,\n    seoDescription\n  }': INDUSTRIES_QUERY_RESULT;
     '*[_type == "industry" && slug.current == $slug][0]{\n    title,\n    "slug": slug.current,\n    description,\n    bulletPoints,\n    photo{ asset, hotspot, crop, alt },\n    body,\n    sections[]{\n      ...,\n      photo{ asset, hotspot, crop, alt },\n      photoPrimary{ asset, hotspot, crop, alt }\n    },\n    seoTitle,\n    seoDescription\n  }': INDUSTRY_BY_SLUG_QUERY_RESULT;
     '*[_type == "trustLogo"] | order(order asc){\n    name,\n    logo{ asset, hotspot, crop, alt },\n    headline,\n    blurb,\n    category,\n    url,\n    verified\n  }': TRUST_LOGOS_QUERY_RESULT;
+    '*[_type == "contactPage" && _id == "contactPage"][0]{\n    heroEyebrow,\n    heroHeading,\n    heroIntro,\n    responsePromise,\n    hours[]{ days, hours },\n    emergencyHeading,\n    emergencyBody,\n    faqs[]{ question, answer }\n  }': CONTACT_PAGE_QUERY_RESULT;
     '*[_type == "navigation" && _id == "navigation"][0]{\n    footerColumns[]{\n      _key,\n      heading,\n      links[]{ _key, label, href }\n    },\n    legalLinks[]{ _key, label, href }\n  }': FOOTER_NAVIGATION_QUERY_RESULT;
   }
 }

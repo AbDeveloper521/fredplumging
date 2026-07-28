@@ -167,6 +167,19 @@ export const TRUST_LOGOS_QUERY = defineQuery(
   }`,
 );
 
+export const CONTACT_PAGE_QUERY = defineQuery(
+  `*[_type == "contactPage" && _id == "contactPage"][0]{
+    heroEyebrow,
+    heroHeading,
+    heroIntro,
+    responsePromise,
+    hours[]{ days, hours },
+    emergencyHeading,
+    emergencyBody,
+    faqs[]{ question, answer }
+  }`,
+);
+
 export const FOOTER_NAVIGATION_QUERY = defineQuery(
   `*[_type == "navigation" && _id == "navigation"][0]{
     footerColumns[]{

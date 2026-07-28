@@ -1,5 +1,6 @@
 import type { SchemaTypeDefinition } from "sanity";
 import { siteSettings } from "./siteSettings";
+import { contactPage } from "./contactPage";
 import { reviewSettings } from "./reviewSettings";
 import { navigation } from "./navigation";
 import { faq } from "./faq";
@@ -12,6 +13,7 @@ import { serviceSectionTypes } from "./serviceSections";
 
 export const schemaTypes: SchemaTypeDefinition[] = [
   siteSettings,
+  contactPage,
   reviewSettings,
   navigation,
   faq,

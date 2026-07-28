@@ -53,8 +53,7 @@ export function EmergencyContactForm({ site }: { site: SiteContent }) {
   async function onSubmit(values: EmergencyContactValues) {
     setStatus("idle");
     try {
-      // Swap submitLead for a real API call when the backend is ready.
-      await submitLead(values);
+      await submitLead(values, "homepage-hero");
       setStatus("success");
       reset();
     } catch {

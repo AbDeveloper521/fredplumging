@@ -42,8 +42,7 @@ export function QuoteRequestForm({ site }: { site: SiteContent }) {
   async function onSubmit(values: QuoteRequestValues) {
     setStatus("idle");
     try {
-      // Swap submitLead for a real API call when the backend is ready.
-      await submitLead(values);
+      await submitLead(values, "final-cta");
       setStatus("success");
       reset();
     } catch {

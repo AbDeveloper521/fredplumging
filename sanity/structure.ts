@@ -20,6 +20,12 @@ export const structure: StructureResolver = (S) =>
         .id("navigation")
         .child(S.document().schemaType("navigation").documentId("navigation")),
       S.listItem()
+        .title("Contact Page")
+        .id("contactPage")
+        .child(
+          S.document().schemaType("contactPage").documentId("contactPage"),
+        ),
+      S.listItem()
         .title("Google Reviews")
         .id("reviewSettings")
         .child(
