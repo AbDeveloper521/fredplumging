@@ -17,10 +17,11 @@ function iconField(options: { description: string; choices: Array<{ title: strin
   return defineField({
     name: "icon",
     title: "Icon",
-    description: options.description,
+    // Optional by design: the site falls back to the wrench icon, so an
+    // empty pick can never block a publish or drop the row.
+    description: `${options.description} Leave empty to use the wrench icon.`,
     type: "string",
     options: { list: options.choices },
-    validation: (rule) => rule.required().error("Pick an icon so the row doesn't render with an empty box."),
   });
 }
 
@@ -47,13 +48,27 @@ const PROPERTY_ICONS: Array<{ title: string; value: NavIconName }> = [
   { title: "Stethoscope (nursing homes)", value: "stethoscope" },
 ];
 
+/** True when the value is a real string with visible characters. */
+const filled = (value: unknown): value is string =>
+  typeof value === "string" && value.trim() !== "";
+
+/**
+ * `rule.required()` alone accepts a string of spaces or a lone newline —
+ * which then fails the renderer's trim gate and drops content at render
+ * time. Every string rule here is trim-aware so the Studio refuses at
+ * publish time what the site cannot use.
+ */
+const notJustSpaces = (message: string) => (value?: string) =>
+  value === undefined || value === null || value.trim() !== "" ? true : message;
+
 function requiredString(name: string, title: string, description: string, errorMessage: string) {
   return defineField({
     name,
     title,
     description,
     type: "string",
-    validation: (rule) => rule.required().error(errorMessage),
+    validation: (rule) =>
+      rule.required().error(errorMessage).custom(notJustSpaces(errorMessage)),
   });
 }
 
@@ -64,26 +79,71 @@ function requiredText(name: string, title: string, description: string, errorMes
     description,
     type: "text",
     rows,
-    validation: (rule) => rule.required().error(errorMessage),
+    validation: (rule) =>
+      rule.required().error(errorMessage).custom(notJustSpaces(errorMessage)),
   });
 }
 
-const internalHref = (name: string, title: string, description: string) =>
-  defineField({
+/** Optional copy: may be left empty, but whitespace-only is refused. */
+function optionalText(name: string, title: string, description: string, rows = 3) {
+  return defineField({
     name,
     title,
     description,
-    type: "string",
+    type: "text",
+    rows,
     validation: (rule) =>
-      rule
-        .required()
-        .error("The button needs a page to go to — usually /contact.")
-        .custom((value?: string) =>
-          value?.startsWith("/")
-            ? true
-            : "Use a page on this site, starting with a slash — e.g. /contact.",
-        ),
+      rule.custom(notJustSpaces("Write real text or clear the field — spaces alone don't count.")),
   });
+}
+
+/**
+ * An optional CTA button: the page renders it only when BOTH text and link
+ * exist, so the Studio enforces both-or-none — a half-filled pair would
+ * publish cleanly and then silently not render.
+ */
+function ctaPairFields(options: {
+  labelName: string;
+  labelTitle: string;
+  labelDescription: string;
+  hrefName: string;
+  hrefTitle: string;
+  hrefDescription: string;
+}) {
+  const { labelName, hrefName } = options;
+  return [
+    defineField({
+      name: labelName,
+      title: options.labelTitle,
+      description: options.labelDescription,
+      type: "string",
+      validation: (rule) =>
+        rule.custom((value: string | undefined, context) => {
+          const parent = context.parent as Record<string, unknown> | undefined;
+          if (typeof value === "string" && value.trim() === "")
+            return "Write real text or clear the field — spaces alone don't count.";
+          if (!filled(value) && filled(parent?.[hrefName]))
+            return "The button has a link but no text — fill this in or clear the link.";
+          return true;
+        }),
+    }),
+    defineField({
+      name: hrefName,
+      title: options.hrefTitle,
+      description: options.hrefDescription,
+      type: "string",
+      validation: (rule) =>
+        rule.custom((value: string | undefined, context) => {
+          const parent = context.parent as Record<string, unknown> | undefined;
+          if (filled(value) && !value.startsWith("/"))
+            return "Use a page on this site, starting with a slash — e.g. /contact.";
+          if (!filled(value) && filled(parent?.[labelName]))
+            return "The button has text but nowhere to go — add the link (usually /contact) or clear the text.";
+          return true;
+        }),
+    }),
+  ];
+}
 
 export const serviceHero = defineType({
   name: "serviceHero",
@@ -97,23 +157,20 @@ export const serviceHero = defineType({
       "The main page headline, e.g. “Plumbing Services In The Dallas–Fort Worth Metroplex”. This is the page's one H1 — search engines weigh it heavily.",
       "The page can't render without its main headline.",
     ),
-    requiredText(
+    optionalText(
       "subheading",
       "Intro paragraph",
-      "Two or three sentences under the heading saying what this service is and who it's for.",
-      "Visitors need one paragraph of context under the headline.",
+      "Two or three sentences under the heading saying what this service is and who it's for. Leave empty to show the heading alone.",
     ),
-    requiredString(
-      "secondaryCtaLabel",
-      "Second button text",
-      "The outlined button next to the red call button, e.g. “Request a Property Assessment”. Keep every button label on the page different.",
-      "The second button needs its own label.",
-    ),
-    internalHref(
-      "secondaryCtaHref",
-      "Second button link",
-      "Where the second button goes — usually /contact.",
-    ),
+    ...ctaPairFields({
+      labelName: "secondaryCtaLabel",
+      labelTitle: "Second button text",
+      labelDescription:
+        "The outlined button next to the red call button, e.g. “Request a Property Assessment”. Keep every button label on the page different. Leave both button fields empty for no second button.",
+      hrefName: "secondaryCtaHref",
+      hrefTitle: "Second button link",
+      hrefDescription: "Where the second button goes — usually /contact.",
+    }),
     defineField({
       name: "credentials",
       title: "Credentials strip",
@@ -197,13 +254,15 @@ export const serviceAbout = defineType({
       validation: (rule) =>
         rule.required().min(1).error("Write at least one paragraph — the section is empty without copy."),
     }),
-    requiredString(
-      "ctaLabel",
-      "Button text",
-      "The dark button under the copy, e.g. “Talk to Our Team”. Keep every button label on the page different.",
-      "The button needs a label.",
-    ),
-    internalHref("ctaHref", "Button link", "Where the button goes — usually /contact."),
+    ...ctaPairFields({
+      labelName: "ctaLabel",
+      labelTitle: "Button text",
+      labelDescription:
+        "The dark button under the copy, e.g. “Talk to Our Team”. Keep every button label on the page different. Leave both button fields empty for no button.",
+      hrefName: "ctaHref",
+      hrefTitle: "Button link",
+      hrefDescription: "Where the button goes — usually /contact.",
+    }),
     imageWithAlt({
       name: "photoPrimary",
       title: "Main photo",
@@ -247,11 +306,10 @@ export const whatsIncluded = defineType({
   description: "The scope list: a grid of the work this service covers, one row per item.",
   fields: [
     requiredString("heading", "Heading", "Section heading, e.g. “What Our Plumbing Service Covers”.", "The section needs a heading."),
-    requiredText(
+    optionalText(
       "intro",
       "Intro line",
-      "One sentence under the heading framing the list.",
-      "Add one framing sentence — the grid looks abrupt without it.",
+      "One sentence under the heading framing the list. Leave empty to show the heading alone.",
       2,
     ),
     defineField({
@@ -340,13 +398,15 @@ export const signsYouNeed = defineType({
       ],
       validation: (rule) => rule.required().min(2).error("Add at least two warning signs — a single card looks like a mistake."),
     }),
-    requiredString(
-      "ctaLabel",
-      "Button text",
-      "The button under the cards, e.g. “Describe Your Issue — Get a Callback”. Keep every button label on the page different.",
-      "The button needs a label.",
-    ),
-    internalHref("ctaHref", "Button link", "Where the button goes — usually /contact."),
+    ...ctaPairFields({
+      labelName: "ctaLabel",
+      labelTitle: "Button text",
+      labelDescription:
+        "The button under the cards, e.g. “Describe Your Issue — Get a Callback”. Keep every button label on the page different. Leave both button fields empty for no button.",
+      hrefName: "ctaHref",
+      hrefTitle: "Button link",
+      hrefDescription: "Where the button goes — usually /contact.",
+    }),
     defineField({
       name: "background",
       title: "Background",
@@ -656,24 +716,14 @@ export const propertyTypes = defineType({
         ],
       },
     }),
-    defineField({
-      name: "ctaLabel",
-      title: "Button under the grid (optional)",
-      description:
-        "Text for a single button under the cards, e.g. “Tell Us About Your Property”. Leave empty for no button. Keep every button label on the page different.",
-      type: "string",
-    }),
-    defineField({
-      name: "ctaHref",
-      title: "Button link",
-      description: "Where the button goes — usually /contact. Only used when button text is set.",
-      type: "string",
-      validation: (rule) =>
-        rule.custom((value?: string) =>
-          !value || value.startsWith("/")
-            ? true
-            : "Use a page on this site, starting with a slash — e.g. /contact.",
-        ),
+    ...ctaPairFields({
+      labelName: "ctaLabel",
+      labelTitle: "Button under the grid (optional)",
+      labelDescription:
+        "Text for a single button under the cards, e.g. “Tell Us About Your Property”. Leave both button fields empty for no button. Keep every button label on the page different.",
+      hrefName: "ctaHref",
+      hrefTitle: "Button link",
+      hrefDescription: "Where the button goes — usually /contact. Only used when button text is set.",
     }),
   ],
   preview: {
@@ -765,7 +815,12 @@ export const serviceArea = defineType({
   description: "Where we work: copy plus the city list. Cities come from Site Settings — edit them there.",
   fields: [
     requiredString("heading", "Heading", "Section heading, e.g. “Proudly Serving The Entire Dallas–Fort Worth Metroplex”.", "The section needs a heading."),
-    requiredText("body", "Paragraph", "One paragraph naming the areas served. The city chips underneath come from Site Settings automatically.", "The section needs its paragraph.", 4),
+    optionalText(
+      "body",
+      "Paragraph",
+      "One paragraph naming the areas served. The city chips underneath come from Site Settings automatically. Leave empty to show the heading and city chips alone.",
+      4,
+    ),
     imageWithAlt({
       name: "photo",
       title: "Photo",
@@ -822,14 +877,21 @@ export const finalCta = defineType({
   description: "The centered dark band at the end of the page: heading, one line, call buttons.",
   fields: [
     requiredString("heading", "Heading", "e.g. “Get a Plumbing Partner Your Properties Can Count On”.", "The closing band needs a heading."),
-    requiredText("body", "Supporting line", "One sentence under the heading.", "Add one supporting sentence.", 2),
-    requiredString(
-      "secondaryCtaLabel",
-      "Second button text",
-      "The outlined button next to the red call button, e.g. “Request a Quote”. Keep every button label on the page different.",
-      "The second button needs its own label.",
+    optionalText(
+      "body",
+      "Supporting line",
+      "One sentence under the heading. Leave empty to show the heading alone.",
+      2,
     ),
-    internalHref("secondaryCtaHref", "Second button link", "Where the second button goes — usually /contact."),
+    ...ctaPairFields({
+      labelName: "secondaryCtaLabel",
+      labelTitle: "Second button text",
+      labelDescription:
+        "The outlined button next to the red call button, e.g. “Request a Quote”. Keep every button label on the page different. Leave both button fields empty for no second button.",
+      hrefName: "secondaryCtaHref",
+      hrefTitle: "Second button link",
+      hrefDescription: "Where the second button goes — usually /contact.",
+    }),
     defineField({
       name: "phoneCtaLabel",
       title: "Call-button text",

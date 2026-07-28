@@ -65,7 +65,67 @@ section stack, top banner included.
 *(Filled in by the degrade-instead-of-vanish change — the two columns must
 agree on every row. This table is the regression test for the gate logic.)*
 
-<!-- RECONCILIATION_TABLE -->
+Every rule below is trim-aware on both sides: the Studio refuses
+whitespace-only values (`notJustSpaces` in `sanity/schemas/serviceSections.ts`)
+and the renderer trims before checking (`str()` in `sanity/lib/sections.ts`).
+CTA buttons are a **both-or-none pair** on both sides: the Studio's
+`ctaPairFields` errors when one half is filled without the other, and the
+renderer's `ctaPair()` renders the button only when both exist.
+
+| Section type | Field | Required in Studio | Load-bearing at render |
+|---|---|---|---|
+| serviceHero | heading | yes | yes (page H1) |
+| serviceHero | subheading | no | no (paragraph omitted) |
+| serviceHero | secondaryCtaLabel + secondaryCtaHref | no (pair: both-or-none) | no (button renders only when both set) |
+| serviceHero | credentials / eyebrow / phoneCtaLabel / photo | no | no |
+| serviceAbout | heading | yes | yes |
+| serviceAbout | paragraphs (≥1) | yes | yes (the copy is the section) |
+| serviceAbout | ctaLabel + ctaHref | no (pair) | no |
+| serviceAbout | photos / photo subjects | no | no |
+| whatsIncluded | heading | yes | yes |
+| whatsIncluded | intro | no | no |
+| whatsIncluded | items (≥1 valid) | yes (Studio asks for ≥2 for layout) | yes |
+| whatsIncluded | item.title, item.description | yes | yes (row dropped without them) |
+| signsYouNeed | heading | yes | yes |
+| signsYouNeed | cards (≥1 valid) | yes (Studio asks for ≥2) | yes |
+| signsYouNeed | card.question, card.answer | yes | yes |
+| signsYouNeed | ctaLabel + ctaHref | no (pair) | no |
+| processSteps | heading | yes | yes |
+| processSteps | steps (≥1 valid) | yes (Studio asks for ≥2) | yes |
+| processSteps | step.title, step.description | yes | yes |
+| comparisonTable | heading | yes | yes |
+| comparisonTable | rows (≥1 valid) | yes (Studio asks for ≥2) | yes |
+| comparisonTable | row.situation, row.recommendation, row.why | yes | yes |
+| comparisonTable | intro / columnLabels / footnote | no | no |
+| serviceTrust | heading | yes | yes |
+| serviceTrust | items (≥1 valid) | yes | yes |
+| serviceTrust | item.title, item.description | yes | yes |
+| serviceTestimonials | heading | yes | yes |
+| serviceTestimonials | filterTags / limit | no | no |
+| propertyTypes | heading | yes | yes |
+| propertyTypes | cards (≥1 valid) | yes | yes |
+| propertyTypes | card.title, card.blurb | yes | yes |
+| propertyTypes | card.slug / card.photo / card.photoSubject | no | no |
+| propertyTypes | ctaLabel + ctaHref | no (pair) | no |
+| serviceFaq | heading | yes | yes |
+| serviceFaq | faqs (≥1 valid) | yes | yes |
+| serviceFaq | faq.question, faq.answer | yes | yes |
+| serviceFaq | faq.href / faq.linkLabel | no | no |
+| serviceArea | heading | yes | yes |
+| serviceArea | body | no (city chips come from Site Settings) | no |
+| serviceArea | photo / photoSubject | no | no |
+| relatedServices | heading | yes | yes |
+| relatedServices | serviceSlugs (≥1) | yes | yes |
+| finalCta | heading | yes | yes |
+| finalCta | body | no | no |
+| finalCta | secondaryCtaLabel + secondaryCtaHref | no (pair) | no |
+| finalCta | phoneCtaLabel / showAvailabilityDot | no | no (phone button always renders from Site Settings) |
+| *(all icon fields)* | icon | no | no (site falls back to the wrench icon) |
+
+Deliberate count difference: where the Studio asks for a **minimum of 2**
+entries (items/cards/steps/rows) that is editorial guidance for layout
+balance; the renderer keeps a section down to **1 valid entry**, because a
+section with one real entry is still meaningful and must not vanish.
 
 ## Raw audit output — 2026-07-29, before any behaviour change
 
