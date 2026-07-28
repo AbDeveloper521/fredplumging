@@ -3,6 +3,29 @@ export interface Faq {
   answer: string;
 }
 
+/**
+ * Vendor-onboarding questions — rendered on /about/partners AND appended to
+ * the shared list below (FAQPage JSON-LD must use the exact rendered
+ * strings, so both pages read from this single source).
+ */
+export const vendorFaqs: Faq[] = [
+  {
+    question: "Which vendor compliance systems is Fred's Plumbing registered with?",
+    answer:
+      "We are registered and in good standing on VendorCafe, Compliance Depot, Vendor Nexus, NetVendor, and RealPage. Our Partners page describes each registration and what it covers.",
+  },
+  {
+    question: "How long does vendor approval take if we use a portal you're already in?",
+    answer:
+      "Usually a same-day lookup rather than a new onboarding cycle — our documentation, insurance, and certifications are already on file in those systems. If you use a different platform, send us its requirements and we will start the registration right away.",
+  },
+  {
+    question: "Can you provide certificates of insurance naming our property as additional insured?",
+    answer:
+      "Yes. Certificates can be issued through your vendor portal or directly from our carrier. Request one through the portal, or contact our office with the exact wording your property requires.",
+  },
+];
+
 export const faqs: Faq[] = [
   {
     question: "Do you provide 24/7 emergency plumbing service?",
@@ -34,4 +57,5 @@ export const faqs: Faq[] = [
     answer:
       "Yes. We maintain the insurance, licensing, and credentialing required by major property management organizations and are registered with common vendor systems such as VendorCafe, NetVendor, and Nexus.",
   },
+  ...vendorFaqs,
 ];

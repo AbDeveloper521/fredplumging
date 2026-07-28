@@ -1,6 +1,7 @@
 import "server-only";
 import { serverClient } from "@/sanity/lib/serverClient";
 import { logFallback } from "@/sanity/lib/fallbackLog";
+import { sanityFetchOptions } from "@/sanity/lib/cacheOptions";
 import { FOOTER_NAVIGATION_QUERY } from "@/sanity/queries";
 import type { FOOTER_NAVIGATION_QUERY_RESULT } from "@/sanity.types";
 import {
@@ -47,7 +48,7 @@ export async function getFooterNavigation(): Promise<FooterNavigation> {
     result = await serverClient.fetch(
       FOOTER_NAVIGATION_QUERY,
       {},
-      { next: { revalidate: 86400, tags: [NAVIGATION_TAG] } },
+      sanityFetchOptions(NAVIGATION_TAG),
     );
   } catch (error) {
     logFallback({

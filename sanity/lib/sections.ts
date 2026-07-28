@@ -40,7 +40,13 @@ function key(item: Raw, index: number): string {
 function photoOf(item: Raw, field: string): CmsPhoto | undefined {
   const value = item[field];
   return value && typeof value === "object"
-    ? resolvePhoto(value as { asset?: unknown; alt?: string | null })
+    ? // Sections don't know their parent document here, so the skipped-image
+      // warning names the section type + field and falls back to the asset ref.
+      resolvePhoto(
+        value as { asset?: unknown; alt?: string | null },
+        1600,
+        `a "${String(item._type ?? "section")}" section → ${field}`,
+      )
     : undefined;
 }
 

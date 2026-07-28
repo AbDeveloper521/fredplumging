@@ -3,6 +3,7 @@ import { serverClient } from "@/sanity/lib/serverClient";
 import { resolvePhoto } from "@/sanity/lib/image";
 import { toSections } from "@/sanity/lib/sections";
 import { logEmpty, logFallback } from "@/sanity/lib/fallbackLog";
+import { sanityFetchOptions } from "@/sanity/lib/cacheOptions";
 import { SERVICES_QUERY, SERVICE_BY_SLUG_QUERY } from "@/sanity/queries";
 import type {
   SERVICES_QUERY_RESULT,
@@ -18,9 +19,7 @@ import { NAV_ICON_NAMES, type NavIconName } from "@/data/navigation";
 /** Cache tag invalidated by the /api/revalidate webhook. */
 export const SERVICE_TAG = "service";
 
-const FETCH_OPTIONS = {
-  next: { revalidate: 86400, tags: [SERVICE_TAG] },
-};
+const FETCH_OPTIONS = sanityFetchOptions(SERVICE_TAG);
 
 function toIcon(value: string | null | undefined): NavIconName {
   return value && (NAV_ICON_NAMES as readonly string[]).includes(value)
@@ -48,7 +47,7 @@ function toService(item: ServiceListItem | ServiceDetailItem): Service | null {
     imageAlt: `${item.title} at a commercial property`,
     icon: toIcon(item.icon),
     featured: item.featured ?? undefined,
-    photo: resolvePhoto(item.photo),
+    photo: resolvePhoto(item.photo, 1600, `service "${item.slug}" → Photo`),
   };
 }
 

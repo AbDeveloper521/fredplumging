@@ -162,7 +162,7 @@ export const serviceHero = defineType({
       name: "photo",
       title: "Banner photo",
       description:
-        "Tall photo on the right of the banner — vertical orientation works best. Until one is uploaded the site shows a styled placeholder.",
+        "The large photo beside the page heading, at the very top of this page — the tall image on the right of the dark banner. Vertical orientation works best. Until one is uploaded the site shows a styled placeholder. (The small photo on the homepage card is a separate field: “Photo” at the document level, below the sections list.)",
     }),
     defineField({
       name: "photoSubject",
@@ -207,7 +207,8 @@ export const serviceAbout = defineType({
     imageWithAlt({
       name: "photoPrimary",
       title: "Main photo",
-      description: "The large photo in the collage.",
+      description:
+        "The large photo in the About band, part-way down this page — the big image on the left of the photo collage, behind the red 24/7 badge.",
     }),
     defineField({
       name: "photoSubjectPrimary",
@@ -219,7 +220,8 @@ export const serviceAbout = defineType({
     imageWithAlt({
       name: "photoSecondary",
       title: "Small overlapping photo",
-      description: "The smaller photo overlapping the main one.",
+      description:
+        "The smaller photo in the About band's collage — it overlaps the bottom corner of the main photo.",
     }),
     defineField({
       name: "photoSubjectSecondary",
@@ -621,7 +623,8 @@ export const propertyTypes = defineType({
             imageWithAlt({
               name: "photo",
               title: "Card photo (optional)",
-              description: "Photo across the top of the card. Cards without one show the icon instead.",
+              description:
+                "The photo across the top of this card in the Property cards grid on this page. Cards without one show the icon instead.",
             }),
             defineField({
               name: "photoSubject",
@@ -766,7 +769,8 @@ export const serviceArea = defineType({
     imageWithAlt({
       name: "photo",
       title: "Photo",
-      description: "Photo on the right, e.g. a Dallas or Fort Worth skyline.",
+      description:
+        "The photo on the right of the Service area section, near the bottom of this page, beside the city list — e.g. a Dallas or Fort Worth skyline.",
     }),
     defineField({
       name: "photoSubject",

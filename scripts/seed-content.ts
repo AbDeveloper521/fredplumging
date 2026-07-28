@@ -27,6 +27,7 @@ import {
 import { faqs } from "../data/faqs";
 import { testimonials } from "../data/testimonials";
 import { googleReviews, DEFAULT_PAGE_REVIEW_TAGS } from "../data/googleReviews";
+import { jobPostings } from "../data/jobs";
 import { services } from "../data/services";
 import { industries } from "../data/industries";
 
@@ -39,6 +40,7 @@ const DOC_TYPES = [
   "service",
   "industry",
   "trustLogo",
+  "jobPosting",
 ];
 
 function slugify(value: string): string {
@@ -3044,11 +3046,39 @@ async function main() {
     reviewsUrl: googleReviews.reviewsUrl,
   });
 
+  jobPostings.forEach((job, i) => {
+    tx.createOrReplace({
+      _id: `jobPosting-${job.slug}`,
+      _type: "jobPosting",
+      title: job.title,
+      slug: { _type: "slug", current: job.slug },
+      employmentType: job.employmentType,
+      ...(job.team ? { team: job.team } : {}),
+      ...(job.shift ? { shift: job.shift } : {}),
+      ...(job.openings ? { openings: job.openings } : {}),
+      summary: job.summary,
+      ...(job.responsibilities ? { responsibilities: [...job.responsibilities] } : {}),
+      ...(job.requirements ? { requirements: [...job.requirements] } : {}),
+      ...(job.compensationNote ? { compensationNote: job.compensationNote } : {}),
+      ...(job.applyEmail ? { applyEmail: job.applyEmail } : {}),
+      ...(job.applyUrl ? { applyUrl: job.applyUrl } : {}),
+      ...(job.datePosted ? { datePosted: job.datePosted } : {}),
+      ...(job.validThrough ? { validThrough: job.validThrough } : {}),
+      open: job.open,
+      order: (i + 1) * 10,
+    });
+  });
+
   STATIC_TRUST_LOGOS.forEach((logo, i) => {
     tx.createOrReplace({
       _id: `trustLogo-${slugify(logo.name)}`,
       _type: "trustLogo",
       name: logo.name,
+      ...(logo.headline ? { headline: logo.headline } : {}),
+      ...(logo.blurb ? { blurb: logo.blurb } : {}),
+      ...(logo.category ? { category: logo.category } : {}),
+      ...(logo.url ? { url: logo.url } : {}),
+      ...(logo.verified !== undefined ? { verified: logo.verified } : {}),
       order: (i + 1) * 10,
     });
   });
@@ -3059,7 +3089,7 @@ async function main() {
     `✓ Seeded project "${projectId}", dataset "${dataset}":\n` +
       `  1 siteSettings, 1 reviewSettings, 1 navigation (header + footer + legal),\n` +
       `  ${services.length} services, ${industries.length} industries, ${faqs.length} FAQs,\n` +
-      `  ${testimonials.length} testimonials, ${STATIC_TRUST_LOGOS.length} trust logos.\n\n` +
+      `  ${testimonials.length} testimonials, ${STATIC_TRUST_LOGOS.length} trust logos, ${jobPostings.length} job postings.\n\n` +
       `  ⚠ Images were NOT seeded — no image assets exist yet. Upload photos and\n` +
       `    logos through the Studio (/studio); each image field requires alt text.\n\n` +
       `  Next: npm run check:drift   (should print all ✓, no drift)`,

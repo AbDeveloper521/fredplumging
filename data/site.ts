@@ -16,6 +16,16 @@ export interface Site {
   foundedYear: number;
   yearsInBusiness: string;
   url: string;
+  /** State plumbing licence as shown on the client's own site footer. */
+  licenseNumber: string;
+  /**
+   * Business street address — UNSET until the client supplies one. Required
+   * (with per-role dates) before JobPosting structured data can be emitted.
+   */
+  streetAddress?: string;
+  addressLocality?: string;
+  addressRegion?: string;
+  postalCode?: string;
 }
 
 /** `Site` plus the city list — the full shape of the Sanity singleton. */
@@ -36,6 +46,7 @@ export const site: Site = {
   yearsInBusiness: "27+",
   /** Placeholder — replace with the production domain before launch. */
   url: "https://www.fredsplumbingdfw.com",
+  licenseNumber: "RMP 44890",
 };
 
 export const serviceAreaCities: readonly string[] = [

@@ -43,11 +43,19 @@ export const structure: StructureResolver = (S) =>
             .defaultOrdering([{ field: "order", direction: "asc" }]),
         ),
       S.listItem()
-        .title("Trust Logos")
+        .title("Careers")
+        .id("jobPostings")
+        .child(
+          S.documentTypeList("jobPosting")
+            .title("Careers")
+            .defaultOrdering([{ field: "order", direction: "asc" }]),
+        ),
+      S.listItem()
+        .title("Partners & Vendor Systems")
         .id("trustLogos")
         .child(
           S.documentTypeList("trustLogo")
-            .title("Trust Logos")
+            .title("Partners & Vendor Systems")
             .defaultOrdering([{ field: "order", direction: "asc" }]),
         ),
       S.divider(),

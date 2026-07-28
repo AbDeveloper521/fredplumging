@@ -2,21 +2,41 @@ import "server-only";
 import imageUrlBuilder from "@sanity/image-url";
 import type { SanityImageSource } from "@sanity/image-url";
 import { client } from "@/sanity/client";
+import { logImageSkipped } from "@/sanity/lib/fallbackLog";
 import type { CmsPhoto } from "@/data/services";
 
 const builder = imageUrlBuilder(client);
+
+function assetRefOf(asset: unknown): string | undefined {
+  if (asset && typeof asset === "object" && "_ref" in asset) {
+    const ref = (asset as { _ref?: unknown })._ref;
+    if (typeof ref === "string") return ref;
+  }
+  return undefined;
+}
 
 /**
  * Resolves a Sanity image + alt into a plain serializable `CmsPhoto`
  * (URL string + alt) server-side, so client components never need
  * `@sanity/image-url` in their bundle. Returns undefined when no image is
  * set or alt is missing — callers fall back to `ImagePlaceholder`.
+ *
+ * The alt-missing case is a deliberate drop of an uploaded asset, so it
+ * warns via `logImageSkipped` — silently rendering a placeholder over a real
+ * upload is the bug this guards against. `context` names the document/field
+ * in that warning; callers without document context omit it and the asset
+ * reference is logged instead.
  */
 export function resolvePhoto(
   image: { asset?: unknown; alt?: string | null } | null | undefined,
   width = 1600,
+  context?: string,
 ): CmsPhoto | undefined {
-  if (!image?.asset || !image.alt) return undefined;
+  if (!image?.asset) return undefined;
+  if (!image.alt) {
+    logImageSkipped({ context, assetRef: assetRefOf(image.asset) });
+    return undefined;
+  }
   return {
     url: builder
       .image(image as SanityImageSource)

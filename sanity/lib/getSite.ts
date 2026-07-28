@@ -1,6 +1,7 @@
 import "server-only";
 import { serverClient } from "@/sanity/lib/serverClient";
 import { logFallback } from "@/sanity/lib/fallbackLog";
+import { sanityFetchOptions } from "@/sanity/lib/cacheOptions";
 import { SITE_SETTINGS_QUERY } from "@/sanity/queries";
 import type { SITE_SETTINGS_QUERY_RESULT } from "@/sanity.types";
 import {
@@ -33,7 +34,7 @@ export async function getSite(): Promise<SiteContent> {
       {},
       // Tag invalidation (webhook) is primary; the 24h revalidate is a
       // backstop so a silently broken webhook can't freeze content forever.
-      { next: { revalidate: 86400, tags: [SITE_SETTINGS_TAG] } },
+      sanityFetchOptions(SITE_SETTINGS_TAG),
     );
   } catch (error) {
     logFallback({
@@ -65,14 +66,24 @@ export async function getSite(): Promise<SiteContent> {
     foundedYear: result.foundedYear ?? FALLBACK.foundedYear,
     yearsInBusiness: result.yearsInBusiness ?? FALLBACK.yearsInBusiness,
     url: result.url ?? FALLBACK.url,
+    licenseNumber: result.licenseNumber ?? FALLBACK.licenseNumber,
+    streetAddress: result.streetAddress ?? FALLBACK.streetAddress,
+    addressLocality: result.addressLocality ?? FALLBACK.addressLocality,
+    addressRegion: result.addressRegion ?? FALLBACK.addressRegion,
+    postalCode: result.postalCode ?? FALLBACK.postalCode,
     serviceAreaCities: result.serviceAreaCities?.length
       ? result.serviceAreaCities
       : FALLBACK.serviceAreaCities,
   };
 
+  // Optional fields (street address) that are ALSO unset in the fallback are
+  // legitimately absent — not drift worth warning about.
   const missing = (
     Object.keys(result) as Array<keyof typeof result>
-  ).filter((key) => result[key] == null);
+  ).filter(
+    (key) =>
+      result[key] == null && FALLBACK[key as keyof SiteContent] != null,
+  );
   if (missing.length > 0) {
     console.warn(
       `[sanity] siteSettings is missing fields (${missing.join(", ")}) — ` +

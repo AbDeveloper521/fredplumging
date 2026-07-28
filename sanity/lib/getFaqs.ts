@@ -1,6 +1,7 @@
 import "server-only";
 import { serverClient } from "@/sanity/lib/serverClient";
 import { logEmpty, logFallback } from "@/sanity/lib/fallbackLog";
+import { sanityFetchOptions } from "@/sanity/lib/cacheOptions";
 import { FAQS_QUERY } from "@/sanity/queries";
 import { faqs as fallbackFaqs, type Faq } from "@/data/faqs";
 
@@ -18,7 +19,7 @@ export async function getFaqs(): Promise<Faq[]> {
     const result = await serverClient.fetch(
       FAQS_QUERY,
       {},
-      { next: { revalidate: 86400, tags: [FAQ_TAG] } },
+      sanityFetchOptions(FAQ_TAG),
     );
 
     const faqs: Faq[] = [];

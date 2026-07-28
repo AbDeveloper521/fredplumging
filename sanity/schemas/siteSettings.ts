@@ -86,10 +86,42 @@ export const siteSettings = defineType({
       validation: (rule) => rule.required(),
     }),
     defineField({
+      name: "licenseNumber",
+      title: "State plumbing licence number",
+      description: "As shown in the site footer and vendor pages, e.g. RMP 44890",
+      type: "string",
+      validation: (rule) => rule.required(),
+    }),
+    defineField({
       name: "url",
       title: "Production URL",
       type: "url",
       validation: (rule) => rule.required(),
+    }),
+    defineField({
+      name: "streetAddress",
+      title: "Street address",
+      description:
+        "Optional. Filling in the full address (all four fields) is what lets job postings appear in Google's job search.",
+      type: "string",
+    }),
+    defineField({
+      name: "addressLocality",
+      title: "City",
+      description: "e.g. Dallas. Part of the business address.",
+      type: "string",
+    }),
+    defineField({
+      name: "addressRegion",
+      title: "State",
+      description: "e.g. TX. Part of the business address.",
+      type: "string",
+    }),
+    defineField({
+      name: "postalCode",
+      title: "ZIP code",
+      description: "Part of the business address.",
+      type: "string",
     }),
     defineField({
       name: "serviceAreaCities",

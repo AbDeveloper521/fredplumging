@@ -2,8 +2,14 @@ import "server-only";
 import { serverClient } from "@/sanity/lib/serverClient";
 import { resolvePhoto } from "@/sanity/lib/image";
 import { logEmpty, logFallback } from "@/sanity/lib/fallbackLog";
+import { sanityFetchOptions } from "@/sanity/lib/cacheOptions";
 import { TRUST_LOGOS_QUERY } from "@/sanity/queries";
-import { STATIC_TRUST_LOGOS, type TrustLogo } from "@/data/navigation";
+import {
+  STATIC_TRUST_LOGOS,
+  TRUST_LOGO_CATEGORIES,
+  type TrustLogo,
+  type TrustLogoCategory,
+} from "@/data/navigation";
 
 /** Cache tag invalidated by the /api/revalidate webhook. */
 export const TRUST_LOGO_TAG = "trustLogo";
@@ -18,7 +24,7 @@ export async function getTrustLogos(): Promise<TrustLogo[]> {
     const result = await serverClient.fetch(
       TRUST_LOGOS_QUERY,
       {},
-      { next: { revalidate: 86400, tags: [TRUST_LOGO_TAG] } },
+      sanityFetchOptions(TRUST_LOGO_TAG),
     );
 
     const logos: TrustLogo[] = [];
@@ -26,7 +32,20 @@ export async function getTrustLogos(): Promise<TrustLogo[]> {
       if (!item.name) continue;
       logos.push({
         name: item.name,
-        photo: resolvePhoto(item.logo, 400),
+        photo: resolvePhoto(item.logo, 400, `trust logo "${item.name}" → Logo`),
+        headline: item.headline ?? undefined,
+        blurb: item.blurb ?? undefined,
+        // Unknown category → dropped, so the UI never renders a pill label
+        // it doesn't have wording for.
+        category: (TRUST_LOGO_CATEGORIES as readonly string[]).includes(
+          item.category ?? "",
+        )
+          ? (item.category as TrustLogoCategory)
+          : undefined,
+        url: item.url ?? undefined,
+        // Mirrors the schema's initialValue — docs created before the field
+        // existed count as verified until an editor unticks them.
+        verified: item.verified ?? true,
       });
     }
 

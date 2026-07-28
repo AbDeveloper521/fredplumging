@@ -275,6 +275,36 @@ export type ServiceHero = {
   photoSubject?: string;
 };
 
+export type JobPosting = {
+  _id: string;
+  _type: "jobPosting";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  slug?: Slug;
+  employmentType?: "FULL_TIME" | "PART_TIME" | "CONTRACTOR" | "TEMPORARY";
+  team?: string;
+  shift?: string;
+  openings?: number;
+  summary?: string;
+  responsibilities?: Array<string>;
+  requirements?: Array<string>;
+  compensationNote?: string;
+  applyEmail?: string;
+  applyUrl?: string;
+  datePosted?: string;
+  validThrough?: string;
+  open?: boolean;
+  order?: number;
+};
+
+export type Slug = {
+  _type: "slug";
+  current?: string;
+  source?: string;
+};
+
 export type TrustLogo = {
   _id: string;
   _type: "trustLogo";
@@ -290,6 +320,12 @@ export type TrustLogo = {
     alt?: string;
     _type: "image";
   };
+  headline?: string;
+  blurb?: string;
+  category?:
+    "vendor-portal" | "compliance-network" | "association" | "credential";
+  url?: string;
+  verified?: boolean;
   order?: number;
 };
 
@@ -398,12 +434,6 @@ export type Industry = {
   slug?: Slug;
   seoTitle?: string;
   seoDescription?: string;
-};
-
-export type Slug = {
-  _type: "slug";
-  current?: string;
-  source?: string;
 };
 
 export type Service = {
@@ -626,7 +656,12 @@ export type SiteSettings = {
   serviceArea?: string;
   foundedYear?: number;
   yearsInBusiness?: string;
+  licenseNumber?: string;
   url?: string;
+  streetAddress?: string;
+  addressLocality?: string;
+  addressRegion?: string;
+  postalCode?: string;
   serviceAreaCities?: Array<string>;
 };
 
@@ -743,11 +778,12 @@ export type AllSanitySchemaTypes =
   | WhatsIncluded
   | ServiceAbout
   | ServiceHero
+  | JobPosting
+  | Slug
   | TrustLogo
   | SanityImageCrop
   | SanityImageHotspot
   | Industry
-  | Slug
   | Service
   | Testimonial
   | Faq
@@ -765,7 +801,7 @@ export type AllSanitySchemaTypes =
 
 // Source: sanity/queries.ts
 // Variable: SITE_SETTINGS_QUERY
-// Query: *[_type == "siteSettings" && _id == "siteSettings"][0]{    name,    legalName,    tagline,    phone,    phoneHref,    email,    emailHref,    serviceArea,    foundedYear,    yearsInBusiness,    url,    serviceAreaCities  }
+// Query: *[_type == "siteSettings" && _id == "siteSettings"][0]{    name,    legalName,    tagline,    phone,    phoneHref,    email,    emailHref,    serviceArea,    foundedYear,    yearsInBusiness,    url,    licenseNumber,    streetAddress,    addressLocality,    addressRegion,    postalCode,    serviceAreaCities  }
 export type SITE_SETTINGS_QUERY_RESULT = {
   name: string | null;
   legalName: string | null;
@@ -778,7 +814,54 @@ export type SITE_SETTINGS_QUERY_RESULT = {
   foundedYear: number | null;
   yearsInBusiness: string | null;
   url: string | null;
+  licenseNumber: string | null;
+  streetAddress: string | null;
+  addressLocality: string | null;
+  addressRegion: string | null;
+  postalCode: string | null;
   serviceAreaCities: Array<string> | null;
+} | null;
+
+// Source: sanity/queries.ts
+// Variable: JOB_POSTINGS_QUERY
+// Query: *[_type == "jobPosting" && open == true] | order(order asc){  title,  "slug": slug.current,  employmentType,  team,  shift,  openings,  summary,  responsibilities,  requirements,  compensationNote,  applyEmail,  applyUrl,  datePosted,  validThrough,  open}
+export type JOB_POSTINGS_QUERY_RESULT = Array<{
+  title: string | null;
+  slug: string | null;
+  employmentType: "CONTRACTOR" | "FULL_TIME" | "PART_TIME" | "TEMPORARY" | null;
+  team: string | null;
+  shift: string | null;
+  openings: number | null;
+  summary: string | null;
+  responsibilities: Array<string> | null;
+  requirements: Array<string> | null;
+  compensationNote: string | null;
+  applyEmail: string | null;
+  applyUrl: string | null;
+  datePosted: string | null;
+  validThrough: string | null;
+  open: true;
+}>;
+
+// Source: sanity/queries.ts
+// Variable: JOB_POSTING_QUERY
+// Query: *[_type == "jobPosting" && slug.current == $slug][0]{  title,  "slug": slug.current,  employmentType,  team,  shift,  openings,  summary,  responsibilities,  requirements,  compensationNote,  applyEmail,  applyUrl,  datePosted,  validThrough,  open}
+export type JOB_POSTING_QUERY_RESULT = {
+  title: string | null;
+  slug: string | null;
+  employmentType: "CONTRACTOR" | "FULL_TIME" | "PART_TIME" | "TEMPORARY" | null;
+  team: string | null;
+  shift: string | null;
+  openings: number | null;
+  summary: string | null;
+  responsibilities: Array<string> | null;
+  requirements: Array<string> | null;
+  compensationNote: string | null;
+  applyEmail: string | null;
+  applyUrl: string | null;
+  datePosted: string | null;
+  validThrough: string | null;
+  open: boolean | null;
 } | null;
 
 // Source: sanity/queries.ts
@@ -1607,7 +1690,7 @@ export type INDUSTRY_BY_SLUG_QUERY_RESULT = {
 
 // Source: sanity/queries.ts
 // Variable: TRUST_LOGOS_QUERY
-// Query: *[_type == "trustLogo"] | order(order asc){    name,    logo{ asset, hotspot, crop, alt }  }
+// Query: *[_type == "trustLogo"] | order(order asc){    name,    logo{ asset, hotspot, crop, alt },    headline,    blurb,    category,    url,    verified  }
 export type TRUST_LOGOS_QUERY_RESULT = Array<{
   name: string | null;
   logo: {
@@ -1616,6 +1699,16 @@ export type TRUST_LOGOS_QUERY_RESULT = Array<{
     crop: SanityImageCrop | null;
     alt: string | null;
   } | null;
+  headline: string | null;
+  blurb: string | null;
+  category:
+    | "association"
+    | "compliance-network"
+    | "credential"
+    | "vendor-portal"
+    | null;
+  url: string | null;
+  verified: boolean | null;
 }>;
 
 // Source: sanity/queries.ts
@@ -1642,7 +1735,9 @@ export type FOOTER_NAVIGATION_QUERY_RESULT = {
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
-    '*[_type == "siteSettings" && _id == "siteSettings"][0]{\n    name,\n    legalName,\n    tagline,\n    phone,\n    phoneHref,\n    email,\n    emailHref,\n    serviceArea,\n    foundedYear,\n    yearsInBusiness,\n    url,\n    serviceAreaCities\n  }': SITE_SETTINGS_QUERY_RESULT;
+    '*[_type == "siteSettings" && _id == "siteSettings"][0]{\n    name,\n    legalName,\n    tagline,\n    phone,\n    phoneHref,\n    email,\n    emailHref,\n    serviceArea,\n    foundedYear,\n    yearsInBusiness,\n    url,\n    licenseNumber,\n    streetAddress,\n    addressLocality,\n    addressRegion,\n    postalCode,\n    serviceAreaCities\n  }': SITE_SETTINGS_QUERY_RESULT;
+    '*[_type == "jobPosting" && open == true] | order(order asc){\n  title,\n  "slug": slug.current,\n  employmentType,\n  team,\n  shift,\n  openings,\n  summary,\n  responsibilities,\n  requirements,\n  compensationNote,\n  applyEmail,\n  applyUrl,\n  datePosted,\n  validThrough,\n  open\n}': JOB_POSTINGS_QUERY_RESULT;
+    '*[_type == "jobPosting" && slug.current == $slug][0]{\n  title,\n  "slug": slug.current,\n  employmentType,\n  team,\n  shift,\n  openings,\n  summary,\n  responsibilities,\n  requirements,\n  compensationNote,\n  applyEmail,\n  applyUrl,\n  datePosted,\n  validThrough,\n  open\n}': JOB_POSTING_QUERY_RESULT;
     '*[_type == "navigation" && _id == "navigation"][0]{\n    items[]{\n      _key,\n      label,\n      href,\n      layout,\n      showServiceAreaCities,\n      children[]{\n        _key,\n        label,\n        href,\n        description,\n        icon\n      }\n    },\n    cta{ label, href }\n  }': NAVIGATION_QUERY_RESULT;
     '*[_type == "faq"] | order(order asc){ question, answer }': FAQS_QUERY_RESULT;
     '*[_type == "testimonial"] | order(order asc){\n    "id": _id, name, role, rating, quote, date, featured,\n    source, reviewerMeta, sourceUrl, serviceTags, verified\n  }': TESTIMONIALS_QUERY_RESULT;
@@ -1651,7 +1746,7 @@ declare module "@sanity/client" {
     '*[_type == "service" && slug.current == $slug][0]{\n    title,\n    "slug": slug.current,\n    shortDescription,\n    icon,\n    featured,\n    photo{ asset, hotspot, crop, alt },\n    body,\n    sections[]{\n      ...,\n      photo{ asset, hotspot, crop, alt },\n      photoPrimary{ asset, hotspot, crop, alt },\n      photoSecondary{ asset, hotspot, crop, alt }\n    },\n    seoTitle,\n    seoDescription\n  }': SERVICE_BY_SLUG_QUERY_RESULT;
     '*[_type == "industry"] | order(order asc){\n    title,\n    "slug": slug.current,\n    description,\n    bulletPoints,\n    photo{ asset, hotspot, crop, alt },\n    body,\n    seoTitle,\n    seoDescription\n  }': INDUSTRIES_QUERY_RESULT;
     '*[_type == "industry" && slug.current == $slug][0]{\n    title,\n    "slug": slug.current,\n    description,\n    bulletPoints,\n    photo{ asset, hotspot, crop, alt },\n    body,\n    sections[]{\n      ...,\n      photo{ asset, hotspot, crop, alt },\n      photoPrimary{ asset, hotspot, crop, alt },\n      photoSecondary{ asset, hotspot, crop, alt }\n    },\n    seoTitle,\n    seoDescription\n  }': INDUSTRY_BY_SLUG_QUERY_RESULT;
-    '*[_type == "trustLogo"] | order(order asc){\n    name,\n    logo{ asset, hotspot, crop, alt }\n  }': TRUST_LOGOS_QUERY_RESULT;
+    '*[_type == "trustLogo"] | order(order asc){\n    name,\n    logo{ asset, hotspot, crop, alt },\n    headline,\n    blurb,\n    category,\n    url,\n    verified\n  }': TRUST_LOGOS_QUERY_RESULT;
     '*[_type == "navigation" && _id == "navigation"][0]{\n    footerColumns[]{\n      _key,\n      heading,\n      links[]{ _key, label, href }\n    },\n    legalLinks[]{ _key, label, href }\n  }': FOOTER_NAVIGATION_QUERY_RESULT;
   }
 }

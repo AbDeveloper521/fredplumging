@@ -1,9 +1,11 @@
 import { defineField, defineType } from "sanity";
 import { imageWithAlt } from "./fields";
 
+// The document type id stays "trustLogo" — changing it would need a dataset
+// migration. The title is what editors see.
 export const trustLogo = defineType({
   name: "trustLogo",
-  title: "Trust Logo",
+  title: "Partners & Vendor Systems",
   type: "document",
   fields: [
     defineField({
@@ -19,7 +21,55 @@ export const trustLogo = defineType({
       name: "logo",
       title: "Logo image",
       description:
-        "The organization's logo file (PNG with transparent background works best). Optional — without it the name is shown as styled text.",
+        "This logo appears in the scrolling trust strip on the homepage, the Compliance section's logo row, and the partner cards on the Partners page. PNG with transparent background works best. Optional — without it the name is shown as styled text.",
+    }),
+    defineField({
+      name: "headline",
+      title: "Partner-card heading",
+      description:
+        "The heading on this entry's card on the Partners page, e.g. “Verified Vendor On VendorCafe”. Optional — without it the card says “Approved vendor on [name]”.",
+      type: "string",
+    }),
+    defineField({
+      name: "blurb",
+      title: "Partner-card paragraph",
+      description:
+        "Writing a paragraph here is what promotes this entry onto the Partners page: entries WITH a paragraph get a full card there, entries without one appear only in the homepage logo strips — same idea as the logo image, where leaving it empty shows the name as a styled wordmark.",
+      type: "text",
+      rows: 3,
+    }),
+    defineField({
+      name: "category",
+      title: "Category",
+      description:
+        "What kind of organization this is — shown as the small pill on the partner card and used for grouping.",
+      type: "string",
+      options: {
+        list: [
+          { title: "Vendor portal", value: "vendor-portal" },
+          { title: "Compliance network", value: "compliance-network" },
+          { title: "Trade association", value: "association" },
+          { title: "Credential", value: "credential" },
+        ],
+      },
+      initialValue: "vendor-portal",
+    }),
+    defineField({
+      name: "url",
+      title: "Public profile link",
+      description:
+        "Optional link to Fred's Plumbing's public vendor profile on this platform. Only add a link that actually shows the profile.",
+      type: "url",
+      validation: (rule) =>
+        rule.uri({ scheme: ["https"], allowRelative: false }),
+    }),
+    defineField({
+      name: "verified",
+      title: "Verified vendor status",
+      description:
+        "Shows the “verified” pill on the partner card. Untick if the registration on this platform lapses.",
+      type: "boolean",
+      initialValue: true,
     }),
     defineField({
       name: "order",
@@ -45,6 +95,11 @@ export const trustLogo = defineType({
     },
   ],
   preview: {
-    select: { title: "name", media: "logo" },
+    select: { title: "name", media: "logo", category: "category", blurb: "blurb" },
+    prepare: ({ title, media, category, blurb }) => ({
+      title,
+      media,
+      subtitle: `${category ?? "uncategorized"} · ${blurb ? "partner card + strips" : "strips only"}`,
+    }),
   },
 });

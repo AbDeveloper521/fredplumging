@@ -1,6 +1,7 @@
 import "server-only";
 import { serverClient } from "@/sanity/lib/serverClient";
 import { logFallback } from "@/sanity/lib/fallbackLog";
+import { sanityFetchOptions } from "@/sanity/lib/cacheOptions";
 import { REVIEW_SETTINGS_QUERY } from "@/sanity/queries";
 import { getGoogleReviews } from "@/sanity/lib/getGoogleReviews";
 import {
@@ -24,7 +25,7 @@ export async function getReviewSettings(): Promise<GoogleReviewProfile> {
     const result = await serverClient.fetch(
       REVIEW_SETTINGS_QUERY,
       {},
-      { next: { revalidate: 86400, tags: [REVIEW_SETTINGS_TAG] } },
+      sanityFetchOptions(REVIEW_SETTINGS_TAG),
     );
 
     if (!result) {

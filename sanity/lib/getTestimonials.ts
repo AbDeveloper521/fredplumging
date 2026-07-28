@@ -1,6 +1,7 @@
 import "server-only";
 import { serverClient } from "@/sanity/lib/serverClient";
 import { logEmpty, logFallback } from "@/sanity/lib/fallbackLog";
+import { sanityFetchOptions } from "@/sanity/lib/cacheOptions";
 import { TESTIMONIALS_QUERY } from "@/sanity/queries";
 import {
   testimonials as fallbackTestimonials,
@@ -20,7 +21,7 @@ export async function getTestimonials(): Promise<Testimonial[]> {
     const result = await serverClient.fetch(
       TESTIMONIALS_QUERY,
       {},
-      { next: { revalidate: 86400, tags: [TESTIMONIAL_TAG] } },
+      sanityFetchOptions(TESTIMONIAL_TAG),
     );
 
     const testimonials: Testimonial[] = [];

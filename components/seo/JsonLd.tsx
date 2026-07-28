@@ -1,5 +1,6 @@
 import { getSite } from "@/sanity/lib/getSite";
 import type { SiteContent } from "@/data/site";
+import type { JobPosting } from "@/data/jobs";
 
 function JsonLdScript({ data }: { data: object }) {
   return (
@@ -113,6 +114,60 @@ export async function BreadcrumbJsonLd({
           name: item.label,
           item: `${site.url}${item.href === "/" ? "" : item.href}`,
         })),
+      }}
+    />
+  );
+}
+
+/**
+ * JobPosting structured data for /about/careers/[slug]. Google requires
+ * title, description, datePosted, hiringOrganization, and a jobLocation with
+ * a real PostalAddress, and applies manual actions when required fields are
+ * missing or don't match the visible page — so this renders NOTHING until
+ * the role has a datePosted AND siteSettings carries a full street address.
+ * Emitting nothing is correct today; a half-populated JobPosting is worse.
+ */
+export async function JobPostingJsonLd({ job }: { job: JobPosting }) {
+  const site = await getSite();
+  const addressComplete =
+    site.streetAddress &&
+    site.addressLocality &&
+    site.addressRegion &&
+    site.postalCode;
+  if (!job.open || !job.datePosted || !job.summary || !addressComplete) {
+    return null;
+  }
+
+  return (
+    <JsonLdScript
+      data={{
+        "@context": "https://schema.org",
+        "@type": "JobPosting",
+        title: job.title,
+        description: job.summary,
+        datePosted: job.datePosted,
+        ...(job.validThrough ? { validThrough: job.validThrough } : {}),
+        employmentType: job.employmentType,
+        ...(job.openings ? { totalJobOpenings: job.openings } : {}),
+        hiringOrganization: {
+          "@type": "Organization",
+          name: site.name,
+          sameAs: site.url,
+        },
+        jobLocation: {
+          "@type": "Place",
+          address: {
+            "@type": "PostalAddress",
+            streetAddress: site.streetAddress,
+            addressLocality: site.addressLocality,
+            addressRegion: site.addressRegion,
+            postalCode: site.postalCode,
+            addressCountry: "US",
+          },
+        },
+        // A mailto route must not claim direct apply.
+        ...(job.applyUrl ? { directApply: true } : {}),
+        url: `${site.url}/about/careers/${job.slug}`,
       }}
     />
   );

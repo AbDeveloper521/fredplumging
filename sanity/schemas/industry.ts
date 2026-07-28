@@ -46,7 +46,7 @@ export const industry = defineType({
       name: "photo",
       title: "Photo",
       description:
-        "Shown in the homepage panel and on the property type's page. Best: a real photo of this kind of property — e.g. an apartment community exterior, a condominium entrance, a technician working quietly in a senior living facility. Until a photo is added the site shows a styled placeholder.",
+        "This photo appears in this property type's panel on the HOMEPAGE (“Industries We Serve”) — it is NOT the large photos on the property type's own page. Those come from the “Page sections” list above (Top banner, About, and so on). Best: a real photo of this kind of property — e.g. an apartment community exterior, a condominium entrance, a technician working quietly in a senior living facility. Until a photo is added the site shows a styled placeholder.",
     }),
     defineField({
       name: "order",

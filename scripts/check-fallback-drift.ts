@@ -18,6 +18,7 @@ import {
 import { faqs } from "../data/faqs";
 import { testimonials } from "../data/testimonials";
 import { googleReviews } from "../data/googleReviews";
+import { jobPostings } from "../data/jobs";
 import { services } from "../data/services";
 import { industries } from "../data/industries";
 
@@ -74,7 +75,7 @@ async function main() {
     {
       name: "siteSettings (data/site.ts)",
       fallback: { ...site, serviceAreaCities },
-      query: `*[_type=="siteSettings" && _id=="siteSettings"][0]{name,legalName,tagline,phone,phoneHref,email,emailHref,serviceArea,foundedYear,yearsInBusiness,url,serviceAreaCities}`,
+      query: `*[_type=="siteSettings" && _id=="siteSettings"][0]{name,legalName,tagline,phone,phoneHref,email,emailHref,serviceArea,foundedYear,yearsInBusiness,url,licenseNumber,serviceAreaCities}`,
     },
     {
       name: "navigation (data/navigation.ts)",
@@ -89,7 +90,7 @@ async function main() {
     {
       name: "trust logos (data/navigation.ts)",
       fallback: STATIC_TRUST_LOGOS,
-      query: `*[_type=="trustLogo"]|order(order asc){name}`,
+      query: `*[_type=="trustLogo"]|order(order asc){name,headline,blurb,category,url,verified}`,
     },
     {
       name: "faqs (data/faqs.ts)",
@@ -115,6 +116,11 @@ async function main() {
       name: "services (data/services.ts)",
       fallback: services,
       query: `*[_type=="service"]|order(order asc){title,"slug":slug.current,shortDescription,icon,featured}`,
+    },
+    {
+      name: "jobs (data/jobs.ts)",
+      fallback: jobPostings,
+      query: `*[_type=="jobPosting"]|order(order asc){title,"slug":slug.current,employmentType,team,shift,openings,summary,responsibilities,requirements,compensationNote,applyEmail,applyUrl,datePosted,validThrough,open}`,
     },
     {
       name: "industries (data/industries.ts)",

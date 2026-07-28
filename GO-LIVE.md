@@ -54,11 +54,17 @@ site looks complete today.) Seed first; flip credentials second.
    `/services/commercial-plumbing` and `/multifamily/apartments` return 200
    with the placeholder body visible; an invented slug 404s; `/studio` loads
    and logs in; `/robots.txt` disallows `/studio`.
-10. **Webhook.** Manage → API → Webhooks → Create:
+10. **Webhook.** ⚠️ Production instant-updates depend entirely on this webhook
+    existing — it is a step in sanity.io/manage that no code change can perform.
+    Without it, publishes take up to 24 hours to appear. Click-by-click guide
+    for a non-developer: `WEBHOOK-SETUP.md`. Summary — Manage → API →
+    Webhooks → Create:
     - URL: `https://<production-domain>/api/revalidate`
     - Dataset: `production`; trigger on create, update, delete
-    - Filter: `_type in ["siteSettings", "navigation", "faq", "testimonial", "service", "industry", "trustLogo"]`
-    - Projection: `{_type}`
+    - Filter: `_type in ["siteSettings", "navigation", "faq", "testimonial", "service", "industry", "trustLogo", "reviewSettings", "jobPosting"]`
+    - Projection: leave empty (the route reads `_type` — and `_id` for its
+      logs — from the payload; a projection that omits `_type` 400s every
+      publish)
     - Secret: the exact `SANITY_REVALIDATE_SECRET` value
 11. **Webhook verification.** Edit the tagline in Site Settings → Publish →
     reload the production homepage: the change appears on the first or second
@@ -68,6 +74,24 @@ site looks complete today.) Seed first; flip credentials second.
     Walk them through: slugs are permanent (checked before first save), every
     image needs a description, "Display order" numbers control ordering, and
     the two singletons can't be deleted.
+
+## Known blockers / client confirmations
+
+- **Application routing is mailto-only until a form backend exists.**
+  `submitLead()` is a stub, so /about/careers deliberately has no application
+  form — every "Apply Now" is a mailto (or an external `applyUrl` set in the
+  Studio). Do not add a form before a real backend receives it.
+- **Careers structured data is off until the client supplies a business street
+  address** (Site Settings → address fields) **and per-role `datePosted` /
+  `validThrough` dates.** `JobPostingJsonLd` intentionally renders nothing
+  until all of those exist — a half-populated JobPosting risks a manual action.
+- **The hiring-process section copy is unconfirmed** — the four steps in
+  `components/sections/HiringProcessSection.tsx` are placeholders to be
+  verified with the client.
+- **Production domain and inbox unconfirmed** — `data/site.ts` still carries
+  the placeholder `fredsplumbingdfw.com`, but the Google listing points at
+  `fredsplumbingservices.com`; confirm the domain and whether
+  `service@fredsplumbingdfw.com` is the real inbox before launch.
 
 ## After go-live
 

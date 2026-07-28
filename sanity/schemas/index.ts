@@ -7,6 +7,7 @@ import { testimonial } from "./testimonial";
 import { service } from "./service";
 import { industry } from "./industry";
 import { trustLogo } from "./trustLogo";
+import { jobPosting } from "./jobPosting";
 import { serviceSectionTypes } from "./serviceSections";
 
 export const schemaTypes: SchemaTypeDefinition[] = [
@@ -18,5 +19,6 @@ export const schemaTypes: SchemaTypeDefinition[] = [
   service,
   industry,
   trustLogo,
+  jobPosting,
   ...serviceSectionTypes,
 ];

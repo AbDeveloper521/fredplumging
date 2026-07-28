@@ -13,8 +13,40 @@ export const SITE_SETTINGS_QUERY = defineQuery(
     foundedYear,
     yearsInBusiness,
     url,
+    licenseNumber,
+    streetAddress,
+    addressLocality,
+    addressRegion,
+    postalCode,
     serviceAreaCities
   }`,
+);
+
+const JOB_POSTING_FIELDS = `
+  title,
+  "slug": slug.current,
+  employmentType,
+  team,
+  shift,
+  openings,
+  summary,
+  responsibilities,
+  requirements,
+  compensationNote,
+  applyEmail,
+  applyUrl,
+  datePosted,
+  validThrough,
+  open
+`;
+
+export const JOB_POSTINGS_QUERY = defineQuery(
+  `*[_type == "jobPosting" && open == true] | order(order asc){${JOB_POSTING_FIELDS}}`,
+);
+
+/** No `open` filter — a filled role's URL must resolve, not 404. */
+export const JOB_POSTING_QUERY = defineQuery(
+  `*[_type == "jobPosting" && slug.current == $slug][0]{${JOB_POSTING_FIELDS}}`,
 );
 
 export const NAVIGATION_QUERY = defineQuery(
@@ -128,7 +160,12 @@ export const INDUSTRY_BY_SLUG_QUERY = defineQuery(
 export const TRUST_LOGOS_QUERY = defineQuery(
   `*[_type == "trustLogo"] | order(order asc){
     name,
-    logo{ asset, hotspot, crop, alt }
+    logo{ asset, hotspot, crop, alt },
+    headline,
+    blurb,
+    category,
+    url,
+    verified
   }`,
 );
 

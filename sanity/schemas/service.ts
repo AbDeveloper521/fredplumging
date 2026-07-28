@@ -63,7 +63,7 @@ export const service = defineType({
       name: "photo",
       title: "Photo",
       description:
-        "Shown on the homepage card and the service page. Best: a real photo of your team doing this work — e.g. a technician in a commercial mechanical room for Commercial Plumbing, a sewer camera in use for Drain & Sewer, a crew responding at night for Emergency. Until a photo is added the site shows a styled placeholder.",
+        "This photo appears on this service's card on the HOMEPAGE (the “What We Do” grid) — it is NOT the large photos on the service's own page. Those come from the “Page sections” list above: the banner photo lives in the Top banner section, the collage photos in the About section, and so on. Best: a real photo of your team doing this work — e.g. a technician in a commercial mechanical room for Commercial Plumbing, a sewer camera in use for Drain & Sewer, a crew responding at night for Emergency. Until a photo is added the site shows a styled placeholder.",
     }),
     defineField({
       name: "icon",

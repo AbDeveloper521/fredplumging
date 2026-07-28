@@ -2,6 +2,7 @@ import "server-only";
 import { serverClient } from "@/sanity/lib/serverClient";
 import { resolvePhoto } from "@/sanity/lib/image";
 import { logEmpty, logFallback } from "@/sanity/lib/fallbackLog";
+import { sanityFetchOptions } from "@/sanity/lib/cacheOptions";
 import { toSections } from "@/sanity/lib/sections";
 import { INDUSTRIES_QUERY, INDUSTRY_BY_SLUG_QUERY } from "@/sanity/queries";
 import type {
@@ -14,9 +15,7 @@ import type { RichBody } from "@/data/services";
 /** Cache tag invalidated by the /api/revalidate webhook. */
 export const INDUSTRY_TAG = "industry";
 
-const FETCH_OPTIONS = {
-  next: { revalidate: 86400, tags: [INDUSTRY_TAG] },
-};
+const FETCH_OPTIONS = sanityFetchOptions(INDUSTRY_TAG);
 
 type IndustryListItem = INDUSTRIES_QUERY_RESULT[number];
 type IndustryDetailItem = NonNullable<INDUSTRY_BY_SLUG_QUERY_RESULT>;
@@ -39,7 +38,7 @@ function toIndustry(item: IndustryListItem | IndustryDetailItem): Industry | nul
     image: "",
     imageAlt: `${item.title} property`,
     bulletPoints: item.bulletPoints,
-    photo: resolvePhoto(item.photo),
+    photo: resolvePhoto(item.photo, 1600, `industry "${item.slug}" → Photo`),
   };
 }
 

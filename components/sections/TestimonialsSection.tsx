@@ -15,6 +15,8 @@ interface TestimonialsSectionProps {
   profile: GoogleReviewProfile;
   /** Section heading — defaults to the homepage wording. */
   heading?: string;
+  /** Optional one-line lead under the heading (reframes the section off-homepage). */
+  lead?: string;
   /** id for aria-labelledby — override when the section appears off-homepage. */
   titleId?: string;
   /** Service / property-type slugs to prefer. Omit on the homepage. */
@@ -30,6 +32,7 @@ export function TestimonialsSection({
   site,
   profile,
   heading = "Trusted by Property Managers Across DFW",
+  lead,
   titleId = "testimonials-heading",
   filterTags,
   limit = 4,
@@ -58,6 +61,7 @@ export function TestimonialsSection({
               titleId={titleId}
               eyebrow={profile.headline ?? "Client Feedback"}
               title={heading}
+              description={lead}
             />
           </Reveal>
           <Reveal delay={0.1}>

@@ -284,22 +284,87 @@ export const STATIC_FOOTER_NAVIGATION: FooterNavigation = {
   ],
 };
 
+export type TrustLogoCategory =
+  | "vendor-portal"
+  | "compliance-network"
+  | "association"
+  | "credential";
+
+export const TRUST_LOGO_CATEGORIES: readonly TrustLogoCategory[] = [
+  "vendor-portal",
+  "compliance-network",
+  "association",
+  "credential",
+];
+
 export interface TrustLogo {
   name: string;
   /** Real logo image resolved server-side; falls back to a styled wordmark. */
   photo?: { url: string; alt: string };
+  /** Card heading on /about/partners; falls back to "Approved vendor on {name}". */
+  headline?: string;
+  /**
+   * The paragraph on /about/partners. THE SWITCH: an entry with a blurb gets
+   * a full partner card there; without one it appears only in the logo strips.
+   */
+  blurb?: string;
+  /** Grouping + pill label on the partner card. */
+  category?: TrustLogoCategory;
+  /** Outbound link to the client's public vendor profile, when one exists. */
+  url?: string;
+  /** Drives the "verified" pill on the partner card. */
+  verified?: boolean;
 }
 
 /**
  * Trust-logo fallback — read via `getTrustLogos()` in
  * `sanity/lib/getTrustLogos.ts`. Vendor systems and associations shown in
- * the trust bar and compliance section.
+ * the trust bar and compliance strip; entries WITH a `blurb` also get a full
+ * card on /about/partners. Blurb copy is the client's own marketing text,
+ * transcribed from their live site (typography normalized, claims untouched).
  */
 export const STATIC_TRUST_LOGOS: TrustLogo[] = [
-  { name: "VendorCafe" },
+  {
+    name: "VendorCafe",
+    headline: "Verified Vendor On VendorCafe",
+    blurb:
+      "We are an approved vendor on VendorCafe, allowing property managers to review documentation and process invoices quickly. Our active status ensures smooth coordination and full compliance for multi-family and commercial properties throughout the Dallas–Fort Worth Metroplex.",
+    category: "vendor-portal",
+    verified: true,
+  },
+  {
+    name: "Compliance Depot",
+    headline: "Approved Provider On Compliance Depot",
+    blurb:
+      "Fred's Plumbing maintains full compliance through Compliance Depot to streamline vendor verification for property managers. Our documentation, insurance, and certifications are kept current to ensure fast approval and dependable service for every community.",
+    category: "compliance-network",
+    verified: true,
+  },
+  {
+    name: "Vendor Nexus",
+    headline: "Trusted Partner On Vendor Nexus",
+    blurb:
+      "We are a verified vendor on Vendor Nexus, giving property managers confidence that our team meets required standards for safety, performance, and documentation. This partnership helps simplify communication and speeds up scheduling.",
+    category: "vendor-portal",
+    verified: true,
+  },
+  {
+    name: "NetVendor",
+    headline: "Certified Vendor On NetVendor",
+    blurb:
+      "Our partnership with NetVendor ensures our insurance, background checks, and compliance records remain fully up to date. Property managers who rely on NetVendor can trust that our team is qualified, approved, and ready to respond quickly.",
+    category: "compliance-network",
+    verified: true,
+  },
+  {
+    name: "RealPage",
+    headline: "Verified Partner On RealPage",
+    blurb:
+      "Fred's Plumbing is a trusted vendor within the RealPage network, offering streamlined coordination for service requests and RealPage documentation. This partnership supports efficient operations for apartment communities and commercial properties across the region.",
+    category: "vendor-portal",
+    verified: true,
+  },
   { name: "Greystar" },
-  { name: "Nexus" },
-  { name: "NetVendor" },
   { name: "Yardi" },
   { name: "AAGD" },
   { name: "TDLR" },
