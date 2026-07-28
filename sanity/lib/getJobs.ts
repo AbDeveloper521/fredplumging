@@ -13,8 +13,9 @@ import {
 /** Cache tag invalidated by the /api/revalidate webhook. */
 export const JOB_TAG = "jobPosting";
 
-// One hour, not the 86400 used elsewhere: a filled role must come down fast.
-const FETCH_OPTIONS = sanityFetchOptions(JOB_TAG, { revalidate: 3600 });
+// The site-wide default (60 s) is already faster than the old jobs-specific
+// 1-hour override — a filled role comes down within about a minute.
+const FETCH_OPTIONS = sanityFetchOptions(JOB_TAG);
 
 type RawJob = {
   title: string | null;
