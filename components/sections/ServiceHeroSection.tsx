@@ -191,7 +191,10 @@ export function ServiceHeroSection({
                 src={section.photo.url}
                 alt={section.photo.alt}
                 fill
-                priority
+                // Above the fold on desktop; `priority` is deprecated in
+                // Next 16 (node_modules/next/dist/docs/01-app/03-api-reference/
+                // 02-components/image.md) in favor of loading="eager".
+                loading="eager"
                 sizes="(min-width: 1024px) 40vw, 100vw"
                 className="object-cover"
               />

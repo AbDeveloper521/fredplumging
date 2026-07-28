@@ -127,6 +127,35 @@ entries (items/cards/steps/rows) that is editorial guidance for layout
 balance; the renderer keeps a section down to **1 valid entry**, because a
 section with one real entry is still meaningful and must not vanish.
 
+## Verification — 2026-07-29, after all Part A changes
+
+- `npx tsc --noEmit` clean; `npm run lint` clean; `npm run typegen` +
+  `npm run check:drift` clean.
+- `npm run build` succeeds with **no** `[SANITY FALLBACK]`, **no**
+  `[SANITY SECTION DROPPED]`, **no** image/deprecation warnings.
+- `scripts/audit-sections.ts` re-run after the changes: **12 documents,
+  91 sections, 0 dropped** (unchanged).
+- Every page below returned 200 from `npm run dev` and the section pages
+  render their full stack (hero photo confirmed rendering at 1440×900 in
+  Chrome, dev console clean — no `has "fill" and a height value of 0`, no
+  `@sanity/image-url` deprecation):
+  - `/`
+  - `/services/plumbing` (banner photo set — the reported page)
+  - `/services/commercial-plumbing`, `/services/emergency-plumbing`,
+    `/services/drain-sewer`, `/services/maintenance`,
+    `/services/specialty-services`, `/services/senior-care-facilities`,
+    `/services/student-housing`
+  - `/multifamily/apartments`, `/multifamily/condos`,
+    `/multifamily/assisted-living`, `/multifamily/nursing-homes`
+  - `/about/partners`, `/about/careers`,
+    `/about/careers/apprentice-plumber`, `/about/testimonials`
+- `http://localhost:3000/api/health/sanity` returns `sanityReachable: true`,
+  `tokenPresent: true`, the per-document sections report, and no secret
+  values anywhere in the payload (checked programmatically).
+- One further cleanup while verifying: the hero photo used the `priority`
+  prop, which Next 16 deprecates — replaced with `loading="eager"` per
+  `node_modules/next/dist/docs/01-app/03-api-reference/02-components/image.md`.
+
 ## Raw audit output — 2026-07-29, before any behaviour change
 
 ```
