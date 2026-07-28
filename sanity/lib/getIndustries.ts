@@ -31,7 +31,7 @@ function toIndustry(item: IndustryListItem | IndustryDetailItem): Industry | nul
     body: item.body?.length ? (item.body as RichBody) : undefined,
     sections:
       "sections" in item && item.sections
-        ? toSections(item.sections as unknown)
+        ? toSections(item.sections as unknown, `industry "${item.slug}"`)
         : undefined,
     seoTitle: item.seoTitle ?? undefined,
     seoDescription: item.seoDescription ?? undefined,

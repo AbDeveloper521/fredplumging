@@ -51,6 +51,41 @@ export function logImageSkipped(options: {
   );
 }
 
+/**
+ * A published section failed its render gate and is NOT on the page. Without
+ * this log the drop is invisible: the Studio says "Published", the page just
+ * quietly misses a section. Names the Studio field titles (what the owner
+ * actually sees on screen), not the schema field names.
+ */
+export function logSectionDropped(options: {
+  /** Which document, e.g. `service "plumbing"`. */
+  context: string;
+  sectionType: string;
+  sectionKey: string;
+  index: number;
+  /** Studio field titles that were empty/invalid, e.g. `"Big heading"`. */
+  studioFields: string[];
+}): void {
+  const fields =
+    options.studioFields.length > 0
+      ? options.studioFields.map((f) => `“${f}”`).join(", ")
+      : "(could not identify which — inspect the section in /studio)";
+  console.warn(
+    [
+      "",
+      BAR,
+      `⚠️  [SANITY SECTION DROPPED] ${options.context} → sections[${options.index}]`,
+      `    (${options.sectionType}, key ${options.sectionKey}) is published but NOT`,
+      `    rendered — required content is missing.`,
+      `    Empty required field(s): ${fields}`,
+      `    Fix: open the document in /studio, fill in the field(s) named above`,
+      `    on that section, then Publish.`,
+      BAR,
+      "",
+    ].join("\n"),
+  );
+}
+
 /** A successful fetch returned zero documents — legitimate, but worth a note. */
 export function logEmpty(fetcher: string, consequence: string): void {
   console.warn(

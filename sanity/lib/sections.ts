@@ -1,5 +1,6 @@
 import "server-only";
 import { resolvePhoto } from "@/sanity/lib/image";
+import { logSectionDropped } from "@/sanity/lib/fallbackLog";
 import type { CmsPhoto } from "@/data/services";
 import type { ServiceSection } from "@/data/serviceSections";
 import { NAV_ICON_NAMES, type NavIconName } from "@/data/navigation";
@@ -342,13 +343,172 @@ function toSection(raw: Raw, index: number): ServiceSection | null {
   }
 }
 
-/** Maps a raw sections array; undefined when absent or nothing survives. */
-export function toSections(value: unknown): ServiceSection[] | undefined {
-  if (!Array.isArray(value)) return undefined;
-  const sections = value
-    .map((raw, i) =>
-      raw && typeof raw === "object" ? toSection(raw as Raw, i) : null,
-    )
-    .filter((s): s is ServiceSection => s !== null);
-  return sections.length > 0 ? sections : undefined;
+/**
+ * The load-bearing fields per section type — the render gates in
+ * `toSection()` above, expressed as data so drops can be EXPLAINED, not just
+ * detected. `title` is the field's Studio title (what the owner sees on
+ * screen); keep both in sync with `sanity/schemas/serviceSections.ts`.
+ * The reconciliation table in SERVICE-SECTIONS-AUDIT.md is generated from
+ * this map.
+ */
+const nonEmptyString = (entry: unknown) =>
+  typeof entry === "string" && entry.trim() !== "";
+
+const childWith = (...fields: string[]) => (entry: unknown) =>
+  Boolean(
+    entry &&
+      typeof entry === "object" &&
+      fields.every((f) => str((entry as Raw)[f])),
+  );
+
+export const SECTION_REQUIREMENTS: Record<
+  string,
+  {
+    strings: Array<{ field: string; title: string }>;
+    /** Arrays that need ≥1 entry passing `valid` for the section to render. */
+    arrays: Array<{ field: string; title: string; valid: (entry: unknown) => boolean }>;
+  }
+> = {
+  serviceHero: { strings: [{ field: "heading", title: "Big heading" }], arrays: [] },
+  serviceAbout: {
+    strings: [{ field: "heading", title: "Heading" }],
+    arrays: [{ field: "paragraphs", title: "Paragraphs", valid: nonEmptyString }],
+  },
+  whatsIncluded: {
+    strings: [{ field: "heading", title: "Heading" }],
+    arrays: [{ field: "items", title: "Covered work", valid: childWith("title", "description") }],
+  },
+  signsYouNeed: {
+    strings: [{ field: "heading", title: "Heading" }],
+    arrays: [{ field: "cards", title: "Symptom cards", valid: childWith("question", "answer") }],
+  },
+  processSteps: {
+    strings: [{ field: "heading", title: "Heading" }],
+    arrays: [{ field: "steps", title: "Steps", valid: childWith("title", "description") }],
+  },
+  comparisonTable: {
+    strings: [{ field: "heading", title: "Heading" }],
+    arrays: [
+      { field: "rows", title: "Table rows", valid: childWith("situation", "recommendation", "why") },
+    ],
+  },
+  serviceTrust: {
+    strings: [{ field: "heading", title: "Heading" }],
+    arrays: [{ field: "items", title: "Proof points", valid: childWith("title", "description") }],
+  },
+  serviceTestimonials: { strings: [{ field: "heading", title: "Heading" }], arrays: [] },
+  propertyTypes: {
+    strings: [{ field: "heading", title: "Heading" }],
+    arrays: [{ field: "cards", title: "Property cards", valid: childWith("title", "blurb") }],
+  },
+  serviceFaq: {
+    strings: [{ field: "heading", title: "Heading" }],
+    arrays: [{ field: "faqs", title: "Questions", valid: childWith("question", "answer") }],
+  },
+  serviceArea: { strings: [{ field: "heading", title: "Heading" }], arrays: [] },
+  relatedServices: {
+    strings: [{ field: "heading", title: "Heading" }],
+    arrays: [{ field: "serviceSlugs", title: "Which services", valid: nonEmptyString }],
+  },
+  finalCta: { strings: [{ field: "heading", title: "Heading" }], arrays: [] },
+};
+
+export interface DroppedSection {
+  _type: string;
+  _key: string;
+  index: number;
+  /** Schema field names that failed the gate. */
+  emptyFields: string[];
+  /** The same fields by their Studio titles — what the owner sees. */
+  studioFields: string[];
+}
+
+/** Names the fields that made `toSection()` return null for this item. */
+function explainDrop(raw: Raw, index: number): DroppedSection {
+  const _type = String(raw._type ?? "unknown");
+  const _key = str(raw._key) ?? `(no _key, index ${index})`;
+  const requirements = SECTION_REQUIREMENTS[_type];
+  if (!requirements) {
+    return {
+      _type,
+      _key,
+      index,
+      emptyFields: ["_type"],
+      studioFields: [`unknown section type "${_type}"`],
+    };
+  }
+  const emptyFields: string[] = [];
+  const studioFields: string[] = [];
+  for (const { field, title } of requirements.strings) {
+    if (!str(raw[field])) {
+      emptyFields.push(field);
+      studioFields.push(title);
+    }
+  }
+  for (const { field, title, valid } of requirements.arrays) {
+    const value = raw[field];
+    if (!Array.isArray(value) || value.length === 0) {
+      emptyFields.push(field);
+      studioFields.push(title);
+    } else if (!value.some(valid)) {
+      // Entries exist but every one is missing its own required fields.
+      emptyFields.push(`${field} (no complete entry)`);
+      studioFields.push(`${title} (entries exist but none is complete)`);
+    }
+  }
+  return { _type, _key, index, emptyFields, studioFields };
+}
+
+/** Identifies the parent document in drop warnings, e.g. `service "plumbing"`. */
+export type SectionsContext = string;
+
+/**
+ * Maps a raw sections array and reports every drop with the fields that
+ * caused it. Used by /api/health/sanity and scripts/audit-sections.ts;
+ * does not log — `toSections()` is the logging entry point.
+ */
+export function toSectionsWithReport(
+  value: unknown,
+): { sections: ServiceSection[] | undefined; dropped: DroppedSection[] } {
+  if (!Array.isArray(value)) return { sections: undefined, dropped: [] };
+  const dropped: DroppedSection[] = [];
+  const sections: ServiceSection[] = [];
+  value.forEach((raw, i) => {
+    if (!raw || typeof raw !== "object") {
+      dropped.push({
+        _type: "unknown",
+        _key: `(not an object, index ${i})`,
+        index: i,
+        emptyFields: [],
+        studioFields: [],
+      });
+      return;
+    }
+    const section = toSection(raw as Raw, i);
+    if (section) sections.push(section);
+    else dropped.push(explainDrop(raw as Raw, i));
+  });
+  return { sections: sections.length > 0 ? sections : undefined, dropped };
+}
+
+/**
+ * Maps a raw sections array; undefined when absent or nothing survives.
+ * Every dropped section is logged loudly with the document context and the
+ * Studio field titles the owner must fill to bring it back.
+ */
+export function toSections(
+  value: unknown,
+  context: SectionsContext = "a document",
+): ServiceSection[] | undefined {
+  const { sections, dropped } = toSectionsWithReport(value);
+  for (const drop of dropped) {
+    logSectionDropped({
+      context,
+      sectionType: drop._type,
+      sectionKey: drop._key,
+      index: drop.index,
+      studioFields: drop.studioFields,
+    });
+  }
+  return sections;
 }

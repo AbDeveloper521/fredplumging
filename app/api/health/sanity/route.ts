@@ -2,6 +2,7 @@ import { timingSafeEqual } from "node:crypto";
 import { type NextRequest, NextResponse } from "next/server";
 import { client } from "@/sanity/client";
 import { resolvePhoto } from "@/sanity/lib/image";
+import { toSectionsWithReport } from "@/sanity/lib/sections";
 import { apiVersion, dataset, projectId } from "@/sanity/env";
 
 /**
@@ -108,6 +109,35 @@ function imagesOf(doc: RawDoc): ImageReport[] {
   return reports;
 }
 
+/**
+ * Which sections of a document render and which are silently dropped —
+ * the render-gate outcome the owner cannot otherwise see in production.
+ */
+function sectionsOf(doc: RawDoc):
+  | {
+      kept: string[];
+      dropped: Array<{ section: string; fillInStudio: string[] }>;
+      note?: string;
+    }
+  | { note: string } {
+  if (!doc.sections) {
+    return { note: "no sections array — page uses the legacy layout" };
+  }
+  const { sections, dropped } = toSectionsWithReport(doc.sections);
+  return {
+    kept: (sections ?? []).map((s) => s._type),
+    dropped: dropped.map((d) => ({
+      section: `sections[${d.index}] (${d._type})`,
+      fillInStudio: d.studioFields,
+    })),
+    ...(sections === undefined && doc.sections.length > 0
+      ? {
+          note: "EVERY section was dropped — this page is silently falling back to the legacy layout",
+        }
+      : {}),
+  };
+}
+
 const HEALTH_QUERY = `*[_type in ["service", "industry"]] | order(_type asc, slug.current asc) {
   _type,
   "slug": slug.current,
@@ -158,6 +188,7 @@ export async function GET(req: NextRequest) {
         slug: doc.slug,
         _updatedAt: doc._updatedAt,
         images: imagesOf(doc),
+        sections: sectionsOf(doc),
       })),
     });
   } catch (error) {
