@@ -177,8 +177,11 @@ export function ServiceHeroSection({
         </div>
 
         {/* Tall image slot — subtly offset, no badge */}
-        <Rise delay={0.2} className="hidden lg:block lg:justify-self-end">
-          <div className="relative aspect-[3/4] w-full max-w-[440px] rotate-1 overflow-hidden rounded-2xl border border-white/10 shadow-(--shadow-card-lg)">
+        {/* Width lives on the grid item: justify-self-end makes it shrink-to-fit,
+            and a fill Image contributes no intrinsic size — without lg:w-full the
+            box collapses to 0×0 the moment a real photo replaces the placeholder. */}
+        <Rise delay={0.2} className="hidden lg:block lg:w-full lg:max-w-[440px] lg:justify-self-end">
+          <div className="relative aspect-[3/4] w-full rotate-1 overflow-hidden rounded-2xl border border-white/10 shadow-(--shadow-card-lg)">
             {section.photo ? (
               <Image
                 src={section.photo.url}

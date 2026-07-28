@@ -1,11 +1,11 @@
 import "server-only";
-import imageUrlBuilder from "@sanity/image-url";
+import { createImageUrlBuilder } from "@sanity/image-url";
 import type { SanityImageSource } from "@sanity/image-url";
 import { client } from "@/sanity/client";
 import { logImageSkipped } from "@/sanity/lib/fallbackLog";
 import type { CmsPhoto } from "@/data/services";
 
-const builder = imageUrlBuilder(client);
+const builder = createImageUrlBuilder(client);
 
 function assetRefOf(asset: unknown): string | undefined {
   if (asset && typeof asset === "object" && "_ref" in asset) {
