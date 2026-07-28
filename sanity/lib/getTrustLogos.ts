@@ -1,8 +1,11 @@
 import "server-only";
-import { serverClient } from "@/sanity/lib/serverClient";
+import {
+  fetchSanityCached,
+  PUBLISHED_FETCH_OPTIONS,
+  type DynamicFetchOptions,
+} from "@/sanity/lib/live";
 import { resolvePhoto } from "@/sanity/lib/image";
 import { logEmpty, logFallback } from "@/sanity/lib/fallbackLog";
-import { sanityFetchOptions } from "@/sanity/lib/cacheOptions";
 import { TRUST_LOGOS_QUERY } from "@/sanity/queries";
 import {
   STATIC_TRUST_LOGOS,
@@ -19,12 +22,15 @@ export const TRUST_LOGO_TAG = "trustLogo";
  * FAILED fetch → static fallback (loud). Successful EMPTY result → empty
  * array: the trust bar and the compliance logo strip hide.
  */
-export async function getTrustLogos(): Promise<TrustLogo[]> {
+export async function getTrustLogos(
+  options: DynamicFetchOptions = PUBLISHED_FETCH_OPTIONS,
+): Promise<TrustLogo[]> {
   try {
-    const result = await serverClient.fetch(
+    const result = await fetchSanityCached(
       TRUST_LOGOS_QUERY,
       {},
-      sanityFetchOptions(TRUST_LOGO_TAG),
+      TRUST_LOGO_TAG,
+      options,
     );
 
     const logos: TrustLogo[] = [];

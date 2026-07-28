@@ -17,11 +17,10 @@ import { apiVersion, dataset, projectId } from "@/sanity/env";
  * Reports env-var PRESENCE only — never a secret value.
  */
 
-// Never cache diagnostics. Valid segment config in Next 16 without
-// cacheComponents — see node_modules/next/dist/docs/01-app/02-guides/
-// caching-without-cache-components.md ("force-dynamic" = fetchCache
-// 'force-no-store' for the whole route).
-export const dynamic = "force-dynamic";
+// No segment config: under Cache Components a GET handler that reads the
+// request is dynamic by default, and `dynamic = "force-dynamic"` is removed —
+// see node_modules/next/dist/docs/01-app/02-guides/
+// migrating-to-cache-components.md ("dynamic = force-dynamic").
 
 /** Timing-safe string comparison; length guard first so it cannot throw. */
 function secretMatches(provided: string | null, expected: string | undefined): boolean {

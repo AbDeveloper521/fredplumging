@@ -1,8 +1,11 @@
 import "server-only";
-import { serverClient } from "@/sanity/lib/serverClient";
+import {
+  fetchSanityCached,
+  PUBLISHED_FETCH_OPTIONS,
+  type DynamicFetchOptions,
+} from "@/sanity/lib/live";
 import { resolvePhoto } from "@/sanity/lib/image";
 import { logEmpty, logFallback } from "@/sanity/lib/fallbackLog";
-import { sanityFetchOptions } from "@/sanity/lib/cacheOptions";
 import { toSections } from "@/sanity/lib/sections";
 import { INDUSTRIES_QUERY, INDUSTRY_BY_SLUG_QUERY } from "@/sanity/queries";
 import type {
@@ -14,8 +17,6 @@ import type { RichBody } from "@/data/services";
 
 /** Cache tag invalidated by the /api/revalidate webhook. */
 export const INDUSTRY_TAG = "industry";
-
-const FETCH_OPTIONS = sanityFetchOptions(INDUSTRY_TAG);
 
 type IndustryListItem = INDUSTRIES_QUERY_RESULT[number];
 type IndustryDetailItem = NonNullable<INDUSTRY_BY_SLUG_QUERY_RESULT>;
@@ -48,10 +49,17 @@ function toIndustry(item: IndustryListItem | IndustryDetailItem): Industry | nul
  * array: the homepage section hides and no /multifamily/[slug] pages
  * generate.
  */
-export async function getIndustries(): Promise<Industry[]> {
+export async function getIndustries(
+  options: DynamicFetchOptions = PUBLISHED_FETCH_OPTIONS,
+): Promise<Industry[]> {
   let result: INDUSTRIES_QUERY_RESULT;
   try {
-    result = await serverClient.fetch(INDUSTRIES_QUERY, {}, FETCH_OPTIONS);
+    result = await fetchSanityCached(
+      INDUSTRIES_QUERY,
+      {},
+      INDUSTRY_TAG,
+      options,
+    );
   } catch (error) {
     logFallback({
       fetcher: "getIndustries",
@@ -73,12 +81,16 @@ export async function getIndustries(): Promise<Industry[]> {
 }
 
 /** Single property type for /multifamily/[slug]. Null = not found (404). */
-export async function getIndustryBySlug(slug: string): Promise<Industry | null> {
+export async function getIndustryBySlug(
+  slug: string,
+  options: DynamicFetchOptions = PUBLISHED_FETCH_OPTIONS,
+): Promise<Industry | null> {
   try {
-    const result = await serverClient.fetch(
+    const result = await fetchSanityCached(
       INDUSTRY_BY_SLUG_QUERY,
       { slug },
-      FETCH_OPTIONS,
+      INDUSTRY_TAG,
+      options,
     );
     return result ? toIndustry(result) : null;
   } catch (error) {

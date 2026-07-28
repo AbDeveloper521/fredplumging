@@ -1,9 +1,11 @@
+import { Suspense } from "react";
 import Link from "next/link";
 import { Clock, Mail, MapPin, Phone } from "lucide-react";
 import { getSite } from "@/sanity/lib/getSite";
 import { getFooterNavigation } from "@/sanity/lib/getFooterNavigation";
 import { Logo } from "@/components/ui/Logo";
 import { Container } from "@/components/ui/Container";
+import { CopyrightYear } from "@/components/layout/CopyrightYear";
 
 export async function Footer() {
   const [site, footer] = await Promise.all([getSite(), getFooterNavigation()]);
@@ -118,7 +120,11 @@ export async function Footer() {
       <div className="border-t border-white/8">
         <Container className="flex flex-col items-center justify-between gap-4 py-6 text-[13px] sm:flex-row">
           <p>
-            © {new Date().getFullYear()} {site.legalName}. All rights reserved.
+            ©{" "}
+            <Suspense fallback={null}>
+              <CopyrightYear />
+            </Suspense>{" "}
+            {site.legalName}. All rights reserved.
             · Licensed &amp; Insured · TX Master Plumber License
           </p>
           <ul className="flex flex-wrap items-center gap-x-6 gap-y-2">

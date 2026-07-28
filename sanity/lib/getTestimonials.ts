@@ -1,7 +1,10 @@
 import "server-only";
-import { serverClient } from "@/sanity/lib/serverClient";
+import {
+  fetchSanityCached,
+  PUBLISHED_FETCH_OPTIONS,
+  type DynamicFetchOptions,
+} from "@/sanity/lib/live";
 import { logEmpty, logFallback } from "@/sanity/lib/fallbackLog";
-import { sanityFetchOptions } from "@/sanity/lib/cacheOptions";
 import { TESTIMONIALS_QUERY } from "@/sanity/queries";
 import {
   testimonials as fallbackTestimonials,
@@ -16,12 +19,15 @@ export const TESTIMONIAL_TAG = "testimonial";
  * Testimonials ordered by the client-controlled `order` field. Falls back to
  * `data/testimonials.ts` on fetch failure or when nothing is published yet.
  */
-export async function getTestimonials(): Promise<Testimonial[]> {
+export async function getTestimonials(
+  options: DynamicFetchOptions = PUBLISHED_FETCH_OPTIONS,
+): Promise<Testimonial[]> {
   try {
-    const result = await serverClient.fetch(
+    const result = await fetchSanityCached(
       TESTIMONIALS_QUERY,
       {},
-      sanityFetchOptions(TESTIMONIAL_TAG),
+      TESTIMONIAL_TAG,
+      options,
     );
 
     const testimonials: Testimonial[] = [];

@@ -1,7 +1,10 @@
 import "server-only";
-import { serverClient } from "@/sanity/lib/serverClient";
+import {
+  fetchSanityCached,
+  PUBLISHED_FETCH_OPTIONS,
+  type DynamicFetchOptions,
+} from "@/sanity/lib/live";
 import { logFallback } from "@/sanity/lib/fallbackLog";
-import { sanityFetchOptions } from "@/sanity/lib/cacheOptions";
 import { NAVIGATION_QUERY } from "@/sanity/queries";
 import type { NAVIGATION_QUERY_RESULT } from "@/sanity.types";
 import {
@@ -64,13 +67,16 @@ function toNavigation(result: NAVIGATION_QUERY_RESULT): Navigation | null {
  * Navigation accessor — same seam pattern as `getSite()`. Tag invalidation is
  * primary; the 24h revalidate is a backstop against a silently broken webhook.
  */
-export async function getNavigation(): Promise<Navigation> {
+export async function getNavigation(
+  options: DynamicFetchOptions = PUBLISHED_FETCH_OPTIONS,
+): Promise<Navigation> {
   let result: NAVIGATION_QUERY_RESULT;
   try {
-    result = await serverClient.fetch(
+    result = await fetchSanityCached(
       NAVIGATION_QUERY,
       {},
-      sanityFetchOptions(NAVIGATION_TAG),
+      NAVIGATION_TAG,
+      options,
     );
   } catch (error) {
     logFallback({

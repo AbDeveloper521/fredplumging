@@ -1,7 +1,10 @@
 import "server-only";
-import { serverClient } from "@/sanity/lib/serverClient";
+import {
+  fetchSanityCached,
+  PUBLISHED_FETCH_OPTIONS,
+  type DynamicFetchOptions,
+} from "@/sanity/lib/live";
 import { logEmpty, logFallback } from "@/sanity/lib/fallbackLog";
-import { sanityFetchOptions } from "@/sanity/lib/cacheOptions";
 import { FAQS_QUERY } from "@/sanity/queries";
 import { faqs as fallbackFaqs, type Faq } from "@/data/faqs";
 
@@ -14,13 +17,11 @@ export const FAQ_TAG = "faq";
  * array: the homepage FAQ section hides — deleted questions must not
  * resurrect from the static file.
  */
-export async function getFaqs(): Promise<Faq[]> {
+export async function getFaqs(
+  options: DynamicFetchOptions = PUBLISHED_FETCH_OPTIONS,
+): Promise<Faq[]> {
   try {
-    const result = await serverClient.fetch(
-      FAQS_QUERY,
-      {},
-      sanityFetchOptions(FAQ_TAG),
-    );
+    const result = await fetchSanityCached(FAQS_QUERY, {}, FAQ_TAG, options);
 
     const faqs: Faq[] = [];
     for (const item of result) {

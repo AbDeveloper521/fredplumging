@@ -1,7 +1,10 @@
 import "server-only";
-import { serverClient } from "@/sanity/lib/serverClient";
+import {
+  fetchSanityCached,
+  PUBLISHED_FETCH_OPTIONS,
+  type DynamicFetchOptions,
+} from "@/sanity/lib/live";
 import { logFallback } from "@/sanity/lib/fallbackLog";
-import { sanityFetchOptions } from "@/sanity/lib/cacheOptions";
 import { FOOTER_NAVIGATION_QUERY } from "@/sanity/queries";
 import type { FOOTER_NAVIGATION_QUERY_RESULT } from "@/sanity.types";
 import {
@@ -42,13 +45,16 @@ function toFooterNavigation(
   return { columns, legal };
 }
 
-export async function getFooterNavigation(): Promise<FooterNavigation> {
+export async function getFooterNavigation(
+  options: DynamicFetchOptions = PUBLISHED_FETCH_OPTIONS,
+): Promise<FooterNavigation> {
   let result: FOOTER_NAVIGATION_QUERY_RESULT;
   try {
-    result = await serverClient.fetch(
+    result = await fetchSanityCached(
       FOOTER_NAVIGATION_QUERY,
       {},
-      sanityFetchOptions(NAVIGATION_TAG),
+      NAVIGATION_TAG,
+      options,
     );
   } catch (error) {
     logFallback({

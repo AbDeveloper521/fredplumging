@@ -1,7 +1,10 @@
 import "server-only";
-import { serverClient } from "@/sanity/lib/serverClient";
+import {
+  fetchSanityCached,
+  PUBLISHED_FETCH_OPTIONS,
+  type DynamicFetchOptions,
+} from "@/sanity/lib/live";
 import { logEmpty, logFallback } from "@/sanity/lib/fallbackLog";
-import { sanityFetchOptions } from "@/sanity/lib/cacheOptions";
 import { JOB_POSTINGS_QUERY, JOB_POSTING_QUERY } from "@/sanity/queries";
 import {
   jobPostings as fallbackJobs,
@@ -12,10 +15,6 @@ import {
 
 /** Cache tag invalidated by the /api/revalidate webhook. */
 export const JOB_TAG = "jobPosting";
-
-// The site-wide default (60 s) is already faster than the old jobs-specific
-// 1-hour override — a filled role comes down within about a minute.
-const FETCH_OPTIONS = sanityFetchOptions(JOB_TAG);
 
 type RawJob = {
   title: string | null;
@@ -69,10 +68,12 @@ function toJob(item: RawJob): JobPosting | null {
  * "no openings right now", not resurrect a filled job from a static file and
  * take applications for it.
  */
-export async function getJobPostings(): Promise<JobPosting[]> {
+export async function getJobPostings(
+  options: DynamicFetchOptions = PUBLISHED_FETCH_OPTIONS,
+): Promise<JobPosting[]> {
   let result: RawJob[];
   try {
-    result = await serverClient.fetch(JOB_POSTINGS_QUERY, {}, FETCH_OPTIONS);
+    result = await fetchSanityCached(JOB_POSTINGS_QUERY, {}, JOB_TAG, options);
   } catch (error) {
     logFallback({
       fetcher: "getJobPostings",
@@ -93,12 +94,16 @@ export async function getJobPostings(): Promise<JobPosting[]> {
 }
 
 /** Single role for /about/careers/[slug] — closed roles included. Null = 404. */
-export async function getJobPosting(slug: string): Promise<JobPosting | null> {
+export async function getJobPosting(
+  slug: string,
+  options: DynamicFetchOptions = PUBLISHED_FETCH_OPTIONS,
+): Promise<JobPosting | null> {
   try {
-    const result = await serverClient.fetch(
+    const result = await fetchSanityCached(
       JOB_POSTING_QUERY,
       { slug },
-      FETCH_OPTIONS,
+      JOB_TAG,
+      options,
     );
     return result ? toJob(result) : null;
   } catch (error) {

@@ -1,18 +1,24 @@
+import { draftMode } from "next/headers";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { MobileCallBar } from "@/components/layout/MobileCallBar";
 import { JsonLd } from "@/components/seo/JsonLd";
+import { SanityLive } from "@/sanity/lib/live";
 
 /**
  * Marketing-site chrome. Lives in the (site) route group so the embedded
- * Sanity Studio at /studio renders without header/footer/call bar.
+ * Sanity Studio at /studio renders without header/footer/call bar — and,
+ * for the same reason, this is the ONE place <SanityLive> renders: the
+ * Studio route never mounts a second copy. `draftMode()` is the only
+ * dynamic API allowed in a prerendered layout body.
  * The bottom padding compensates for the fixed MobileCallBar.
  */
-export default function SiteLayout({
+export default async function SiteLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const { isEnabled: isDraftMode } = await draftMode();
   return (
     <div className="flex min-h-full flex-1 flex-col pb-[68px] lg:pb-0">
       <a
@@ -28,6 +34,7 @@ export default function SiteLayout({
       <Footer />
       <MobileCallBar />
       <JsonLd />
+      <SanityLive includeDrafts={isDraftMode} />
     </div>
   );
 }

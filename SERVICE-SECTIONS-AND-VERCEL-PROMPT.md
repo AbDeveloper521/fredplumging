@@ -345,6 +345,20 @@ URL in the audit file — "all pages" is not a verification.
 `PRODUCTION-INSTANT-UPDATES.md` §3 already lays out the correct plan. It was never executed.
 Execute it now, with the Vercel specifics below folded in.
 
+**The site owner has chosen step B2 (Sanity Live) explicitly. That is the objective, not an
+optional upgrade.** He wants a Studio publish to appear on `fredplumging.vercel.app` within
+seconds and without a manual refresh — which only Live delivers. B1 stays in the plan anyway
+because it is five minutes of work and it is what production falls back to if B2 has to be
+reverted; do not skip it, and do not treat shipping B1 as having satisfied the request.
+
+**Do B3 before you test B2, not after.** Sanity Live opens an EventSource from the visitor's
+browser to the Sanity Content Lake, so it cannot work at all until
+`https://fredplumging.vercel.app` is a CORS origin in sanity.io/manage and
+`SANITY_API_READ_TOKEN` is set on Vercel with a redeploy. If those are missing, B2 will look
+broken in production even when the code is perfect — and you will waste the whole task
+debugging the wrong layer. Write the owner checklist first and tell him which items are
+blocking.
+
 ## Step B1 — the safety net (small, low-risk, its own commit)
 
 In `sanity/lib/cacheOptions.ts`, change the production default `revalidate` from `86400` to

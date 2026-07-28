@@ -1,7 +1,10 @@
 import "server-only";
-import { serverClient } from "@/sanity/lib/serverClient";
+import {
+  fetchSanityCached,
+  PUBLISHED_FETCH_OPTIONS,
+  type DynamicFetchOptions,
+} from "@/sanity/lib/live";
 import { logFallback } from "@/sanity/lib/fallbackLog";
-import { sanityFetchOptions } from "@/sanity/lib/cacheOptions";
 import { REVIEW_SETTINGS_QUERY } from "@/sanity/queries";
 import { getGoogleReviews } from "@/sanity/lib/getGoogleReviews";
 import {
@@ -19,13 +22,16 @@ export const REVIEW_SETTINGS_TAG = "reviewSettings";
  * rating badge. When the optional Places refresh is configured (off by
  * default — see getGoogleReviews), its LIVE aggregate wins over both.
  */
-export async function getReviewSettings(): Promise<GoogleReviewProfile> {
+export async function getReviewSettings(
+  options: DynamicFetchOptions = PUBLISHED_FETCH_OPTIONS,
+): Promise<GoogleReviewProfile> {
   let profile: GoogleReviewProfile;
   try {
-    const result = await serverClient.fetch(
+    const result = await fetchSanityCached(
       REVIEW_SETTINGS_QUERY,
       {},
-      sanityFetchOptions(REVIEW_SETTINGS_TAG),
+      REVIEW_SETTINGS_TAG,
+      options,
     );
 
     if (!result) {

@@ -1,9 +1,12 @@
 import "server-only";
-import { serverClient } from "@/sanity/lib/serverClient";
+import {
+  fetchSanityCached,
+  PUBLISHED_FETCH_OPTIONS,
+  type DynamicFetchOptions,
+} from "@/sanity/lib/live";
 import { resolvePhoto } from "@/sanity/lib/image";
 import { toSections } from "@/sanity/lib/sections";
 import { logEmpty, logFallback } from "@/sanity/lib/fallbackLog";
-import { sanityFetchOptions } from "@/sanity/lib/cacheOptions";
 import { SERVICES_QUERY, SERVICE_BY_SLUG_QUERY } from "@/sanity/queries";
 import type {
   SERVICES_QUERY_RESULT,
@@ -18,8 +21,6 @@ import { NAV_ICON_NAMES, type NavIconName } from "@/data/navigation";
 
 /** Cache tag invalidated by the /api/revalidate webhook. */
 export const SERVICE_TAG = "service";
-
-const FETCH_OPTIONS = sanityFetchOptions(SERVICE_TAG);
 
 function toIcon(value: string | null | undefined): NavIconName {
   return value && (NAV_ICON_NAMES as readonly string[]).includes(value)
@@ -57,10 +58,12 @@ function toService(item: ServiceListItem | ServiceDetailItem): Service | null {
  * array: the homepage grid hides and no /services/[slug] pages generate —
  * deleted services must not resurrect from the static file.
  */
-export async function getServices(): Promise<Service[]> {
+export async function getServices(
+  options: DynamicFetchOptions = PUBLISHED_FETCH_OPTIONS,
+): Promise<Service[]> {
   let result: SERVICES_QUERY_RESULT;
   try {
-    result = await serverClient.fetch(SERVICES_QUERY, {}, FETCH_OPTIONS);
+    result = await fetchSanityCached(SERVICES_QUERY, {}, SERVICE_TAG, options);
   } catch (error) {
     logFallback({
       fetcher: "getServices",
@@ -82,12 +85,16 @@ export async function getServices(): Promise<Service[]> {
 }
 
 /** Single service for /services/[slug]. Null = genuinely not found (404). */
-export async function getServiceBySlug(slug: string): Promise<Service | null> {
+export async function getServiceBySlug(
+  slug: string,
+  options: DynamicFetchOptions = PUBLISHED_FETCH_OPTIONS,
+): Promise<Service | null> {
   try {
-    const result = await serverClient.fetch(
+    const result = await fetchSanityCached(
       SERVICE_BY_SLUG_QUERY,
       { slug },
-      FETCH_OPTIONS,
+      SERVICE_TAG,
+      options,
     );
     return result ? toService(result) : null;
   } catch (error) {

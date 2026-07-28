@@ -5,7 +5,14 @@ import {
 } from "next-sanity/studio";
 import { Studio } from "./Studio";
 
-export const dynamic = "force-static";
+// `dynamic = "force-static"` is removed under Cache Components
+// (node_modules/next/dist/docs/01-app/02-guides/
+// migrating-to-cache-components.md). The base /studio path prerenders via
+// generateStaticParams; deeper tool paths (e.g. /studio/structure) resolve
+// at request time and route client-side inside the Studio itself.
+export function generateStaticParams() {
+  return [{ tool: [] }];
+}
 
 export const metadata: Metadata = {
   ...studioMetadata,

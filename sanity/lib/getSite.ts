@@ -1,7 +1,10 @@
 import "server-only";
-import { serverClient } from "@/sanity/lib/serverClient";
+import {
+  fetchSanityCached,
+  PUBLISHED_FETCH_OPTIONS,
+  type DynamicFetchOptions,
+} from "@/sanity/lib/live";
 import { logFallback } from "@/sanity/lib/fallbackLog";
-import { sanityFetchOptions } from "@/sanity/lib/cacheOptions";
 import { SITE_SETTINGS_QUERY } from "@/sanity/queries";
 import type { SITE_SETTINGS_QUERY_RESULT } from "@/sanity.types";
 import {
@@ -21,20 +24,22 @@ const FALLBACK: SiteContent = {
 /**
  * The single seam between the app and Sanity for site settings.
  *
- * Cached statically (`force-cache`) and tagged, so every page reuses one
- * fetch per build; the webhook revalidates the tag on publish. If Sanity is
+ * Fetched through the shared `'use cache'` boundary in sanity/lib/live.ts
+ * and tagged, so every page reuses one cached result; Sanity Live and the
+ * /api/revalidate webhook both revalidate the tag on publish. If Sanity is
  * unreachable or the document is incomplete, each missing field falls back
  * to `data/site.ts` — a broken CMS must never remove the phone number.
  */
-export async function getSite(): Promise<SiteContent> {
+export async function getSite(
+  options: DynamicFetchOptions = PUBLISHED_FETCH_OPTIONS,
+): Promise<SiteContent> {
   let result: SITE_SETTINGS_QUERY_RESULT;
   try {
-    result = await serverClient.fetch(
+    result = await fetchSanityCached(
       SITE_SETTINGS_QUERY,
       {},
-      // Tag invalidation (webhook) is primary; the 24h revalidate is a
-      // backstop so a silently broken webhook can't freeze content forever.
-      sanityFetchOptions(SITE_SETTINGS_TAG),
+      SITE_SETTINGS_TAG,
+      options,
     );
   } catch (error) {
     logFallback({
