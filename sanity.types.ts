@@ -657,6 +657,71 @@ export type ContactPage = {
   }>;
 };
 
+export type AboutPage = {
+  _id: string;
+  _type: "aboutPage";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  heroEyebrow?: string;
+  heroHeading?: string;
+  heroParagraphs?: Array<string>;
+  storyHeading?: string;
+  storyParagraphs?: Array<string>;
+  storyPhotoPrimary?: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  };
+  storyPhotoSubjectPrimary?: string;
+  storyPhotoSecondary?: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  };
+  storyPhotoSubjectSecondary?: string;
+  evolutionHeading?: string;
+  evolutionParagraphs?: Array<string>;
+  evolutionPhoto?: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  };
+  evolutionPhotoSubject?: string;
+  valuesHeading?: string;
+  values?: Array<{
+    icon?:
+      | "award"
+      | "shield-check"
+      | "clock"
+      | "siren"
+      | "wrench"
+      | "building-2"
+      | "heart-handshake";
+    title?: string;
+    description?: string;
+    _type: "value";
+    _key: string;
+  }>;
+  linksHeading?: string;
+  links?: Array<{
+    title?: string;
+    description?: string;
+    href?: string;
+    _type: "link";
+    _key: string;
+  }>;
+};
+
 export type SiteSettings = {
   _id: string;
   _type: "siteSettings";
@@ -807,6 +872,7 @@ export type AllSanitySchemaTypes =
   | Navigation
   | ReviewSettings
   | ContactPage
+  | AboutPage
   | SiteSettings
   | SanityImagePaletteSwatch
   | SanityImagePalette
@@ -1692,6 +1758,60 @@ export type TRUST_LOGOS_QUERY_RESULT = Array<{
 }>;
 
 // Source: sanity/queries.ts
+// Variable: ABOUT_PAGE_QUERY
+// Query: *[_type == "aboutPage" && _id == "aboutPage"][0]{    heroEyebrow,    heroHeading,    heroParagraphs,    storyHeading,    storyParagraphs,    storyPhotoPrimary{ asset, hotspot, crop, alt },    storyPhotoSubjectPrimary,    storyPhotoSecondary{ asset, hotspot, crop, alt },    storyPhotoSubjectSecondary,    evolutionHeading,    evolutionParagraphs,    evolutionPhoto{ asset, hotspot, crop, alt },    evolutionPhotoSubject,    valuesHeading,    values[]{ icon, title, description },    linksHeading,    links[]{ title, description, href }  }
+export type ABOUT_PAGE_QUERY_RESULT = {
+  heroEyebrow: string | null;
+  heroHeading: string | null;
+  heroParagraphs: Array<string> | null;
+  storyHeading: string | null;
+  storyParagraphs: Array<string> | null;
+  storyPhotoPrimary: {
+    asset: SanityImageAssetReference | null;
+    hotspot: SanityImageHotspot | null;
+    crop: SanityImageCrop | null;
+    alt: string | null;
+  } | null;
+  storyPhotoSubjectPrimary: string | null;
+  storyPhotoSecondary: {
+    asset: SanityImageAssetReference | null;
+    hotspot: SanityImageHotspot | null;
+    crop: SanityImageCrop | null;
+    alt: string | null;
+  } | null;
+  storyPhotoSubjectSecondary: string | null;
+  evolutionHeading: string | null;
+  evolutionParagraphs: Array<string> | null;
+  evolutionPhoto: {
+    asset: SanityImageAssetReference | null;
+    hotspot: SanityImageHotspot | null;
+    crop: SanityImageCrop | null;
+    alt: string | null;
+  } | null;
+  evolutionPhotoSubject: string | null;
+  valuesHeading: string | null;
+  values: Array<{
+    icon:
+      | "award"
+      | "building-2"
+      | "clock"
+      | "heart-handshake"
+      | "shield-check"
+      | "siren"
+      | "wrench"
+      | null;
+    title: string | null;
+    description: string | null;
+  }> | null;
+  linksHeading: string | null;
+  links: Array<{
+    title: string | null;
+    description: string | null;
+    href: string | null;
+  }> | null;
+} | null;
+
+// Source: sanity/queries.ts
 // Variable: CONTACT_PAGE_QUERY
 // Query: *[_type == "contactPage" && _id == "contactPage"][0]{    heroEyebrow,    heroHeading,    heroIntro,    responsePromise,    hours[]{ days, hours },    emergencyHeading,    emergencyBody,    faqs[]{ question, answer }  }
 export type CONTACT_PAGE_QUERY_RESULT = {
@@ -1747,6 +1867,7 @@ declare module "@sanity/client" {
     '*[_type == "industry"] | order(order asc){\n    title,\n    "slug": slug.current,\n    description,\n    bulletPoints,\n    photo{ asset, hotspot, crop, alt },\n    body,\n    seoTitle,\n    seoDescription\n  }': INDUSTRIES_QUERY_RESULT;
     '*[_type == "industry" && slug.current == $slug][0]{\n    title,\n    "slug": slug.current,\n    description,\n    bulletPoints,\n    photo{ asset, hotspot, crop, alt },\n    body,\n    sections[]{\n      ...,\n      photo{ asset, hotspot, crop, alt },\n      photoPrimary{ asset, hotspot, crop, alt }\n    },\n    seoTitle,\n    seoDescription\n  }': INDUSTRY_BY_SLUG_QUERY_RESULT;
     '*[_type == "trustLogo"] | order(order asc){\n    name,\n    logo{ asset, hotspot, crop, alt },\n    headline,\n    blurb,\n    category,\n    url,\n    verified\n  }': TRUST_LOGOS_QUERY_RESULT;
+    '*[_type == "aboutPage" && _id == "aboutPage"][0]{\n    heroEyebrow,\n    heroHeading,\n    heroParagraphs,\n    storyHeading,\n    storyParagraphs,\n    storyPhotoPrimary{ asset, hotspot, crop, alt },\n    storyPhotoSubjectPrimary,\n    storyPhotoSecondary{ asset, hotspot, crop, alt },\n    storyPhotoSubjectSecondary,\n    evolutionHeading,\n    evolutionParagraphs,\n    evolutionPhoto{ asset, hotspot, crop, alt },\n    evolutionPhotoSubject,\n    valuesHeading,\n    values[]{ icon, title, description },\n    linksHeading,\n    links[]{ title, description, href }\n  }': ABOUT_PAGE_QUERY_RESULT;
     '*[_type == "contactPage" && _id == "contactPage"][0]{\n    heroEyebrow,\n    heroHeading,\n    heroIntro,\n    responsePromise,\n    hours[]{ days, hours },\n    emergencyHeading,\n    emergencyBody,\n    faqs[]{ question, answer }\n  }': CONTACT_PAGE_QUERY_RESULT;
     '*[_type == "navigation" && _id == "navigation"][0]{\n    footerColumns[]{\n      _key,\n      heading,\n      links[]{ _key, label, href }\n    },\n    legalLinks[]{ _key, label, href }\n  }': FOOTER_NAVIGATION_QUERY_RESULT;
   }

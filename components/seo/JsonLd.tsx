@@ -191,6 +191,7 @@ export async function JsonLd() {
     description:
       "Commercial, multi-family, drain, sewer, maintenance, and 24/7 emergency plumbing services across the Dallas–Fort Worth Metroplex.",
     foundingDate: String(site.foundedYear),
+    founder: { "@type": "Person", name: "Fredrick Lee Press" },
     areaServed: [
       { "@type": "AdministrativeArea", name: site.serviceArea },
       ...site.serviceAreaCities.map((city) => ({

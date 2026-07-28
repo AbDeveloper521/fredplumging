@@ -80,10 +80,10 @@ export const siteSettings = defineType({
     }),
     defineField({
       name: "yearsInBusiness",
-      title: "Years in business (display)",
-      description: 'Display string, e.g. "27+"',
+      title: "Years in business (manual override)",
+      description:
+        "LEAVE EMPTY to show the value calculated from the founded year (recommended — it updates itself every year). Only fill this in to force a specific display string, e.g. “30+”.",
       type: "string",
-      validation: (rule) => rule.required(),
     }),
     defineField({
       name: "licenseNumber",

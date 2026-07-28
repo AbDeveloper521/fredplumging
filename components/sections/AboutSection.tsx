@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { Award, CheckCircle2, Clock, MapPin, ShieldCheck, Users } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
@@ -5,6 +6,7 @@ import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
 import { StatCard } from "@/components/ui/StatCard";
 import { ImagePlaceholder } from "@/components/ui/ImagePlaceholder";
+import type { CmsPhoto } from "@/data/services";
 import type { SiteContent } from "@/data/site";
 
 const highlights = [
@@ -12,6 +14,81 @@ const highlights = [
   "Responsive scheduling and emergency support",
   "Clear communication from start to finish",
 ];
+
+/**
+ * The brand photo collage: large photo, overlapping small photo, red badge,
+ * accent line. Extracted so the /about story section can reuse the exact
+ * composition; the homepage section below renders it with its original
+ * defaults, pixel-for-pixel unchanged.
+ */
+export function AboutCollage({
+  badgeTitle,
+  badgeSubtitle,
+  primaryPhoto,
+  primaryLabel,
+  secondaryPhoto,
+  secondaryLabel,
+  /** Matches the section background so the overlap frame blends in. */
+  frameClass = "border-offwhite",
+}: {
+  badgeTitle: string;
+  badgeSubtitle: string;
+  primaryPhoto?: CmsPhoto;
+  primaryLabel: string;
+  secondaryPhoto?: CmsPhoto;
+  secondaryLabel: string;
+  frameClass?: string;
+}) {
+  return (
+    <div className="relative">
+      <div className="relative aspect-[4/3] overflow-hidden rounded-2xl shadow-(--shadow-card-lg)">
+        {primaryPhoto ? (
+          <Image
+            src={primaryPhoto.url}
+            alt={primaryPhoto.alt}
+            fill
+            sizes="(min-width: 1024px) 50vw, 100vw"
+            className="object-cover"
+          />
+        ) : (
+          <ImagePlaceholder label={primaryLabel} icon={Users} />
+        )}
+      </div>
+      {/* Overlapping secondary image */}
+      <div
+        className={`absolute -bottom-8 -right-3 hidden w-[46%] overflow-hidden rounded-2xl border-4 shadow-(--shadow-card-lg) sm:block lg:-right-8 ${frameClass}`}
+      >
+        <div className="relative aspect-[4/3]">
+          {secondaryPhoto ? (
+            <Image
+              src={secondaryPhoto.url}
+              alt={secondaryPhoto.alt}
+              fill
+              sizes="(min-width: 1024px) 23vw, 46vw"
+              className="object-cover"
+            />
+          ) : (
+            <ImagePlaceholder label={secondaryLabel} tone="steel" showCaption={false} />
+          )}
+        </div>
+      </div>
+      {/* Experience badge */}
+      <div className="absolute -top-5 -left-3 rounded-xl bg-red-600 px-5 py-3.5 text-white shadow-[0_12px_28px_rgb(211_33_39/0.4)] lg:-left-6">
+        <p className="font-heading text-2xl leading-none font-extrabold">
+          {badgeTitle}
+        </p>
+        <p className="mt-1 text-xs font-semibold tracking-wide uppercase opacity-90">
+          {badgeSubtitle}
+        </p>
+      </div>
+      {/* Decorative accent line */}
+      <div
+        aria-hidden="true"
+        className="absolute -bottom-4 left-10 hidden h-px w-40 bg-gradient-to-r from-red-500 to-transparent sm:block"
+      />
+    </div>
+  );
+}
 
 export function AboutSection({ site }: { site: SiteContent }) {
   const metrics = [
@@ -27,38 +104,12 @@ export function AboutSection({ site }: { site: SiteContent }) {
         <div className="grid grid-cols-1 items-center gap-14 lg:grid-cols-2 lg:gap-20">
           {/* Image composition */}
           <Reveal className="relative">
-            <div className="relative">
-              <div className="aspect-[4/3] overflow-hidden rounded-2xl shadow-(--shadow-card-lg)">
-                <ImagePlaceholder
-                  label="Fred's Plumbing commercial service team on site — /images/commercial-plumber-team.webp"
-                  icon={Users}
-                />
-              </div>
-              {/* Overlapping secondary image */}
-              <div className="absolute -bottom-8 -right-3 hidden w-[46%] overflow-hidden rounded-2xl border-4 border-offwhite shadow-(--shadow-card-lg) sm:block lg:-right-8">
-                <div className="aspect-[4/3]">
-                  <ImagePlaceholder
-                    label="Technician at a DFW multi-family property — /images/technician-working.webp"
-                    tone="steel"
-                    showCaption={false}
-                  />
-                </div>
-              </div>
-              {/* Experience badge */}
-              <div className="absolute -top-5 -left-3 rounded-xl bg-red-600 px-5 py-3.5 text-white shadow-[0_12px_28px_rgb(211_33_39/0.4)] lg:-left-6">
-                <p className="font-heading text-2xl leading-none font-extrabold">
-                  Since {site.foundedYear}
-                </p>
-                <p className="mt-1 text-xs font-semibold tracking-wide uppercase opacity-90">
-                  Family-owned &amp; operated
-                </p>
-              </div>
-              {/* Decorative accent line */}
-              <div
-                aria-hidden="true"
-                className="absolute -bottom-4 left-10 hidden h-px w-40 bg-gradient-to-r from-red-500 to-transparent sm:block"
-              />
-            </div>
+            <AboutCollage
+              badgeTitle={`Since ${site.foundedYear}`}
+              badgeSubtitle="Family-owned & operated"
+              primaryLabel="Fred's Plumbing commercial service team on site — /images/commercial-plumber-team.webp"
+              secondaryLabel="Technician at a DFW multi-family property — /images/technician-working.webp"
+            />
           </Reveal>
 
           {/* Copy */}

@@ -167,6 +167,28 @@ export const TRUST_LOGOS_QUERY = defineQuery(
   }`,
 );
 
+export const ABOUT_PAGE_QUERY = defineQuery(
+  `*[_type == "aboutPage" && _id == "aboutPage"][0]{
+    heroEyebrow,
+    heroHeading,
+    heroParagraphs,
+    storyHeading,
+    storyParagraphs,
+    storyPhotoPrimary{ asset, hotspot, crop, alt },
+    storyPhotoSubjectPrimary,
+    storyPhotoSecondary{ asset, hotspot, crop, alt },
+    storyPhotoSubjectSecondary,
+    evolutionHeading,
+    evolutionParagraphs,
+    evolutionPhoto{ asset, hotspot, crop, alt },
+    evolutionPhotoSubject,
+    valuesHeading,
+    values[]{ icon, title, description },
+    linksHeading,
+    links[]{ title, description, href }
+  }`,
+);
+
 export const CONTACT_PAGE_QUERY = defineQuery(
   `*[_type == "contactPage" && _id == "contactPage"][0]{
     heroEyebrow,

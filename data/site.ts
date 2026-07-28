@@ -14,7 +14,13 @@ export interface Site {
   emailHref: string;
   serviceArea: string;
   foundedYear: number;
-  yearsInBusiness: string;
+  /**
+   * OPTIONAL manual override for the displayed years-in-business. When
+   * unset (the default), the value is DERIVED from `foundedYear` at render
+   * time in `getSite()` so it can never quietly age the way the old
+   * hardcoded "27+" did.
+   */
+  yearsInBusiness?: string;
   url: string;
   /** State plumbing licence as shown on the client's own site footer. */
   licenseNumber: string;
@@ -28,9 +34,13 @@ export interface Site {
   postalCode?: string;
 }
 
-/** `Site` plus the city list — the full shape of the Sanity singleton. */
+/**
+ * `Site` plus the city list — the full shape of the Sanity singleton, with
+ * `yearsInBusiness` always resolved (override or derived) by `getSite()`.
+ */
 export interface SiteContent extends Site {
   serviceAreaCities: readonly string[];
+  yearsInBusiness: string;
 }
 
 export const site: Site = {
@@ -43,7 +53,7 @@ export const site: Site = {
   emailHref: "mailto:contact@fredsplumbing.com",
   serviceArea: "Dallas–Fort Worth Metroplex",
   foundedYear: 1996,
-  yearsInBusiness: "27+",
+  // yearsInBusiness deliberately unset — derived from foundedYear.
   /** Placeholder — replace with the production domain before launch. */
   url: "https://www.fredsplumbingdfw.com",
   licenseNumber: "RMP 44890",

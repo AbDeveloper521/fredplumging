@@ -4,6 +4,7 @@ import {
   PUBLISHED_FETCH_OPTIONS,
   type DynamicFetchOptions,
 } from "@/sanity/lib/live";
+import { cacheLife } from "next/cache";
 import { logFallback } from "@/sanity/lib/fallbackLog";
 import { SITE_SETTINGS_QUERY } from "@/sanity/queries";
 import type { SITE_SETTINGS_QUERY_RESULT } from "@/sanity.types";
@@ -16,10 +17,28 @@ import {
 /** Cache tag invalidated by the /api/revalidate webhook. */
 export const SITE_SETTINGS_TAG = "siteSettings";
 
-const FALLBACK: SiteContent = {
-  ...fallbackSite,
-  serviceAreaCities: fallbackCities,
-};
+/**
+ * "30+" derived from the founding year, so the display value can never
+ * quietly age the way the old hardcoded "27+" did. Reading the current
+ * year is only allowed inside a cache scope under Cache Components; the
+ * "days" profile re-derives daily, which is plenty for a value that
+ * changes once a year.
+ */
+async function derivedYears(foundedYear: number): Promise<string> {
+  "use cache";
+  cacheLife("days");
+  return `${new Date().getFullYear() - foundedYear}+`;
+}
+
+async function resolveFallback(): Promise<SiteContent> {
+  return {
+    ...fallbackSite,
+    serviceAreaCities: fallbackCities,
+    yearsInBusiness:
+      fallbackSite.yearsInBusiness ??
+      (await derivedYears(fallbackSite.foundedYear)),
+  };
+}
 
 /**
  * The single seam between the app and Sanity for site settings.
@@ -33,6 +52,7 @@ const FALLBACK: SiteContent = {
 export async function getSite(
   options: DynamicFetchOptions = PUBLISHED_FETCH_OPTIONS,
 ): Promise<SiteContent> {
+  const FALLBACK = await resolveFallback();
   let result: SITE_SETTINGS_QUERY_RESULT;
   try {
     result = await fetchSanityCached(
@@ -69,7 +89,11 @@ export async function getSite(
     emailHref: result.emailHref ?? FALLBACK.emailHref,
     serviceArea: result.serviceArea ?? FALLBACK.serviceArea,
     foundedYear: result.foundedYear ?? FALLBACK.foundedYear,
-    yearsInBusiness: result.yearsInBusiness ?? FALLBACK.yearsInBusiness,
+    // Sanity is a manual OVERRIDE; when empty the value derives from the
+    // founding year (see derivedYears above).
+    yearsInBusiness:
+      result.yearsInBusiness ??
+      (await derivedYears(result.foundedYear ?? FALLBACK.foundedYear)),
     url: result.url ?? FALLBACK.url,
     licenseNumber: result.licenseNumber ?? FALLBACK.licenseNumber,
     streetAddress: result.streetAddress ?? FALLBACK.streetAddress,
