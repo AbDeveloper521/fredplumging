@@ -118,11 +118,16 @@ export function MobileMenu({ open, onClose, navigation, site }: MobileMenuProps)
                           href={group.href}
                           onClick={onClose}
                           aria-current={sectionActive ? "page" : undefined}
-                          className={cn(
-                            "flex min-h-12 flex-1 items-center rounded-xl px-4 py-3 text-[17px] font-semibold transition-colors hover:bg-white/6",
-                            sectionActive ? "bg-white/6 text-white" : "text-white",
-                          )}
+                          className="relative flex min-h-12 flex-1 items-center rounded-xl px-4 py-3 text-[17px] font-semibold text-white transition-colors hover:bg-white/6"
                         >
+                          {/* Section marker: the filled pill is reserved for
+                              the exact current page (child rows below). */}
+                          {sectionActive && (
+                            <span
+                              aria-hidden="true"
+                              className="absolute top-1/2 left-0 h-6 w-0.5 -translate-y-1/2 rounded-full bg-red-500"
+                            />
+                          )}
                           {group.label}
                         </Link>
                         <button
@@ -151,10 +156,15 @@ export function MobileMenu({ open, onClose, navigation, site }: MobileMenuProps)
                           isExpanded ? "grid-rows-[1fr]" : "grid-rows-[0fr]",
                         )}
                       >
-                        <ul
-                          className="overflow-hidden pl-4"
-                          aria-hidden={!isExpanded}
-                        >
+                        {/* All vertical spacing lives inside this
+                            overflow-hidden element so the grid-rows accordion
+                            clips it during the transition instead of letting
+                            it jump at the end. */}
+                        <div className="overflow-hidden">
+                          <ul
+                            className="mt-1 mb-2 ml-3 space-y-0.5 rounded-xl border border-white/8 bg-white/3 p-1.5"
+                            aria-hidden={!isExpanded}
+                          >
                           {group.children.map((child) => {
                             const Icon = child.icon
                               ? navIcons[child.icon]
@@ -173,14 +183,17 @@ export function MobileMenu({ open, onClose, navigation, site }: MobileMenuProps)
                                     childActive ? "page" : undefined
                                   }
                                   className={cn(
-                                    "flex min-h-11 items-start gap-3 rounded-lg px-4 py-2.5 transition-colors hover:bg-white/6",
-                                    childActive && "bg-white/6",
+                                    "flex min-h-11 items-start gap-3 rounded-lg px-3 py-2.5 transition-colors hover:bg-white/6",
+                                    childActive && "bg-white/8",
                                   )}
                                 >
                                   {Icon ? (
                                     <span
                                       aria-hidden="true"
-                                      className="mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-lg bg-navy-800"
+                                      className={cn(
+                                        "mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-lg",
+                                        childActive ? "bg-red-600/15" : "bg-navy-800",
+                                      )}
                                     >
                                       <Icon className="size-4 text-red-500" />
                                     </span>
@@ -211,7 +224,8 @@ export function MobileMenu({ open, onClose, navigation, site }: MobileMenuProps)
                               </li>
                             );
                           })}
-                        </ul>
+                          </ul>
+                        </div>
                       </div>
                     </li>
                   );
