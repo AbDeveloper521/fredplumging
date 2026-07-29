@@ -38,7 +38,7 @@ function key(item: Raw, index: number): string {
   return str(item._key) ?? `section-${index}`;
 }
 
-function photoOf(item: Raw, field: string): CmsPhoto | undefined {
+function photoOf(item: Raw, field: string, aspect?: number): CmsPhoto | undefined {
   const value = item[field];
   return value && typeof value === "object"
     ? // Sections don't know their parent document here, so the skipped-image
@@ -47,6 +47,7 @@ function photoOf(item: Raw, field: string): CmsPhoto | undefined {
         value as { asset?: unknown; alt?: string | null },
         1600,
         `a "${String(item._type ?? "section")}" section → ${field}`,
+        aspect,
       )
     : undefined;
 }
@@ -135,7 +136,9 @@ function toSection(raw: Raw, index: number): ServiceSection | null {
         paragraphs,
         ctaLabel: cta?.label,
         ctaHref: cta?.href,
-        photoPrimary: photoOf(raw, "photoPrimary"),
+        // Cropped square server-side so the CDN honours the editor's hotspot;
+        // the About band shows this photo in a square frame.
+        photoPrimary: photoOf(raw, "photoPrimary", 1),
         photoSubjectPrimary: str(raw.photoSubjectPrimary),
       };
     }

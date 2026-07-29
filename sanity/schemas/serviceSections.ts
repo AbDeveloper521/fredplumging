@@ -267,7 +267,7 @@ export const serviceAbout = defineType({
       name: "photoPrimary",
       title: "Main photo",
       description:
-        "The large photo in the About band, part-way down this page — the big image on the left of the photo collage, behind the red 24/7 badge.",
+        "The large photo in the About band, part-way down this page — behind the red 24/7 badge. It is shown in a square frame: a square photo is ideal, but any shape works. If part of the photo gets cut off, click the image, choose “Edit hotspot”, and drag the circle over the part that must stay visible — the site will keep that part in frame.",
     }),
     defineField({
       name: "photoSubjectPrimary",

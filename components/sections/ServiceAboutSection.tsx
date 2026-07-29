@@ -48,14 +48,14 @@ export function ServiceAboutSection({ section, id }: ServiceAboutSectionProps) {
           {/* Image collage — brand continuity anchor */}
           <Reveal className="relative">
             <div className="relative">
-              <div className="relative aspect-[4/3] overflow-hidden rounded-2xl shadow-(--shadow-card-lg)">
+              <div className="relative aspect-square overflow-hidden rounded-2xl shadow-(--shadow-card-lg)">
                 <CollagePhoto
                   photo={section.photoPrimary}
                   fallbackLabel={
                     section.photoSubjectPrimary ??
                     "A Fred's Plumbing technician on the job"
                   }
-                  sizes="(min-width: 1024px) 50vw, 100vw"
+                  sizes="(min-width: 1320px) 580px, (min-width: 1024px) 46vw, 100vw"
                 />
               </div>
               {/* Red 24/7 Emergency badge */}

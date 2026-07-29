@@ -26,24 +26,29 @@ function assetRefOf(asset: unknown): string | undefined {
  * upload is the bug this guards against. `context` names the document/field
  * in that warning; callers without document context omit it and the asset
  * reference is logged instead.
+ *
+ * `aspect` (width / height) asks the CDN to crop to that shape. Only with a
+ * fixed target shape can `fit("crop")` honour the hotspot the editor set in
+ * Studio — without `aspect` the URL keeps `fit("max")`, which never crops,
+ * so the hotspot cannot apply and the browser centre-crops via CSS instead.
  */
 export function resolvePhoto(
   image: { asset?: unknown; alt?: string | null } | null | undefined,
   width = 1600,
   context?: string,
+  aspect?: number,
 ): CmsPhoto | undefined {
   if (!image?.asset) return undefined;
   if (!image.alt) {
     logImageSkipped({ context, assetRef: assetRefOf(image.asset) });
     return undefined;
   }
+  let url = builder.image(image as SanityImageSource).width(width);
+  url = aspect
+    ? url.height(Math.round(width / aspect)).fit("crop")
+    : url.fit("max");
   return {
-    url: builder
-      .image(image as SanityImageSource)
-      .width(width)
-      .fit("max")
-      .auto("format")
-      .url(),
+    url: url.auto("format").url(),
     alt: image.alt,
   };
 }
