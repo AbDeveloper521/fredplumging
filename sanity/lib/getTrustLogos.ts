@@ -38,7 +38,7 @@ export async function getTrustLogos(
       if (!item.name) continue;
       logos.push({
         name: item.name,
-        photo: resolvePhoto(item.logo, 400, `trust logo "${item.name}" → Logo`),
+        photo: resolvePhoto(item.logo, 800, `trust logo "${item.name}" → Logo`),
         headline: item.headline ?? undefined,
         blurb: item.blurb ?? undefined,
         // Unknown category → dropped, so the UI never renders a pill label

@@ -21,7 +21,7 @@ export const trustLogo = defineType({
       name: "logo",
       title: "Logo image",
       description:
-        "This logo appears in the scrolling trust strip on the homepage, the Compliance section's logo row, and the partner cards on the Partners page. PNG with transparent background works best. Optional — without it the name is shown as styled text.",
+        "This logo appears in the scrolling trust strip on the homepage, the Compliance section's logo row, and the partner cards on the Partners page. Please upload a transparent-background PNG or SVG — logos exported with a baked-in white or dark rectangle show that rectangle inside the strip's white tiles. Optional — without it the name is shown as styled text.",
     }),
     defineField({
       name: "headline",
