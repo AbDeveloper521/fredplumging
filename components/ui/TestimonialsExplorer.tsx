@@ -68,11 +68,13 @@ export function TestimonialsExplorer({ testimonials }: TestimonialsExplorerProps
         ))}
       </ul>
 
-      <p aria-live="polite" className="mt-10 text-center text-sm text-grey-500">
+      {/* Visually hidden but kept: the polite announcement after "Show more"
+          depends on this live region. */}
+      <p aria-live="polite" className="sr-only">
         Showing {visible.length} of {testimonials.length} reviews
       </p>
       {remaining > 0 && (
-        <div className="mt-4 text-center">
+        <div className="mt-10 text-center">
           <Button type="button" variant="secondary" size="lg" onClick={showMore}>
             Show more reviews
           </Button>
