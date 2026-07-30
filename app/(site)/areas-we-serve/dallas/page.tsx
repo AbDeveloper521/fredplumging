@@ -1,18 +1,72 @@
 import type { Metadata } from "next";
-import { PagePlaceholder } from "@/components/layout/PagePlaceholder";
+import { notFound } from "next/navigation";
+import { getCityPage } from "@/sanity/lib/getCityPage";
+import { getSite } from "@/sanity/lib/getSite";
+import { getTestimonials } from "@/sanity/lib/getTestimonials";
+import { getReviewSettings } from "@/sanity/lib/getReviewSettings";
+import { getTrustLogos } from "@/sanity/lib/getTrustLogos";
+import { cityHref } from "@/data/cities";
+import { CityPage } from "@/components/layout/CityPage";
+import { BreadcrumbJsonLd } from "@/components/seo/JsonLd";
 
-export const metadata: Metadata = {
-  title: "Dallas Plumbing Services | Fred's Plumbing",
-  description: "Commercial and multi-family plumbing services in Dallas, TX — emergency response, maintenance, drain, and sewer work.",
-  alternates: { canonical: "/areas-we-serve/dallas" },
-};
+const SLUG = "dallas";
 
-export default function DallasPage() {
+export async function generateMetadata(): Promise<Metadata> {
+  const [content, site] = await Promise.all([getCityPage(SLUG), getSite()]);
+  if (!content) return {};
+
+  const title =
+    content.seoTitle ?? `Plumbing Services in ${content.city}, TX | ${site.name}`;
+  const description = content.seoDescription ?? content.heroIntro;
+  const path = cityHref(SLUG);
+
+  return {
+    title,
+    description,
+    // Relative — resolved to an absolute URL against metadataBase (root layout).
+    alternates: { canonical: path },
+    openGraph: {
+      type: "website",
+      siteName: site.name,
+      title,
+      description,
+      url: path,
+      locale: "en_US",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+    },
+  };
+}
+
+export default async function DallasPage() {
+  const [content, site, testimonials, profile, trustLogos] = await Promise.all([
+    getCityPage(SLUG),
+    getSite(),
+    getTestimonials(),
+    getReviewSettings(),
+    getTrustLogos(),
+  ]);
+  if (!content) notFound();
+
   return (
-    <PagePlaceholder
-      eyebrow="Areas We Serve"
-      title="Dallas"
-      description="Commercial and multi-family plumbing across Dallas and the surrounding communities."
-    />
+    <>
+      <BreadcrumbJsonLd
+        items={[
+          { label: "Home", href: "/" },
+          { label: "Areas We Serve", href: "/areas-we-serve" },
+          { label: content.city, href: cityHref(SLUG) },
+        ]}
+      />
+      <CityPage
+        content={content}
+        site={site}
+        testimonials={testimonials}
+        profile={profile}
+        trustLogos={trustLogos}
+      />
+    </>
   );
 }

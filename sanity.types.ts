@@ -631,6 +631,54 @@ export type ReviewSettings = {
   headline?: string;
 };
 
+export type CityPage = {
+  _id: string;
+  _type: "cityPage";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  city?: string;
+  slug?: Slug;
+  heroHeading?: string;
+  heroIntro?: string;
+  servicesHeading?: string;
+  serviceCards?: Array<{
+    title?: string;
+    description?: string;
+    href?: string;
+    icon?:
+      | "wrench"
+      | "waves"
+      | "cog"
+      | "calendar-check"
+      | "siren"
+      | "building-2"
+      | "shield-check";
+    _type: "card";
+    _key: string;
+  }>;
+  whyChooseHeading?: string;
+  whyChooseBody?: string;
+  reviewsHeading?: string;
+  heritageHeading?: string;
+  heritageParagraphs?: Array<string>;
+  heritagePhoto?: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  };
+  heritagePhotoSubject?: string;
+  communitiesHeading?: string;
+  communitiesBody?: string;
+  communities?: Array<string>;
+  showLogoStrip?: boolean;
+  seoTitle?: string;
+  seoDescription?: string;
+};
+
 export type ContactPage = {
   _id: string;
   _type: "contactPage";
@@ -871,6 +919,7 @@ export type AllSanitySchemaTypes =
   | Faq
   | Navigation
   | ReviewSettings
+  | CityPage
   | ContactPage
   | AboutPage
   | SiteSettings
@@ -1832,6 +1881,50 @@ export type CONTACT_PAGE_QUERY_RESULT = {
 } | null;
 
 // Source: sanity/queries.ts
+// Variable: CITY_PAGE_QUERY
+// Query: *[_type == "cityPage" && slug.current == $slug][0]{    city,    "slug": slug.current,    heroHeading,    heroIntro,    servicesHeading,    serviceCards[]{ _key, title, description, href, icon },    whyChooseHeading,    whyChooseBody,    reviewsHeading,    heritageHeading,    heritageParagraphs,    heritagePhoto{ asset, hotspot, crop, alt },    heritagePhotoSubject,    communitiesHeading,    communitiesBody,    communities,    showLogoStrip,    seoTitle,    seoDescription  }
+export type CITY_PAGE_QUERY_RESULT = {
+  city: string | null;
+  slug: string | null;
+  heroHeading: string | null;
+  heroIntro: string | null;
+  servicesHeading: string | null;
+  serviceCards: Array<{
+    _key: string;
+    title: string | null;
+    description: string | null;
+    href: string | null;
+    icon:
+      | "building-2"
+      | "calendar-check"
+      | "cog"
+      | "shield-check"
+      | "siren"
+      | "waves"
+      | "wrench"
+      | null;
+  }> | null;
+  whyChooseHeading: string | null;
+  whyChooseBody: string | null;
+  reviewsHeading: string | null;
+  heritageHeading: string | null;
+  heritageParagraphs: Array<string> | null;
+  heritagePhoto: {
+    asset: SanityImageAssetReference | null;
+    hotspot: SanityImageHotspot | null;
+    crop: SanityImageCrop | null;
+    alt: string | null;
+  } | null;
+  heritagePhotoSubject: string | null;
+  communitiesHeading: string | null;
+  communitiesBody: string | null;
+  communities: Array<string> | null;
+  showLogoStrip: boolean | null;
+  seoTitle: string | null;
+  seoDescription: string | null;
+} | null;
+
+// Source: sanity/queries.ts
 // Variable: FOOTER_NAVIGATION_QUERY
 // Query: *[_type == "navigation" && _id == "navigation"][0]{    footerColumns[]{      _key,      heading,      links[]{ _key, label, href }    },    legalLinks[]{ _key, label, href }  }
 export type FOOTER_NAVIGATION_QUERY_RESULT = {
@@ -1869,6 +1962,7 @@ declare module "@sanity/client" {
     '*[_type == "trustLogo"] | order(order asc){\n    name,\n    logo{ asset, hotspot, crop, alt },\n    headline,\n    blurb,\n    category,\n    url,\n    verified\n  }': TRUST_LOGOS_QUERY_RESULT;
     '*[_type == "aboutPage" && _id == "aboutPage"][0]{\n    heroEyebrow,\n    heroHeading,\n    heroParagraphs,\n    storyHeading,\n    storyParagraphs,\n    storyPhotoPrimary{ asset, hotspot, crop, alt },\n    storyPhotoSubjectPrimary,\n    storyPhotoSecondary{ asset, hotspot, crop, alt },\n    storyPhotoSubjectSecondary,\n    evolutionHeading,\n    evolutionParagraphs,\n    evolutionPhoto{ asset, hotspot, crop, alt },\n    evolutionPhotoSubject,\n    valuesHeading,\n    values[]{ icon, title, description },\n    linksHeading,\n    links[]{ title, description, href }\n  }': ABOUT_PAGE_QUERY_RESULT;
     '*[_type == "contactPage" && _id == "contactPage"][0]{\n    heroEyebrow,\n    heroHeading,\n    heroIntro,\n    responsePromise,\n    hours[]{ days, hours },\n    emergencyHeading,\n    emergencyBody,\n    faqs[]{ question, answer }\n  }': CONTACT_PAGE_QUERY_RESULT;
+    '*[_type == "cityPage" && slug.current == $slug][0]{\n    city,\n    "slug": slug.current,\n    heroHeading,\n    heroIntro,\n    servicesHeading,\n    serviceCards[]{ _key, title, description, href, icon },\n    whyChooseHeading,\n    whyChooseBody,\n    reviewsHeading,\n    heritageHeading,\n    heritageParagraphs,\n    heritagePhoto{ asset, hotspot, crop, alt },\n    heritagePhotoSubject,\n    communitiesHeading,\n    communitiesBody,\n    communities,\n    showLogoStrip,\n    seoTitle,\n    seoDescription\n  }': CITY_PAGE_QUERY_RESULT;
     '*[_type == "navigation" && _id == "navigation"][0]{\n    footerColumns[]{\n      _key,\n      heading,\n      links[]{ _key, label, href }\n    },\n    legalLinks[]{ _key, label, href }\n  }': FOOTER_NAVIGATION_QUERY_RESULT;
   }
 }

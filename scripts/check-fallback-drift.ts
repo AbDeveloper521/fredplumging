@@ -21,6 +21,7 @@ import { googleReviews } from "../data/googleReviews";
 import { jobPostings } from "../data/jobs";
 import { services } from "../data/services";
 import { industries } from "../data/industries";
+import { cities } from "../data/cities";
 
 // Prefer the app's read token (works in CI); fall back to CLI login auth.
 const client = process.env.SANITY_API_READ_TOKEN
@@ -121,6 +122,11 @@ async function main() {
       name: "jobs (data/jobs.ts)",
       fallback: jobPostings,
       query: `*[_type=="jobPosting"]|order(order asc){title,"slug":slug.current,employmentType,team,shift,openings,summary,responsibilities,requirements,compensationNote,applyEmail,applyUrl,datePosted,validThrough,open}`,
+    },
+    {
+      name: "city pages (data/cities.ts)",
+      fallback: cities,
+      query: `*[_type=="cityPage"]|order(city asc){city,"slug":slug.current,heroHeading,heroIntro,servicesHeading,serviceCards[]{title,description,href,icon},whyChooseHeading,whyChooseBody,reviewsHeading,heritageHeading,heritageParagraphs,heritagePhotoSubject,communitiesHeading,communitiesBody,communities,showLogoStrip}`,
     },
     {
       name: "industries (data/industries.ts)",

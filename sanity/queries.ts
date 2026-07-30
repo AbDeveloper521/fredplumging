@@ -202,6 +202,30 @@ export const CONTACT_PAGE_QUERY = defineQuery(
   }`,
 );
 
+export const CITY_PAGE_QUERY = defineQuery(
+  `*[_type == "cityPage" && slug.current == $slug][0]{
+    city,
+    "slug": slug.current,
+    heroHeading,
+    heroIntro,
+    servicesHeading,
+    serviceCards[]{ _key, title, description, href, icon },
+    whyChooseHeading,
+    whyChooseBody,
+    reviewsHeading,
+    heritageHeading,
+    heritageParagraphs,
+    heritagePhoto{ asset, hotspot, crop, alt },
+    heritagePhotoSubject,
+    communitiesHeading,
+    communitiesBody,
+    communities,
+    showLogoStrip,
+    seoTitle,
+    seoDescription
+  }`,
+);
+
 export const FOOTER_NAVIGATION_QUERY = defineQuery(
   `*[_type == "navigation" && _id == "navigation"][0]{
     footerColumns[]{
