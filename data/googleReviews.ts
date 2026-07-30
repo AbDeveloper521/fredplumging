@@ -5,8 +5,8 @@ import { industries } from "./industries";
  * Fred's Plumbing's Google Business Profile — the identifiers and the
  * aggregate figures shown around the review sections.
  *
- * Verified against the live listing on 28 July 2026:
- *   rating 5.0 · 133 reviews · FID 0x6d28a9a9242e61cb:0x10c8773cb4095848
+ * Verified against the owner's full listing export on 30 July 2026:
+ *   rating 5.0 · 134 reviews · FID 0x6d28a9a9242e61cb:0x10c8773cb4095848
  *
  * As of the reviews phase these constants are the FALLBACK: the site reads via
  * `getReviewSettings()` in `sanity/lib/getReviewSettings.ts`, so the client can
@@ -50,7 +50,7 @@ export interface GoogleReviewProfile {
 
 export const googleReviews: GoogleReviewProfile = {
   rating: 5.0,
-  reviewCount: 133,
+  reviewCount: 134,
   verifiedOn: "July 2026",
   reviewsUrl:
     "https://www.google.com/maps/place/Fred's+Plumbing/data=!4m8!3m7!1s0x6d28a9a9242e61cb:0x10c8773cb4095848!9m1!1b1",

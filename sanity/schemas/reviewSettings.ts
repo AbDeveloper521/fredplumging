@@ -32,9 +32,9 @@ export const reviewSettings = defineType({
       name: "reviewCount",
       title: "Review count",
       description:
-        "The total number of public reviews on the Google listing, e.g. 133. Update it as new reviews come in.",
+        "The total number of public reviews on the Google listing, e.g. 134. Update it as new reviews come in.",
       type: "number",
-      initialValue: 133,
+      initialValue: 134,
       validation: (rule) =>
         rule
           .required()

@@ -59,7 +59,11 @@ function diff(fallback: unknown, published: unknown, path: string, out: Diff[]):
         key === "body" ||
         key === "sections" ||
         key === "seoTitle" ||
-        key === "seoDescription"
+        key === "seoDescription" ||
+        // Stored for a future "Response from the owner" treatment, never
+        // rendered — the hand-created testimonial docs don't carry them.
+        key === "ownerReply" ||
+        key === "ownerReplyDate"
       )
         continue;
       diff(value, (published as Record<string, unknown>)[key], `${path}.${key}`, out);

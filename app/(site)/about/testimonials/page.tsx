@@ -4,8 +4,7 @@ import { getTestimonials } from "@/sanity/lib/getTestimonials";
 import { getReviewSettings } from "@/sanity/lib/getReviewSettings";
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
-import { Reveal } from "@/components/ui/Reveal";
-import { TestimonialCard } from "@/components/ui/TestimonialCard";
+import { TestimonialsExplorer } from "@/components/ui/TestimonialsExplorer";
 import { GoogleRatingBadge } from "@/components/ui/GoogleRatingBadge";
 import { FinalCTASection } from "@/components/sections/FinalCTASection";
 import { BreadcrumbJsonLd } from "@/components/seo/JsonLd";
@@ -13,7 +12,7 @@ import { BreadcrumbJsonLd } from "@/components/seo/JsonLd";
 export const metadata: Metadata = {
   title: "Testimonials | Fred's Plumbing",
   description:
-    "Reviews and testimonials from Dallas–Fort Worth property managers and facilities teams who rely on Fred's Plumbing — rated 5.0 across 133 Google reviews.",
+    "Reviews and testimonials from Dallas–Fort Worth property managers and facilities teams who rely on Fred's Plumbing — rated 5.0 across 134 Google reviews.",
   alternates: { canonical: "/about/testimonials" },
 };
 
@@ -95,19 +94,7 @@ export default async function TestimonialsPage() {
 
       <section aria-label="All reviews" className="bg-white py-16 sm:py-20 lg:py-24">
         <Container>
-          {/* CSS columns handle the very uneven quote lengths (one review is a
-              single line, another a full paragraph) without grid gaps. */}
-          <div className="columns-1 gap-6 md:columns-2 lg:columns-3">
-            {testimonials.map((testimonial, i) => (
-              <Reveal
-                key={testimonial.id}
-                delay={Math.min(i, 5) * 0.05}
-                className="mb-6 break-inside-avoid"
-              >
-                <TestimonialCard testimonial={testimonial} />
-              </Reveal>
-            ))}
-          </div>
+          <TestimonialsExplorer testimonials={testimonials} />
         </Container>
       </section>
 

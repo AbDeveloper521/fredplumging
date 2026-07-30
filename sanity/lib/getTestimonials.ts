@@ -47,6 +47,8 @@ export async function getTestimonials(
           // Unknown slugs are dropped (a typo must not hide the review from
           // every page); an empty result means "untagged", shown everywhere.
           serviceTags: item.serviceTags?.filter(isReviewTag),
+          ownerReply: item.ownerReply ?? undefined,
+          ownerReplyDate: item.ownerReplyDate ?? undefined,
         });
       }
     }

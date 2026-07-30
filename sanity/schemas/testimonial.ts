@@ -98,6 +98,21 @@ export const testimonial = defineType({
       options: { layout: "tags" },
     }),
     defineField({
+      name: "ownerReply",
+      title: "Owner reply",
+      description:
+        "The business's public reply on Google, stored verbatim. Not shown on the site yet — kept so a “Response from the owner” treatment can be added without re-exporting.",
+      type: "text",
+      rows: 3,
+    }),
+    defineField({
+      name: "ownerReplyDate",
+      title: "Owner reply date",
+      description:
+        "When the reply was posted, as captured at export time (Google only exposes a relative date like “3 months ago”).",
+      type: "string",
+    }),
+    defineField({
       name: "verified",
       title: "Verified",
       description:

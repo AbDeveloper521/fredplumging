@@ -76,7 +76,8 @@ export const FAQS_QUERY = defineQuery(
 export const TESTIMONIALS_QUERY = defineQuery(
   `*[_type == "testimonial"] | order(order asc){
     "id": _id, name, role, rating, quote, date, featured,
-    source, reviewerMeta, sourceUrl, serviceTags, verified
+    source, reviewerMeta, sourceUrl, serviceTags, verified,
+    ownerReply, ownerReplyDate
   }`,
 );
 
