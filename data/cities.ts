@@ -131,4 +131,83 @@ export const cities: CityPageContent[] = [
     seoDescription:
       "Multi-family and commercial plumbing in Dallas, TX — 24/7 emergency response, drain and sewer, preventive maintenance, and specialty systems from Fred's Plumbing.",
   },
+  {
+    city: "Fort Worth",
+    slug: "fort-worth",
+    heroHeading: "Plumbing Services in Fort Worth, Texas",
+    heroIntro:
+      "Fred's Plumbing provides professional plumbing solutions for multi-family and commercial properties throughout Fort Worth. Our experienced team delivers reliable service, high-quality workmanship, and efficient repairs that support the daily needs of property managers, owners, and residents across the city.",
+    servicesHeading: "Reliable Plumbing Services in Fort Worth",
+    serviceCards: [
+      {
+        _key: "fort-worth-plumbing",
+        title: "Plumbing",
+        // Opening words were clipped in the owner's reference — "From routine
+        // maintenance" is a reconstruction pending the owner's confirmation.
+        description:
+          "From routine maintenance to full system installations, our team handles all types of plumbing projects for commercial and multi-family buildings across DFW.",
+        href: "/services/plumbing",
+        icon: "wrench",
+      },
+      {
+        _key: "fort-worth-drain-sewer",
+        title: "Drain & Sewer",
+        description:
+          "We provide professional drain cleaning, hydro jetting, and sewer line repair to prevent backups and keep your property's systems flowing smoothly.",
+        href: "/services/drain-sewer",
+        icon: "waves",
+      },
+      {
+        _key: "fort-worth-specialty",
+        title: "Specialty Services",
+        description:
+          "Our expertise extends to boiler, backflow, gas, and advanced diagnostics for complex plumbing challenges.",
+        href: "/services/specialty-services",
+        icon: "cog",
+      },
+      {
+        _key: "fort-worth-maintenance",
+        title: "Maintenance",
+        description:
+          "Prevent costly downtime with scheduled maintenance plans designed to protect your infrastructure and ensure compliance with local codes.",
+        href: "/services/maintenance",
+        icon: "calendar-check",
+      },
+      {
+        _key: "fort-worth-emergency",
+        title: "Emergency Repairs",
+        description:
+          "Available 24/7 for burst pipes, leaks, and urgent repairs, we deliver immediate response when your tenants or facilities need it most.",
+        href: "/services/emergency-plumbing",
+        icon: "siren",
+      },
+    ],
+    whyChooseHeading: "Why Choose Us in Fort Worth",
+    whyChooseBody:
+      "Property managers throughout Fort Worth trust Fred's Plumbing because we deliver fast service, clear communication, and long-lasting results. Our team has extensive experience with the plumbing needs of large buildings and uses advanced technology to ensure accurate diagnostics and efficient repairs. We focus on protecting your property, reducing downtime, and maintaining a safe environment for your residents.",
+    reviewsHeading: "What Our Clients Say",
+    heritageHeading:
+      "Serving Fort Worth with Quality and Integrity Since 1996",
+    heritageParagraphs: [
+      "Fred's Plumbing has delivered trusted plumbing solutions to the Fort Worth community for nearly thirty years. Our team understands the unique challenges of managing large-scale plumbing systems in high-occupancy properties and brings the knowledge needed to resolve issues quickly and correctly.",
+      "We are committed to providing service that is safe, efficient, and built to last. Whether you need emergency repairs, preventive maintenance, or complex system support, we are here to serve your property with professionalism and care.",
+    ],
+    heritagePhotoSubject:
+      "A Fred's Plumbing technician at work on a Fort Worth multi-family property",
+    communitiesHeading:
+      "Proudly Serving Fort Worth and Surrounding Communities",
+    communitiesBody:
+      "Our services extend throughout Fort Worth and into nearby areas including Arlington, North Richland Hills, Haltom City, Mansfield, Benbrook, and other surrounding neighborhoods. Wherever your property is located, our team is ready to assist with dependable plumbing service.",
+    communities: [
+      "Arlington",
+      "North Richland Hills",
+      "Haltom City",
+      "Mansfield",
+      "Benbrook",
+    ],
+    showLogoStrip: true,
+    seoTitle: "Plumbing Services in Fort Worth, TX | Fred's Plumbing",
+    seoDescription:
+      "Multi-family and commercial plumbing in Fort Worth, TX — 24/7 emergency repairs, drain and sewer service, preventive maintenance, and specialty systems from Fred's Plumbing.",
+  },
 ];
