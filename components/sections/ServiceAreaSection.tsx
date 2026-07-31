@@ -3,9 +3,10 @@ import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
+import { homePage, type HomeServiceAreaContent } from "@/data/homePage";
 import type { SiteContent } from "@/data/site";
 
-/** Stylized, decorative DFW coverage map â€” replaces a heavy embedded map. */
+/** Stylized, decorative DFW coverage map — replaces a heavy embedded map. */
 function DfwMap() {
   return (
     <svg
@@ -68,7 +69,13 @@ function DfwMap() {
   );
 }
 
-export function ServiceAreaSection({ site }: { site: SiteContent }) {
+export function ServiceAreaSection({
+  site,
+  content = homePage.serviceArea,
+}: {
+  site: SiteContent;
+  content?: HomeServiceAreaContent;
+}) {
   return (
     <section
       aria-labelledby="area-heading"
@@ -79,9 +86,9 @@ export function ServiceAreaSection({ site }: { site: SiteContent }) {
           <Reveal>
             <SectionHeading
               titleId="area-heading"
-              eyebrow="Where We Work"
-              title="Proudly Serving the Dallasâ€“Fort Worth Metroplex"
-              description="Our commercial plumbing team supports properties across Dallas, Fort Worth, and surrounding communities."
+              eyebrow={content.eyebrow}
+              title={content.heading}
+              description={content.description}
             />
           </Reveal>
 
@@ -101,9 +108,7 @@ export function ServiceAreaSection({ site }: { site: SiteContent }) {
           <Reveal delay={0.18}>
             <div className="mt-9 rounded-xl border-l-4 border-red-600 bg-offwhite p-5">
               <p className="text-[15px] font-medium text-grey-700">
-                Not sure whether we serve your area? We cover the entire
-                Metroplex and take on properties in surrounding communities
-                case by case.
+                {content.calloutBody}
               </p>
               <div className="mt-4">
                 <Button href="/service-areas" variant="dark" withArrow>
@@ -133,7 +138,7 @@ export function ServiceAreaSection({ site }: { site: SiteContent }) {
               </div>
               <DfwMap />
               <p className="text-center text-xs font-medium text-white/40">
-                Stylized coverage illustration â€” swap for /images/dfw-service-area.webp
+                Stylized coverage illustration — swap for /images/dfw-service-area.webp
               </p>
             </div>
           </div>

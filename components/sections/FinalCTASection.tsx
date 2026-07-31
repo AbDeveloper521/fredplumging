@@ -4,9 +4,24 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
 import { QuoteRequestForm } from "@/components/forms/QuoteRequestForm";
+import { homePage, type HomeFinalCtaContent } from "@/data/homePage";
 import type { SiteContent } from "@/data/site";
 
-export function FinalCTASection({ site }: { site: SiteContent }) {
+/**
+ * Also rendered (with the default copy) on /about, /about/partners,
+ * /about/testimonials, and the city pages — `content` defaults to the
+ * homepage fallback so those call sites are unaffected by the CMS wiring.
+ */
+export function FinalCTASection({
+  site,
+  content = homePage.finalCta,
+}: {
+  site: SiteContent;
+  content?: HomeFinalCtaContent;
+}) {
+  // "{phone}" marks where the clickable phone number goes.
+  const [reassuranceBefore, reassuranceAfter] =
+    content.reassurance.split("{phone}");
   return (
     <section
       aria-labelledby="finalcta-heading"
@@ -33,9 +48,9 @@ export function FinalCTASection({ site }: { site: SiteContent }) {
           <Reveal>
             <SectionHeading
               titleId="finalcta-heading"
-              eyebrow="Let's Solve the Problem"
-              title="Schedule Commercial Plumbing Service Today"
-              description="Tell us about your property and the plumbing support you need. Our team will contact you to discuss the next steps."
+              eyebrow={content.eyebrow}
+              title={content.heading}
+              description={content.description}
               theme="dark"
             />
           </Reveal>
@@ -57,14 +72,18 @@ export function FinalCTASection({ site }: { site: SiteContent }) {
                 <Phone aria-hidden="true" className="size-5 text-white" />
               </span>
               <p className="text-[15px] leading-relaxed text-grey-300">
-                Prefer to talk it through? Our office answers around the clock —{" "}
-                <a
-                  href={site.phoneHref}
-                  className="font-bold text-white underline-offset-4 hover:underline"
-                >
-                  {site.phone}
-                </a>
-                , 24 hours a day, 7 days a week.
+                {reassuranceBefore}
+                {reassuranceAfter !== undefined && (
+                  <>
+                    <a
+                      href={site.phoneHref}
+                      className="font-bold text-white underline-offset-4 hover:underline"
+                    >
+                      {site.phone}
+                    </a>
+                    {reassuranceAfter}
+                  </>
+                )}
               </p>
             </div>
           </Reveal>

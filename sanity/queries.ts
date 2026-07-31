@@ -168,6 +168,83 @@ export const TRUST_LOGOS_QUERY = defineQuery(
   }`,
 );
 
+export const HOME_PAGE_QUERY = defineQuery(
+  `*[_type == "homePage" && _id == "homePage"][0]{
+    hero{
+      eyebrow,
+      headingBefore,
+      headingHighlight,
+      headingAfter,
+      subcopy,
+      trustIndicators[]{ icon, label },
+      experienceBadgeLabel
+    },
+    about{
+      eyebrow,
+      heading,
+      description,
+      highlights,
+      badgeSubtitle,
+      metrics[]{ icon, value, label },
+      primaryPhoto{ asset, hotspot, crop, alt },
+      primaryPhotoSubject,
+      secondaryPhoto{ asset, hotspot, crop, alt },
+      secondaryPhotoSubject
+    },
+    emergency{
+      eyebrow,
+      heading,
+      body,
+      benefits[]{ icon, label },
+      photo{ asset, hotspot, crop, alt },
+      photoSubject,
+      photoCaption
+    },
+    whyChooseUs{
+      eyebrow,
+      heading,
+      description,
+      features[]{ icon, title, description },
+      photo{ asset, hotspot, crop, alt },
+      photoSubject,
+      photoCaption
+    },
+    process{
+      eyebrow,
+      heading,
+      steps[]{ icon, title, description }
+    },
+    compliance{
+      eyebrow,
+      heading,
+      description,
+      items
+    },
+    caseStudy{
+      badgeLabel,
+      eyebrow,
+      heading,
+      storyBlocks[]{ icon, label, copy },
+      photo{ asset, hotspot, crop, alt },
+      photoSubject,
+      photoCardTitle,
+      photoCardSubtitle
+    },
+    serviceArea{
+      eyebrow,
+      heading,
+      description,
+      calloutBody
+    },
+    finalCta{
+      eyebrow,
+      heading,
+      description,
+      reassurance
+    }
+  }`,
+);
+
 export const ABOUT_PAGE_QUERY = defineQuery(
   `*[_type == "aboutPage" && _id == "aboutPage"][0]{
     heroEyebrow,

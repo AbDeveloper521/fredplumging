@@ -1,7 +1,9 @@
-import { Award, Clock, MapPin, ShieldCheck } from "lucide-react";
+import { Award } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
 import { EmergencyContactForm } from "@/components/forms/EmergencyContactForm";
+import { navIcons } from "@/components/layout/navIcons";
+import { homePage, type HomeHeroContent } from "@/data/homePage";
 import type { SiteContent } from "@/data/site";
 
 /** CSS-animated wrapper — hero entrances must not wait on JS hydration. */
@@ -24,12 +26,17 @@ function Rise({
   );
 }
 
-export function HeroSection({ site }: { site: SiteContent }) {
-  const trustIndicators = [
-    { icon: Clock, label: "24/7 Emergency Response" },
-    { icon: ShieldCheck, label: "Licensed & Insured" },
-    { icon: MapPin, label: `Serving DFW Since ${site.foundedYear}` },
-  ];
+export function HeroSection({
+  site,
+  content = homePage.hero,
+}: {
+  site: SiteContent;
+  content?: HomeHeroContent;
+}) {
+  const trustIndicators = content.trustIndicators.map((item) => ({
+    icon: navIcons[item.icon],
+    label: item.label.replace("{foundedYear}", String(site.foundedYear)),
+  }));
 
   return (
     <section
@@ -63,7 +70,7 @@ export function HeroSection({ site }: { site: SiteContent }) {
           <Rise>
             <p className="flex items-center gap-3 text-[13px] font-bold tracking-[0.14em] text-red-500 uppercase">
               <span aria-hidden="true" className="h-px w-8 bg-red-500" />
-              Commercial &amp; Multi-Family Plumbing Experts
+              {content.eyebrow}
             </p>
           </Rise>
 
@@ -72,17 +79,20 @@ export function HeroSection({ site }: { site: SiteContent }) {
               id="hero-heading"
               className="mt-6 text-[38px] leading-[1.08] font-extrabold tracking-tight text-balance text-white sm:text-[48px] lg:text-[54px] xl:text-[60px] lg:leading-[1.05]"
             >
-              Reliable Plumbing Solutions for{" "}
-              <span className="text-red-500">Dallas–Fort Worth</span> Properties
+              {content.headingBefore}
+              {content.headingHighlight && (
+                <>
+                  {" "}
+                  <span className="text-red-500">{content.headingHighlight}</span>
+                </>
+              )}
+              {content.headingAfter && <> {content.headingAfter}</>}
             </h1>
           </Rise>
 
           <Rise delay={0.16}>
             <p className="mt-6 max-w-xl text-[17px] leading-relaxed text-grey-300 sm:text-lg">
-              Fred&rsquo;s Plumbing provides responsive emergency repairs,
-              preventive maintenance, drain and sewer services, specialty
-              plumbing, and property-wide solutions for commercial and
-              multi-family facilities across the DFW Metroplex.
+              {content.subcopy}
             </p>
           </Rise>
 
@@ -126,7 +136,7 @@ export function HeroSection({ site }: { site: SiteContent }) {
                   {site.yearsInBusiness} Years
                 </p>
                 <p className="mt-1 text-[13px] font-medium text-grey-300">
-                  Serving DFW property teams
+                  {content.experienceBadgeLabel}
                 </p>
               </div>
             </div>

@@ -1,53 +1,21 @@
-import {
-  PhoneCall,
-  SearchCheck,
-  Wrench,
-  FileCheck2,
-  type LucideIcon,
-} from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Reveal } from "@/components/ui/Reveal";
+import { navIcons } from "@/components/layout/navIcons";
+import { homePage, type HomeProcessContent } from "@/data/homePage";
 
-interface Step {
-  number: string;
-  title: string;
-  description: string;
-  icon: LucideIcon;
-}
-
-const steps: Step[] = [
-  {
-    number: "01",
-    title: "Tell Us What You Need",
-    description:
-      "Call or send a request — we gather the details and prioritize urgent issues immediately.",
-    icon: PhoneCall,
-  },
-  {
-    number: "02",
-    title: "We Assess the Situation",
-    description:
-      "A technician evaluates the problem on site and walks you through the recommended fix.",
-    icon: SearchCheck,
-  },
-  {
-    number: "03",
-    title: "Our Team Completes the Work",
-    description:
-      "Licensed professionals complete the repair or project with minimal disruption to your property.",
-    icon: Wrench,
-  },
-  {
-    number: "04",
-    title: "You Receive Clear Follow-Up",
-    description:
-      "You get documentation of the completed work plus any recommendations for prevention.",
-    icon: FileCheck2,
-  },
-];
-
-export function ProcessSection() {
+export function ProcessSection({
+  content = homePage.process,
+}: {
+  content?: HomeProcessContent;
+}) {
+  // Step numbers derive from position — reordering in the Studio renumbers.
+  const steps = content.steps.map((step, i) => ({
+    number: String(i + 1).padStart(2, "0"),
+    title: step.title,
+    description: step.description,
+    icon: navIcons[step.icon],
+  }));
   return (
     <section
       aria-labelledby="process-heading"
@@ -57,8 +25,8 @@ export function ProcessSection() {
         <Reveal>
           <SectionHeading
             titleId="process-heading"
-            eyebrow="How It Works"
-            title="A Straightforward Service Process"
+            eyebrow={content.eyebrow}
+            title={content.heading}
             align="center"
           />
         </Reveal>

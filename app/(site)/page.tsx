@@ -1,4 +1,5 @@
 import { getSite } from "@/sanity/lib/getSite";
+import { getHomePage } from "@/sanity/lib/getHomePage";
 import { getFaqs } from "@/sanity/lib/getFaqs";
 import { getTestimonials } from "@/sanity/lib/getTestimonials";
 import { getReviewSettings } from "@/sanity/lib/getReviewSettings";
@@ -21,30 +22,39 @@ import { FAQSection } from "@/components/sections/FAQSection";
 import { FinalCTASection } from "@/components/sections/FinalCTASection";
 
 export default async function HomePage() {
-  const [site, faqs, testimonials, profile, services, industries, trustLogos] =
-    await Promise.all([
-      getSite(),
-      getFaqs(),
-      getTestimonials(),
-      getReviewSettings(),
-      getServices(),
-      getIndustries(),
-      getTrustLogos(),
-    ]);
+  const [
+    site,
+    home,
+    faqs,
+    testimonials,
+    profile,
+    services,
+    industries,
+    trustLogos,
+  ] = await Promise.all([
+    getSite(),
+    getHomePage(),
+    getFaqs(),
+    getTestimonials(),
+    getReviewSettings(),
+    getServices(),
+    getIndustries(),
+    getTrustLogos(),
+  ]);
 
   // Empty collections hide their sections (a successful fetch returning zero
   // documents means the client removed the content on purpose).
   return (
     <>
-      <HeroSection site={site} />
+      <HeroSection site={site} content={home.hero} />
       {trustLogos.length > 0 && <TrustBar logos={trustLogos} />}
-      <AboutSection site={site} />
+      <AboutSection site={site} content={home.about} />
       {services.length > 0 && <ServicesSection services={services} />}
-      <EmergencySection site={site} />
+      <EmergencySection site={site} content={home.emergency} />
       {industries.length > 0 && <IndustriesSection industries={industries} />}
-      <WhyChooseUsSection />
-      <ProcessSection />
-      <ComplianceSection logos={trustLogos} />
+      <WhyChooseUsSection site={site} content={home.whyChooseUs} />
+      <ProcessSection content={home.process} />
+      <ComplianceSection logos={trustLogos} content={home.compliance} />
       {testimonials.length > 0 && (
         <TestimonialsSection
           testimonials={testimonials}
@@ -52,10 +62,10 @@ export default async function HomePage() {
           profile={profile}
         />
       )}
-      <CaseStudySection />
-      <ServiceAreaSection site={site} />
+      <CaseStudySection content={home.caseStudy} />
+      <ServiceAreaSection site={site} content={home.serviceArea} />
       {faqs.length > 0 && <FAQSection faqs={faqs} />}
-      <FinalCTASection site={site} />
+      <FinalCTASection site={site} content={home.finalCta} />
     </>
   );
 }

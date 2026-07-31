@@ -1,18 +1,24 @@
-import { MapPin, MessageSquare, Phone, Siren, Truck, Wrench } from "lucide-react";
+import Image from "next/image";
+import { Phone, Siren } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
 import { ImagePlaceholder } from "@/components/ui/ImagePlaceholder";
+import { navIcons } from "@/components/layout/navIcons";
+import { homePage, type HomeEmergencyContent } from "@/data/homePage";
 import type { SiteContent } from "@/data/site";
 
-const benefits = [
-  { icon: Truck, label: "Fast dispatch" },
-  { icon: MessageSquare, label: "Clear communication" },
-  { icon: Wrench, label: "Commercial-ready service" },
-  { icon: MapPin, label: "DFW-wide coverage" },
-];
-
-export function EmergencySection({ site }: { site: SiteContent }) {
+export function EmergencySection({
+  site,
+  content = homePage.emergency,
+}: {
+  site: SiteContent;
+  content?: HomeEmergencyContent;
+}) {
+  const benefits = content.benefits.map((item) => ({
+    icon: navIcons[item.icon],
+    label: item.label,
+  }));
   return (
     <section
       aria-labelledby="emergency-heading"
@@ -37,7 +43,7 @@ export function EmergencySection({ site }: { site: SiteContent }) {
                 aria-hidden="true"
                 className="availability-dot size-2 rounded-full bg-red-500"
               />
-              Available Day and Night
+              {content.eyebrow}
             </p>
           </Reveal>
 
@@ -46,15 +52,13 @@ export function EmergencySection({ site }: { site: SiteContent }) {
               id="emergency-heading"
               className="mt-5 text-[32px] leading-[1.1] font-extrabold tracking-tight text-balance text-white sm:text-4xl lg:text-[46px]"
             >
-              Plumbing Emergency? Our Team Is Ready 24/7.
+              {content.heading}
             </h2>
           </Reveal>
 
           <Reveal delay={0.14}>
             <p className="mt-5 max-w-xl text-[17px] leading-relaxed text-grey-300">
-              Get fast support for active leaks, sewer backups, burst pipes,
-              overflowing fixtures, and other urgent commercial plumbing
-              problems.
+              {content.body}
             </p>
           </Reveal>
 
@@ -106,12 +110,22 @@ export function EmergencySection({ site }: { site: SiteContent }) {
         {/* Visual */}
         <Reveal delay={0.15}>
           <div className="relative">
-            <div className="aspect-[4/5] max-h-[540px] w-full overflow-hidden rounded-2xl border border-white/10 shadow-(--shadow-card-lg)">
-              <ImagePlaceholder
-                label="Emergency technician and service vehicle at night — /images/service-emergency.webp"
-                icon={Siren}
-                tone="steel"
-              />
+            <div className="relative aspect-[4/5] max-h-[540px] w-full overflow-hidden rounded-2xl border border-white/10 shadow-(--shadow-card-lg)">
+              {content.photo ? (
+                <Image
+                  src={content.photo.url}
+                  alt={content.photo.alt}
+                  fill
+                  sizes="(min-width: 1024px) 45vw, 100vw"
+                  className="object-cover"
+                />
+              ) : (
+                <ImagePlaceholder
+                  label={content.photoSubject}
+                  icon={Siren}
+                  tone="steel"
+                />
+              )}
             </div>
             <div className="absolute -bottom-5 left-6 flex items-center gap-3 rounded-xl bg-white px-5 py-3.5 shadow-(--shadow-card-lg)">
               <span
@@ -119,7 +133,7 @@ export function EmergencySection({ site }: { site: SiteContent }) {
                 className="availability-dot size-2.5 rounded-full bg-red-600"
               />
               <p className="text-sm font-bold text-navy-900">
-                Crews on call across DFW right now
+                {content.photoCaption}
               </p>
             </div>
           </div>

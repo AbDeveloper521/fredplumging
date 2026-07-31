@@ -1,19 +1,15 @@
 import Image from "next/image";
-import { Award, CheckCircle2, Clock, MapPin, ShieldCheck, Users } from "lucide-react";
+import { CheckCircle2, Users } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
 import { StatCard } from "@/components/ui/StatCard";
 import { ImagePlaceholder } from "@/components/ui/ImagePlaceholder";
+import { navIcons } from "@/components/layout/navIcons";
+import { homePage, type HomeAboutContent } from "@/data/homePage";
 import type { CmsPhoto } from "@/data/services";
 import type { SiteContent } from "@/data/site";
-
-const highlights = [
-  "Commercial and multi-family specialists",
-  "Responsive scheduling and emergency support",
-  "Clear communication from start to finish",
-];
 
 /**
  * The brand photo collage: large photo, overlapping small photo, red badge,
@@ -90,13 +86,20 @@ export function AboutCollage({
   );
 }
 
-export function AboutSection({ site }: { site: SiteContent }) {
-  const metrics = [
-    { value: site.yearsInBusiness, label: "Years of Experience", icon: Award },
-    { value: "24/7", label: "Emergency Availability", icon: Clock },
-    { value: "DFW", label: "Metroplex-Wide Coverage", icon: MapPin },
-    { value: "100%", label: "Licensed and Insured", icon: ShieldCheck },
-  ];
+export function AboutSection({
+  site,
+  content = homePage.about,
+}: {
+  site: SiteContent;
+  content?: HomeAboutContent;
+}) {
+  // An unset metric value means "the years-in-business figure" — derived
+  // from Site Settings so it can never quietly go stale.
+  const metrics = content.metrics.map((metric) => ({
+    value: metric.value ?? site.yearsInBusiness,
+    label: metric.label,
+    icon: navIcons[metric.icon],
+  }));
 
   return (
     <section aria-labelledby="about-heading" className="bg-offwhite py-16 sm:py-24 lg:py-28">
@@ -106,9 +109,11 @@ export function AboutSection({ site }: { site: SiteContent }) {
           <Reveal className="relative">
             <AboutCollage
               badgeTitle={`Since ${site.foundedYear}`}
-              badgeSubtitle="Family-owned & operated"
-              primaryLabel="Fred's Plumbing commercial service team on site — /images/commercial-plumber-team.webp"
-              secondaryLabel="Technician at a DFW multi-family property — /images/technician-working.webp"
+              badgeSubtitle={content.badgeSubtitle}
+              primaryPhoto={content.primaryPhoto}
+              primaryLabel={content.primaryPhotoSubject}
+              secondaryPhoto={content.secondaryPhoto}
+              secondaryLabel={content.secondaryPhotoSubject}
             />
           </Reveal>
 
@@ -117,15 +122,15 @@ export function AboutSection({ site }: { site: SiteContent }) {
             <Reveal>
               <SectionHeading
                 titleId="about-heading"
-                eyebrow="Built on Experience. Trusted Across DFW."
-                title="Commercial Plumbing Expertise Since 1996"
-                description="Fred's Plumbing has supported apartment communities, property managers, commercial buildings, and multi-family facilities throughout the Dallas–Fort Worth Metroplex for more than two decades. Our team combines responsive service, reliable communication, and practical plumbing solutions designed to reduce disruption and protect your property."
+                eyebrow={content.eyebrow}
+                title={content.heading}
+                description={content.description}
               />
             </Reveal>
 
             <Reveal delay={0.1}>
               <ul className="mt-8 space-y-3.5">
-                {highlights.map((item) => (
+                {content.highlights.map((item) => (
                   <li key={item} className="flex items-center gap-3 text-[16px] font-semibold text-navy-900">
                     <CheckCircle2 aria-hidden="true" className="size-5 shrink-0 text-red-600" />
                     {item}

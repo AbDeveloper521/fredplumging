@@ -1,29 +1,23 @@
-import { AlertTriangle, Building2, Lightbulb, TrendingUp } from "lucide-react";
+import Image from "next/image";
+import { Building2 } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Badge } from "@/components/ui/Badge";
 import { Reveal } from "@/components/ui/Reveal";
 import { ImagePlaceholder } from "@/components/ui/ImagePlaceholder";
+import { navIcons } from "@/components/layout/navIcons";
+import { homePage, type HomeCaseStudyContent } from "@/data/homePage";
 
-const storyBlocks = [
-  {
-    icon: AlertTriangle,
-    label: "Problem",
-    copy: "Recurring sewer backups were disrupting residents and creating repeated emergency calls.",
-  },
-  {
-    icon: Lightbulb,
-    label: "Solution",
-    copy: "Our team inspected the system, identified the source, completed the required repair, and created a preventive maintenance schedule.",
-  },
-  {
-    icon: TrendingUp,
-    label: "Outcome",
-    copy: "Reduced repeat issues, improved response planning, and clearer maintenance visibility for the property team.",
-  },
-];
-
-export function CaseStudySection() {
+export function CaseStudySection({
+  content = homePage.caseStudy,
+}: {
+  content?: HomeCaseStudyContent;
+}) {
+  const storyBlocks = content.storyBlocks.map((block) => ({
+    icon: navIcons[block.icon],
+    label: block.label,
+    copy: block.copy,
+  }));
   return (
     <section
       aria-labelledby="casestudy-heading"
@@ -32,15 +26,24 @@ export function CaseStudySection() {
       <Container className="grid grid-cols-1 items-center gap-14 lg:grid-cols-2 lg:gap-20">
         <Reveal className="order-2 lg:order-1">
           <div className="relative">
-            <div className="aspect-[4/3] overflow-hidden rounded-2xl shadow-(--shadow-card-lg)">
-              <ImagePlaceholder
-                label="Multi-family property served by Fred's Plumbing — /images/multifamily-property.webp"
-                icon={Building2}
-              />
+            <div className="relative aspect-[4/3] overflow-hidden rounded-2xl shadow-(--shadow-card-lg)">
+              {content.photo ? (
+                <Image
+                  src={content.photo.url}
+                  alt={content.photo.alt}
+                  fill
+                  sizes="(min-width: 1024px) 50vw, 100vw"
+                  className="object-cover"
+                />
+              ) : (
+                <ImagePlaceholder label={content.photoSubject} icon={Building2} />
+              )}
             </div>
             <div className="absolute -bottom-5 right-6 rounded-xl bg-navy-900 px-5 py-3.5 text-white shadow-(--shadow-card-lg)">
-              <p className="text-sm font-bold">240-unit apartment community</p>
-              <p className="mt-0.5 text-xs text-grey-300">Dallas, TX</p>
+              <p className="text-sm font-bold">{content.photoCardTitle}</p>
+              <p className="mt-0.5 text-xs text-grey-300">
+                {content.photoCardSubtitle}
+              </p>
             </div>
           </div>
         </Reveal>
@@ -48,12 +51,12 @@ export function CaseStudySection() {
         <div className="order-1 lg:order-2">
           <Reveal>
             <Badge variant="soft" className="mb-5">
-              Representative service scenario
+              {content.badgeLabel}
             </Badge>
             <SectionHeading
               titleId="casestudy-heading"
-              eyebrow="Proven in the Field"
-              title="Responsive Plumbing Support That Protects Your Property"
+              eyebrow={content.eyebrow}
+              title={content.heading}
             />
           </Reveal>
 

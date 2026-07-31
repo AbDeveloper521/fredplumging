@@ -772,6 +772,269 @@ export type AboutPage = {
   }>;
 };
 
+export type HomePage = {
+  _id: string;
+  _type: "homePage";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  hero?: {
+    headingBefore?: string;
+    headingHighlight?: string;
+    headingAfter?: string;
+    subcopy?: string;
+    eyebrow?: string;
+    trustIndicators?: Array<{
+      icon?:
+        | "clock"
+        | "shield-check"
+        | "map-pin"
+        | "truck"
+        | "message-square"
+        | "wrench"
+        | "building-2"
+        | "clipboard-check"
+        | "calendar-check"
+        | "phone-call"
+        | "search-check"
+        | "file-check-2"
+        | "alert-triangle"
+        | "lightbulb"
+        | "trending-up"
+        | "award"
+        | "siren"
+        | "droplets"
+        | "waves";
+      label?: string;
+      _type: "item";
+      _key: string;
+    }>;
+    experienceBadgeLabel?: string;
+  };
+  about?: {
+    heading?: string;
+    eyebrow?: string;
+    description?: string;
+    highlights?: Array<string>;
+    badgeSubtitle?: string;
+    metrics?: Array<{
+      icon?:
+        | "clock"
+        | "shield-check"
+        | "map-pin"
+        | "truck"
+        | "message-square"
+        | "wrench"
+        | "building-2"
+        | "clipboard-check"
+        | "calendar-check"
+        | "phone-call"
+        | "search-check"
+        | "file-check-2"
+        | "alert-triangle"
+        | "lightbulb"
+        | "trending-up"
+        | "award"
+        | "siren"
+        | "droplets"
+        | "waves";
+      value?: string;
+      label?: string;
+      _type: "metric";
+      _key: string;
+    }>;
+    primaryPhoto?: {
+      asset?: SanityImageAssetReference;
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt?: string;
+      _type: "image";
+    };
+    primaryPhotoSubject?: string;
+    secondaryPhoto?: {
+      asset?: SanityImageAssetReference;
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt?: string;
+      _type: "image";
+    };
+    secondaryPhotoSubject?: string;
+  };
+  emergency?: {
+    heading?: string;
+    eyebrow?: string;
+    body?: string;
+    benefits?: Array<{
+      icon?:
+        | "clock"
+        | "shield-check"
+        | "map-pin"
+        | "truck"
+        | "message-square"
+        | "wrench"
+        | "building-2"
+        | "clipboard-check"
+        | "calendar-check"
+        | "phone-call"
+        | "search-check"
+        | "file-check-2"
+        | "alert-triangle"
+        | "lightbulb"
+        | "trending-up"
+        | "award"
+        | "siren"
+        | "droplets"
+        | "waves";
+      label?: string;
+      _type: "item";
+      _key: string;
+    }>;
+    photo?: {
+      asset?: SanityImageAssetReference;
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt?: string;
+      _type: "image";
+    };
+    photoSubject?: string;
+    photoCaption?: string;
+  };
+  whyChooseUs?: {
+    heading?: string;
+    eyebrow?: string;
+    description?: string;
+    features?: Array<{
+      icon?:
+        | "clock"
+        | "shield-check"
+        | "map-pin"
+        | "truck"
+        | "message-square"
+        | "wrench"
+        | "building-2"
+        | "clipboard-check"
+        | "calendar-check"
+        | "phone-call"
+        | "search-check"
+        | "file-check-2"
+        | "alert-triangle"
+        | "lightbulb"
+        | "trending-up"
+        | "award"
+        | "siren"
+        | "droplets"
+        | "waves";
+      title?: string;
+      description?: string;
+      _type: "item";
+      _key: string;
+    }>;
+    photo?: {
+      asset?: SanityImageAssetReference;
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt?: string;
+      _type: "image";
+    };
+    photoSubject?: string;
+    photoCaption?: string;
+  };
+  process?: {
+    heading?: string;
+    eyebrow?: string;
+    steps?: Array<{
+      icon?:
+        | "clock"
+        | "shield-check"
+        | "map-pin"
+        | "truck"
+        | "message-square"
+        | "wrench"
+        | "building-2"
+        | "clipboard-check"
+        | "calendar-check"
+        | "phone-call"
+        | "search-check"
+        | "file-check-2"
+        | "alert-triangle"
+        | "lightbulb"
+        | "trending-up"
+        | "award"
+        | "siren"
+        | "droplets"
+        | "waves";
+      title?: string;
+      description?: string;
+      _type: "item";
+      _key: string;
+    }>;
+  };
+  compliance?: {
+    heading?: string;
+    eyebrow?: string;
+    description?: string;
+    items?: Array<string>;
+  };
+  caseStudy?: {
+    heading?: string;
+    eyebrow?: string;
+    badgeLabel?: string;
+    storyBlocks?: Array<{
+      icon?:
+        | "clock"
+        | "shield-check"
+        | "map-pin"
+        | "truck"
+        | "message-square"
+        | "wrench"
+        | "building-2"
+        | "clipboard-check"
+        | "calendar-check"
+        | "phone-call"
+        | "search-check"
+        | "file-check-2"
+        | "alert-triangle"
+        | "lightbulb"
+        | "trending-up"
+        | "award"
+        | "siren"
+        | "droplets"
+        | "waves";
+      label?: string;
+      copy?: string;
+      _type: "storyBlock";
+      _key: string;
+    }>;
+    photo?: {
+      asset?: SanityImageAssetReference;
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt?: string;
+      _type: "image";
+    };
+    photoSubject?: string;
+    photoCardTitle?: string;
+    photoCardSubtitle?: string;
+  };
+  serviceArea?: {
+    heading?: string;
+    eyebrow?: string;
+    description?: string;
+    calloutBody?: string;
+  };
+  finalCta?: {
+    heading?: string;
+    eyebrow?: string;
+    description?: string;
+    reassurance?: string;
+  };
+};
+
 export type SiteSettings = {
   _id: string;
   _type: "siteSettings";
@@ -924,6 +1187,7 @@ export type AllSanitySchemaTypes =
   | CityPage
   | ContactPage
   | AboutPage
+  | HomePage
   | SiteSettings
   | SanityImagePaletteSwatch
   | SanityImagePalette
@@ -1811,6 +2075,251 @@ export type TRUST_LOGOS_QUERY_RESULT = Array<{
 }>;
 
 // Source: sanity/queries.ts
+// Variable: HOME_PAGE_QUERY
+// Query: *[_type == "homePage" && _id == "homePage"][0]{    hero{      eyebrow,      headingBefore,      headingHighlight,      headingAfter,      subcopy,      trustIndicators[]{ icon, label },      experienceBadgeLabel    },    about{      eyebrow,      heading,      description,      highlights,      badgeSubtitle,      metrics[]{ icon, value, label },      primaryPhoto{ asset, hotspot, crop, alt },      primaryPhotoSubject,      secondaryPhoto{ asset, hotspot, crop, alt },      secondaryPhotoSubject    },    emergency{      eyebrow,      heading,      body,      benefits[]{ icon, label },      photo{ asset, hotspot, crop, alt },      photoSubject,      photoCaption    },    whyChooseUs{      eyebrow,      heading,      description,      features[]{ icon, title, description },      photo{ asset, hotspot, crop, alt },      photoSubject,      photoCaption    },    process{      eyebrow,      heading,      steps[]{ icon, title, description }    },    compliance{      eyebrow,      heading,      description,      items    },    caseStudy{      badgeLabel,      eyebrow,      heading,      storyBlocks[]{ icon, label, copy },      photo{ asset, hotspot, crop, alt },      photoSubject,      photoCardTitle,      photoCardSubtitle    },    serviceArea{      eyebrow,      heading,      description,      calloutBody    },    finalCta{      eyebrow,      heading,      description,      reassurance    }  }
+export type HOME_PAGE_QUERY_RESULT = {
+  hero: {
+    eyebrow: string | null;
+    headingBefore: string | null;
+    headingHighlight: string | null;
+    headingAfter: string | null;
+    subcopy: string | null;
+    trustIndicators: Array<{
+      icon:
+        | "alert-triangle"
+        | "award"
+        | "building-2"
+        | "calendar-check"
+        | "clipboard-check"
+        | "clock"
+        | "droplets"
+        | "file-check-2"
+        | "lightbulb"
+        | "map-pin"
+        | "message-square"
+        | "phone-call"
+        | "search-check"
+        | "shield-check"
+        | "siren"
+        | "trending-up"
+        | "truck"
+        | "waves"
+        | "wrench"
+        | null;
+      label: string | null;
+    }> | null;
+    experienceBadgeLabel: string | null;
+  } | null;
+  about: {
+    eyebrow: string | null;
+    heading: string | null;
+    description: string | null;
+    highlights: Array<string> | null;
+    badgeSubtitle: string | null;
+    metrics: Array<{
+      icon:
+        | "alert-triangle"
+        | "award"
+        | "building-2"
+        | "calendar-check"
+        | "clipboard-check"
+        | "clock"
+        | "droplets"
+        | "file-check-2"
+        | "lightbulb"
+        | "map-pin"
+        | "message-square"
+        | "phone-call"
+        | "search-check"
+        | "shield-check"
+        | "siren"
+        | "trending-up"
+        | "truck"
+        | "waves"
+        | "wrench"
+        | null;
+      value: string | null;
+      label: string | null;
+    }> | null;
+    primaryPhoto: {
+      asset: SanityImageAssetReference | null;
+      hotspot: SanityImageHotspot | null;
+      crop: SanityImageCrop | null;
+      alt: string | null;
+    } | null;
+    primaryPhotoSubject: string | null;
+    secondaryPhoto: {
+      asset: SanityImageAssetReference | null;
+      hotspot: SanityImageHotspot | null;
+      crop: SanityImageCrop | null;
+      alt: string | null;
+    } | null;
+    secondaryPhotoSubject: string | null;
+  } | null;
+  emergency: {
+    eyebrow: string | null;
+    heading: string | null;
+    body: string | null;
+    benefits: Array<{
+      icon:
+        | "alert-triangle"
+        | "award"
+        | "building-2"
+        | "calendar-check"
+        | "clipboard-check"
+        | "clock"
+        | "droplets"
+        | "file-check-2"
+        | "lightbulb"
+        | "map-pin"
+        | "message-square"
+        | "phone-call"
+        | "search-check"
+        | "shield-check"
+        | "siren"
+        | "trending-up"
+        | "truck"
+        | "waves"
+        | "wrench"
+        | null;
+      label: string | null;
+    }> | null;
+    photo: {
+      asset: SanityImageAssetReference | null;
+      hotspot: SanityImageHotspot | null;
+      crop: SanityImageCrop | null;
+      alt: string | null;
+    } | null;
+    photoSubject: string | null;
+    photoCaption: string | null;
+  } | null;
+  whyChooseUs: {
+    eyebrow: string | null;
+    heading: string | null;
+    description: string | null;
+    features: Array<{
+      icon:
+        | "alert-triangle"
+        | "award"
+        | "building-2"
+        | "calendar-check"
+        | "clipboard-check"
+        | "clock"
+        | "droplets"
+        | "file-check-2"
+        | "lightbulb"
+        | "map-pin"
+        | "message-square"
+        | "phone-call"
+        | "search-check"
+        | "shield-check"
+        | "siren"
+        | "trending-up"
+        | "truck"
+        | "waves"
+        | "wrench"
+        | null;
+      title: string | null;
+      description: string | null;
+    }> | null;
+    photo: {
+      asset: SanityImageAssetReference | null;
+      hotspot: SanityImageHotspot | null;
+      crop: SanityImageCrop | null;
+      alt: string | null;
+    } | null;
+    photoSubject: string | null;
+    photoCaption: string | null;
+  } | null;
+  process: {
+    eyebrow: string | null;
+    heading: string | null;
+    steps: Array<{
+      icon:
+        | "alert-triangle"
+        | "award"
+        | "building-2"
+        | "calendar-check"
+        | "clipboard-check"
+        | "clock"
+        | "droplets"
+        | "file-check-2"
+        | "lightbulb"
+        | "map-pin"
+        | "message-square"
+        | "phone-call"
+        | "search-check"
+        | "shield-check"
+        | "siren"
+        | "trending-up"
+        | "truck"
+        | "waves"
+        | "wrench"
+        | null;
+      title: string | null;
+      description: string | null;
+    }> | null;
+  } | null;
+  compliance: {
+    eyebrow: string | null;
+    heading: string | null;
+    description: string | null;
+    items: Array<string> | null;
+  } | null;
+  caseStudy: {
+    badgeLabel: string | null;
+    eyebrow: string | null;
+    heading: string | null;
+    storyBlocks: Array<{
+      icon:
+        | "alert-triangle"
+        | "award"
+        | "building-2"
+        | "calendar-check"
+        | "clipboard-check"
+        | "clock"
+        | "droplets"
+        | "file-check-2"
+        | "lightbulb"
+        | "map-pin"
+        | "message-square"
+        | "phone-call"
+        | "search-check"
+        | "shield-check"
+        | "siren"
+        | "trending-up"
+        | "truck"
+        | "waves"
+        | "wrench"
+        | null;
+      label: string | null;
+      copy: string | null;
+    }> | null;
+    photo: {
+      asset: SanityImageAssetReference | null;
+      hotspot: SanityImageHotspot | null;
+      crop: SanityImageCrop | null;
+      alt: string | null;
+    } | null;
+    photoSubject: string | null;
+    photoCardTitle: string | null;
+    photoCardSubtitle: string | null;
+  } | null;
+  serviceArea: {
+    eyebrow: string | null;
+    heading: string | null;
+    description: string | null;
+    calloutBody: string | null;
+  } | null;
+  finalCta: {
+    eyebrow: string | null;
+    heading: string | null;
+    description: string | null;
+    reassurance: string | null;
+  } | null;
+} | null;
+
+// Source: sanity/queries.ts
 // Variable: ABOUT_PAGE_QUERY
 // Query: *[_type == "aboutPage" && _id == "aboutPage"][0]{    heroEyebrow,    heroHeading,    heroParagraphs,    storyHeading,    storyParagraphs,    storyPhotoPrimary{ asset, hotspot, crop, alt },    storyPhotoSubjectPrimary,    storyPhotoSecondary{ asset, hotspot, crop, alt },    storyPhotoSubjectSecondary,    evolutionHeading,    evolutionParagraphs,    evolutionPhoto{ asset, hotspot, crop, alt },    evolutionPhotoSubject,    valuesHeading,    values[]{ icon, title, description },    linksHeading,    links[]{ title, description, href }  }
 export type ABOUT_PAGE_QUERY_RESULT = {
@@ -1964,6 +2473,7 @@ declare module "@sanity/client" {
     '*[_type == "industry"] | order(order asc){\n    title,\n    "slug": slug.current,\n    description,\n    bulletPoints,\n    photo{ asset, hotspot, crop, alt },\n    body,\n    seoTitle,\n    seoDescription\n  }': INDUSTRIES_QUERY_RESULT;
     '*[_type == "industry" && slug.current == $slug][0]{\n    title,\n    "slug": slug.current,\n    description,\n    bulletPoints,\n    photo{ asset, hotspot, crop, alt },\n    body,\n    sections[]{\n      ...,\n      photo{ asset, hotspot, crop, alt },\n      photoPrimary{ asset, hotspot, crop, alt }\n    },\n    seoTitle,\n    seoDescription\n  }': INDUSTRY_BY_SLUG_QUERY_RESULT;
     '*[_type == "trustLogo"] | order(order asc){\n    name,\n    logo{ asset, hotspot, crop, alt },\n    headline,\n    blurb,\n    category,\n    url,\n    verified\n  }': TRUST_LOGOS_QUERY_RESULT;
+    '*[_type == "homePage" && _id == "homePage"][0]{\n    hero{\n      eyebrow,\n      headingBefore,\n      headingHighlight,\n      headingAfter,\n      subcopy,\n      trustIndicators[]{ icon, label },\n      experienceBadgeLabel\n    },\n    about{\n      eyebrow,\n      heading,\n      description,\n      highlights,\n      badgeSubtitle,\n      metrics[]{ icon, value, label },\n      primaryPhoto{ asset, hotspot, crop, alt },\n      primaryPhotoSubject,\n      secondaryPhoto{ asset, hotspot, crop, alt },\n      secondaryPhotoSubject\n    },\n    emergency{\n      eyebrow,\n      heading,\n      body,\n      benefits[]{ icon, label },\n      photo{ asset, hotspot, crop, alt },\n      photoSubject,\n      photoCaption\n    },\n    whyChooseUs{\n      eyebrow,\n      heading,\n      description,\n      features[]{ icon, title, description },\n      photo{ asset, hotspot, crop, alt },\n      photoSubject,\n      photoCaption\n    },\n    process{\n      eyebrow,\n      heading,\n      steps[]{ icon, title, description }\n    },\n    compliance{\n      eyebrow,\n      heading,\n      description,\n      items\n    },\n    caseStudy{\n      badgeLabel,\n      eyebrow,\n      heading,\n      storyBlocks[]{ icon, label, copy },\n      photo{ asset, hotspot, crop, alt },\n      photoSubject,\n      photoCardTitle,\n      photoCardSubtitle\n    },\n    serviceArea{\n      eyebrow,\n      heading,\n      description,\n      calloutBody\n    },\n    finalCta{\n      eyebrow,\n      heading,\n      description,\n      reassurance\n    }\n  }': HOME_PAGE_QUERY_RESULT;
     '*[_type == "aboutPage" && _id == "aboutPage"][0]{\n    heroEyebrow,\n    heroHeading,\n    heroParagraphs,\n    storyHeading,\n    storyParagraphs,\n    storyPhotoPrimary{ asset, hotspot, crop, alt },\n    storyPhotoSubjectPrimary,\n    storyPhotoSecondary{ asset, hotspot, crop, alt },\n    storyPhotoSubjectSecondary,\n    evolutionHeading,\n    evolutionParagraphs,\n    evolutionPhoto{ asset, hotspot, crop, alt },\n    evolutionPhotoSubject,\n    valuesHeading,\n    values[]{ icon, title, description },\n    linksHeading,\n    links[]{ title, description, href }\n  }': ABOUT_PAGE_QUERY_RESULT;
     '*[_type == "contactPage" && _id == "contactPage"][0]{\n    heroEyebrow,\n    heroHeading,\n    heroIntro,\n    responsePromise,\n    hours[]{ days, hours },\n    emergencyHeading,\n    emergencyBody,\n    faqs[]{ question, answer }\n  }': CONTACT_PAGE_QUERY_RESULT;
     '*[_type == "cityPage" && slug.current == $slug][0]{\n    city,\n    "slug": slug.current,\n    heroHeading,\n    heroIntro,\n    servicesHeading,\n    serviceCards[]{ _key, title, description, href, icon },\n    whyChooseHeading,\n    whyChooseBody,\n    reviewsHeading,\n    heritageHeading,\n    heritageParagraphs,\n    heritagePhoto{ asset, hotspot, crop, alt },\n    heritagePhotoSubject,\n    communitiesHeading,\n    communitiesBody,\n    communities,\n    showLogoStrip,\n    seoTitle,\n    seoDescription\n  }': CITY_PAGE_QUERY_RESULT;

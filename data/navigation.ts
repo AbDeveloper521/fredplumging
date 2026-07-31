@@ -36,6 +36,15 @@ export const NAV_ICON_NAMES = [
   "flame",
   "gauge",
   "award",
+  "truck",
+  "message-square",
+  "clipboard-check",
+  "phone-call",
+  "search-check",
+  "file-check-2",
+  "alert-triangle",
+  "lightbulb",
+  "trending-up",
 ] as const;
 
 export type NavIconName = (typeof NAV_ICON_NAMES)[number];

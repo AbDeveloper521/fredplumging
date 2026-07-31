@@ -6,17 +6,15 @@ import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
 import { ComplianceDashboardPanel } from "@/components/ui/ComplianceDashboardPanel";
 import type { TrustLogo } from "@/data/navigation";
+import { homePage, type HomeComplianceContent } from "@/data/homePage";
 
-const complianceItems = [
-  "Licensing documentation",
-  "Insurance verification",
-  "Background requirements",
-  "Vendor portal compliance",
-  "Service documentation",
-  "Property-specific coordination",
-];
-
-export function ComplianceSection({ logos }: { logos: TrustLogo[] }) {
+export function ComplianceSection({
+  logos,
+  content = homePage.compliance,
+}: {
+  logos: TrustLogo[];
+  content?: HomeComplianceContent;
+}) {
   return (
     <section
       aria-labelledby="compliance-heading"
@@ -34,16 +32,16 @@ export function ComplianceSection({ logos }: { logos: TrustLogo[] }) {
             <Reveal>
               <SectionHeading
                 titleId="compliance-heading"
-                eyebrow="Vendor-Ready and Fully Compliant"
-                title="Approved Across Leading Property Management Systems"
-                description="Fred's Plumbing maintains the insurance, licensing, documentation, and vendor credentials required by commercial property management organizations. Our team helps simplify onboarding, compliance, and ongoing service coordination."
+                eyebrow={content.eyebrow}
+                title={content.heading}
+                description={content.description}
                 theme="dark"
               />
             </Reveal>
 
             <Reveal delay={0.1}>
               <ul className="mt-8 grid grid-cols-1 gap-x-6 gap-y-3.5 sm:grid-cols-2">
-                {complianceItems.map((item) => (
+                {content.items.map((item) => (
                   <li
                     key={item}
                     className="flex items-center gap-3 text-[15px] font-semibold text-white/90"
