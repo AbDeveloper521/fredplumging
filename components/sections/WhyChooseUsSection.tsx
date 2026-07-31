@@ -7,15 +7,18 @@ import { Reveal } from "@/components/ui/Reveal";
 import { IconFeature } from "@/components/ui/IconFeature";
 import { ImagePlaceholder } from "@/components/ui/ImagePlaceholder";
 import { navIcons } from "@/components/layout/navIcons";
-import { homePage, type HomeWhyChooseUsContent } from "@/data/homePage";
+import { homePageDefaults, type HomeWhyChooseUsContent } from "@/data/homePage";
 import type { SiteContent } from "@/data/site";
 
 export function WhyChooseUsSection({
   site,
-  content = homePage.whyChooseUs,
+  content = homePageDefaults.whyChooseUs,
+  titleId = "why-heading",
 }: {
   site: SiteContent;
   content?: HomeWhyChooseUsContent;
+  /** Unique per instance — sections can be duplicated in the Studio. */
+  titleId?: string;
 }) {
   // {yearsInBusiness} derives from Site Settings so the caption's figure
   // can never quietly age the way the old hardcoded "27+" did.
@@ -25,7 +28,7 @@ export function WhyChooseUsSection({
   );
   return (
     <section
-      aria-labelledby="why-heading"
+      aria-labelledby={titleId}
       className="bg-white py-16 sm:py-24 lg:py-28"
     >
       <Container className="grid grid-cols-1 gap-14 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20">
@@ -33,7 +36,7 @@ export function WhyChooseUsSection({
         <div className="lg:sticky lg:top-36 lg:self-start">
           <Reveal>
             <SectionHeading
-              titleId="why-heading"
+              titleId={titleId}
               eyebrow={content.eyebrow}
               title={content.heading}
               description={content.description}

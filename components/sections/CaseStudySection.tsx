@@ -6,12 +6,15 @@ import { Badge } from "@/components/ui/Badge";
 import { Reveal } from "@/components/ui/Reveal";
 import { ImagePlaceholder } from "@/components/ui/ImagePlaceholder";
 import { navIcons } from "@/components/layout/navIcons";
-import { homePage, type HomeCaseStudyContent } from "@/data/homePage";
+import { homePageDefaults, type HomeCaseStudyContent } from "@/data/homePage";
 
 export function CaseStudySection({
-  content = homePage.caseStudy,
+  content = homePageDefaults.caseStudy,
+  titleId = "casestudy-heading",
 }: {
   content?: HomeCaseStudyContent;
+  /** Unique per instance — sections can be duplicated in the Studio. */
+  titleId?: string;
 }) {
   const storyBlocks = content.storyBlocks.map((block) => ({
     icon: navIcons[block.icon],
@@ -20,7 +23,7 @@ export function CaseStudySection({
   }));
   return (
     <section
-      aria-labelledby="casestudy-heading"
+      aria-labelledby={titleId}
       className="bg-offwhite py-16 sm:py-24 lg:py-28"
     >
       <Container className="grid grid-cols-1 items-center gap-14 lg:grid-cols-2 lg:gap-20">
@@ -54,7 +57,7 @@ export function CaseStudySection({
               {content.badgeLabel}
             </Badge>
             <SectionHeading
-              titleId="casestudy-heading"
+              titleId={titleId}
               eyebrow={content.eyebrow}
               title={content.heading}
             />

@@ -4,7 +4,7 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
 import { QuoteRequestForm } from "@/components/forms/QuoteRequestForm";
-import { homePage, type HomeFinalCtaContent } from "@/data/homePage";
+import { homePageDefaults, type HomeFinalCtaContent } from "@/data/homePage";
 import type { SiteContent } from "@/data/site";
 
 /**
@@ -14,17 +14,20 @@ import type { SiteContent } from "@/data/site";
  */
 export function FinalCTASection({
   site,
-  content = homePage.finalCta,
+  content = homePageDefaults.finalCta,
+  titleId = "finalcta-heading",
 }: {
   site: SiteContent;
   content?: HomeFinalCtaContent;
+  /** Unique per instance — sections can be duplicated in the Studio. */
+  titleId?: string;
 }) {
   // "{phone}" marks where the clickable phone number goes.
   const [reassuranceBefore, reassuranceAfter] =
     content.reassurance.split("{phone}");
   return (
     <section
-      aria-labelledby="finalcta-heading"
+      aria-labelledby={titleId}
       className="relative isolate overflow-hidden bg-navy-950 py-16 sm:py-24 lg:py-28"
     >
       {/*
@@ -47,7 +50,7 @@ export function FinalCTASection({
         <div>
           <Reveal>
             <SectionHeading
-              titleId="finalcta-heading"
+              titleId={titleId}
               eyebrow={content.eyebrow}
               title={content.heading}
               description={content.description}

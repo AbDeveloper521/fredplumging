@@ -2,15 +2,19 @@ import type { NavIconName } from "./navigation";
 import type { CmsPhoto } from "./services";
 
 /**
- * Homepage copy — FALLBACK for the `homePage` Sanity singleton (see
- * `sanity/lib/getHomePage.ts`). The strings below are the previously
- * hardcoded, client-approved section copy moved out of the components
- * verbatim (one mojibake'd en dash fixed); the homepage renders identically
- * against an empty dataset.
+ * Homepage section stack — FALLBACK for the `homePage` Sanity singleton (see
+ * `sanity/lib/getHomePage.ts`). The homepage is an ordered array of typed
+ * sections, mirroring the service-page section-stack pattern: the owner can
+ * reorder, hide, duplicate, add and remove sections natively in Studio.
+ *
+ * `defaultHomeSections` below is the shipped page: the same client-approved
+ * copy as before, in the same order — minus the "Who We Serve"
+ * (`homeIndustries`) band, which was removed from the default on request.
+ * Its type still exists, so Studio can re-add it with one click.
  *
  * Business facts (phone, cities, years) stay in `data/site.ts` — copy here
  * may reference them via tokens replaced at render time:
- *   {phone}           → siteSettings phone
+ *   {phone}           → siteSettings phone (becomes a link where noted)
  *   {foundedYear}     → siteSettings founded year
  *   {yearsInBusiness} → the derived "30+" years figure
  */
@@ -39,6 +43,11 @@ export interface HomeHeroContent {
   experienceBadgeLabel: string;
 }
 
+/** Collection band: logos come from Trust Logos — only the tagline is copy. */
+export interface HomeTrustBarContent {
+  tagline: string;
+}
+
 export interface HomeAboutMetric {
   icon: NavIconName;
   /** Empty → the years-in-business figure from Site Settings (derived, never stale). */
@@ -60,6 +69,13 @@ export interface HomeAboutContent {
   secondaryPhotoSubject: string;
 }
 
+/** Collection band: cards come from Services — only the heading block is copy. */
+export interface HomeServicesContent {
+  eyebrow: string;
+  heading: string;
+  description: string;
+}
+
 export interface HomeEmergencyContent {
   eyebrow: string;
   heading: string;
@@ -68,6 +84,13 @@ export interface HomeEmergencyContent {
   photo?: CmsPhoto;
   photoSubject: string;
   photoCaption: string;
+}
+
+/** Collection band: property types come from Property Types — heading block only. */
+export interface HomeIndustriesContent {
+  eyebrow: string;
+  heading: string;
+  description: string;
 }
 
 export interface HomeWhyChooseUsContent {
@@ -101,6 +124,11 @@ export interface HomeComplianceContent {
   items: string[];
 }
 
+/** Collection band: reviews come from Testimonials — only the heading is copy. */
+export interface HomeTestimonialsContent {
+  heading: string;
+}
+
 export interface HomeStoryBlock {
   icon: NavIconName;
   label: string;
@@ -125,6 +153,15 @@ export interface HomeServiceAreaContent {
   calloutBody: string;
 }
 
+/** Collection band: questions come from FAQs — only the heading block is copy. */
+export interface HomeFaqContent {
+  eyebrow: string;
+  heading: string;
+}
+
+/** Copy and embed URL live in Site Settings — the item is just placement. */
+export type HomeLocationMapContent = Record<never, never>;
+
 export interface HomeFinalCtaContent {
   eyebrow: string;
   heading: string;
@@ -133,19 +170,25 @@ export interface HomeFinalCtaContent {
   reassurance: string;
 }
 
-export interface HomePageContent {
+/** Per-type default copy — also the prop defaults inside the components. */
+export interface HomePageDefaults {
   hero: HomeHeroContent;
+  trustBar: HomeTrustBarContent;
   about: HomeAboutContent;
+  services: HomeServicesContent;
   emergency: HomeEmergencyContent;
+  industries: HomeIndustriesContent;
   whyChooseUs: HomeWhyChooseUsContent;
   process: HomeProcessContent;
   compliance: HomeComplianceContent;
+  testimonials: HomeTestimonialsContent;
   caseStudy: HomeCaseStudyContent;
   serviceArea: HomeServiceAreaContent;
+  faq: HomeFaqContent;
   finalCta: HomeFinalCtaContent;
 }
 
-export const homePage: HomePageContent = {
+export const homePageDefaults: HomePageDefaults = {
   hero: {
     eyebrow: "Commercial & Multi-Family Plumbing Experts",
     headingBefore: "Reliable Plumbing Solutions for",
@@ -159,6 +202,9 @@ export const homePage: HomePageContent = {
       { icon: "map-pin", label: "Serving DFW Since {foundedYear}" },
     ],
     experienceBadgeLabel: "Serving DFW property teams",
+  },
+  trustBar: {
+    tagline: "Trusted by property managers and commercial facilities across DFW",
   },
   about: {
     eyebrow: "Built on Experience. Trusted Across DFW.",
@@ -182,6 +228,12 @@ export const homePage: HomePageContent = {
     secondaryPhotoSubject:
       "Technician at a DFW multi-family property — /images/technician-working.webp",
   },
+  services: {
+    eyebrow: "What We Do",
+    heading: "Complete Plumbing Support for Commercial Properties",
+    description:
+      "From emergency repairs to planned maintenance, our team provides dependable plumbing services tailored to the demands of commercial and multi-family environments.",
+  },
   emergency: {
     eyebrow: "Available Day and Night",
     heading: "Plumbing Emergency? Our Team Is Ready 24/7.",
@@ -195,6 +247,12 @@ export const homePage: HomePageContent = {
     photoSubject:
       "Emergency technician and service vehicle at night — /images/service-emergency.webp",
     photoCaption: "Crews on call across DFW right now",
+  },
+  industries: {
+    eyebrow: "Who We Serve",
+    heading: "Plumbing Solutions Built Around Your Property",
+    description:
+      "Every property type runs differently. We tailor scheduling, communication, and service scope to the way your community or facility operates.",
   },
   whyChooseUs: {
     eyebrow: "Why Property Managers Choose Fred's",
@@ -288,6 +346,9 @@ export const homePage: HomePageContent = {
       "Property-specific coordination",
     ],
   },
+  testimonials: {
+    heading: "Trusted by Property Managers Across DFW",
+  },
   caseStudy: {
     badgeLabel: "Representative service scenario",
     eyebrow: "Proven in the Field",
@@ -322,6 +383,10 @@ export const homePage: HomePageContent = {
     calloutBody:
       "Not sure whether we serve your area? We cover the entire Metroplex and take on properties in surrounding communities case by case.",
   },
+  faq: {
+    eyebrow: "Good to Know",
+    heading: "Common Questions",
+  },
   finalCta: {
     eyebrow: "Let's Solve the Problem",
     heading: "Schedule Commercial Plumbing Service Today",
@@ -331,3 +396,63 @@ export const homePage: HomePageContent = {
       "Prefer to talk it through? Our office answers around the clock — {phone}, 24 hours a day, 7 days a week.",
   },
 };
+
+interface SectionMeta<T extends string> {
+  _type: T;
+  _key: string;
+  /** Hidden in Studio: content kept, section skipped at render. */
+  hidden?: boolean;
+}
+
+export type HomeSection =
+  | (SectionMeta<"homeHero"> & HomeHeroContent)
+  | (SectionMeta<"homeTrustBar"> & HomeTrustBarContent)
+  | (SectionMeta<"homeAbout"> & HomeAboutContent)
+  | (SectionMeta<"homeServices"> & HomeServicesContent)
+  | (SectionMeta<"homeEmergency"> & HomeEmergencyContent)
+  | (SectionMeta<"homeIndustries"> & HomeIndustriesContent)
+  | (SectionMeta<"homeWhyChooseUs"> & HomeWhyChooseUsContent)
+  | (SectionMeta<"homeProcess"> & HomeProcessContent)
+  | (SectionMeta<"homeCompliance"> & HomeComplianceContent)
+  | (SectionMeta<"homeTestimonials"> & HomeTestimonialsContent)
+  | (SectionMeta<"homeCaseStudy"> & HomeCaseStudyContent)
+  | (SectionMeta<"homeServiceArea"> & HomeServiceAreaContent)
+  | (SectionMeta<"homeFaq"> & HomeFaqContent)
+  | (SectionMeta<"homeLocationMap"> & HomeLocationMapContent)
+  | (SectionMeta<"homeFinalCta"> & HomeFinalCtaContent);
+
+export type HomeSectionType = HomeSection["_type"];
+
+/**
+ * The shipped homepage, in order. "Who We Serve" (`homeIndustries`) is
+ * deliberately absent; the map band sits between FAQ and the closing CTA so
+ * the CTA still closes the page.
+ */
+export const defaultHomeSections: HomeSection[] = [
+  { _type: "homeHero", _key: "hero", ...homePageDefaults.hero },
+  { _type: "homeTrustBar", _key: "trustBar", ...homePageDefaults.trustBar },
+  { _type: "homeAbout", _key: "about", ...homePageDefaults.about },
+  { _type: "homeServices", _key: "services", ...homePageDefaults.services },
+  { _type: "homeEmergency", _key: "emergency", ...homePageDefaults.emergency },
+  {
+    _type: "homeWhyChooseUs",
+    _key: "whyChooseUs",
+    ...homePageDefaults.whyChooseUs,
+  },
+  { _type: "homeProcess", _key: "process", ...homePageDefaults.process },
+  { _type: "homeCompliance", _key: "compliance", ...homePageDefaults.compliance },
+  {
+    _type: "homeTestimonials",
+    _key: "testimonials",
+    ...homePageDefaults.testimonials,
+  },
+  { _type: "homeCaseStudy", _key: "caseStudy", ...homePageDefaults.caseStudy },
+  {
+    _type: "homeServiceArea",
+    _key: "serviceArea",
+    ...homePageDefaults.serviceArea,
+  },
+  { _type: "homeFaq", _key: "faq", ...homePageDefaults.faq },
+  { _type: "homeLocationMap", _key: "locationMap" },
+  { _type: "homeFinalCta", _key: "finalCta", ...homePageDefaults.finalCta },
+];

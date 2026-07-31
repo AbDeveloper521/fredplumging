@@ -6,22 +6,32 @@ import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Reveal } from "@/components/ui/Reveal";
 import type { Faq } from "@/data/faqs";
+import { homePageDefaults, type HomeFaqContent } from "@/data/homePage";
 import { cn } from "@/lib/utils";
 
-export function FAQSection({ faqs }: { faqs: Faq[] }) {
+export function FAQSection({
+  faqs,
+  content = homePageDefaults.faq,
+  titleId = "faq-heading",
+}: {
+  faqs: Faq[];
+  content?: HomeFaqContent;
+  /** Unique per instance — sections can be duplicated in the Studio; the accordion item ids derive from it. */
+  titleId?: string;
+}) {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
     <section
-      aria-labelledby="faq-heading"
+      aria-labelledby={titleId}
       className="bg-offwhite py-16 sm:py-24 lg:py-28"
     >
       <Container className="max-w-[880px]">
         <Reveal>
           <SectionHeading
-            titleId="faq-heading"
-            eyebrow="Good to Know"
-            title="Common Questions"
+            titleId={titleId}
+            eyebrow={content.eyebrow}
+            title={content.heading}
             align="center"
           />
         </Reveal>
@@ -42,9 +52,9 @@ export function FAQSection({ faqs }: { faqs: Faq[] }) {
                   <h3>
                     <button
                       type="button"
-                      id={`faq-trigger-${index}`}
+                      id={`${titleId}-trigger-${index}`}
                       aria-expanded={isOpen}
-                      aria-controls={`faq-panel-${index}`}
+                      aria-controls={`${titleId}-panel-${index}`}
                       onClick={() => setOpenIndex(isOpen ? null : index)}
                       className="flex min-h-14 w-full items-center justify-between gap-4 px-6 py-4.5 text-left"
                     >
@@ -63,9 +73,9 @@ export function FAQSection({ faqs }: { faqs: Faq[] }) {
                     </button>
                   </h3>
                   <div
-                    id={`faq-panel-${index}`}
+                    id={`${titleId}-panel-${index}`}
                     role="region"
-                    aria-labelledby={`faq-trigger-${index}`}
+                    aria-labelledby={`${titleId}-trigger-${index}`}
                     className={cn(
                       "grid transition-[grid-template-rows] duration-300",
                       isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]",

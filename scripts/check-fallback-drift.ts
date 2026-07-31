@@ -60,6 +60,11 @@ function diff(fallback: unknown, published: unknown, path: string, out: Diff[]):
         key === "sections" ||
         key === "seoTitle" ||
         key === "seoDescription" ||
+        // Map-band fields carry built-in defaults and are optional CMS
+        // overrides — unset in Sanity is the normal state, not drift.
+        key === "mapHeading" ||
+        key === "mapDescription" ||
+        key === "mapEmbedUrl" ||
         // Stored for a future "Response from the owner" treatment, never
         // rendered — the hand-created testimonial docs don't carry them.
         key === "ownerReply" ||

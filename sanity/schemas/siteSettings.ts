@@ -124,6 +124,36 @@ export const siteSettings = defineType({
       type: "string",
     }),
     defineField({
+      name: "mapHeading",
+      title: "Map band — heading",
+      description:
+        "Heading of the Google-map band shown on the homepage and every service page, e.g. “Serving the Dallas–Fort Worth Metroplex”. Leave empty to use the built-in default.",
+      type: "string",
+    }),
+    defineField({
+      name: "mapDescription",
+      title: "Map band — supporting line",
+      description:
+        "One sentence under the map-band heading. Leave empty to use the built-in default.",
+      type: "text",
+      rows: 2,
+    }),
+    defineField({
+      name: "mapEmbedUrl",
+      title: "Map band — Google Maps embed address",
+      description:
+        "From Google Maps: Share → Embed a map → copy ONLY the address inside src=\"…\" (it starts with https://www.google.com/maps/embed). Do not paste the whole <iframe> code. Leave empty to use the built-in default.",
+      type: "url",
+      validation: (rule) =>
+        rule
+          .uri({ scheme: ["https"] })
+          .custom((value?: string) =>
+            !value || value.startsWith("https://www.google.com/maps/embed")
+              ? true
+              : "Paste only the embed address — it must start with https://www.google.com/maps/embed. If you copied the whole <iframe> code, take just the part between the quotes after src=.",
+          ),
+    }),
+    defineField({
       name: "serviceAreaCities",
       title: "Service area cities",
       type: "array",

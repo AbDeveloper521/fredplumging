@@ -9,25 +9,35 @@ import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
 import { ImagePlaceholder } from "@/components/ui/ImagePlaceholder";
 import { industryHref, type Industry } from "@/data/industries";
+import { homePageDefaults, type HomeIndustriesContent } from "@/data/homePage";
 import { cn } from "@/lib/utils";
 
-export function IndustriesSection({ industries }: { industries: Industry[] }) {
+export function IndustriesSection({
+  industries,
+  content = homePageDefaults.industries,
+  titleId = "industries-heading",
+}: {
+  industries: Industry[];
+  content?: HomeIndustriesContent;
+  /** Unique per instance — sections can be duplicated in the Studio; the tab/accordion ids derive from it. */
+  titleId?: string;
+}) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [openAccordion, setOpenAccordion] = useState<number | null>(0);
   const active = industries[Math.min(activeIndex, industries.length - 1)];
 
   return (
     <section
-      aria-labelledby="industries-heading"
+      aria-labelledby={titleId}
       className="bg-offwhite py-16 sm:py-24 lg:py-28"
     >
       <Container>
         <Reveal>
           <SectionHeading
-            titleId="industries-heading"
-            eyebrow="Who We Serve"
-            title="Plumbing Solutions Built Around Your Property"
-            description="Every property type runs differently. We tailor scheduling, communication, and service scope to the way your community or facility operates."
+            titleId={titleId}
+            eyebrow={content.eyebrow}
+            title={content.heading}
+            description={content.description}
             align="center"
           />
         </Reveal>
@@ -39,9 +49,9 @@ export function IndustriesSection({ industries }: { industries: Industry[] }) {
               <button
                 key={industry.slug}
                 role="tab"
-                id={`industry-tab-${industry.slug}`}
+                id={`${titleId}-tab-${industry.slug}`}
                 aria-selected={index === activeIndex}
-                aria-controls={`industry-panel-${industry.slug}`}
+                aria-controls={`${titleId}-panel-${industry.slug}`}
                 tabIndex={index === activeIndex ? 0 : -1}
                 onClick={() => setActiveIndex(index)}
                 onKeyDown={(e) => {
@@ -49,13 +59,13 @@ export function IndustriesSection({ industries }: { industries: Industry[] }) {
                     e.preventDefault();
                     const next = (index + 1) % industries.length;
                     setActiveIndex(next);
-                    document.getElementById(`industry-tab-${industries[next].slug}`)?.focus();
+                    document.getElementById(`${titleId}-tab-${industries[next].slug}`)?.focus();
                   }
                   if (e.key === "ArrowUp" || e.key === "ArrowLeft") {
                     e.preventDefault();
                     const prev = (index - 1 + industries.length) % industries.length;
                     setActiveIndex(prev);
-                    document.getElementById(`industry-tab-${industries[prev].slug}`)?.focus();
+                    document.getElementById(`${titleId}-tab-${industries[prev].slug}`)?.focus();
                   }
                 }}
                 className={cn(
@@ -86,8 +96,8 @@ export function IndustriesSection({ industries }: { industries: Industry[] }) {
 
           <div
             role="tabpanel"
-            id={`industry-panel-${active.slug}`}
-            aria-labelledby={`industry-tab-${active.slug}`}
+            id={`${titleId}-panel-${active.slug}`}
+            aria-labelledby={`${titleId}-tab-${active.slug}`}
             className="overflow-hidden rounded-2xl bg-white shadow-(--shadow-card)"
           >
             <div className="relative h-60 overflow-hidden">
@@ -140,7 +150,7 @@ export function IndustriesSection({ industries }: { industries: Industry[] }) {
                 <button
                   type="button"
                   aria-expanded={isOpen}
-                  aria-controls={`industry-acc-${industry.slug}`}
+                  aria-controls={`${titleId}-acc-${industry.slug}`}
                   onClick={() => setOpenAccordion(isOpen ? null : index)}
                   className="flex min-h-14 w-full items-center justify-between gap-4 px-5 py-4 text-left"
                 >
@@ -156,7 +166,7 @@ export function IndustriesSection({ industries }: { industries: Industry[] }) {
                   />
                 </button>
                 <div
-                  id={`industry-acc-${industry.slug}`}
+                  id={`${titleId}-acc-${industry.slug}`}
                   className={cn(
                     "grid transition-[grid-template-rows] duration-300",
                     isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]",

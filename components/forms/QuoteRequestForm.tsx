@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useId, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CheckCircle2 } from "lucide-react";
@@ -28,6 +28,10 @@ function FieldError({ id, message }: { id: string; message?: string }) {
 }
 
 export function QuoteRequestForm({ site }: { site: SiteContent }) {
+  // Unique per mounted instance — the closing-CTA section (and this form
+  // with it) can be duplicated in the Studio, and duplicate DOM ids break
+  // label association for screen readers.
+  const idPrefix = useId();
   const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
 
   const {
@@ -96,60 +100,60 @@ export function QuoteRequestForm({ site }: { site: SiteContent }) {
         className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2"
       >
         <div>
-          <label htmlFor="cta-name" className={labelClasses}>
+          <label htmlFor={`${idPrefix}name`} className={labelClasses}>
             Name
           </label>
           <input
-            id="cta-name"
+            id={`${idPrefix}name`}
             type="text"
             autoComplete="name"
             aria-invalid={!!errors.name}
-            aria-describedby={errors.name ? "cta-name-error" : undefined}
+            aria-describedby={errors.name ? `${idPrefix}name-error` : undefined}
             className={inputClasses}
             {...register("name")}
           />
-          <FieldError id="cta-name-error" message={errors.name?.message} />
+          <FieldError id={`${idPrefix}name-error`} message={errors.name?.message} />
         </div>
 
         <div>
-          <label htmlFor="cta-phone" className={labelClasses}>
+          <label htmlFor={`${idPrefix}phone`} className={labelClasses}>
             Phone
           </label>
           <input
-            id="cta-phone"
+            id={`${idPrefix}phone`}
             type="tel"
             autoComplete="tel"
             aria-invalid={!!errors.phone}
-            aria-describedby={errors.phone ? "cta-phone-error" : undefined}
+            aria-describedby={errors.phone ? `${idPrefix}phone-error` : undefined}
             className={inputClasses}
             {...register("phone")}
           />
-          <FieldError id="cta-phone-error" message={errors.phone?.message} />
+          <FieldError id={`${idPrefix}phone-error`} message={errors.phone?.message} />
         </div>
 
         <div className="sm:col-span-2">
-          <label htmlFor="cta-email" className={labelClasses}>
+          <label htmlFor={`${idPrefix}email`} className={labelClasses}>
             Email
           </label>
           <input
-            id="cta-email"
+            id={`${idPrefix}email`}
             type="email"
             autoComplete="email"
             aria-invalid={!!errors.email}
-            aria-describedby={errors.email ? "cta-email-error" : undefined}
+            aria-describedby={errors.email ? `${idPrefix}email-error` : undefined}
             className={inputClasses}
             {...register("email")}
           />
-          <FieldError id="cta-email-error" message={errors.email?.message} />
+          <FieldError id={`${idPrefix}email-error`} message={errors.email?.message} />
         </div>
 
         <div className="sm:col-span-2">
-          <label htmlFor="cta-company" className={labelClasses}>
+          <label htmlFor={`${idPrefix}company`} className={labelClasses}>
             Property or company{" "}
             <span className="font-normal text-grey-500">(optional)</span>
           </label>
           <input
-            id="cta-company"
+            id={`${idPrefix}company`}
             type="text"
             autoComplete="organization"
             className={inputClasses}
@@ -158,19 +162,19 @@ export function QuoteRequestForm({ site }: { site: SiteContent }) {
         </div>
 
         <div className="sm:col-span-2">
-          <label htmlFor="cta-message" className={labelClasses}>
+          <label htmlFor={`${idPrefix}message`} className={labelClasses}>
             Message
           </label>
           <textarea
-            id="cta-message"
+            id={`${idPrefix}message`}
             rows={3}
             aria-invalid={!!errors.message}
-            aria-describedby={errors.message ? "cta-message-error" : undefined}
+            aria-describedby={errors.message ? `${idPrefix}message-error` : undefined}
             className={cn(inputClasses, "h-auto min-h-24 py-3")}
             placeholder="Tell us about your property and what you need…"
             {...register("message")}
           />
-          <FieldError id="cta-message-error" message={errors.message?.message} />
+          <FieldError id={`${idPrefix}message-error`} message={errors.message?.message} />
         </div>
 
         {status === "error" && (

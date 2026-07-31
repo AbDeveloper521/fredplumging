@@ -2,12 +2,15 @@ import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Reveal } from "@/components/ui/Reveal";
 import { navIcons } from "@/components/layout/navIcons";
-import { homePage, type HomeProcessContent } from "@/data/homePage";
+import { homePageDefaults, type HomeProcessContent } from "@/data/homePage";
 
 export function ProcessSection({
-  content = homePage.process,
+  content = homePageDefaults.process,
+  titleId = "process-heading",
 }: {
   content?: HomeProcessContent;
+  /** Unique per instance — sections can be duplicated in the Studio. */
+  titleId?: string;
 }) {
   // Step numbers derive from position — reordering in the Studio renumbers.
   const steps = content.steps.map((step, i) => ({
@@ -18,13 +21,13 @@ export function ProcessSection({
   }));
   return (
     <section
-      aria-labelledby="process-heading"
+      aria-labelledby={titleId}
       className="bg-offwhite py-16 sm:py-24 lg:py-28"
     >
       <Container>
         <Reveal>
           <SectionHeading
-            titleId="process-heading"
+            titleId={titleId}
             eyebrow={content.eyebrow}
             title={content.heading}
             align="center"

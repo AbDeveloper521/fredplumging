@@ -4,21 +4,31 @@ import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
 import { ServiceCard } from "@/components/ui/ServiceCard";
 import type { Service } from "@/data/services";
+import { homePageDefaults, type HomeServicesContent } from "@/data/homePage";
 
-export function ServicesSection({ services }: { services: Service[] }) {
+export function ServicesSection({
+  services,
+  content = homePageDefaults.services,
+  titleId = "services-heading",
+}: {
+  services: Service[];
+  content?: HomeServicesContent;
+  /** Unique per instance — sections can be duplicated in the Studio. */
+  titleId?: string;
+}) {
   const featured = services.filter((s) => s.featured);
   const supporting = services.filter((s) => !s.featured);
 
   return (
-    <section aria-labelledby="services-heading" className="bg-white py-16 sm:py-24 lg:py-28">
+    <section aria-labelledby={titleId} className="bg-white py-16 sm:py-24 lg:py-28">
       <Container>
         <div className="flex flex-col justify-between gap-8 lg:flex-row lg:items-end">
           <Reveal>
             <SectionHeading
-              titleId="services-heading"
-              eyebrow="What We Do"
-              title="Complete Plumbing Support for Commercial Properties"
-              description="From emergency repairs to planned maintenance, our team provides dependable plumbing services tailored to the demands of commercial and multi-family environments."
+              titleId={titleId}
+              eyebrow={content.eyebrow}
+              title={content.heading}
+              description={content.description}
             />
           </Reveal>
           <Reveal delay={0.1} className="shrink-0">

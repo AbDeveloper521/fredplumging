@@ -1,23 +1,26 @@
-import Image from "next/image";
 import { CheckCircle2 } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
 import { ComplianceDashboardPanel } from "@/components/ui/ComplianceDashboardPanel";
+import { TrustLogoStrip } from "@/components/ui/TrustLogoStrip";
 import type { TrustLogo } from "@/data/navigation";
-import { homePage, type HomeComplianceContent } from "@/data/homePage";
+import { homePageDefaults, type HomeComplianceContent } from "@/data/homePage";
 
 export function ComplianceSection({
   logos,
-  content = homePage.compliance,
+  content = homePageDefaults.compliance,
+  titleId = "compliance-heading",
 }: {
   logos: TrustLogo[];
   content?: HomeComplianceContent;
+  /** Unique per instance — sections can be duplicated in the Studio. */
+  titleId?: string;
 }) {
   return (
     <section
-      aria-labelledby="compliance-heading"
+      aria-labelledby={titleId}
       className="relative isolate overflow-hidden bg-navy-950 py-16 sm:py-24 lg:py-28"
     >
       <div aria-hidden="true" className="bg-grid-dark absolute inset-0" />
@@ -31,7 +34,7 @@ export function ComplianceSection({
           <div>
             <Reveal>
               <SectionHeading
-                titleId="compliance-heading"
+                titleId={titleId}
                 eyebrow={content.eyebrow}
                 title={content.heading}
                 description={content.description}
@@ -68,31 +71,18 @@ export function ComplianceSection({
           </Reveal>
         </div>
 
-        {/* Vendor-system wordmarks — hidden entirely when no logos exist */}
+        {/*
+          Vendor-system logos — the same white-tile strip as the light
+          sections. White tiles sit deliberately on the navy band and, unlike
+          the old white-silhouette treatment (brightness-0 invert), they
+          render uploads with baked-in backgrounds correctly instead of as
+          blank rectangles. Hidden entirely when no logos exist.
+        */}
         {logos.length > 0 && (
           <Reveal delay={0.1}>
-            <ul className="mt-16 flex flex-wrap items-center justify-center gap-x-12 gap-y-5 border-t border-white/8 pt-10 lg:mt-20">
-              {logos.map((logo) => (
-                <li key={logo.name}>
-                  {logo.photo ? (
-                    <Image
-                      src={logo.photo.url}
-                      alt={logo.photo.alt}
-                      width={200}
-                      height={48}
-                      className="h-8 w-auto opacity-40 brightness-0 invert transition-opacity duration-200 hover:opacity-80"
-                    />
-                  ) : (
-                    <span
-                      aria-label={`${logo.name} logo`}
-                      className="font-heading text-lg font-extrabold tracking-tight text-white/30 transition-colors duration-200 select-none hover:text-white/80"
-                    >
-                      {logo.name}
-                    </span>
-                  )}
-                </li>
-              ))}
-            </ul>
+            <div className="mt-16 border-t border-white/8 pt-10 lg:mt-20">
+              <TrustLogoStrip logos={logos} />
+            </div>
           </Reveal>
         )}
       </Container>

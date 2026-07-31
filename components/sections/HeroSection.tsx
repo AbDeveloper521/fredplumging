@@ -3,7 +3,7 @@ import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
 import { EmergencyContactForm } from "@/components/forms/EmergencyContactForm";
 import { navIcons } from "@/components/layout/navIcons";
-import { homePage, type HomeHeroContent } from "@/data/homePage";
+import { homePageDefaults, type HomeHeroContent } from "@/data/homePage";
 import type { SiteContent } from "@/data/site";
 
 /** CSS-animated wrapper — hero entrances must not wait on JS hydration. */
@@ -28,10 +28,13 @@ function Rise({
 
 export function HeroSection({
   site,
-  content = homePage.hero,
+  content = homePageDefaults.hero,
+  titleId = "hero-heading",
 }: {
   site: SiteContent;
   content?: HomeHeroContent;
+  /** Unique per instance — sections can be duplicated in the Studio. */
+  titleId?: string;
 }) {
   const trustIndicators = content.trustIndicators.map((item) => ({
     icon: navIcons[item.icon],
@@ -40,7 +43,7 @@ export function HeroSection({
 
   return (
     <section
-      aria-labelledby="hero-heading"
+      aria-labelledby={titleId}
       className="relative isolate overflow-hidden bg-navy-950"
     >
       {/*
@@ -76,7 +79,7 @@ export function HeroSection({
 
           <Rise delay={0.08}>
             <h1
-              id="hero-heading"
+              id={titleId}
               className="mt-6 text-[38px] leading-[1.08] font-extrabold tracking-tight text-balance text-white sm:text-[48px] lg:text-[54px] xl:text-[60px] lg:leading-[1.05]"
             >
               {content.headingBefore}

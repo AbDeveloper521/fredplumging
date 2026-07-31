@@ -32,6 +32,15 @@ export interface Site {
   addressLocality?: string;
   addressRegion?: string;
   postalCode?: string;
+  /** Heading for the shared Google-map band (homepage + service pages). */
+  mapHeading: string;
+  /** One supporting line under the map-band heading. */
+  mapDescription: string;
+  /**
+   * Google Maps embed URL (https://www.google.com/maps/embed?pb=…). No API
+   * key, nothing billed. Empty → the map band hides site-wide.
+   */
+  mapEmbedUrl: string;
 }
 
 /**
@@ -57,6 +66,11 @@ export const site: Site = {
   /** Placeholder — replace with the production domain before launch. */
   url: "https://www.fredsplumbingdfw.com",
   licenseNumber: "RMP 44890",
+  mapHeading: "Serving the Dallas–Fort Worth Metroplex",
+  mapDescription:
+    "Commercial and multi-family plumbing teams dispatched across DFW, 24/7.",
+  mapEmbedUrl:
+    "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1718285.9085962924!2d-98.28338183041127!3d32.738469352465685!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6d28a9a9242e61cb%3A0x10c8773cb4095848!2sFred's%20Plumbing!5e0!3m2!1sen!2s!4v1785511031920!5m2!1sen!2s",
 };
 
 export const serviceAreaCities: readonly string[] = [

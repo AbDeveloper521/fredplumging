@@ -3,7 +3,7 @@ import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
-import { homePage, type HomeServiceAreaContent } from "@/data/homePage";
+import { homePageDefaults, type HomeServiceAreaContent } from "@/data/homePage";
 import type { SiteContent } from "@/data/site";
 
 /** Stylized, decorative DFW coverage map — replaces a heavy embedded map. */
@@ -71,21 +71,24 @@ function DfwMap() {
 
 export function ServiceAreaSection({
   site,
-  content = homePage.serviceArea,
+  content = homePageDefaults.serviceArea,
+  titleId = "area-heading",
 }: {
   site: SiteContent;
   content?: HomeServiceAreaContent;
+  /** Unique per instance — sections can be duplicated in the Studio. */
+  titleId?: string;
 }) {
   return (
     <section
-      aria-labelledby="area-heading"
+      aria-labelledby={titleId}
       className="bg-white py-16 sm:py-24 lg:py-28"
     >
       <Container className="grid grid-cols-1 items-center gap-14 lg:grid-cols-2 lg:gap-20">
         <div>
           <Reveal>
             <SectionHeading
-              titleId="area-heading"
+              titleId={titleId}
               eyebrow={content.eyebrow}
               title={content.heading}
               description={content.description}

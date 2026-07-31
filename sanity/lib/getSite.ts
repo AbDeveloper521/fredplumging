@@ -100,18 +100,29 @@ export async function getSite(
     addressLocality: result.addressLocality ?? FALLBACK.addressLocality,
     addressRegion: result.addressRegion ?? FALLBACK.addressRegion,
     postalCode: result.postalCode ?? FALLBACK.postalCode,
+    mapHeading: result.mapHeading ?? FALLBACK.mapHeading,
+    mapDescription: result.mapDescription ?? FALLBACK.mapDescription,
+    mapEmbedUrl: result.mapEmbedUrl ?? FALLBACK.mapEmbedUrl,
     serviceAreaCities: result.serviceAreaCities?.length
       ? result.serviceAreaCities
       : FALLBACK.serviceAreaCities,
   };
 
   // Optional fields (street address) that are ALSO unset in the fallback are
-  // legitimately absent — not drift worth warning about.
+  // legitimately absent — not drift worth warning about. The map-band fields
+  // carry built-in defaults and are optional overrides: unset is normal.
+  const OPTIONAL_OVERRIDES: ReadonlySet<string> = new Set([
+    "mapHeading",
+    "mapDescription",
+    "mapEmbedUrl",
+  ]);
   const missing = (
     Object.keys(result) as Array<keyof typeof result>
   ).filter(
     (key) =>
-      result[key] == null && FALLBACK[key as keyof SiteContent] != null,
+      !OPTIONAL_OVERRIDES.has(key) &&
+      result[key] == null &&
+      FALLBACK[key as keyof SiteContent] != null,
   );
   if (missing.length > 0) {
     console.warn(

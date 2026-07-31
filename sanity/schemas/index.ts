@@ -1,6 +1,6 @@
 import type { SchemaTypeDefinition } from "sanity";
 import { siteSettings } from "./siteSettings";
-import { homePage } from "./homePage";
+import { homePage, homeSectionTypes } from "./homePage";
 import { aboutPage } from "./aboutPage";
 import { contactPage } from "./contactPage";
 import { cityPage } from "./cityPage";
@@ -29,4 +29,5 @@ export const schemaTypes: SchemaTypeDefinition[] = [
   trustLogo,
   jobPosting,
   ...serviceSectionTypes,
+  ...homeSectionTypes,
 ];

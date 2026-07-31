@@ -7,7 +7,7 @@ import { Reveal } from "@/components/ui/Reveal";
 import { StatCard } from "@/components/ui/StatCard";
 import { ImagePlaceholder } from "@/components/ui/ImagePlaceholder";
 import { navIcons } from "@/components/layout/navIcons";
-import { homePage, type HomeAboutContent } from "@/data/homePage";
+import { homePageDefaults, type HomeAboutContent } from "@/data/homePage";
 import type { CmsPhoto } from "@/data/services";
 import type { SiteContent } from "@/data/site";
 
@@ -88,10 +88,13 @@ export function AboutCollage({
 
 export function AboutSection({
   site,
-  content = homePage.about,
+  content = homePageDefaults.about,
+  titleId = "about-heading",
 }: {
   site: SiteContent;
   content?: HomeAboutContent;
+  /** Unique per instance — sections can be duplicated in the Studio. */
+  titleId?: string;
 }) {
   // An unset metric value means "the years-in-business figure" — derived
   // from Site Settings so it can never quietly go stale.
@@ -102,7 +105,7 @@ export function AboutSection({
   }));
 
   return (
-    <section aria-labelledby="about-heading" className="bg-offwhite py-16 sm:py-24 lg:py-28">
+    <section aria-labelledby={titleId} className="bg-offwhite py-16 sm:py-24 lg:py-28">
       <Container>
         <div className="grid grid-cols-1 items-center gap-14 lg:grid-cols-2 lg:gap-20">
           {/* Image composition */}
@@ -121,7 +124,7 @@ export function AboutSection({
           <div>
             <Reveal>
               <SectionHeading
-                titleId="about-heading"
+                titleId={titleId}
                 eyebrow={content.eyebrow}
                 title={content.heading}
                 description={content.description}

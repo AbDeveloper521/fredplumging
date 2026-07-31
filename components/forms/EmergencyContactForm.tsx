@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useId, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CheckCircle2, Phone } from "lucide-react";
@@ -38,6 +38,10 @@ function FieldError({ id, message }: { id: string; message?: string }) {
 }
 
 export function EmergencyContactForm({ site }: { site: SiteContent }) {
+  // Unique per mounted instance — the hero section (and this form with it)
+  // can be duplicated in the Studio, and duplicate DOM ids break label
+  // association for screen readers.
+  const idPrefix = useId();
   const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
 
   const {
@@ -107,76 +111,76 @@ export function EmergencyContactForm({ site }: { site: SiteContent }) {
         className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2"
       >
         <div>
-          <label htmlFor="hero-firstName" className={labelClasses}>
+          <label htmlFor={`${idPrefix}firstName`} className={labelClasses}>
             First name
           </label>
           <input
-            id="hero-firstName"
+            id={`${idPrefix}firstName`}
             type="text"
             autoComplete="given-name"
             aria-invalid={!!errors.firstName}
-            aria-describedby={errors.firstName ? "hero-firstName-error" : undefined}
+            aria-describedby={errors.firstName ? `${idPrefix}firstName-error` : undefined}
             className={inputClasses}
             {...register("firstName")}
           />
-          <FieldError id="hero-firstName-error" message={errors.firstName?.message} />
+          <FieldError id={`${idPrefix}firstName-error`} message={errors.firstName?.message} />
         </div>
 
         <div>
-          <label htmlFor="hero-lastName" className={labelClasses}>
+          <label htmlFor={`${idPrefix}lastName`} className={labelClasses}>
             Last name
           </label>
           <input
-            id="hero-lastName"
+            id={`${idPrefix}lastName`}
             type="text"
             autoComplete="family-name"
             aria-invalid={!!errors.lastName}
-            aria-describedby={errors.lastName ? "hero-lastName-error" : undefined}
+            aria-describedby={errors.lastName ? `${idPrefix}lastName-error` : undefined}
             className={inputClasses}
             {...register("lastName")}
           />
-          <FieldError id="hero-lastName-error" message={errors.lastName?.message} />
+          <FieldError id={`${idPrefix}lastName-error`} message={errors.lastName?.message} />
         </div>
 
         <div>
-          <label htmlFor="hero-email" className={labelClasses}>
+          <label htmlFor={`${idPrefix}email`} className={labelClasses}>
             Email
           </label>
           <input
-            id="hero-email"
+            id={`${idPrefix}email`}
             type="email"
             autoComplete="email"
             aria-invalid={!!errors.email}
-            aria-describedby={errors.email ? "hero-email-error" : undefined}
+            aria-describedby={errors.email ? `${idPrefix}email-error` : undefined}
             className={inputClasses}
             {...register("email")}
           />
-          <FieldError id="hero-email-error" message={errors.email?.message} />
+          <FieldError id={`${idPrefix}email-error`} message={errors.email?.message} />
         </div>
 
         <div>
-          <label htmlFor="hero-phone" className={labelClasses}>
+          <label htmlFor={`${idPrefix}phone`} className={labelClasses}>
             Phone
           </label>
           <input
-            id="hero-phone"
+            id={`${idPrefix}phone`}
             type="tel"
             autoComplete="tel"
             aria-invalid={!!errors.phone}
-            aria-describedby={errors.phone ? "hero-phone-error" : undefined}
+            aria-describedby={errors.phone ? `${idPrefix}phone-error` : undefined}
             className={inputClasses}
             {...register("phone")}
           />
-          <FieldError id="hero-phone-error" message={errors.phone?.message} />
+          <FieldError id={`${idPrefix}phone-error`} message={errors.phone?.message} />
         </div>
 
         <div className="sm:col-span-2">
-          <label htmlFor="hero-company" className={labelClasses}>
+          <label htmlFor={`${idPrefix}company`} className={labelClasses}>
             Property or company name{" "}
             <span className="font-normal text-grey-500">(optional)</span>
           </label>
           <input
-            id="hero-company"
+            id={`${idPrefix}company`}
             type="text"
             autoComplete="organization"
             className={inputClasses}
@@ -185,13 +189,13 @@ export function EmergencyContactForm({ site }: { site: SiteContent }) {
         </div>
 
         <div className="sm:col-span-2">
-          <label htmlFor="hero-service" className={labelClasses}>
+          <label htmlFor={`${idPrefix}service`} className={labelClasses}>
             Service needed
           </label>
           <select
-            id="hero-service"
+            id={`${idPrefix}service`}
             aria-invalid={!!errors.service}
-            aria-describedby={errors.service ? "hero-service-error" : undefined}
+            aria-describedby={errors.service ? `${idPrefix}service-error` : undefined}
             className={cn(inputClasses, "appearance-none bg-[url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22none%22%20stroke%3D%22%23687383%22%20stroke-width%3D%222%22%3E%3Cpath%20d%3D%22m4%206%204%204%204-4%22/%3E%3C/svg%3E')] bg-[position:right_0.9rem_center] bg-no-repeat pr-10")}
             defaultValue=""
             {...register("service")}
@@ -205,23 +209,23 @@ export function EmergencyContactForm({ site }: { site: SiteContent }) {
               </option>
             ))}
           </select>
-          <FieldError id="hero-service-error" message={errors.service?.message} />
+          <FieldError id={`${idPrefix}service-error`} message={errors.service?.message} />
         </div>
 
         <div className="sm:col-span-2">
-          <label htmlFor="hero-message" className={labelClasses}>
+          <label htmlFor={`${idPrefix}message`} className={labelClasses}>
             Message
           </label>
           <textarea
-            id="hero-message"
+            id={`${idPrefix}message`}
             rows={3}
             aria-invalid={!!errors.message}
-            aria-describedby={errors.message ? "hero-message-error" : undefined}
+            aria-describedby={errors.message ? `${idPrefix}message-error` : undefined}
             className={cn(inputClasses, "h-auto min-h-24 py-3")}
             placeholder="Briefly describe the issue or project…"
             {...register("message")}
           />
-          <FieldError id="hero-message-error" message={errors.message?.message} />
+          <FieldError id={`${idPrefix}message-error`} message={errors.message?.message} />
         </div>
 
         {status === "error" && (

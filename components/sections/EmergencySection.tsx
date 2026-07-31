@@ -5,15 +5,18 @@ import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
 import { ImagePlaceholder } from "@/components/ui/ImagePlaceholder";
 import { navIcons } from "@/components/layout/navIcons";
-import { homePage, type HomeEmergencyContent } from "@/data/homePage";
+import { homePageDefaults, type HomeEmergencyContent } from "@/data/homePage";
 import type { SiteContent } from "@/data/site";
 
 export function EmergencySection({
   site,
-  content = homePage.emergency,
+  content = homePageDefaults.emergency,
+  titleId = "emergency-heading",
 }: {
   site: SiteContent;
   content?: HomeEmergencyContent;
+  /** Unique per instance — sections can be duplicated in the Studio. */
+  titleId?: string;
 }) {
   const benefits = content.benefits.map((item) => ({
     icon: navIcons[item.icon],
@@ -21,7 +24,7 @@ export function EmergencySection({
   }));
   return (
     <section
-      aria-labelledby="emergency-heading"
+      aria-labelledby={titleId}
       className="relative isolate overflow-hidden bg-navy-900 py-16 sm:py-24 lg:py-28"
     >
       {/* Controlled red glow + texture */}
@@ -49,7 +52,7 @@ export function EmergencySection({
 
           <Reveal delay={0.08}>
             <h2
-              id="emergency-heading"
+              id={titleId}
               className="mt-5 text-[32px] leading-[1.1] font-extrabold tracking-tight text-balance text-white sm:text-4xl lg:text-[46px]"
             >
               {content.heading}

@@ -11,6 +11,7 @@ import type { ServiceFaqSection } from "@/data/serviceSections";
 import { CmsDetailPage } from "@/components/layout/CmsDetailPage";
 import { ServiceSectionRenderer } from "@/components/sections/ServiceSectionRenderer";
 import { TestimonialsSection } from "@/components/sections/TestimonialsSection";
+import { LocationMapSection } from "@/components/sections/LocationMapSection";
 import {
   BreadcrumbJsonLd,
   FaqJsonLd,
@@ -117,6 +118,7 @@ export default async function ServicePage({
           titleId="client-reviews-heading"
           filterTags={DEFAULT_PAGE_REVIEW_TAGS[service.slug]}
         />
+        <LocationMapSection site={site} directionsUrl={profile.reviewsUrl} />
       </>
     );
   }
@@ -148,6 +150,8 @@ export default async function ServicePage({
         profile={profile}
         trustLogos={trustLogos}
       />
+      {/* Shared Google-map band — after the section stack on every service. */}
+      <LocationMapSection site={site} directionsUrl={profile.reviewsUrl} />
     </>
   );
 }
