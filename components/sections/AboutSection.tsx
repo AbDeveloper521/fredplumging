@@ -37,7 +37,13 @@ export function AboutCollage({
 }) {
   return (
     <div className="relative">
-      <div className="relative aspect-[4/3] overflow-hidden rounded-2xl shadow-(--shadow-card-lg)">
+      <div
+        className="relative overflow-hidden rounded-2xl shadow-(--shadow-card-lg)"
+        // 4:3 by design; the editor's "Frame shape" override travels on the
+        // resolved photo's ratio. The overlapping secondary stays fixed —
+        // its frame is part of the composition.
+        style={{ aspectRatio: primaryPhoto?.ratio ?? 4 / 3 }}
+      >
         {primaryPhoto ? (
           <Image
             src={primaryPhoto.url}

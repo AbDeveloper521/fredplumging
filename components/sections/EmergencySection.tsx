@@ -113,7 +113,10 @@ export function EmergencySection({
         {/* Visual */}
         <Reveal delay={0.15}>
           <div className="relative">
-            <div className="relative aspect-[4/5] max-h-[540px] w-full overflow-hidden rounded-2xl border border-white/10 shadow-(--shadow-card-lg)">
+            <div
+              className="relative max-h-[540px] w-full overflow-hidden rounded-2xl border border-white/10 shadow-(--shadow-card-lg)"
+              style={{ aspectRatio: content.photo?.ratio ?? 4 / 5 }}
+            >
               {content.photo ? (
                 <Image
                   src={content.photo.url}

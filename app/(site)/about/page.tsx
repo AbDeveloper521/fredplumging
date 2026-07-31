@@ -164,7 +164,10 @@ export default async function AboutPage() {
             ))}
           </div>
           <Reveal delay={0.12}>
-            <div className="relative aspect-[4/3] overflow-hidden rounded-2xl border border-white/10 shadow-(--shadow-card-lg)">
+            <div
+              className="relative overflow-hidden rounded-2xl border border-white/10 shadow-(--shadow-card-lg)"
+              style={{ aspectRatio: content.evolutionPhoto?.ratio ?? 4 / 3 }}
+            >
               {content.evolutionPhoto ? (
                 <Image
                   src={content.evolutionPhoto.url}

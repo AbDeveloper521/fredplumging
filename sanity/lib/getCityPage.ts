@@ -109,10 +109,13 @@ export async function getCityPage(
     heritageHeading: result.heritageHeading ?? fb?.heritageHeading,
     heritageParagraphs:
       strings(result.heritageParagraphs) ?? fb?.heritageParagraphs ?? [],
+    // Renders through ServiceAboutSection's square frame — same design
+    // ratio as the serviceAbout main photo.
     heritagePhoto: resolvePhoto(
       result.heritagePhoto,
       1600,
       `cityPage "${slug}" → "Heritage photo"`,
+      1,
     ),
     heritagePhotoSubject:
       result.heritagePhotoSubject ?? fb?.heritagePhotoSubject,

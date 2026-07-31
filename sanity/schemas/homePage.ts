@@ -329,13 +329,18 @@ export const homeAbout = defineType({
     imageWithAlt({
       name: "primaryPhoto",
       title: "Main photo",
-      description: "The large photo in the collage, behind the red badge.",
+      description:
+        "The large photo in the collage, behind the red badge. The “Frame shape” control below the upload can change the frame's shape or show the photo uncropped.",
     }),
     photoSubjectField("primaryPhotoSubject", "What the main photo should eventually show."),
     imageWithAlt({
       name: "secondaryPhoto",
       title: "Small overlapping photo",
-      description: "The smaller photo overlapping the main one.",
+      description:
+        "The smaller photo overlapping the main one. Its frame is fixed so the overlap composition holds — drag the hotspot circle (click the image → Edit hotspot) over the part that must stay visible.",
+      // The overlap frame is absolutely positioned against the main photo;
+      // a shape override here could cover it, so no control.
+      frameRatio: false,
     }),
     photoSubjectField("secondaryPhotoSubject", "What the small photo should eventually show."),
     hiddenField(),
@@ -376,7 +381,8 @@ export const homeEmergency = defineType({
     imageWithAlt({
       name: "photo",
       title: "Photo",
-      description: "The tall photo on the right of the band. Vertical orientation works best.",
+      description:
+        "The tall photo on the right of the band. Vertical orientation works best. The “Frame shape” control below the upload can change the frame's shape or show the photo uncropped.",
     }),
     photoSubjectField("photoSubject", "What the photo should eventually show."),
     optionalString(
@@ -417,7 +423,8 @@ export const homeWhyChooseUs = defineType({
     imageWithAlt({
       name: "photo",
       title: "Photo",
-      description: "The photo under the intro column (desktop only).",
+      description:
+        "The photo under the intro column (desktop only). The “Frame shape” control below the upload can change the frame's shape or show the photo uncropped.",
     }),
     photoSubjectField("photoSubject", "What the photo should eventually show."),
     optionalString(
@@ -522,7 +529,8 @@ export const homeCaseStudy = defineType({
     imageWithAlt({
       name: "photo",
       title: "Photo",
-      description: "The property photo on the left of the story.",
+      description:
+        "The property photo on the left of the story. The “Frame shape” control below the upload can change the frame's shape or show the photo uncropped.",
     }),
     photoSubjectField("photoSubject", "What the photo should eventually show."),
     optionalString("photoCardTitle", "Dark card on the photo — first line", "e.g. “240-unit apartment community”."),

@@ -69,7 +69,7 @@ export const aboutPage = defineType({
       name: "storyPhotoPrimary",
       title: "Story — main photo",
       description:
-        "The large photo in the story section's collage, part-way down the page.",
+        "The large photo in the story section's collage, part-way down the page. The “Frame shape” control below the upload can change the frame's shape or show the photo uncropped.",
     }),
     defineField({
       name: "storyPhotoSubjectPrimary",
@@ -81,7 +81,10 @@ export const aboutPage = defineType({
     imageWithAlt({
       name: "storyPhotoSecondary",
       title: "Story — small overlapping photo",
-      description: "The smaller photo overlapping the main one in the collage.",
+      description:
+        "The smaller photo overlapping the main one in the collage. Its frame is fixed so the overlap composition holds — drag the hotspot circle (click the image → Edit hotspot) over the part that must stay visible.",
+      // Same overlap composition as the homepage collage — no override.
+      frameRatio: false,
     }),
     defineField({
       name: "storyPhotoSubjectSecondary",
@@ -105,7 +108,8 @@ export const aboutPage = defineType({
     imageWithAlt({
       name: "evolutionPhoto",
       title: "Evolution photo",
-      description: "The single large photo beside the evolution copy.",
+      description:
+        "The single large photo beside the evolution copy. The “Frame shape” control below the upload can change the frame's shape or show the photo uncropped.",
     }),
     defineField({
       name: "evolutionPhotoSubject",

@@ -185,7 +185,12 @@ export function ServiceHeroSection({
             and a fill Image contributes no intrinsic size — without lg:w-full the
             box collapses to 0×0 the moment a real photo replaces the placeholder. */}
         <Rise delay={0.2} className="hidden lg:block lg:w-full lg:max-w-[440px] lg:justify-self-end">
-          <div className="relative aspect-[3/4] w-full rotate-1 overflow-hidden rounded-2xl border border-white/10 shadow-(--shadow-card-lg)">
+          <div
+            className="relative w-full rotate-1 overflow-hidden rounded-2xl border border-white/10 shadow-(--shadow-card-lg)"
+            // Tall 3:4 by design; the Studio override on this slot is
+            // restricted to portrait/square so the banner survives.
+            style={{ aspectRatio: section.photo?.ratio ?? 3 / 4 }}
+          >
             {section.photo ? (
               <Image
                 src={section.photo.url}

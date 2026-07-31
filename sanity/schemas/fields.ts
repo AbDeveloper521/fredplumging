@@ -1,15 +1,47 @@
 import { defineArrayMember, defineField } from "sanity";
 
 /**
+ * Values the optional per-image "Frame shape" override can take. Interpreted
+ * by `resolvePhoto` in sanity/lib/image.ts — keep the two in sync.
+ */
+export const FRAME_RATIO_VALUES = [
+  "square",
+  "landscape",
+  "wide",
+  "portrait",
+  "original",
+] as const;
+export type FrameRatioValue = (typeof FRAME_RATIO_VALUES)[number];
+
+const FRAME_RATIO_TITLES: Record<FrameRatioValue, string> = {
+  square: "Square (1:1)",
+  landscape: "Landscape (4:3)",
+  wide: "Wide (16:9)",
+  portrait: "Portrait (3:4)",
+  original: "Original — show the whole photo uncropped",
+};
+
+/**
  * Shared image-with-required-alt field. Alt text is enforced whenever an
  * image is set — accessibility is first-class, and that only holds if the
  * CMS enforces it.
+ *
+ * `frameRatio` controls the optional "Frame shape" override: omit for the
+ * full choice list, pass a subset for composition slots that only survive
+ * certain shapes, or `false` for slots where the frame is load-bearing
+ * (overlap collages, full-bleed cards) and an override would break the
+ * layout.
  */
 export function imageWithAlt(options: {
   name: string;
   title: string;
   description: string;
+  frameRatio?: false | readonly FrameRatioValue[];
 }) {
+  const ratioValues =
+    options.frameRatio === false
+      ? []
+      : (options.frameRatio ?? FRAME_RATIO_VALUES);
   return defineField({
     name: options.name,
     title: options.title,
@@ -24,6 +56,28 @@ export function imageWithAlt(options: {
           "A short sentence saying what's in the picture, e.g. “Technician repairing a commercial water heater”. This is what screen readers announce to blind and low-vision visitors, and what shows if the image fails to load.",
         type: "string",
       }),
+      ...(ratioValues.length > 0
+        ? [
+            defineField({
+              name: "frameRatio",
+              title: "Frame shape",
+              description:
+                "How this photo's frame is shaped on the page. Leave on the default unless the photo looks wrong in its spot. Whatever you choose, drag the hotspot circle (click the image → Edit hotspot) over the part that must stay visible. Extreme panoramas and towers are reined in — frames never go wider than 2.4:1 or taller than 1:1.6, even on “Original”.",
+              type: "string",
+              options: {
+                layout: "radio",
+                list: [
+                  { title: "Designed for this spot (default)", value: "default" },
+                  ...ratioValues.map((value) => ({
+                    title: FRAME_RATIO_TITLES[value],
+                    value,
+                  })),
+                ],
+              },
+              initialValue: "default",
+            }),
+          ]
+        : []),
     ],
     validation: (rule) =>
       rule.custom((value: { asset?: unknown; alt?: string } | undefined) => {

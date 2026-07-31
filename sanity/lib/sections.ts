@@ -115,7 +115,10 @@ function toSection(raw: Raw, index: number): ServiceSection | null {
             ? { _key: key(c, i), icon: toIcon(str(c.icon)), label }
             : null;
         }),
-        photo: photoOf(raw, "photo"),
+        // The hero banner's tall 3:4 frame — cropped server-side so the CDN
+        // honours the editor's hotspot (the Studio override is restricted to
+        // portrait/square; this is the design default).
+        photo: photoOf(raw, "photo", 3 / 4),
         photoSubject: str(raw.photoSubject),
         phoneCtaLabel: str(raw.phoneCtaLabel),
         showAvailabilityDot: raw.showAvailabilityDot === true,
@@ -264,7 +267,9 @@ function toSection(raw: Raw, index: number): ServiceSection | null {
               title,
               blurb,
               slug: str(c.slug),
-              photo: photoOf(c, "photo"),
+              // Uniform 16:10 card strip — every card crops the same so
+              // grid rows stay aligned (no Studio override on this slot).
+              photo: photoOf(c, "photo", 16 / 10),
               photoSubject: str(c.photoSubject),
             }
           : null;
@@ -312,7 +317,7 @@ function toSection(raw: Raw, index: number): ServiceSection | null {
         _key,
         heading,
         body: str(raw.body),
-        photo: photoOf(raw, "photo"),
+        photo: photoOf(raw, "photo", 4 / 3),
         photoSubject: str(raw.photoSubject),
       };
     }

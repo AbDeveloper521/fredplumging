@@ -5,6 +5,12 @@ import type { ServiceSection } from "./serviceSections";
 export interface CmsPhoto {
   url: string;
   alt: string;
+  /**
+   * Width/height ratio the URL was cropped to (design ratio or the editor's
+   * "Frame shape" override) — components size the frame from it via CSS
+   * `aspect-ratio`. Absent when the URL is uncropped (`fit=max`).
+   */
+  ratio?: number;
 }
 
 /**

@@ -70,7 +70,10 @@ export function ServiceAreaCmsSection({ section, site, id }: ServiceAreaCmsSecti
         </div>
 
         <Reveal delay={0.12}>
-          <div className="relative aspect-[4/3] overflow-hidden rounded-2xl shadow-(--shadow-card-lg)">
+          <div
+            className="relative overflow-hidden rounded-2xl shadow-(--shadow-card-lg)"
+            style={{ aspectRatio: section.photo?.ratio ?? 4 / 3 }}
+          >
             {section.photo ? (
               <Image
                 src={section.photo.url}

@@ -29,7 +29,10 @@ export function CaseStudySection({
       <Container className="grid grid-cols-1 items-center gap-14 lg:grid-cols-2 lg:gap-20">
         <Reveal className="order-2 lg:order-1">
           <div className="relative">
-            <div className="relative aspect-[4/3] overflow-hidden rounded-2xl shadow-(--shadow-card-lg)">
+            <div
+              className="relative overflow-hidden rounded-2xl shadow-(--shadow-card-lg)"
+              style={{ aspectRatio: content.photo?.ratio ?? 4 / 3 }}
+            >
               {content.photo ? (
                 <Image
                   src={content.photo.url}

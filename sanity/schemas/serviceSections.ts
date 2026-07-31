@@ -219,7 +219,11 @@ export const serviceHero = defineType({
       name: "photo",
       title: "Banner photo",
       description:
-        "The large photo beside the page heading, at the very top of this page — the tall image on the right of the dark banner. Vertical orientation works best. Until one is uploaded the site shows a styled placeholder. (The small photo on the homepage card is a separate field: “Photo” at the document level, below the sections list.)",
+        "The large photo beside the page heading, at the very top of this page — the tall image on the right of the dark banner. Vertical orientation works best. Until one is uploaded the site shows a styled placeholder. The “Frame shape” control below the upload can switch the frame to a square — wider shapes would break the banner, so only tall shapes are offered. (The small photo on the homepage card is a separate field: “Photo” at the document level, below the sections list.)",
+      // The tall banner is load-bearing: it sits against `justify-self-end`
+      // on the hero grid and reads as a vertical strip. Landscape/wide/
+      // original would collapse the composition, so only tall shapes.
+      frameRatio: ["portrait", "square"],
     }),
     defineField({
       name: "photoSubject",
@@ -267,7 +271,7 @@ export const serviceAbout = defineType({
       name: "photoPrimary",
       title: "Main photo",
       description:
-        "The large photo in the About band, part-way down this page — behind the red 24/7 badge. It is shown in a square frame: a square photo is ideal, but any shape works. If part of the photo gets cut off, click the image, choose “Edit hotspot”, and drag the circle over the part that must stay visible — the site will keep that part in frame.",
+        "The large photo in the About band, part-way down this page — behind the red 24/7 badge. It is shown in a square frame by default; the “Frame shape” control below the upload can change that, or show the photo uncropped. If part of the photo gets cut off, click the image, choose “Edit hotspot”, and drag the circle over the part that must stay visible — the site will keep that part in frame.",
     }),
     defineField({
       name: "photoSubjectPrimary",
@@ -671,7 +675,10 @@ export const propertyTypes = defineType({
               name: "photo",
               title: "Card photo (optional)",
               description:
-                "The photo across the top of this card in the Property cards grid on this page. Cards without one show the icon instead.",
+                "The photo across the top of this card in the Property cards grid on this page. Cards without one show the icon instead. Every card crops to the same shape so the grid rows stay aligned — drag the hotspot circle (click the image → Edit hotspot) over the part that must stay visible.",
+              // Cards sit in a uniform grid; per-card frame shapes would
+              // misalign the rows, so no override here.
+              frameRatio: false,
             }),
             defineField({
               name: "photoSubject",
@@ -812,7 +819,7 @@ export const serviceArea = defineType({
       name: "photo",
       title: "Photo",
       description:
-        "The photo on the right of the Service area section, near the bottom of this page, beside the city list — e.g. a Dallas or Fort Worth skyline.",
+        "The photo on the right of the Service area section, near the bottom of this page, beside the city list — e.g. a Dallas or Fort Worth skyline. The “Frame shape” control below the upload can change the frame's shape or show the photo uncropped.",
     }),
     defineField({
       name: "photoSubject",

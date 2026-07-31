@@ -51,7 +51,10 @@ export function WhyChooseUsSection({
           </Reveal>
           <Reveal delay={0.16}>
             <div className="relative mt-12 hidden overflow-hidden rounded-2xl lg:block">
-              <div className="relative aspect-[16/10]">
+              <div
+                className="relative"
+                style={{ aspectRatio: content.photo?.ratio ?? 16 / 10 }}
+              >
                 {content.photo ? (
                   <Image
                     src={content.photo.url}

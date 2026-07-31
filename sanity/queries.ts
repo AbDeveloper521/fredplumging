@@ -120,8 +120,8 @@ export const SERVICE_BY_SLUG_QUERY = defineQuery(
     body,
     sections[]{
       ...,
-      photo{ asset, hotspot, crop, alt },
-      photoPrimary{ asset, hotspot, crop, alt }
+      photo{ asset, hotspot, crop, alt, frameRatio },
+      photoPrimary{ asset, hotspot, crop, alt, frameRatio }
     },
     seoTitle,
     seoDescription
@@ -151,8 +151,8 @@ export const INDUSTRY_BY_SLUG_QUERY = defineQuery(
     body,
     sections[]{
       ...,
-      photo{ asset, hotspot, crop, alt },
-      photoPrimary{ asset, hotspot, crop, alt }
+      photo{ asset, hotspot, crop, alt, frameRatio },
+      photoPrimary{ asset, hotspot, crop, alt, frameRatio }
     },
     seoTitle,
     seoDescription
@@ -175,8 +175,8 @@ export const HOME_PAGE_QUERY = defineQuery(
   `*[_type == "homePage" && _id == "homePage"][0]{
     sections[]{
       ...,
-      photo{ asset, hotspot, crop, alt },
-      primaryPhoto{ asset, hotspot, crop, alt },
+      photo{ asset, hotspot, crop, alt, frameRatio },
+      primaryPhoto{ asset, hotspot, crop, alt, frameRatio },
       secondaryPhoto{ asset, hotspot, crop, alt }
     }
   }`,
@@ -189,13 +189,13 @@ export const ABOUT_PAGE_QUERY = defineQuery(
     heroParagraphs,
     storyHeading,
     storyParagraphs,
-    storyPhotoPrimary{ asset, hotspot, crop, alt },
+    storyPhotoPrimary{ asset, hotspot, crop, alt, frameRatio },
     storyPhotoSubjectPrimary,
     storyPhotoSecondary{ asset, hotspot, crop, alt },
     storyPhotoSubjectSecondary,
     evolutionHeading,
     evolutionParagraphs,
-    evolutionPhoto{ asset, hotspot, crop, alt },
+    evolutionPhoto{ asset, hotspot, crop, alt, frameRatio },
     evolutionPhotoSubject,
     valuesHeading,
     values[]{ icon, title, description },
@@ -230,7 +230,7 @@ export const CITY_PAGE_QUERY = defineQuery(
     reviewsHeading,
     heritageHeading,
     heritageParagraphs,
-    heritagePhoto{ asset, hotspot, crop, alt },
+    heritagePhoto{ asset, hotspot, crop, alt, frameRatio },
     heritagePhotoSubject,
     communitiesHeading,
     communitiesBody,

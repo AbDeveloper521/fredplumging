@@ -98,6 +98,8 @@ export type HomeCaseStudy = {
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     alt?: string;
+    frameRatio?:
+      "default" | "square" | "landscape" | "wide" | "portrait" | "original";
     _type: "image";
   };
   photoSubject?: string;
@@ -191,6 +193,8 @@ export type HomeWhyChooseUs = {
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     alt?: string;
+    frameRatio?:
+      "default" | "square" | "landscape" | "wide" | "portrait" | "original";
     _type: "image";
   };
   photoSubject?: string;
@@ -242,6 +246,8 @@ export type HomeEmergency = {
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     alt?: string;
+    frameRatio?:
+      "default" | "square" | "landscape" | "wide" | "portrait" | "original";
     _type: "image";
   };
   photoSubject?: string;
@@ -296,6 +302,8 @@ export type HomeAbout = {
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     alt?: string;
+    frameRatio?:
+      "default" | "square" | "landscape" | "wide" | "portrait" | "original";
     _type: "image";
   };
   primaryPhotoSubject?: string;
@@ -379,6 +387,8 @@ export type ServiceArea = {
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     alt?: string;
+    frameRatio?:
+      "default" | "square" | "landscape" | "wide" | "portrait" | "original";
     _type: "image";
   };
   photoSubject?: string;
@@ -544,6 +554,8 @@ export type ServiceAbout = {
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     alt?: string;
+    frameRatio?:
+      "default" | "square" | "landscape" | "wide" | "portrait" | "original";
     _type: "image";
   };
   photoSubjectPrimary?: string;
@@ -583,6 +595,7 @@ export type ServiceHero = {
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     alt?: string;
+    frameRatio?: "default" | "portrait" | "square";
     _type: "image";
   };
   photoSubject?: string;
@@ -992,6 +1005,8 @@ export type CityPage = {
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     alt?: string;
+    frameRatio?:
+      "default" | "square" | "landscape" | "wide" | "portrait" | "original";
     _type: "image";
   };
   heritagePhotoSubject?: string;
@@ -1046,6 +1061,8 @@ export type AboutPage = {
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     alt?: string;
+    frameRatio?:
+      "default" | "square" | "landscape" | "wide" | "portrait" | "original";
     _type: "image";
   };
   storyPhotoSubjectPrimary?: string;
@@ -1066,6 +1083,8 @@ export type AboutPage = {
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     alt?: string;
+    frameRatio?:
+      "default" | "square" | "landscape" | "wide" | "portrait" | "original";
     _type: "image";
   };
   evolutionPhotoSubject?: string;
@@ -1534,7 +1553,7 @@ export type SERVICES_QUERY_RESULT = Array<{
 
 // Source: sanity/queries.ts
 // Variable: SERVICE_BY_SLUG_QUERY
-// Query: *[_type == "service" && slug.current == $slug][0]{    title,    "slug": slug.current,    shortDescription,    icon,    featured,    photo{ asset, hotspot, crop, alt },    body,    sections[]{      ...,      photo{ asset, hotspot, crop, alt },      photoPrimary{ asset, hotspot, crop, alt }    },    seoTitle,    seoDescription  }
+// Query: *[_type == "service" && slug.current == $slug][0]{    title,    "slug": slug.current,    shortDescription,    icon,    featured,    photo{ asset, hotspot, crop, alt },    body,    sections[]{      ...,      photo{ asset, hotspot, crop, alt, frameRatio },      photoPrimary{ asset, hotspot, crop, alt, frameRatio }    },    seoTitle,    seoDescription  }
 export type SERVICE_BY_SLUG_QUERY_RESULT = {
   title: string | null;
   slug: string | null;
@@ -1669,6 +1688,14 @@ export type SERVICE_BY_SLUG_QUERY_RESULT = {
           hotspot: SanityImageHotspot | null;
           crop: SanityImageCrop | null;
           alt: string | null;
+          frameRatio:
+            | "default"
+            | "landscape"
+            | "original"
+            | "portrait"
+            | "square"
+            | "wide"
+            | null;
         } | null;
         photoSubjectPrimary?: string;
         photo: null;
@@ -1683,6 +1710,14 @@ export type SERVICE_BY_SLUG_QUERY_RESULT = {
           hotspot: SanityImageHotspot | null;
           crop: SanityImageCrop | null;
           alt: string | null;
+          frameRatio:
+            | "default"
+            | "landscape"
+            | "original"
+            | "portrait"
+            | "square"
+            | "wide"
+            | null;
         } | null;
         photoSubject?: string;
         photoPrimary: null;
@@ -1737,6 +1772,7 @@ export type SERVICE_BY_SLUG_QUERY_RESULT = {
           hotspot: SanityImageHotspot | null;
           crop: SanityImageCrop | null;
           alt: string | null;
+          frameRatio: "default" | "portrait" | "square" | null;
         } | null;
         photoSubject?: string;
         photoPrimary: null;
@@ -1889,7 +1925,7 @@ export type INDUSTRIES_QUERY_RESULT = Array<{
 
 // Source: sanity/queries.ts
 // Variable: INDUSTRY_BY_SLUG_QUERY
-// Query: *[_type == "industry" && slug.current == $slug][0]{    title,    "slug": slug.current,    description,    bulletPoints,    photo{ asset, hotspot, crop, alt },    body,    sections[]{      ...,      photo{ asset, hotspot, crop, alt },      photoPrimary{ asset, hotspot, crop, alt }    },    seoTitle,    seoDescription  }
+// Query: *[_type == "industry" && slug.current == $slug][0]{    title,    "slug": slug.current,    description,    bulletPoints,    photo{ asset, hotspot, crop, alt },    body,    sections[]{      ...,      photo{ asset, hotspot, crop, alt, frameRatio },      photoPrimary{ asset, hotspot, crop, alt, frameRatio }    },    seoTitle,    seoDescription  }
 export type INDUSTRY_BY_SLUG_QUERY_RESULT = {
   title: string | null;
   slug: string | null;
@@ -2013,6 +2049,14 @@ export type INDUSTRY_BY_SLUG_QUERY_RESULT = {
           hotspot: SanityImageHotspot | null;
           crop: SanityImageCrop | null;
           alt: string | null;
+          frameRatio:
+            | "default"
+            | "landscape"
+            | "original"
+            | "portrait"
+            | "square"
+            | "wide"
+            | null;
         } | null;
         photoSubjectPrimary?: string;
         photo: null;
@@ -2027,6 +2071,14 @@ export type INDUSTRY_BY_SLUG_QUERY_RESULT = {
           hotspot: SanityImageHotspot | null;
           crop: SanityImageCrop | null;
           alt: string | null;
+          frameRatio:
+            | "default"
+            | "landscape"
+            | "original"
+            | "portrait"
+            | "square"
+            | "wide"
+            | null;
         } | null;
         photoSubject?: string;
         photoPrimary: null;
@@ -2081,6 +2133,7 @@ export type INDUSTRY_BY_SLUG_QUERY_RESULT = {
           hotspot: SanityImageHotspot | null;
           crop: SanityImageCrop | null;
           alt: string | null;
+          frameRatio: "default" | "portrait" | "square" | null;
         } | null;
         photoSubject?: string;
         photoPrimary: null;
@@ -2211,7 +2264,7 @@ export type TRUST_LOGOS_QUERY_RESULT = Array<{
 
 // Source: sanity/queries.ts
 // Variable: HOME_PAGE_QUERY
-// Query: *[_type == "homePage" && _id == "homePage"][0]{    sections[]{      ...,      photo{ asset, hotspot, crop, alt },      primaryPhoto{ asset, hotspot, crop, alt },      secondaryPhoto{ asset, hotspot, crop, alt }    }  }
+// Query: *[_type == "homePage" && _id == "homePage"][0]{    sections[]{      ...,      photo{ asset, hotspot, crop, alt, frameRatio },      primaryPhoto{ asset, hotspot, crop, alt, frameRatio },      secondaryPhoto{ asset, hotspot, crop, alt }    }  }
 export type HOME_PAGE_QUERY_RESULT = {
   sections: Array<
     | {
@@ -2253,6 +2306,14 @@ export type HOME_PAGE_QUERY_RESULT = {
           hotspot: SanityImageHotspot | null;
           crop: SanityImageCrop | null;
           alt: string | null;
+          frameRatio:
+            | "default"
+            | "landscape"
+            | "original"
+            | "portrait"
+            | "square"
+            | "wide"
+            | null;
         } | null;
         primaryPhotoSubject?: string;
         secondaryPhoto: {
@@ -2302,6 +2363,14 @@ export type HOME_PAGE_QUERY_RESULT = {
           hotspot: SanityImageHotspot | null;
           crop: SanityImageCrop | null;
           alt: string | null;
+          frameRatio:
+            | "default"
+            | "landscape"
+            | "original"
+            | "portrait"
+            | "square"
+            | "wide"
+            | null;
         } | null;
         photoSubject?: string;
         photoCardTitle?: string;
@@ -2358,6 +2427,14 @@ export type HOME_PAGE_QUERY_RESULT = {
           hotspot: SanityImageHotspot | null;
           crop: SanityImageCrop | null;
           alt: string | null;
+          frameRatio:
+            | "default"
+            | "landscape"
+            | "original"
+            | "portrait"
+            | "square"
+            | "wide"
+            | null;
         } | null;
         photoSubject?: string;
         photoCaption?: string;
@@ -2559,6 +2636,14 @@ export type HOME_PAGE_QUERY_RESULT = {
           hotspot: SanityImageHotspot | null;
           crop: SanityImageCrop | null;
           alt: string | null;
+          frameRatio:
+            | "default"
+            | "landscape"
+            | "original"
+            | "portrait"
+            | "square"
+            | "wide"
+            | null;
         } | null;
         photoSubject?: string;
         photoCaption?: string;
@@ -2571,7 +2656,7 @@ export type HOME_PAGE_QUERY_RESULT = {
 
 // Source: sanity/queries.ts
 // Variable: ABOUT_PAGE_QUERY
-// Query: *[_type == "aboutPage" && _id == "aboutPage"][0]{    heroEyebrow,    heroHeading,    heroParagraphs,    storyHeading,    storyParagraphs,    storyPhotoPrimary{ asset, hotspot, crop, alt },    storyPhotoSubjectPrimary,    storyPhotoSecondary{ asset, hotspot, crop, alt },    storyPhotoSubjectSecondary,    evolutionHeading,    evolutionParagraphs,    evolutionPhoto{ asset, hotspot, crop, alt },    evolutionPhotoSubject,    valuesHeading,    values[]{ icon, title, description },    linksHeading,    links[]{ title, description, href }  }
+// Query: *[_type == "aboutPage" && _id == "aboutPage"][0]{    heroEyebrow,    heroHeading,    heroParagraphs,    storyHeading,    storyParagraphs,    storyPhotoPrimary{ asset, hotspot, crop, alt, frameRatio },    storyPhotoSubjectPrimary,    storyPhotoSecondary{ asset, hotspot, crop, alt },    storyPhotoSubjectSecondary,    evolutionHeading,    evolutionParagraphs,    evolutionPhoto{ asset, hotspot, crop, alt, frameRatio },    evolutionPhotoSubject,    valuesHeading,    values[]{ icon, title, description },    linksHeading,    links[]{ title, description, href }  }
 export type ABOUT_PAGE_QUERY_RESULT = {
   heroEyebrow: string | null;
   heroHeading: string | null;
@@ -2583,6 +2668,14 @@ export type ABOUT_PAGE_QUERY_RESULT = {
     hotspot: SanityImageHotspot | null;
     crop: SanityImageCrop | null;
     alt: string | null;
+    frameRatio:
+      | "default"
+      | "landscape"
+      | "original"
+      | "portrait"
+      | "square"
+      | "wide"
+      | null;
   } | null;
   storyPhotoSubjectPrimary: string | null;
   storyPhotoSecondary: {
@@ -2599,6 +2692,14 @@ export type ABOUT_PAGE_QUERY_RESULT = {
     hotspot: SanityImageHotspot | null;
     crop: SanityImageCrop | null;
     alt: string | null;
+    frameRatio:
+      | "default"
+      | "landscape"
+      | "original"
+      | "portrait"
+      | "square"
+      | "wide"
+      | null;
   } | null;
   evolutionPhotoSubject: string | null;
   valuesHeading: string | null;
@@ -2645,7 +2746,7 @@ export type CONTACT_PAGE_QUERY_RESULT = {
 
 // Source: sanity/queries.ts
 // Variable: CITY_PAGE_QUERY
-// Query: *[_type == "cityPage" && slug.current == $slug][0]{    city,    "slug": slug.current,    heroHeading,    heroIntro,    servicesHeading,    serviceCards[]{ _key, title, description, href, icon },    whyChooseHeading,    whyChooseBody,    reviewsHeading,    heritageHeading,    heritageParagraphs,    heritagePhoto{ asset, hotspot, crop, alt },    heritagePhotoSubject,    communitiesHeading,    communitiesBody,    communities,    showLogoStrip,    seoTitle,    seoDescription  }
+// Query: *[_type == "cityPage" && slug.current == $slug][0]{    city,    "slug": slug.current,    heroHeading,    heroIntro,    servicesHeading,    serviceCards[]{ _key, title, description, href, icon },    whyChooseHeading,    whyChooseBody,    reviewsHeading,    heritageHeading,    heritageParagraphs,    heritagePhoto{ asset, hotspot, crop, alt, frameRatio },    heritagePhotoSubject,    communitiesHeading,    communitiesBody,    communities,    showLogoStrip,    seoTitle,    seoDescription  }
 export type CITY_PAGE_QUERY_RESULT = {
   city: string | null;
   slug: string | null;
@@ -2677,6 +2778,14 @@ export type CITY_PAGE_QUERY_RESULT = {
     hotspot: SanityImageHotspot | null;
     crop: SanityImageCrop | null;
     alt: string | null;
+    frameRatio:
+      | "default"
+      | "landscape"
+      | "original"
+      | "portrait"
+      | "square"
+      | "wide"
+      | null;
   } | null;
   heritagePhotoSubject: string | null;
   communitiesHeading: string | null;
@@ -2719,14 +2828,14 @@ declare module "@sanity/client" {
     '*[_type == "testimonial"] | order(order asc){\n    "id": _id, name, role, rating, quote, date, featured,\n    source, reviewerMeta, sourceUrl, serviceTags, verified,\n    ownerReply, ownerReplyDate\n  }': TESTIMONIALS_QUERY_RESULT;
     '*[_type == "reviewSettings" && _id == "reviewSettings"][0]{\n    rating,\n    reviewCount,\n    verifiedOn,\n    reviewsUrl,\n    writeReviewUrl,\n    headline\n  }': REVIEW_SETTINGS_QUERY_RESULT;
     '*[_type == "service"] | order(order asc){\n    title,\n    "slug": slug.current,\n    shortDescription,\n    icon,\n    featured,\n    photo{ asset, hotspot, crop, alt },\n    body,\n    seoTitle,\n    seoDescription\n  }': SERVICES_QUERY_RESULT;
-    '*[_type == "service" && slug.current == $slug][0]{\n    title,\n    "slug": slug.current,\n    shortDescription,\n    icon,\n    featured,\n    photo{ asset, hotspot, crop, alt },\n    body,\n    sections[]{\n      ...,\n      photo{ asset, hotspot, crop, alt },\n      photoPrimary{ asset, hotspot, crop, alt }\n    },\n    seoTitle,\n    seoDescription\n  }': SERVICE_BY_SLUG_QUERY_RESULT;
+    '*[_type == "service" && slug.current == $slug][0]{\n    title,\n    "slug": slug.current,\n    shortDescription,\n    icon,\n    featured,\n    photo{ asset, hotspot, crop, alt },\n    body,\n    sections[]{\n      ...,\n      photo{ asset, hotspot, crop, alt, frameRatio },\n      photoPrimary{ asset, hotspot, crop, alt, frameRatio }\n    },\n    seoTitle,\n    seoDescription\n  }': SERVICE_BY_SLUG_QUERY_RESULT;
     '*[_type == "industry"] | order(order asc){\n    title,\n    "slug": slug.current,\n    description,\n    bulletPoints,\n    photo{ asset, hotspot, crop, alt },\n    body,\n    seoTitle,\n    seoDescription\n  }': INDUSTRIES_QUERY_RESULT;
-    '*[_type == "industry" && slug.current == $slug][0]{\n    title,\n    "slug": slug.current,\n    description,\n    bulletPoints,\n    photo{ asset, hotspot, crop, alt },\n    body,\n    sections[]{\n      ...,\n      photo{ asset, hotspot, crop, alt },\n      photoPrimary{ asset, hotspot, crop, alt }\n    },\n    seoTitle,\n    seoDescription\n  }': INDUSTRY_BY_SLUG_QUERY_RESULT;
+    '*[_type == "industry" && slug.current == $slug][0]{\n    title,\n    "slug": slug.current,\n    description,\n    bulletPoints,\n    photo{ asset, hotspot, crop, alt },\n    body,\n    sections[]{\n      ...,\n      photo{ asset, hotspot, crop, alt, frameRatio },\n      photoPrimary{ asset, hotspot, crop, alt, frameRatio }\n    },\n    seoTitle,\n    seoDescription\n  }': INDUSTRY_BY_SLUG_QUERY_RESULT;
     '*[_type == "trustLogo"] | order(order asc){\n    name,\n    logo{ asset, hotspot, crop, alt },\n    headline,\n    blurb,\n    category,\n    url,\n    verified\n  }': TRUST_LOGOS_QUERY_RESULT;
-    '*[_type == "homePage" && _id == "homePage"][0]{\n    sections[]{\n      ...,\n      photo{ asset, hotspot, crop, alt },\n      primaryPhoto{ asset, hotspot, crop, alt },\n      secondaryPhoto{ asset, hotspot, crop, alt }\n    }\n  }': HOME_PAGE_QUERY_RESULT;
-    '*[_type == "aboutPage" && _id == "aboutPage"][0]{\n    heroEyebrow,\n    heroHeading,\n    heroParagraphs,\n    storyHeading,\n    storyParagraphs,\n    storyPhotoPrimary{ asset, hotspot, crop, alt },\n    storyPhotoSubjectPrimary,\n    storyPhotoSecondary{ asset, hotspot, crop, alt },\n    storyPhotoSubjectSecondary,\n    evolutionHeading,\n    evolutionParagraphs,\n    evolutionPhoto{ asset, hotspot, crop, alt },\n    evolutionPhotoSubject,\n    valuesHeading,\n    values[]{ icon, title, description },\n    linksHeading,\n    links[]{ title, description, href }\n  }': ABOUT_PAGE_QUERY_RESULT;
+    '*[_type == "homePage" && _id == "homePage"][0]{\n    sections[]{\n      ...,\n      photo{ asset, hotspot, crop, alt, frameRatio },\n      primaryPhoto{ asset, hotspot, crop, alt, frameRatio },\n      secondaryPhoto{ asset, hotspot, crop, alt }\n    }\n  }': HOME_PAGE_QUERY_RESULT;
+    '*[_type == "aboutPage" && _id == "aboutPage"][0]{\n    heroEyebrow,\n    heroHeading,\n    heroParagraphs,\n    storyHeading,\n    storyParagraphs,\n    storyPhotoPrimary{ asset, hotspot, crop, alt, frameRatio },\n    storyPhotoSubjectPrimary,\n    storyPhotoSecondary{ asset, hotspot, crop, alt },\n    storyPhotoSubjectSecondary,\n    evolutionHeading,\n    evolutionParagraphs,\n    evolutionPhoto{ asset, hotspot, crop, alt, frameRatio },\n    evolutionPhotoSubject,\n    valuesHeading,\n    values[]{ icon, title, description },\n    linksHeading,\n    links[]{ title, description, href }\n  }': ABOUT_PAGE_QUERY_RESULT;
     '*[_type == "contactPage" && _id == "contactPage"][0]{\n    heroEyebrow,\n    heroHeading,\n    heroIntro,\n    responsePromise,\n    hours[]{ days, hours },\n    emergencyHeading,\n    emergencyBody,\n    faqs[]{ question, answer }\n  }': CONTACT_PAGE_QUERY_RESULT;
-    '*[_type == "cityPage" && slug.current == $slug][0]{\n    city,\n    "slug": slug.current,\n    heroHeading,\n    heroIntro,\n    servicesHeading,\n    serviceCards[]{ _key, title, description, href, icon },\n    whyChooseHeading,\n    whyChooseBody,\n    reviewsHeading,\n    heritageHeading,\n    heritageParagraphs,\n    heritagePhoto{ asset, hotspot, crop, alt },\n    heritagePhotoSubject,\n    communitiesHeading,\n    communitiesBody,\n    communities,\n    showLogoStrip,\n    seoTitle,\n    seoDescription\n  }': CITY_PAGE_QUERY_RESULT;
+    '*[_type == "cityPage" && slug.current == $slug][0]{\n    city,\n    "slug": slug.current,\n    heroHeading,\n    heroIntro,\n    servicesHeading,\n    serviceCards[]{ _key, title, description, href, icon },\n    whyChooseHeading,\n    whyChooseBody,\n    reviewsHeading,\n    heritageHeading,\n    heritageParagraphs,\n    heritagePhoto{ asset, hotspot, crop, alt, frameRatio },\n    heritagePhotoSubject,\n    communitiesHeading,\n    communitiesBody,\n    communities,\n    showLogoStrip,\n    seoTitle,\n    seoDescription\n  }': CITY_PAGE_QUERY_RESULT;
     '*[_type == "navigation" && _id == "navigation"][0]{\n    footerColumns[]{\n      _key,\n      heading,\n      links[]{ _key, label, href }\n    },\n    legalLinks[]{ _key, label, href }\n  }': FOOTER_NAVIGATION_QUERY_RESULT;
   }
 }

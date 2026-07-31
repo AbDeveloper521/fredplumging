@@ -48,7 +48,12 @@ export function ServiceAboutSection({ section, id }: ServiceAboutSectionProps) {
           {/* Image collage — brand continuity anchor */}
           <Reveal className="relative">
             <div className="relative">
-              <div className="relative aspect-square overflow-hidden rounded-2xl shadow-(--shadow-card-lg)">
+              <div
+                className="relative overflow-hidden rounded-2xl shadow-(--shadow-card-lg)"
+                // Square by design; the editor's "Frame shape" override
+                // travels on the resolved photo's ratio.
+                style={{ aspectRatio: section.photoPrimary?.ratio ?? 1 }}
+              >
                 <CollagePhoto
                   photo={section.photoPrimary}
                   fallbackLabel={

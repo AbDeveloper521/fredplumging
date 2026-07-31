@@ -152,7 +152,7 @@ export const cityPage = defineType({
       name: "heritagePhoto",
       title: "Heritage photo",
       description:
-        "The photo beside the heritage copy, carrying the red 24/7 Emergency badge.",
+        "The photo beside the heritage copy, carrying the red 24/7 Emergency badge. It is shown in a square frame by default; the “Frame shape” control below the upload can change that, or show the photo uncropped.",
     }),
     defineField({
       name: "heritagePhotoSubject",

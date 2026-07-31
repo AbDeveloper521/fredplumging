@@ -46,13 +46,20 @@ function key(item: Raw, index: number): string {
   return str(item._key) ?? `section-${index}`;
 }
 
-function photoOf(raw: Raw, field: string, width: number, context: string): CmsPhoto | undefined {
+function photoOf(
+  raw: Raw,
+  field: string,
+  width: number,
+  context: string,
+  aspect?: number,
+): CmsPhoto | undefined {
   const value = raw[field];
   return value && typeof value === "object"
     ? resolvePhoto(
         value as { asset?: unknown; alt?: string | null },
         width,
         `homePage → ${context} → ${field}`,
+        aspect,
       )
     : undefined;
 }
@@ -142,10 +149,12 @@ function toSection(raw: Raw, index: number): HomeSection | null {
         highlights: strings(raw.highlights, fb.highlights),
         badgeSubtitle: str(raw.badgeSubtitle) ?? fb.badgeSubtitle,
         metrics: metrics.length ? metrics : fb.metrics,
-        primaryPhoto: photoOf(raw, "primaryPhoto", 1600, "About band"),
+        // Design ratios match each frame in AboutCollage: 4:3 both, cropped
+        // server-side so the CDN honours the editor's hotspot.
+        primaryPhoto: photoOf(raw, "primaryPhoto", 1600, "About band", 4 / 3),
         primaryPhotoSubject:
           str(raw.primaryPhotoSubject) ?? fb.primaryPhotoSubject,
-        secondaryPhoto: photoOf(raw, "secondaryPhoto", 800, "About band"),
+        secondaryPhoto: photoOf(raw, "secondaryPhoto", 800, "About band", 4 / 3),
         secondaryPhotoSubject:
           str(raw.secondaryPhotoSubject) ?? fb.secondaryPhotoSubject,
       };
@@ -169,7 +178,7 @@ function toSection(raw: Raw, index: number): HomeSection | null {
         heading: str(raw.heading) ?? fb.heading,
         body: str(raw.body) ?? fb.body,
         benefits: iconLabels(raw.benefits, fb.benefits),
-        photo: photoOf(raw, "photo", 1200, "Emergency band"),
+        photo: photoOf(raw, "photo", 1200, "Emergency band", 4 / 5),
         photoSubject: str(raw.photoSubject) ?? fb.photoSubject,
         photoCaption: str(raw.photoCaption) ?? fb.photoCaption,
       };
@@ -193,7 +202,7 @@ function toSection(raw: Raw, index: number): HomeSection | null {
         heading: str(raw.heading) ?? fb.heading,
         description: str(raw.description) ?? fb.description,
         features: iconItems(raw.features, fb.features),
-        photo: photoOf(raw, "photo", 1200, "Why choose us"),
+        photo: photoOf(raw, "photo", 1200, "Why choose us", 16 / 10),
         photoSubject: str(raw.photoSubject) ?? fb.photoSubject,
         photoCaption: str(raw.photoCaption) ?? fb.photoCaption,
       };
@@ -246,7 +255,7 @@ function toSection(raw: Raw, index: number): HomeSection | null {
         eyebrow: str(raw.eyebrow) ?? fb.eyebrow,
         heading: str(raw.heading) ?? fb.heading,
         storyBlocks: storyBlocks.length ? storyBlocks : fb.storyBlocks,
-        photo: photoOf(raw, "photo", 1600, "Service scenario"),
+        photo: photoOf(raw, "photo", 1600, "Service scenario", 4 / 3),
         photoSubject: str(raw.photoSubject) ?? fb.photoSubject,
         photoCardTitle: str(raw.photoCardTitle) ?? fb.photoCardTitle,
         photoCardSubtitle:

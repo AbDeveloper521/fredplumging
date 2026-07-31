@@ -71,10 +71,13 @@ export async function getAboutPage(
     heroParagraphs: strings(result.heroParagraphs) ?? fb.heroParagraphs,
     storyHeading: result.storyHeading ?? fb.storyHeading,
     storyParagraphs: strings(result.storyParagraphs) ?? fb.storyParagraphs,
+    // Design ratios match the /about frames (AboutCollage 4:3 pair, the
+    // evolution band 4:3) — cropped server-side so the hotspot applies.
     storyPhotoPrimary: resolvePhoto(
       result.storyPhotoPrimary,
       1600,
       'aboutPage → "Story — main photo"',
+      4 / 3,
     ),
     storyPhotoSubjectPrimary:
       result.storyPhotoSubjectPrimary ?? fb.storyPhotoSubjectPrimary,
@@ -82,6 +85,7 @@ export async function getAboutPage(
       result.storyPhotoSecondary,
       800,
       'aboutPage → "Story — small overlapping photo"',
+      4 / 3,
     ),
     storyPhotoSubjectSecondary:
       result.storyPhotoSubjectSecondary ?? fb.storyPhotoSubjectSecondary,
@@ -92,6 +96,7 @@ export async function getAboutPage(
       result.evolutionPhoto,
       1600,
       'aboutPage → "Evolution photo"',
+      4 / 3,
     ),
     evolutionPhotoSubject:
       result.evolutionPhotoSubject ?? fb.evolutionPhotoSubject,
