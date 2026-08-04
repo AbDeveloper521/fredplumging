@@ -187,6 +187,9 @@ function toSection(raw: Raw, index: number): ServiceSection | null {
           width: 2400,
           ignoreFrameRatio: true,
         }),
+        // Missing/absent → true: every page published before the toggle
+        // existed keeps its overlay pixel-identical.
+        darkOverlay: raw.darkOverlay !== false,
         photoSubject: str(raw.photoSubject),
         phoneCtaLabel: str(raw.phoneCtaLabel),
         showAvailabilityDot: raw.showAvailabilityDot === true,

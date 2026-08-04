@@ -225,6 +225,14 @@ export const serviceHero = defineType({
       frameRatio: false,
     }),
     defineField({
+      name: "darkOverlay",
+      title: "Dark overlay over the photo",
+      description:
+        "Keeps text readable over bright photos. Turn this off only if your image is already dark or has its own overlay — the text must stay readable.",
+      type: "boolean",
+      initialValue: true,
+    }),
+    defineField({
       name: "photoSubject",
       title: "Intended photo subject",
       description:

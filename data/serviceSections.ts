@@ -37,6 +37,12 @@ export interface ServiceHeroSection extends SectionBase {
   secondaryCtaHref?: string;
   credentials: Array<{ _key: string; icon: NavIconName; label: string }>;
   photo?: CmsPhoto;
+  /**
+   * Dark gradient over the background photo for text contrast. Absent means
+   * true — only an explicit Studio opt-out (photo already dark or carries
+   * its own baked-in overlay) turns it off.
+   */
+  darkOverlay?: boolean;
   /** Intended photo subject — placeholder caption until a photo exists. */
   photoSubject?: string;
   /** Call-button text; "{phone}" is replaced with the siteSettings number. */

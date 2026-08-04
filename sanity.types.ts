@@ -607,6 +607,7 @@ export type ServiceHero = {
     alt?: string;
     _type: "image";
   };
+  darkOverlay?: boolean;
   photoSubject?: string;
 };
 
@@ -1795,6 +1796,7 @@ export type SERVICE_BY_SLUG_QUERY_RESULT = {
           alt: string | null;
           frameRatio: null;
         } | null;
+        darkOverlay?: boolean;
         photoSubject?: string;
         photoPrimary: null;
       }
@@ -2168,6 +2170,7 @@ export type INDUSTRY_BY_SLUG_QUERY_RESULT = {
           alt: string | null;
           frameRatio: null;
         } | null;
+        darkOverlay?: boolean;
         photoSubject?: string;
         photoPrimary: null;
       }

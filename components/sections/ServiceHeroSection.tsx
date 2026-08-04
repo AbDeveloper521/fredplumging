@@ -4,6 +4,7 @@ import { ChevronRight } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
 import { navIcons } from "@/components/layout/navIcons";
+import { cn } from "@/lib/utils";
 import type { ServiceHeroSection as HeroData } from "@/data/serviceSections";
 import type { SiteContent } from "@/data/site";
 
@@ -59,6 +60,9 @@ export function ServiceHeroSection({
       ? { label: section.secondaryCtaLabel, href: section.secondaryCtaHref }
       : undefined;
   const hasCtas = Boolean(phoneCtaLabel ?? secondaryCta);
+  // Absent means on — only an explicit Studio opt-out (photo already dark
+  // or carrying its own baked-in overlay) turns the gradient off.
+  const darkOverlay = section.darkOverlay !== false;
 
   return (
     <section
@@ -81,10 +85,12 @@ export function ServiceHeroSection({
             sizes="100vw"
             className="object-cover"
           />
-          <div
-            aria-hidden="true"
-            className="absolute inset-0 bg-gradient-to-b from-navy-950/90 via-navy-950/70 to-navy-950/85"
-          />
+          {darkOverlay && (
+            <div
+              aria-hidden="true"
+              className="absolute inset-0 bg-gradient-to-b from-navy-950/90 via-navy-950/70 to-navy-950/85"
+            />
+          )}
         </>
       ) : (
         <>
@@ -101,7 +107,17 @@ export function ServiceHeroSection({
       )}
 
       {/* Shallow banner: height comes from the content + padding, never 100vh. */}
-      <Container className="relative flex flex-col items-center pt-[110px] pb-14 text-center lg:pt-[160px] lg:pb-20">
+      <Container
+        className={cn(
+          "relative flex flex-col items-center pt-[110px] pb-14 text-center lg:pt-[160px] lg:pb-20",
+          // Readability floor with the overlay off: a soft navy text-shadow
+          // (inherited by every line in the banner) keeps white text legible
+          // over an unknown photo, and is near-invisible over a dark one.
+          section.photo &&
+            !darkOverlay &&
+            "[text-shadow:0_1px_2px_rgb(7_17_31/0.6),0_2px_18px_rgb(7_17_31/0.45)]",
+        )}
+      >
         <Rise>
           <nav aria-label="Breadcrumb">
             <ol className="flex flex-wrap items-center justify-center gap-1.5 text-[13px] font-semibold text-grey-300">
