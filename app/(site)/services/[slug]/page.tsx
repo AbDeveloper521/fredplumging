@@ -11,6 +11,7 @@ import type { ServiceFaqSection } from "@/data/serviceSections";
 import { CmsDetailPage } from "@/components/layout/CmsDetailPage";
 import { ServiceSectionRenderer } from "@/components/sections/ServiceSectionRenderer";
 import { TestimonialsSection } from "@/components/sections/TestimonialsSection";
+import { AssociationBadgeStrip } from "@/components/sections/AssociationBadgeStrip";
 import { LocationMapSection } from "@/components/sections/LocationMapSection";
 import {
   BreadcrumbJsonLd,
@@ -94,10 +95,11 @@ export default async function ServicePage({
   // render (every service page must carry them), preferring this service's
   // default tags.
   if (!service.sections) {
-    const [site, testimonials, profile] = await Promise.all([
+    const [site, testimonials, profile, trustLogos] = await Promise.all([
       getSite(),
       getTestimonials(),
       getReviewSettings(),
+      getTrustLogos(),
     ]);
     return (
       <>
@@ -118,6 +120,9 @@ export default async function ServicePage({
           titleId="client-reviews-heading"
           filterTags={DEFAULT_PAGE_REVIEW_TAGS[service.slug]}
         />
+        {/* Association/certification badges close the content on every
+            service page, per the owner's reference — then the map band. */}
+        <AssociationBadgeStrip logos={trustLogos} />
         <LocationMapSection site={site} directionsUrl={profile.reviewsUrl} />
       </>
     );
@@ -150,7 +155,9 @@ export default async function ServicePage({
         profile={profile}
         trustLogos={trustLogos}
       />
-      {/* Shared Google-map band — after the section stack on every service. */}
+      {/* Association/certification badges close the content on every
+          service page, per the owner's reference — then the map band. */}
+      <AssociationBadgeStrip logos={trustLogos} />
       <LocationMapSection site={site} directionsUrl={profile.reviewsUrl} />
     </>
   );

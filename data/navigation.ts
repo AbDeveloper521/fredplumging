@@ -306,6 +306,21 @@ export const TRUST_LOGO_CATEGORIES: readonly TrustLogoCategory[] = [
   "credential",
 ];
 
+/**
+ * Categories that appear in the association/certification badge strip on
+ * every service page (components/sections/AssociationBadgeStrip.tsx).
+ * Uploading a Trust Logo in Studio with one of these categories is ALL it
+ * takes — no per-page editing. Vendor platforms stay out: those belong to
+ * the grayscale tile strips (TrustBar / compliance band).
+ */
+export const ASSOCIATION_BADGE_CATEGORIES: readonly TrustLogoCategory[] = [
+  "association",
+  "credential",
+];
+
+/** One factual line above the badge strip; edit here, not in the component. */
+export const ASSOCIATION_STRIP_HEADING = "Licensed, certified, and affiliated";
+
 export interface TrustLogo {
   name: string;
   /** Real logo image resolved server-side; falls back to a styled wordmark. */
@@ -375,6 +390,6 @@ export const STATIC_TRUST_LOGOS: TrustLogo[] = [
   },
   { name: "Greystar" },
   { name: "Yardi" },
-  { name: "AAGD" },
-  { name: "TDLR" },
+  { name: "AAGD", category: "association" },
+  { name: "TDLR", category: "credential" },
 ];

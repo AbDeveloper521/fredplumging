@@ -45,14 +45,14 @@ export const trustLogo = defineType({
       name: "category",
       title: "Category",
       description:
-        "What kind of organization this is — shown as the small pill on the partner card and used for grouping.",
+        "What kind of organization this is — shown as the small pill on the partner card and used for grouping. Badges set to “Trade association” or “Certification / credential badge” also appear automatically, in full colour, in the credentials strip near the bottom of every service page.",
       type: "string",
       options: {
         list: [
           { title: "Vendor portal", value: "vendor-portal" },
           { title: "Compliance network", value: "compliance-network" },
           { title: "Trade association", value: "association" },
-          { title: "Credential", value: "credential" },
+          { title: "Certification / credential badge", value: "credential" },
         ],
       },
       initialValue: "vendor-portal",
