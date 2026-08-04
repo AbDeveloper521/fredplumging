@@ -15,6 +15,7 @@ import { TestimonialsSection } from "./TestimonialsSection";
 import { ServicePropertyTypesSection } from "./ServicePropertyTypesSection";
 import { ServiceFaqSection } from "./ServiceFaqSection";
 import { ServiceAreaCmsSection } from "./ServiceAreaCmsSection";
+import { TrustLogoStripSection } from "./TrustLogoStripSection";
 import { RelatedServicesSection } from "./RelatedServicesSection";
 import { ServiceFinalCtaSection } from "./ServiceFinalCtaSection";
 
@@ -35,6 +36,7 @@ const SECTION_IDS: Record<ServiceSection["_type"], string> = {
   propertyTypes: "property-types",
   serviceFaq: "service-faq",
   serviceArea: "service-area",
+  trustLogoStrip: "trust-badges",
   relatedServices: "related-services",
   finalCta: "final-cta",
 };
@@ -131,6 +133,15 @@ export function ServiceSectionRenderer({
                 key={section._key}
                 section={section}
                 site={site}
+                id={id}
+              />
+            );
+          case "trustLogoStrip":
+            return (
+              <TrustLogoStripSection
+                key={section._key}
+                section={section}
+                logos={trustLogos}
                 id={id}
               />
             );

@@ -55,6 +55,8 @@ export interface ServiceAboutSection extends SectionBase {
   photoPrimary?: CmsPhoto;
   /** Intended photo subject — placeholder caption until a photo exists. */
   photoSubjectPrimary?: string;
+  /** Section background — defaults to white; "dark" for heritage bands. */
+  background?: "white" | "dark";
 }
 
 export interface WhatsIncludedSection extends SectionBase {
@@ -119,7 +121,8 @@ export interface ServiceTestimonialsSection extends SectionBase {
 
 export interface PropertyTypesSection extends SectionBase {
   _type: "propertyTypes";
-  heading: string;
+  /** Optional — the reference-style card band renders the cards alone. */
+  heading?: string;
   cards: Array<{
     _key: string;
     icon: NavIconName;
@@ -130,6 +133,10 @@ export interface PropertyTypesSection extends SectionBase {
      * Optional: a card without a slug renders as informational (no link).
      */
     slug?: string;
+    /** Explicit link ("/path") — beats `slug` when both are set. */
+    href?: string;
+    /** Card-link words — defaults to "See how we help". */
+    linkLabel?: string;
     /** Optional card image; falls back to a placeholder with photoSubject. */
     photo?: CmsPhoto;
     photoSubject?: string;
@@ -160,9 +167,18 @@ export interface ServiceAreaSection extends SectionBase {
   _type: "serviceArea";
   heading: string;
   body?: string;
+  /** CTA button — set together or not at all (both-or-none). */
+  ctaLabel?: string;
+  ctaHref?: string;
   photo?: CmsPhoto;
   /** Intended photo subject — placeholder caption until a photo exists. */
   photoSubject?: string;
+}
+
+export interface TrustLogoStripSection extends SectionBase {
+  _type: "trustLogoStrip";
+  /** Section background — defaults to offwhite. */
+  background?: "offwhite" | "white";
 }
 
 export interface RelatedServicesSection extends SectionBase {
@@ -197,5 +213,6 @@ export type ServiceSection =
   | PropertyTypesSection
   | ServiceFaqSection
   | ServiceAreaSection
+  | TrustLogoStripSection
   | RelatedServicesSection
   | FinalCtaSection;

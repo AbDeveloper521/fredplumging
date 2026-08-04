@@ -377,10 +377,17 @@ export type RelatedServices = {
   serviceSlugs?: Array<string>;
 };
 
+export type TrustLogoStrip = {
+  _type: "trustLogoStrip";
+  background?: "offwhite" | "white";
+};
+
 export type ServiceArea = {
   _type: "serviceArea";
   heading?: string;
   body?: string;
+  ctaLabel?: string;
+  ctaHref?: string;
   photo?: {
     asset?: SanityImageAssetReference;
     media?: unknown;
@@ -415,6 +422,8 @@ export type PropertyTypes = {
     title?: string;
     blurb?: string;
     slug?: string;
+    href?: string;
+    linkLabel?: string;
     icon?: "building" | "hotel" | "heart-handshake" | "stethoscope";
     photo?: Photo;
     photoSubject?: string;
@@ -559,6 +568,7 @@ export type ServiceAbout = {
     _type: "image";
   };
   photoSubjectPrimary?: string;
+  background?: "white" | "dark";
 };
 
 export type ServiceHero = {
@@ -595,7 +605,6 @@ export type ServiceHero = {
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     alt?: string;
-    frameRatio?: "default" | "portrait" | "square";
     _type: "image";
   };
   photoSubject?: string;
@@ -725,6 +734,9 @@ export type Industry = {
       } & ServiceArea)
     | ({
         _key: string;
+      } & TrustLogoStrip)
+    | ({
+        _key: string;
       } & RelatedServices)
     | ({
         _key: string;
@@ -804,6 +816,9 @@ export type Service = {
     | ({
         _key: string;
       } & ServiceArea)
+    | ({
+        _key: string;
+      } & TrustLogoStrip)
     | ({
         _key: string;
       } & RelatedServices)
@@ -1313,6 +1328,7 @@ export type AllSanitySchemaTypes =
   | HomeHero
   | FinalCta
   | RelatedServices
+  | TrustLogoStrip
   | ServiceArea
   | ServiceFaq
   | PropertyTypes
@@ -1656,6 +1672,8 @@ export type SERVICE_BY_SLUG_QUERY_RESULT = {
           title?: string;
           blurb?: string;
           slug?: string;
+          href?: string;
+          linkLabel?: string;
           icon?: "building" | "heart-handshake" | "hotel" | "stethoscope";
           photo?: Photo;
           photoSubject?: string;
@@ -1698,6 +1716,7 @@ export type SERVICE_BY_SLUG_QUERY_RESULT = {
             | null;
         } | null;
         photoSubjectPrimary?: string;
+        background?: "dark" | "white";
         photo: null;
       }
     | {
@@ -1705,6 +1724,8 @@ export type SERVICE_BY_SLUG_QUERY_RESULT = {
         _type: "serviceArea";
         heading?: string;
         body?: string;
+        ctaLabel?: string;
+        ctaHref?: string;
         photo: {
           asset: SanityImageAssetReference | null;
           hotspot: SanityImageHotspot | null;
@@ -1772,7 +1793,7 @@ export type SERVICE_BY_SLUG_QUERY_RESULT = {
           hotspot: SanityImageHotspot | null;
           crop: SanityImageCrop | null;
           alt: string | null;
-          frameRatio: "default" | "portrait" | "square" | null;
+          frameRatio: null;
         } | null;
         photoSubject?: string;
         photoPrimary: null;
@@ -1841,6 +1862,13 @@ export type SERVICE_BY_SLUG_QUERY_RESULT = {
         ctaLabel?: string;
         ctaHref?: string;
         background?: "dark" | "white";
+        photo: null;
+        photoPrimary: null;
+      }
+    | {
+        _key: string;
+        _type: "trustLogoStrip";
+        background?: "offwhite" | "white";
         photo: null;
         photoPrimary: null;
       }
@@ -2017,6 +2045,8 @@ export type INDUSTRY_BY_SLUG_QUERY_RESULT = {
           title?: string;
           blurb?: string;
           slug?: string;
+          href?: string;
+          linkLabel?: string;
           icon?: "building" | "heart-handshake" | "hotel" | "stethoscope";
           photo?: Photo;
           photoSubject?: string;
@@ -2059,6 +2089,7 @@ export type INDUSTRY_BY_SLUG_QUERY_RESULT = {
             | null;
         } | null;
         photoSubjectPrimary?: string;
+        background?: "dark" | "white";
         photo: null;
       }
     | {
@@ -2066,6 +2097,8 @@ export type INDUSTRY_BY_SLUG_QUERY_RESULT = {
         _type: "serviceArea";
         heading?: string;
         body?: string;
+        ctaLabel?: string;
+        ctaHref?: string;
         photo: {
           asset: SanityImageAssetReference | null;
           hotspot: SanityImageHotspot | null;
@@ -2133,7 +2166,7 @@ export type INDUSTRY_BY_SLUG_QUERY_RESULT = {
           hotspot: SanityImageHotspot | null;
           crop: SanityImageCrop | null;
           alt: string | null;
-          frameRatio: "default" | "portrait" | "square" | null;
+          frameRatio: null;
         } | null;
         photoSubject?: string;
         photoPrimary: null;
@@ -2202,6 +2235,13 @@ export type INDUSTRY_BY_SLUG_QUERY_RESULT = {
         ctaLabel?: string;
         ctaHref?: string;
         background?: "dark" | "white";
+        photo: null;
+        photoPrimary: null;
+      }
+    | {
+        _key: string;
+        _type: "trustLogoStrip";
+        background?: "offwhite" | "white";
         photo: null;
         photoPrimary: null;
       }

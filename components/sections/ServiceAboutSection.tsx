@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { ImagePlaceholder } from "@/components/ui/ImagePlaceholder";
+import { cn } from "@/lib/utils";
 import type { ServiceAboutSection as AboutData } from "@/data/serviceSections";
 import type { CmsPhoto } from "@/data/services";
 
@@ -39,17 +40,36 @@ function CollagePhoto({
  * About band: one photo with the red 24/7 Emergency badge on the left, copy
  * right. (The small overlapping second photo was removed at the owner's
  * request — the homepage AboutSection still carries the full collage.)
+ * A `background: "dark"` variant serves heritage-style second appearances
+ * further down the page.
  */
 export function ServiceAboutSection({ section, id }: ServiceAboutSectionProps) {
+  const dark = section.background === "dark";
   return (
-    <section id={id} aria-labelledby={`${id}-heading`} className="bg-white py-16 sm:py-24 lg:py-28">
-      <Container>
+    <section
+      id={id}
+      aria-labelledby={`${id}-heading`}
+      className={cn(
+        "relative isolate overflow-hidden py-16 sm:py-24 lg:py-28",
+        dark ? "bg-navy-900" : "bg-white",
+      )}
+    >
+      {dark && (
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 bg-[radial-gradient(ellipse_50%_55%_at_85%_15%,rgb(211_33_39/0.12),transparent_60%)]"
+        />
+      )}
+      <Container className="relative">
         <div className="grid grid-cols-1 items-center gap-14 lg:grid-cols-2 lg:gap-20">
           {/* Image collage — brand continuity anchor */}
           <Reveal className="relative">
             <div className="relative">
               <div
-                className="relative overflow-hidden rounded-2xl shadow-(--shadow-card-lg)"
+                className={cn(
+                  "relative overflow-hidden rounded-2xl shadow-(--shadow-card-lg)",
+                  dark && "border border-white/10",
+                )}
                 // Square by design; the editor's "Frame shape" override
                 // travels on the resolved photo's ratio.
                 style={{ aspectRatio: section.photoPrimary?.ratio ?? 1 }}
@@ -83,13 +103,23 @@ export function ServiceAboutSection({ section, id }: ServiceAboutSectionProps) {
           {/* Copy */}
           <div>
             <Reveal>
-              <SectionHeading titleId={`${id}-heading`} title={section.heading} />
+              <SectionHeading
+                titleId={`${id}-heading`}
+                title={section.heading}
+                theme={dark ? "dark" : "light"}
+              />
             </Reveal>
 
             <Reveal delay={0.1}>
               <div className="mt-6 space-y-5">
                 {section.paragraphs.map((paragraph, i) => (
-                  <p key={i} className="text-[17px] leading-relaxed text-grey-700">
+                  <p
+                    key={i}
+                    className={cn(
+                      "text-[17px] leading-relaxed",
+                      dark ? "text-grey-300" : "text-grey-700",
+                    )}
+                  >
                     {paragraph}
                   </p>
                 ))}
@@ -99,7 +129,11 @@ export function ServiceAboutSection({ section, id }: ServiceAboutSectionProps) {
             {section.ctaLabel && section.ctaHref && (
               <Reveal delay={0.18}>
                 <div className="mt-9">
-                  <Button href={section.ctaHref} variant="dark" withArrow>
+                  <Button
+                    href={section.ctaHref}
+                    variant={dark ? "secondary" : "dark"}
+                    withArrow
+                  >
                     {section.ctaLabel}
                   </Button>
                 </div>

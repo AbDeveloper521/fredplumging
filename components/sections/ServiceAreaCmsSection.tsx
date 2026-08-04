@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight, MapPin } from "lucide-react";
 import { Container } from "@/components/ui/Container";
+import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { ImagePlaceholder } from "@/components/ui/ImagePlaceholder";
@@ -67,6 +68,16 @@ export function ServiceAreaCmsSection({ section, site, id }: ServiceAreaCmsSecti
               ))}
             </ul>
           </Reveal>
+
+          {section.ctaLabel && section.ctaHref && (
+            <Reveal delay={0.2}>
+              <div className="mt-9">
+                <Button href={section.ctaHref} variant="dark" withArrow>
+                  {section.ctaLabel}
+                </Button>
+              </div>
+            </Reveal>
+          )}
         </div>
 
         <Reveal delay={0.12}>

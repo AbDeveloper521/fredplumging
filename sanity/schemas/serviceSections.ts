@@ -219,17 +219,16 @@ export const serviceHero = defineType({
       name: "photo",
       title: "Banner photo",
       description:
-        "The large photo beside the page heading, at the very top of this page — the tall image on the right of the dark banner. Vertical orientation works best. Until one is uploaded the site shows a styled placeholder. The “Frame shape” control below the upload can switch the frame to a square — wider shapes would break the banner, so only tall shapes are offered. (The small photo on the homepage card is a separate field: “Photo” at the document level, below the sections list.)",
-      // The tall banner is load-bearing: it sits against `justify-self-end`
-      // on the hero grid and reads as a vertical strip. Landscape/wide/
-      // original would collapse the composition, so only tall shapes.
-      frameRatio: ["portrait", "square"],
+        "The photo BEHIND the banner — it fills the whole width of the dark band at the top of this page, darkened so the headline stays readable. Wide, landscape photos work best. Until one is uploaded the site shows a styled dark background. Drag the hotspot circle (click the image → Edit hotspot) over the part that must stay visible — the banner crops wide, so the hotspot matters here more than anywhere. (The small photo on the homepage card is a separate field: “Photo” at the document level, below the sections list.)",
+      // The background crop is load-bearing — a frame-shape override would
+      // fight the full-bleed banner, so none is offered.
+      frameRatio: false,
     }),
     defineField({
       name: "photoSubject",
       title: "Intended photo subject",
       description:
-        "What the banner photo should eventually show, e.g. “A technician feeding a sewer camera line into a cleanout”. Shown inside the styled placeholder until a real photo is uploaded.",
+        "What the banner photo should eventually show, e.g. “A technician feeding a sewer camera line into a cleanout”. A note for the photographer — the dark stand-in background renders without a caption.",
       type: "string",
     }),
   ],
@@ -279,6 +278,19 @@ export const serviceAbout = defineType({
       description:
         "What the main photo should eventually show. Shown inside the styled placeholder until a real photo is uploaded.",
       type: "string",
+    }),
+    defineField({
+      name: "background",
+      title: "Background",
+      description:
+        "Which band this section sits on. Pick “Dark navy” when this band appears a second time further down the page (heritage treatment), to keep the page alternating light and dark.",
+      type: "string",
+      options: {
+        list: [
+          { title: "White (default)", value: "white" },
+          { title: "Dark navy", value: "dark" },
+        ],
+      },
     }),
   ],
   preview: {
@@ -641,9 +653,17 @@ export const propertyTypes = defineType({
   title: "Property cards",
   type: "object",
   description:
-    "A grid of property cards — link cards into the property-type pages, or informational cards (no link) with photos.",
+    "A grid of cards — link cards into other pages, or informational cards (no link) with photos.",
   fields: [
-    requiredString("heading", "Heading", "Section heading, e.g. “Built for the Properties You Manage”.", "The section needs a heading."),
+    defineField({
+      name: "heading",
+      title: "Heading (optional)",
+      description:
+        "Section heading, e.g. “Built for the Properties You Manage”. Leave empty to show the cards alone.",
+      type: "string",
+      validation: (rule) =>
+        rule.custom(notJustSpaces("Write real text or clear the field — spaces alone don't count.")),
+    }),
     defineField({
       name: "cards",
       title: "Property cards",
@@ -669,6 +689,26 @@ export const propertyTypes = defineType({
                     ? true
                     : "Just the address ending — lowercase letters and dashes, e.g. “assisted-living”.",
                 ),
+            }),
+            defineField({
+              name: "href",
+              title: "Link to any page instead (optional)",
+              description:
+                "A full page address on this site, starting with a slash — e.g. /services/commercial-plumbing or /contact. Beats the property-type pick above when both are set.",
+              type: "string",
+              validation: (rule) =>
+                rule.custom((value?: string) =>
+                  !value || value.startsWith("/")
+                    ? true
+                    : "Use a page on this site, starting with a slash — e.g. /contact.",
+                ),
+            }),
+            defineField({
+              name: "linkLabel",
+              title: "Link text",
+              description:
+                "The words of the card's link, e.g. “Get Started”. Leave empty for “See how we help”. Only used when the card links somewhere.",
+              type: "string",
             }),
             iconField({ description: "Small symbol on the card — hidden when the card has a photo.", choices: PROPERTY_ICONS }),
             imageWithAlt({
@@ -815,6 +855,15 @@ export const serviceArea = defineType({
       "One paragraph naming the areas served. The city chips underneath come from Site Settings automatically. Leave empty to show the heading and city chips alone.",
       4,
     ),
+    ...ctaPairFields({
+      labelName: "ctaLabel",
+      labelTitle: "Button text",
+      labelDescription:
+        "The dark button under the city list, e.g. “Contact Us”. Leave both button fields empty for no button.",
+      hrefName: "ctaHref",
+      hrefTitle: "Button link",
+      hrefDescription: "Where the button goes — usually /contact.",
+    }),
     imageWithAlt({
       name: "photo",
       title: "Photo",
@@ -860,6 +909,35 @@ export const relatedServices = defineType({
     prepare: ({ heading, serviceSlugs }) => ({
       title: heading ?? "Related services",
       subtitle: `Related — ${serviceSlugs?.length ?? 0} service${serviceSlugs?.length === 1 ? "" : "s"}`,
+    }),
+  },
+});
+
+export const trustLogoStrip = defineType({
+  name: "trustLogoStrip",
+  title: "Badge strip",
+  type: "object",
+  description:
+    "The row of certification and partner badges (the Trust Logos collection) on its own band — edit the badges in Trust Logos, not here.",
+  fields: [
+    defineField({
+      name: "background",
+      title: "Background",
+      description:
+        "Which band the badges sit on. Pick to keep the page alternating light and dark.",
+      type: "string",
+      options: {
+        list: [
+          { title: "Off-white (default)", value: "offwhite" },
+          { title: "White", value: "white" },
+        ],
+      },
+    }),
+  ],
+  preview: {
+    prepare: () => ({
+      title: "Badge strip",
+      subtitle: "Badges from the Trust Logos collection",
     }),
   },
 });
@@ -923,6 +1001,7 @@ export const serviceSectionTypes = [
   propertyTypes,
   serviceFaq,
   serviceArea,
+  trustLogoStrip,
   relatedServices,
   finalCta,
 ];

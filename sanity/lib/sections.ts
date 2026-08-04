@@ -38,18 +38,34 @@ function key(item: Raw, index: number): string {
   return str(item._key) ?? `section-${index}`;
 }
 
-function photoOf(item: Raw, field: string, aspect?: number): CmsPhoto | undefined {
+function photoOf(
+  item: Raw,
+  field: string,
+  aspect?: number,
+  options?: {
+    /** Rendered wider than default (full-bleed backgrounds). */
+    width?: number;
+    /**
+     * Drop the editor's "Frame shape" override — for slots whose crop is
+     * load-bearing (the hero background) where a stale portrait/square
+     * override from an earlier design would break the composition.
+     */
+    ignoreFrameRatio?: boolean;
+  },
+): CmsPhoto | undefined {
   const value = item[field];
-  return value && typeof value === "object"
-    ? // Sections don't know their parent document here, so the skipped-image
-      // warning names the section type + field and falls back to the asset ref.
-      resolvePhoto(
-        value as { asset?: unknown; alt?: string | null },
-        1600,
-        `a "${String(item._type ?? "section")}" section → ${field}`,
-        aspect,
-      )
-    : undefined;
+  if (!value || typeof value !== "object") return undefined;
+  const image = options?.ignoreFrameRatio
+    ? { ...(value as Raw), frameRatio: undefined }
+    : value;
+  // Sections don't know their parent document here, so the skipped-image
+  // warning names the section type + field and falls back to the asset ref.
+  return resolvePhoto(
+    image as { asset?: unknown; alt?: string | null },
+    options?.width ?? 1600,
+    `a "${String(item._type ?? "section")}" section → ${field}`,
+    aspect,
+  );
 }
 
 /** Maps an array of raw child objects, dropping entries missing required strings. */
@@ -91,9 +107,57 @@ function ctaPair(
 
 function toSection(raw: Raw, index: number): ServiceSection | null {
   const _key = key(raw, index);
+
+  // Two types render without a heading, so they sit ahead of the blanket
+  // heading gate: the badge strip carries no copy at all, and the card band
+  // may show its cards alone (reference-style layout). Both label themselves
+  // for assistive tech without an h2.
+  if (raw._type === "trustLogoStrip") {
+    return {
+      _type: "trustLogoStrip",
+      _key,
+      background: choice(raw.background, ["offwhite", "white"] as const),
+    };
+  }
+  if (raw._type === "propertyTypes") {
+    // Minimum to render: at least one valid card — the cards ARE the
+    // section. The optional CTA already renders only when both label+href
+    // exist.
+    const cards = children(raw.cards, (c, i) => {
+      const title = str(c.title);
+      const blurb = str(c.blurb);
+      return title && blurb
+        ? {
+            _key: key(c, i),
+            icon: toIcon(str(c.icon)),
+            title,
+            blurb,
+            slug: str(c.slug),
+            href: str(c.href),
+            linkLabel: str(c.linkLabel),
+            // Uniform 16:10 card strip — every card crops the same so
+            // grid rows stay aligned (no Studio override on this slot).
+            photo: photoOf(c, "photo", 16 / 10),
+            photoSubject: str(c.photoSubject),
+          }
+        : null;
+    });
+    if (cards.length === 0) return null;
+    return {
+      _type: "propertyTypes",
+      _key,
+      heading: str(raw.heading),
+      cards,
+      background: choice(raw.background, ["dark", "white", "offwhite"] as const),
+      ctaLabel: str(raw.ctaLabel),
+      ctaHref: str(raw.ctaHref),
+    };
+  }
+
   const heading = str(raw.heading);
-  // Every type's minimum: the heading. It is the section's h2 (the hero's
-  // h1) and its aria-label — a section with no heading cannot render.
+  // Every remaining type's minimum: the heading. It is the section's h2
+  // (the hero's h1) and its aria-label — a section with no heading cannot
+  // render.
   if (!heading) return null;
 
   switch (raw._type) {
@@ -115,10 +179,14 @@ function toSection(raw: Raw, index: number): ServiceSection | null {
             ? { _key: key(c, i), icon: toIcon(str(c.icon)), label }
             : null;
         }),
-        // The hero banner's tall 3:4 frame — cropped server-side so the CDN
-        // honours the editor's hotspot (the Studio override is restricted to
-        // portrait/square; this is the design default).
-        photo: photoOf(raw, "photo", 3 / 4),
+        // Full-width banner background — cropped wide server-side so the CDN
+        // honours the editor's hotspot (a background is the worst case for
+        // blind cropping). Frame-shape overrides from the old tall-banner
+        // design are ignored: the crop here is load-bearing.
+        photo: photoOf(raw, "photo", 16 / 9, {
+          width: 2400,
+          ignoreFrameRatio: true,
+        }),
         photoSubject: str(raw.photoSubject),
         phoneCtaLabel: str(raw.phoneCtaLabel),
         showAvailabilityDot: raw.showAvailabilityDot === true,
@@ -143,6 +211,7 @@ function toSection(raw: Raw, index: number): ServiceSection | null {
         // the About band shows this photo in a square frame.
         photoPrimary: photoOf(raw, "photoPrimary", 1),
         photoSubjectPrimary: str(raw.photoSubjectPrimary),
+        background: choice(raw.background, ["white", "dark"] as const),
       };
     }
     case "whatsIncluded": {
@@ -254,37 +323,6 @@ function toSection(raw: Raw, index: number): ServiceSection | null {
         limit,
       };
     }
-    case "propertyTypes": {
-      // Minimum to render: heading + at least one valid card. The optional
-      // CTA under the grid already renders only when both label+href exist.
-      const cards = children(raw.cards, (c, i) => {
-        const title = str(c.title);
-        const blurb = str(c.blurb);
-        return title && blurb
-          ? {
-              _key: key(c, i),
-              icon: toIcon(str(c.icon)),
-              title,
-              blurb,
-              slug: str(c.slug),
-              // Uniform 16:10 card strip — every card crops the same so
-              // grid rows stay aligned (no Studio override on this slot).
-              photo: photoOf(c, "photo", 16 / 10),
-              photoSubject: str(c.photoSubject),
-            }
-          : null;
-      });
-      if (cards.length === 0) return null;
-      return {
-        _type: "propertyTypes",
-        _key,
-        heading,
-        cards,
-        background: choice(raw.background, ["dark", "white", "offwhite"] as const),
-        ctaLabel: str(raw.ctaLabel),
-        ctaHref: str(raw.ctaHref),
-      };
-    }
     case "serviceFaq": {
       // Minimum to render: heading + at least one complete Q&A pair.
       const faqs = children(raw.faqs, (c, i) => {
@@ -312,11 +350,14 @@ function toSection(raw: Raw, index: number): ServiceSection | null {
     case "serviceArea": {
       // Minimum to render: heading only — the city chips come from Site
       // Settings, so the section is meaningful even without its paragraph.
+      const cta = ctaPair(raw.ctaLabel, raw.ctaHref);
       return {
         _type: "serviceArea",
         _key,
         heading,
         body: str(raw.body),
+        ctaLabel: cta?.label,
+        ctaHref: cta?.href,
         photo: photoOf(raw, "photo", 4 / 3),
         photoSubject: str(raw.photoSubject),
       };
@@ -404,7 +445,8 @@ export const SECTION_REQUIREMENTS: Record<
   },
   serviceTestimonials: { strings: [{ field: "heading", title: "Heading" }], arrays: [] },
   propertyTypes: {
-    strings: [{ field: "heading", title: "Heading" }],
+    // Heading is optional — the reference-style card band has none.
+    strings: [],
     arrays: [{ field: "cards", title: "Property cards", valid: childWith("title", "blurb") }],
   },
   serviceFaq: {
@@ -412,6 +454,8 @@ export const SECTION_REQUIREMENTS: Record<
     arrays: [{ field: "faqs", title: "Questions", valid: childWith("question", "answer") }],
   },
   serviceArea: { strings: [{ field: "heading", title: "Heading" }], arrays: [] },
+  // Never drops: the strip renders from the Trust Logos collection alone.
+  trustLogoStrip: { strings: [], arrays: [] },
   relatedServices: {
     strings: [{ field: "heading", title: "Heading" }],
     arrays: [{ field: "serviceSlugs", title: "Which services", valid: nonEmptyString }],

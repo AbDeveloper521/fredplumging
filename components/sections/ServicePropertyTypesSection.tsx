@@ -38,10 +38,12 @@ function CardMedia({ card }: { card: Card }) {
 }
 
 /**
- * Property-card grid. Two modes per card: a slug makes it a link card into
- * /multifamily/[slug]; no slug makes it informational. Cards with a photo
- * (or an intended photo subject) show the image across the top instead of
- * the icon. Section background is configurable to keep page rhythm.
+ * Property/sub-service card grid. Link modes per card: an explicit `href`
+ * links anywhere on the site; else a slug links into /multifamily/[slug];
+ * neither makes the card informational. Cards with a photo (or an intended
+ * photo subject) show the image across the top instead of the icon. The
+ * heading is optional (the reference-style card band renders cards alone);
+ * section background is configurable to keep page rhythm.
  */
 export function ServicePropertyTypesSection({
   section,
@@ -57,7 +59,7 @@ export function ServicePropertyTypesSection({
   return (
     <section
       id={id}
-      aria-labelledby={`${id}-heading`}
+      aria-labelledby={section.heading ? `${id}-heading` : undefined}
       className={cn(
         "relative isolate overflow-hidden py-16 sm:py-24 lg:py-28",
         dark ? "bg-navy-900" : background === "white" ? "bg-white" : "bg-offwhite",
@@ -70,23 +72,29 @@ export function ServicePropertyTypesSection({
         />
       )}
       <Container className="relative">
-        <Reveal>
-          <SectionHeading
-            titleId={`${id}-heading`}
-            title={section.heading}
-            theme={dark ? "dark" : "light"}
-          />
-        </Reveal>
+        {section.heading && (
+          <Reveal>
+            <SectionHeading
+              titleId={`${id}-heading`}
+              title={section.heading}
+              theme={dark ? "dark" : "light"}
+            />
+          </Reveal>
+        )}
 
         <ul
           className={cn(
-            "mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2",
+            "grid grid-cols-1 gap-5 sm:grid-cols-2",
+            section.heading && "mt-12",
             section.cards.length >= 4 ? "lg:grid-cols-4" : "lg:grid-cols-3",
           )}
         >
           {section.cards.map((card, i) => {
             const Icon = navIcons[card.icon];
             const hasMedia = Boolean(card.photo ?? card.photoSubject);
+            // An explicit href beats the property-type slug shorthand.
+            const href =
+              card.href ?? (card.slug ? industryHref(card.slug) : undefined);
             const inner = (
               <>
                 <CardMedia card={card} />
@@ -120,14 +128,14 @@ export function ServicePropertyTypesSection({
                 >
                   {card.blurb}
                 </p>
-                {card.slug && (
+                {href && (
                   <span
                     className={cn(
                       "mt-4 inline-flex items-center gap-1.5 text-sm font-bold",
                       dark ? "text-white" : "text-navy-900",
                     )}
                   >
-                    See how we help
+                    {card.linkLabel ?? "See how we help"}
                     <ArrowUpRight
                       aria-hidden="true"
                       className={cn(
@@ -148,8 +156,8 @@ export function ServicePropertyTypesSection({
             return (
               <li key={card._key}>
                 <Reveal delay={i * 0.06} className="h-full">
-                  {card.slug ? (
-                    <Link href={industryHref(card.slug)} className={cn("group", cardClasses)}>
+                  {href ? (
+                    <Link href={href} className={cn("group", cardClasses)}>
                       {inner}
                     </Link>
                   ) : (
