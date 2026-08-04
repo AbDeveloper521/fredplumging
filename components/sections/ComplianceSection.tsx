@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
 import { ComplianceDashboardPanel } from "@/components/ui/ComplianceDashboardPanel";
 import { TrustLogoStrip } from "@/components/ui/TrustLogoStrip";
-import type { TrustLogo } from "@/data/navigation";
+import { vendorPlatformLogos, type TrustLogo } from "@/data/navigation";
 import { homePageDefaults, type HomeComplianceContent } from "@/data/homePage";
 
 export function ComplianceSection({
@@ -18,6 +18,8 @@ export function ComplianceSection({
   /** Unique per instance — sections can be duplicated in the Studio. */
   titleId?: string;
 }) {
+  // Vendor platforms only — badges belong to the service-page strip.
+  const vendors = vendorPlatformLogos(logos);
   return (
     <section
       aria-labelledby={titleId}
@@ -78,10 +80,10 @@ export function ComplianceSection({
           render uploads with baked-in backgrounds correctly instead of as
           blank rectangles. Hidden entirely when no logos exist.
         */}
-        {logos.length > 0 && (
+        {vendors.length > 0 && (
           <Reveal delay={0.1}>
             <div className="mt-16 border-t border-white/8 pt-10 lg:mt-20">
-              <TrustLogoStrip logos={logos} />
+              <TrustLogoStrip logos={vendors} />
             </div>
           </Reveal>
         )}

@@ -45,7 +45,7 @@ export const trustLogo = defineType({
       name: "category",
       title: "Category",
       description:
-        "What kind of organization this is — shown as the small pill on the partner card and used for grouping. Badges set to “Trade association” or “Certification / credential badge” also appear automatically, in full colour, in the credentials strip near the bottom of every service page.",
+        "Where this logo appears on the site. Vendor platform and compliance network categories appear in the partner strips on the homepage and the tile rows on service and city pages. Trade association and Certification categories appear — in full colour — in the credentials strip near the bottom of every service page. The category also decides which Studio list this entry shows up in, and is shown as the small pill on the partner card.",
       type: "string",
       options: {
         list: [

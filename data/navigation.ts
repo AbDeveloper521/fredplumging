@@ -318,6 +318,39 @@ export const ASSOCIATION_BADGE_CATEGORIES: readonly TrustLogoCategory[] = [
   "credential",
 ];
 
+/**
+ * The complement — vendor-platform categories shown in the grayscale tile
+ * strips. DERIVED, so the two sets partition TRUST_LOGO_CATEGORIES by
+ * construction: no overlap, no orphan, and a category added later lands
+ * here (the vendor strips) until deliberately moved to the badge list.
+ */
+export const VENDOR_PLATFORM_CATEGORIES: readonly TrustLogoCategory[] =
+  TRUST_LOGO_CATEGORIES.filter(
+    (category) => !ASSOCIATION_BADGE_CATEGORIES.includes(category),
+  );
+
+/**
+ * Vendor tile strips (TrustBar, compliance band, service/city tile rows).
+ * Uncategorised legacy documents count as vendor so nothing published
+ * before the category split silently vanishes from where it shows today.
+ */
+export function vendorPlatformLogos(logos: TrustLogo[]): TrustLogo[] {
+  return logos.filter(
+    (logo) =>
+      logo.category === undefined ||
+      VENDOR_PLATFORM_CATEGORIES.includes(logo.category),
+  );
+}
+
+/** Service-page credentials strip — explicit badge categories only. */
+export function associationBadgeLogos(logos: TrustLogo[]): TrustLogo[] {
+  return logos.filter(
+    (logo) =>
+      logo.category !== undefined &&
+      ASSOCIATION_BADGE_CATEGORIES.includes(logo.category),
+  );
+}
+
 /** One factual line above the badge strip; edit here, not in the component. */
 export const ASSOCIATION_STRIP_HEADING = "Licensed, certified, and affiliated";
 

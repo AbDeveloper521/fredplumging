@@ -5,7 +5,7 @@ import { IconFeature } from "@/components/ui/IconFeature";
 import { TrustLogoStrip } from "@/components/ui/TrustLogoStrip";
 import { navIcons } from "@/components/layout/navIcons";
 import type { ServiceTrustSection as TrustData } from "@/data/serviceSections";
-import type { TrustLogo } from "@/data/navigation";
+import { vendorPlatformLogos, type TrustLogo } from "@/data/navigation";
 
 interface ServiceTrustSectionProps {
   section: TrustData;
@@ -19,6 +19,9 @@ interface ServiceTrustSectionProps {
  * with the shared trust-logo strip underneath.
  */
 export function ServiceTrustSection({ section, logos, id }: ServiceTrustSectionProps) {
+  // The tile strip under the proof points is a vendor-platform strip —
+  // certification badges have their own full-colour band.
+  const vendors = vendorPlatformLogos(logos);
   return (
     <section id={id} aria-labelledby={`${id}-heading`} className="bg-offwhite py-16 sm:py-20 lg:py-24">
       <Container>
@@ -43,10 +46,10 @@ export function ServiceTrustSection({ section, logos, id }: ServiceTrustSectionP
           ))}
         </div>
 
-        {section.showLogos && logos.length > 0 && (
+        {section.showLogos && vendors.length > 0 && (
           <Reveal delay={0.15}>
             <div className="mt-14 border-t border-grey-300/60 pt-10">
-              <TrustLogoStrip logos={logos} />
+              <TrustLogoStrip logos={vendors} />
             </div>
           </Reveal>
         )}

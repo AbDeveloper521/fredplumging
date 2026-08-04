@@ -2,7 +2,7 @@ import Image from "next/image";
 import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/ui/Reveal";
 import {
-  ASSOCIATION_BADGE_CATEGORIES,
+  associationBadgeLogos,
   ASSOCIATION_STRIP_HEADING,
   type TrustLogo,
 } from "@/data/navigation";
@@ -22,11 +22,7 @@ import {
  * on small screens so every credential stays visible (no horizontal scroll).
  */
 export function AssociationBadgeStrip({ logos }: { logos: TrustLogo[] }) {
-  const badges = logos.filter(
-    (logo) =>
-      logo.category !== undefined &&
-      ASSOCIATION_BADGE_CATEGORIES.includes(logo.category),
-  );
+  const badges = associationBadgeLogos(logos);
   if (badges.length === 0) return null;
 
   return (

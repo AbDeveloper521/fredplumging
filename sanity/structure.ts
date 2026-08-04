@@ -1,9 +1,19 @@
 import type { StructureResolver } from "sanity/structure";
+import {
+  ASSOCIATION_BADGE_CATEGORIES,
+  VENDOR_PLATFORM_CATEGORIES,
+} from "@/data/navigation";
 
 /**
  * Studio structure. Singletons (`siteSettings`, `navigation`) are pinned as
  * single documents with fixed IDs — there is no document list to "create new"
  * from. FAQ and testimonial lists default to the client-controlled `order`.
+ *
+ * `trustLogo` is ONE document type shown as TWO filtered lists — vendor
+ * platforms vs certification/association badges — mirroring where each
+ * group renders on the site. Creating from either list pre-sets the
+ * matching category via the templates in sanity.config.ts, so a document
+ * lands in the list it was created from.
  */
 export const structure: StructureResolver = (S) =>
   S.list()
@@ -78,7 +88,31 @@ export const structure: StructureResolver = (S) =>
         .child(
           S.documentTypeList("trustLogo")
             .title("Partners & Vendor Systems")
-            .defaultOrdering([{ field: "order", direction: "asc" }]),
+            .apiVersion("2026-07-01")
+            // Uncategorised legacy documents stay here — the vendor strips
+            // are where they render today.
+            .filter(
+              '_type == "trustLogo" && (!defined(category) || category in $categories)',
+            )
+            .params({ categories: [...VENDOR_PLATFORM_CATEGORIES] })
+            .defaultOrdering([{ field: "order", direction: "asc" }])
+            .initialValueTemplates([
+              S.initialValueTemplateItem("trustLogo-vendor"),
+            ]),
+        ),
+      S.listItem()
+        .title("Certification & Association Badges")
+        .id("certificationBadges")
+        .child(
+          S.documentTypeList("trustLogo")
+            .title("Certification & Association Badges")
+            .apiVersion("2026-07-01")
+            .filter('_type == "trustLogo" && category in $categories')
+            .params({ categories: [...ASSOCIATION_BADGE_CATEGORIES] })
+            .defaultOrdering([{ field: "order", direction: "asc" }])
+            .initialValueTemplates([
+              S.initialValueTemplateItem("trustLogo-badge"),
+            ]),
         ),
       S.divider(),
       S.listItem()

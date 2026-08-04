@@ -1,10 +1,11 @@
 import { Container } from "@/components/ui/Container";
 import { TrustLogoStrip } from "@/components/ui/TrustLogoStrip";
-import type { TrustLogo } from "@/data/navigation";
+import { vendorPlatformLogos, type TrustLogo } from "@/data/navigation";
 import { homePageDefaults } from "@/data/homePage";
 
 /**
- * Vendor-system and association logos. The strip itself lives in
+ * Vendor-platform logos only — certification/association badges live in the
+ * service pages' AssociationBadgeStrip instead. The strip itself lives in
  * `components/ui/TrustLogoStrip.tsx` so service-page sections can reuse it.
  */
 export function TrustBar({
@@ -14,6 +15,8 @@ export function TrustBar({
   logos: TrustLogo[];
   tagline?: string;
 }) {
+  const vendors = vendorPlatformLogos(logos);
+  if (vendors.length === 0) return null;
   return (
     <section aria-label="Trusted partners and vendor systems" className="bg-white pb-16 pt-4 sm:pb-20">
       <Container>
@@ -21,7 +24,7 @@ export function TrustBar({
           {tagline}
         </p>
         <div className="mt-8">
-          <TrustLogoStrip logos={logos} />
+          <TrustLogoStrip logos={vendors} />
         </div>
       </Container>
     </section>

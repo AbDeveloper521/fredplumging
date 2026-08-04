@@ -9,7 +9,7 @@ import { TestimonialsSection } from "@/components/sections/TestimonialsSection";
 import { ServiceAboutSection } from "@/components/sections/ServiceAboutSection";
 import { FinalCTASection } from "@/components/sections/FinalCTASection";
 import type { CityPageContent } from "@/data/cities";
-import type { TrustLogo } from "@/data/navigation";
+import { vendorPlatformLogos, type TrustLogo } from "@/data/navigation";
 import type { GoogleReviewProfile } from "@/data/googleReviews";
 import type { Testimonial } from "@/data/testimonials";
 import type { SiteContent } from "@/data/site";
@@ -35,6 +35,9 @@ export function CityPage({
   profile,
   trustLogos,
 }: CityPageProps) {
+  // The closing tile strip is a vendor-platform strip — certification
+  // badges belong to the service pages' full-colour band.
+  const vendorLogos = vendorPlatformLogos(trustLogos);
   return (
     <>
       {/* Hero — same dark composition as the other page shells. */}
@@ -157,14 +160,14 @@ export function CityPage({
         />
       )}
 
-      {content.showLogoStrip && trustLogos.length > 0 && (
+      {content.showLogoStrip && vendorLogos.length > 0 && (
         <section
-          aria-label="Associations and vendor systems"
+          aria-label="Partner platforms and vendor systems"
           className="border-t border-grey-300/40 bg-white py-12 sm:py-14"
         >
           <Container>
             <Reveal>
-              <TrustLogoStrip logos={trustLogos} />
+              <TrustLogoStrip logos={vendorLogos} />
             </Reveal>
           </Container>
         </section>
