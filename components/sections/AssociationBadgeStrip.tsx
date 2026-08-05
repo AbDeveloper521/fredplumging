@@ -14,12 +14,17 @@ import {
  * categories — an editor uploads a badge with that category in Studio and it
  * appears here on every service page, no per-page editing.
  *
- * Unlike the vendor tile strip these render FULL COLOUR at rest — dimmed
+ * Unlike the vendor tile strips these render FULL COLOUR at rest — dimmed
  * certification marks read as decoration; in colour they read as
  * credentials. Bare row, no tiles: badges are designed for light
  * backgrounds, and the schema already asks for transparent uploads. Even
- * slot heights + object-contain keep mixed badge shapes tidy; the row wraps
- * on small screens so every credential stays visible (no horizontal scroll).
+ * slot heights + object-contain keep mixed badge shapes tidy (the NMSDC
+ * hexagon stays contained, never cropped).
+ *
+ * Layout: a centred wrapping row whose slot flex-basis sets the wrap point —
+ * six fit one line at `lg`+ inside the Container, tablets wrap 3-up, phones
+ * 2-up. Nothing hardcodes the count: a seventh badge wraps to a tidy centred
+ * second line instead of shrinking the row into illegibility.
  */
 export function AssociationBadgeStrip({ logos }: { logos: TrustLogo[] }) {
   const badges = associationBadgeLogos(logos);
@@ -43,11 +48,21 @@ export function AssociationBadgeStrip({ logos }: { logos: TrustLogo[] }) {
         </Reveal>
 
         <Reveal delay={0.08}>
-          <ul className="mt-8 flex flex-wrap items-center justify-center gap-x-10 gap-y-6 lg:gap-x-14">
+          <ul className="mt-8 flex flex-wrap items-center justify-center gap-x-8 gap-y-6 sm:gap-x-10">
+            {/*
+              basis is the wrap threshold, not the rendered size: slots then
+              grow to share their row equally, capped at max-w-40 so a short
+              row (or a wrapped seventh badge) can't balloon. basis-28 fits
+              two per row on a 320px phone and six per row at lg; the wider
+              sm basis deliberately wraps tablets at three per row.
+            */}
             {badges.map((logo) => (
-              <li key={logo.name} className="flex items-center justify-center">
+              <li
+                key={logo.name}
+                className="flex max-w-40 basis-28 grow items-center justify-center sm:basis-40 lg:basis-28"
+              >
                 {logo.photo ? (
-                  <div className="relative h-14 w-36 sm:h-16 sm:w-40">
+                  <div className="relative h-12 w-full lg:h-14">
                     <Image
                       src={logo.photo.url}
                       alt={logo.photo.alt}
@@ -57,7 +72,7 @@ export function AssociationBadgeStrip({ logos }: { logos: TrustLogo[] }) {
                     />
                   </div>
                 ) : (
-                  <span className="font-heading max-w-40 text-center text-lg leading-tight font-extrabold tracking-tight text-navy-900">
+                  <span className="font-heading text-center text-lg leading-tight font-extrabold tracking-tight text-navy-900">
                     {logo.name}
                   </span>
                 )}

@@ -1,7 +1,6 @@
 import type { ServiceSection } from "@/data/serviceSections";
 import type { Service } from "@/data/services";
 import type { SiteContent } from "@/data/site";
-import type { TrustLogo } from "@/data/navigation";
 import type { Testimonial } from "@/data/testimonials";
 import type { GoogleReviewProfile } from "@/data/googleReviews";
 import { ServiceHeroSection, type Breadcrumb } from "./ServiceHeroSection";
@@ -15,7 +14,6 @@ import { TestimonialsSection } from "./TestimonialsSection";
 import { ServicePropertyTypesSection } from "./ServicePropertyTypesSection";
 import { ServiceFaqSection } from "./ServiceFaqSection";
 import { ServiceAreaCmsSection } from "./ServiceAreaCmsSection";
-import { TrustLogoStripSection } from "./TrustLogoStripSection";
 import { RelatedServicesSection } from "./RelatedServicesSection";
 import { ServiceFinalCtaSection } from "./ServiceFinalCtaSection";
 
@@ -50,7 +48,6 @@ interface ServiceSectionRendererProps {
   services: Service[];
   testimonials: Testimonial[];
   profile: GoogleReviewProfile;
-  trustLogos: TrustLogo[];
 }
 
 /**
@@ -66,7 +63,6 @@ export function ServiceSectionRenderer({
   services,
   testimonials,
   profile,
-  trustLogos,
 }: ServiceSectionRendererProps) {
   const seen = new Map<string, number>();
 
@@ -101,12 +97,7 @@ export function ServiceSectionRenderer({
             return <ComparisonTableSection key={section._key} section={section} id={id} />;
           case "serviceTrust":
             return (
-              <ServiceTrustSection
-                key={section._key}
-                section={section}
-                logos={trustLogos}
-                id={id}
-              />
+              <ServiceTrustSection key={section._key} section={section} id={id} />
             );
           case "serviceTestimonials":
             return (
@@ -137,14 +128,10 @@ export function ServiceSectionRenderer({
               />
             );
           case "trustLogoStrip":
-            return (
-              <TrustLogoStripSection
-                key={section._key}
-                section={section}
-                logos={trustLogos}
-                id={id}
-              />
-            );
+            // Retired: vendor-platform tiles now appear on the homepage only.
+            // The type stays mapped (published stacks still contain it) but
+            // renders nothing — AssociationBadgeStrip is the credentials band.
+            return null;
           case "relatedServices":
             return (
               <RelatedServicesSection

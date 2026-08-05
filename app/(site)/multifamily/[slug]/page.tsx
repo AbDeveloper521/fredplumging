@@ -12,6 +12,7 @@ import type { ServiceFaqSection } from "@/data/serviceSections";
 import { CmsDetailPage } from "@/components/layout/CmsDetailPage";
 import { ServiceSectionRenderer } from "@/components/sections/ServiceSectionRenderer";
 import { TestimonialsSection } from "@/components/sections/TestimonialsSection";
+import { AssociationBadgeStrip } from "@/components/sections/AssociationBadgeStrip";
 import {
   BreadcrumbJsonLd,
   FaqJsonLd,
@@ -96,10 +97,11 @@ export default async function IndustryPage({
   // body/CmsDetailPage layout — nothing breaks mid-migration. Reviews still
   // render, preferring this property type's default tags.
   if (!industry.sections) {
-    const [site, testimonials, profile] = await Promise.all([
+    const [site, testimonials, profile, trustLogos] = await Promise.all([
       getSite(),
       getTestimonials(),
       getReviewSettings(),
+      getTrustLogos(),
     ]);
     return (
       <>
@@ -121,6 +123,9 @@ export default async function IndustryPage({
           titleId="client-reviews-heading"
           filterTags={DEFAULT_PAGE_REVIEW_TAGS[industry.slug]}
         />
+        {/* Association/certification badges close the content, matching the
+            service pages. */}
+        <AssociationBadgeStrip logos={trustLogos} />
       </>
     );
   }
@@ -150,8 +155,10 @@ export default async function IndustryPage({
         services={services}
         testimonials={testimonials}
         profile={profile}
-        trustLogos={trustLogos}
       />
+      {/* Association/certification badges close the content, matching the
+          service pages. */}
+      <AssociationBadgeStrip logos={trustLogos} />
     </>
   );
 }

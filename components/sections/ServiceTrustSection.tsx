@@ -2,26 +2,21 @@ import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { IconFeature } from "@/components/ui/IconFeature";
-import { TrustLogoStrip } from "@/components/ui/TrustLogoStrip";
 import { navIcons } from "@/components/layout/navIcons";
 import type { ServiceTrustSection as TrustData } from "@/data/serviceSections";
-import { vendorPlatformLogos, type TrustLogo } from "@/data/navigation";
 
 interface ServiceTrustSectionProps {
   section: TrustData;
-  logos: TrustLogo[];
   id: string;
 }
 
 /**
  * Compact trust row — condenses the reference page's full-height "Trusted
- * Plumbing Professionals" section into heading + three inline icon features,
- * with the shared trust-logo strip underneath.
+ * Plumbing Professionals" section into heading + three inline icon features.
+ * Vendor-platform logos live on the homepage only (TrustBar + compliance
+ * band); the credentials band on service pages is AssociationBadgeStrip.
  */
-export function ServiceTrustSection({ section, logos, id }: ServiceTrustSectionProps) {
-  // The tile strip under the proof points is a vendor-platform strip —
-  // certification badges have their own full-colour band.
-  const vendors = vendorPlatformLogos(logos);
+export function ServiceTrustSection({ section, id }: ServiceTrustSectionProps) {
   return (
     <section id={id} aria-labelledby={`${id}-heading`} className="bg-offwhite py-16 sm:py-20 lg:py-24">
       <Container>
@@ -45,14 +40,6 @@ export function ServiceTrustSection({ section, logos, id }: ServiceTrustSectionP
             </Reveal>
           ))}
         </div>
-
-        {section.showLogos && vendors.length > 0 && (
-          <Reveal delay={0.15}>
-            <div className="mt-14 border-t border-grey-300/60 pt-10">
-              <TrustLogoStrip logos={vendors} />
-            </div>
-          </Reveal>
-        )}
       </Container>
     </section>
   );

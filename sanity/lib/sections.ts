@@ -109,9 +109,10 @@ function toSection(raw: Raw, index: number): ServiceSection | null {
   const _key = key(raw, index);
 
   // Two types render without a heading, so they sit ahead of the blanket
-  // heading gate: the badge strip carries no copy at all, and the card band
-  // may show its cards alone (reference-style layout). Both label themselves
-  // for assistive tech without an h2.
+  // heading gate: the (retired, render-nothing) strip carries no copy at
+  // all, and the card band may show its cards alone (reference-style
+  // layout). trustLogoStrip stays mapped rather than dropped so published
+  // stacks that still contain it don't raise dropped-section warnings.
   if (raw._type === "trustLogoStrip") {
     return {
       _type: "trustLogoStrip",
@@ -305,7 +306,6 @@ function toSection(raw: Raw, index: number): ServiceSection | null {
         _key,
         heading,
         items,
-        showLogos: raw.showLogos !== false,
       };
     }
     case "serviceTestimonials": {
@@ -457,7 +457,7 @@ export const SECTION_REQUIREMENTS: Record<
     arrays: [{ field: "faqs", title: "Questions", valid: childWith("question", "answer") }],
   },
   serviceArea: { strings: [{ field: "heading", title: "Heading" }], arrays: [] },
-  // Never drops: the strip renders from the Trust Logos collection alone.
+  // Never drops — retired type kept mapped so existing stacks stay warning-free.
   trustLogoStrip: { strings: [], arrays: [] },
   relatedServices: {
     strings: [{ field: "heading", title: "Heading" }],

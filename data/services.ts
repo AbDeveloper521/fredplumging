@@ -208,8 +208,6 @@ export const services: Service[] = [
               "We use modern equipment for diagnostics, leak detection, and repairs to ensure precision and minimize disruption.",
           },
         ],
-        // The badge strip closes the page instead (tpl-badges).
-        showLogos: false,
       },
       {
         _type: "serviceTestimonials",

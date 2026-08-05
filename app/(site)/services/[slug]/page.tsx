@@ -153,7 +153,6 @@ export default async function ServicePage({
         services={services}
         testimonials={testimonials}
         profile={profile}
-        trustLogos={trustLogos}
       />
       {/* Association/certification badges close the content on every
           service page, per the owner's reference — then the map band. */}

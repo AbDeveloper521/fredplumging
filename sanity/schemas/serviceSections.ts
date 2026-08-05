@@ -576,7 +576,7 @@ export const serviceTrust = defineType({
   name: "serviceTrust",
   title: "Why trust us",
   type: "object",
-  description: "Compact row of proof points, with the partner-logo strip underneath.",
+  description: "Compact row of proof points.",
   fields: [
     requiredString("heading", "Heading", "Section heading, e.g. “Trusted Plumbing Professionals Across The DFW Metroplex”.", "The section needs a heading."),
     defineField({
@@ -605,9 +605,12 @@ export const serviceTrust = defineType({
     defineField({
       name: "showLogos",
       title: "Show the partner logo strip",
-      description: "Shows the Trust Logos collection (AAGD, TDLR, …) under the row.",
+      description: "No longer used — vendor logos now appear only on the homepage.",
       type: "boolean",
-      initialValue: true,
+      // Inert: published documents still carry a value (so the field stays in
+      // the schema to avoid unknown-field noise), but nothing reads it and
+      // the toggle is hidden so it can't suggest a strip that never renders.
+      hidden: true,
     }),
   ],
   preview: {
@@ -921,12 +924,15 @@ export const relatedServices = defineType({
   },
 });
 
+// Retired: vendor logos now appear only on the homepage, and pages render
+// nothing for this section. The type stays in the schema so published stacks
+// that still contain it don't show unknown-type noise in the Studio.
 export const trustLogoStrip = defineType({
   name: "trustLogoStrip",
-  title: "Badge strip",
+  title: "Badge strip (no longer shown)",
   type: "object",
   description:
-    "The row of certification and partner badges (the Trust Logos collection) on its own band — edit the badges in Trust Logos, not here.",
+    "No longer used — vendor logos now appear only on the homepage. This section renders nothing; the certification badges have their own automatic band on every service page.",
   fields: [
     defineField({
       name: "background",
@@ -944,8 +950,8 @@ export const trustLogoStrip = defineType({
   ],
   preview: {
     prepare: () => ({
-      title: "Badge strip",
-      subtitle: "Badges from the Trust Logos collection",
+      title: "Badge strip (no longer shown)",
+      subtitle: "Retired — renders nothing; vendor logos live on the homepage",
     }),
   },
 });

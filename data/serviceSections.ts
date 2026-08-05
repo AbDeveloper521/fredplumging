@@ -113,7 +113,6 @@ export interface ServiceTrustSection extends SectionBase {
   _type: "serviceTrust";
   heading: string;
   items: Array<{ _key: string; icon: NavIconName; title: string; description: string }>;
-  showLogos: boolean;
 }
 
 export interface ServiceTestimonialsSection extends SectionBase {
@@ -181,6 +180,11 @@ export interface ServiceAreaSection extends SectionBase {
   photoSubject?: string;
 }
 
+/**
+ * Retired: vendor-platform tiles now appear on the homepage only. The type
+ * survives (published stacks still contain it, and the Studio schema keeps
+ * the object so those documents stay noise-free) but renders nothing.
+ */
 export interface TrustLogoStripSection extends SectionBase {
   _type: "trustLogoStrip";
   /** Section background — defaults to offwhite. */
