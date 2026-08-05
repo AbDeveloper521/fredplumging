@@ -4,12 +4,18 @@ import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Reveal } from "@/components/ui/Reveal";
 import type { TrustLogo, TrustLogoCategory } from "@/data/navigation";
+import {
+  partnersPageDefaults,
+  type PartnerPlatformsContent,
+} from "@/data/partnersPage";
 import { cn } from "@/lib/utils";
 
 interface PartnerPlatformsSectionProps {
   /** Trust-logo entries WITH a blurb — the caller filters. */
   partners: TrustLogo[];
-  id?: string;
+  content?: PartnerPlatformsContent;
+  /** Unique per instance — sections can be duplicated in the Studio. */
+  titleId?: string;
 }
 
 const CATEGORY_LABELS: Record<TrustLogoCategory, string> = {
@@ -26,23 +32,23 @@ const CATEGORY_LABELS: Record<TrustLogoCategory, string> = {
  */
 export function PartnerPlatformsSection({
   partners,
-  id = "partner-platforms",
+  content = partnersPageDefaults.platforms,
+  titleId = "partner-platforms-heading",
 }: PartnerPlatformsSectionProps) {
   if (partners.length === 0) return null;
 
   return (
     <section
-      id={id}
-      aria-labelledby={`${id}-heading`}
+      aria-labelledby={titleId}
       className="bg-offwhite py-16 sm:py-24 lg:py-28"
     >
       <Container>
         <Reveal>
           <SectionHeading
-            titleId={`${id}-heading`}
-            eyebrow="Vendor Compliance"
-            title="Approved Across the Systems Property Managers Already Use"
-            description="Each registration below is active and maintained — documentation, insurance, and certifications are already on file, so approving Fred's Plumbing is a lookup in the system you use today, not a new onboarding project."
+            titleId={titleId}
+            eyebrow={content.eyebrow}
+            title={content.heading}
+            description={content.description}
           />
         </Reveal>
 

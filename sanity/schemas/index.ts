@@ -2,6 +2,7 @@ import type { SchemaTypeDefinition } from "sanity";
 import { siteSettings } from "./siteSettings";
 import { homePage, homeSectionTypes } from "./homePage";
 import { aboutPage, aboutSectionTypes } from "./aboutPage";
+import { partnersPage, partnersSectionTypes } from "./partnersPage";
 import { contactPage } from "./contactPage";
 import { cityPage } from "./cityPage";
 import { reviewSettings } from "./reviewSettings";
@@ -18,6 +19,7 @@ export const schemaTypes: SchemaTypeDefinition[] = [
   siteSettings,
   homePage,
   aboutPage,
+  partnersPage,
   contactPage,
   cityPage,
   reviewSettings,
@@ -31,4 +33,5 @@ export const schemaTypes: SchemaTypeDefinition[] = [
   ...serviceSectionTypes,
   ...homeSectionTypes,
   ...aboutSectionTypes,
+  ...partnersSectionTypes,
 ];

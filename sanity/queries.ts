@@ -193,6 +193,15 @@ export const ABOUT_PAGE_QUERY = defineQuery(
   }`,
 );
 
+export const PARTNERS_PAGE_QUERY = defineQuery(
+  `*[_type == "partnersPage" && _id == "partnersPage"][0]{
+    sections[]{
+      ...,
+      photo{ asset, hotspot, crop, alt, frameRatio }
+    }
+  }`,
+);
+
 export const CONTACT_PAGE_QUERY = defineQuery(
   `*[_type == "contactPage" && _id == "contactPage"][0]{
     heroEyebrow,

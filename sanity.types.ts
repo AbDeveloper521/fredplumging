@@ -31,6 +31,56 @@ export type Photo = {
   _type: "image";
 };
 
+export type PartnerCredentials = {
+  _type: "partnerCredentials";
+  heading?: string;
+  eyebrow?: string;
+  description?: string;
+  ctaLabel?: string;
+  ctaHref?: string;
+  hidden?: boolean;
+};
+
+export type PartnerPlatforms = {
+  _type: "partnerPlatforms";
+  heading?: string;
+  eyebrow?: string;
+  description?: string;
+  hidden?: boolean;
+};
+
+export type VendorOnboarding = {
+  _type: "vendorOnboarding";
+  heading?: string;
+  eyebrow?: string;
+  description?: string;
+  items?: Array<{
+    icon?:
+      | "file-check-2"
+      | "shield-check"
+      | "clock-4"
+      | "clipboard-list"
+      | "wrench"
+      | "truck"
+      | "phone-call"
+      | "building-2";
+    title?: string;
+    description?: string;
+    _type: "item";
+    _key: string;
+  }>;
+  hidden?: boolean;
+};
+
+export type PartnersHero = {
+  _type: "partnersHero";
+  heading?: string;
+  eyebrow?: string;
+  paragraphs?: Array<string>;
+  showCredentials?: boolean;
+  hidden?: boolean;
+};
+
 export type PageLinks = {
   _type: "pageLinks";
   heading?: string;
@@ -1197,6 +1247,43 @@ export type ContactPage = {
   }>;
 };
 
+export type PartnersPage = {
+  _id: string;
+  _type: "partnersPage";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  sections?: Array<
+    | ({
+        _key: string;
+      } & PartnersHero)
+    | ({
+        _key: string;
+      } & VendorOnboarding)
+    | ({
+        _key: string;
+      } & PartnerPlatforms)
+    | ({
+        _key: string;
+      } & PartnerCredentials)
+    | ({
+        _key: string;
+      } & ServiceTestimonials)
+    | ({
+        _key: string;
+      } & ServiceFaq)
+    | ({
+        _key: string;
+      } & IconCardSection)
+    | ({
+        _key: string;
+      } & HomeLocationMap)
+    | ({
+        _key: string;
+      } & HomeFinalCta)
+  >;
+};
+
 export type AboutPage = {
   _id: string;
   _type: "aboutPage";
@@ -1417,6 +1504,10 @@ export type Geopoint = {
 export type AllSanitySchemaTypes =
   | SanityImageAssetReference
   | Photo
+  | PartnerCredentials
+  | PartnerPlatforms
+  | VendorOnboarding
+  | PartnersHero
   | PageLinks
   | ValuesGrid
   | AboutEvolution
@@ -1465,6 +1556,7 @@ export type AllSanitySchemaTypes =
   | ReviewSettings
   | CityPage
   | ContactPage
+  | PartnersPage
   | AboutPage
   | HomePage
   | SiteSettings
@@ -3074,6 +3166,145 @@ export type ABOUT_PAGE_QUERY_RESULT = {
 } | null;
 
 // Source: sanity/queries.ts
+// Variable: PARTNERS_PAGE_QUERY
+// Query: *[_type == "partnersPage" && _id == "partnersPage"][0]{    sections[]{      ...,      photo{ asset, hotspot, crop, alt, frameRatio }    }  }
+export type PARTNERS_PAGE_QUERY_RESULT = {
+  sections: Array<
+    | {
+        _key: string;
+        _type: "homeFinalCta";
+        heading?: string;
+        eyebrow?: string;
+        description?: string;
+        reassurance?: string;
+        hidden?: boolean;
+        photo: null;
+      }
+    | {
+        _key: string;
+        _type: "homeLocationMap";
+        hidden?: boolean;
+        photo: null;
+      }
+    | {
+        _key: string;
+        _type: "iconCardSection";
+        eyebrow?: string;
+        heading?: string;
+        background?: "dark" | "default";
+        photo: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+          frameRatio: null;
+        } | null;
+        defaultCardColor?: "navy" | "offwhite" | "red" | "white";
+        cards?: Array<{
+          icon?:
+            | "award"
+            | "building-2"
+            | "calendar-check"
+            | "clock"
+            | "cog"
+            | "droplets"
+            | "flame"
+            | "gauge"
+            | "map-pin"
+            | "shield-check"
+            | "siren"
+            | "waves"
+            | "wrench";
+          title?: string;
+          description?: string;
+          ctaLabel?: string;
+          ctaHref?: string;
+          cardColor?: "navy" | "offwhite" | "red" | "white";
+          _type: "card";
+          _key: string;
+        }>;
+      }
+    | {
+        _key: string;
+        _type: "partnerCredentials";
+        heading?: string;
+        eyebrow?: string;
+        description?: string;
+        ctaLabel?: string;
+        ctaHref?: string;
+        hidden?: boolean;
+        photo: null;
+      }
+    | {
+        _key: string;
+        _type: "partnerPlatforms";
+        heading?: string;
+        eyebrow?: string;
+        description?: string;
+        hidden?: boolean;
+        photo: null;
+      }
+    | {
+        _key: string;
+        _type: "partnersHero";
+        heading?: string;
+        eyebrow?: string;
+        paragraphs?: Array<string>;
+        showCredentials?: boolean;
+        hidden?: boolean;
+        photo: null;
+      }
+    | {
+        _key: string;
+        _type: "serviceFaq";
+        heading?: string;
+        faqs?: Array<{
+          question?: string;
+          answer?: string;
+          href?: string;
+          linkLabel?: string;
+          _type: "faq";
+          _key: string;
+        }>;
+        background?: "offwhite" | "white";
+        photo: null;
+      }
+    | {
+        _key: string;
+        _type: "serviceTestimonials";
+        heading?: string;
+        filterTags?: Array<string>;
+        limit?: number;
+        photo: null;
+      }
+    | {
+        _key: string;
+        _type: "vendorOnboarding";
+        heading?: string;
+        eyebrow?: string;
+        description?: string;
+        items?: Array<{
+          icon?:
+            | "building-2"
+            | "clipboard-list"
+            | "clock-4"
+            | "file-check-2"
+            | "phone-call"
+            | "shield-check"
+            | "truck"
+            | "wrench";
+          title?: string;
+          description?: string;
+          _type: "item";
+          _key: string;
+        }>;
+        hidden?: boolean;
+        photo: null;
+      }
+  > | null;
+} | null;
+
+// Source: sanity/queries.ts
 // Variable: CONTACT_PAGE_QUERY
 // Query: *[_type == "contactPage" && _id == "contactPage"][0]{    heroEyebrow,    heroHeading,    heroIntro,    responsePromise,    hours[]{ days, hours },    emergencyHeading,    emergencyBody,    faqs[]{ question, answer }  }
 export type CONTACT_PAGE_QUERY_RESULT = {
@@ -3183,6 +3414,7 @@ declare module "@sanity/client" {
     '*[_type == "trustLogo"] | order(order asc){\n    name,\n    logo{ asset, hotspot, crop, alt },\n    headline,\n    blurb,\n    category,\n    url,\n    verified\n  }': TRUST_LOGOS_QUERY_RESULT;
     '*[_type == "homePage" && _id == "homePage"][0]{\n    sections[]{\n      ...,\n      photo{ asset, hotspot, crop, alt, frameRatio },\n      primaryPhoto{ asset, hotspot, crop, alt, frameRatio },\n      secondaryPhoto{ asset, hotspot, crop, alt }\n    }\n  }': HOME_PAGE_QUERY_RESULT;
     '*[_type == "aboutPage" && _id == "aboutPage"][0]{\n    sections[]{\n      ...,\n      photo{ asset, hotspot, crop, alt, frameRatio },\n      photoPrimary{ asset, hotspot, crop, alt, frameRatio },\n      photoSecondary{ asset, hotspot, crop, alt }\n    }\n  }': ABOUT_PAGE_QUERY_RESULT;
+    '*[_type == "partnersPage" && _id == "partnersPage"][0]{\n    sections[]{\n      ...,\n      photo{ asset, hotspot, crop, alt, frameRatio }\n    }\n  }': PARTNERS_PAGE_QUERY_RESULT;
     '*[_type == "contactPage" && _id == "contactPage"][0]{\n    heroEyebrow,\n    heroHeading,\n    heroIntro,\n    responsePromise,\n    hours[]{ days, hours },\n    emergencyHeading,\n    emergencyBody,\n    faqs[]{ question, answer }\n  }': CONTACT_PAGE_QUERY_RESULT;
     '*[_type == "cityPage" && slug.current == $slug][0]{\n    city,\n    "slug": slug.current,\n    heroHeading,\n    heroIntro,\n    servicesHeading,\n    serviceCards[]{ _key, title, description, href, icon },\n    whyChooseHeading,\n    whyChooseBody,\n    reviewsHeading,\n    heritageHeading,\n    heritageParagraphs,\n    heritagePhoto{ asset, hotspot, crop, alt, frameRatio },\n    heritagePhotoSubject,\n    communitiesHeading,\n    communitiesBody,\n    communities,\n    showLogoStrip,\n    seoTitle,\n    seoDescription\n  }': CITY_PAGE_QUERY_RESULT;
     '*[_type == "navigation" && _id == "navigation"][0]{\n    footerColumns[]{\n      _key,\n      heading,\n      links[]{ _key, label, href }\n    },\n    legalLinks[]{ _key, label, href }\n  }': FOOTER_NAVIGATION_QUERY_RESULT;

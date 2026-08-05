@@ -3,6 +3,10 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
 import { ComplianceDashboardPanel } from "@/components/ui/ComplianceDashboardPanel";
+import {
+  partnersPageDefaults,
+  type PartnerCredentialsContent,
+} from "@/data/partnersPage";
 
 /**
  * Lighter sibling of the homepage ComplianceSection, split for
@@ -10,13 +14,20 @@ import { ComplianceDashboardPanel } from "@/components/ui/ComplianceDashboardPan
  * Management Systems"), checklist, and logo strip would all repeat what the
  * partners page already says in its hero, onboarding band, and platform
  * cards. Only the dashboard panel is additive here — the concrete document
- * line items — so this keeps the panel and drops the rest.
+ * line items — so this keeps the panel (design-owned) and drops the rest;
+ * the copy and button come from the section item.
  */
-export function PartnerCredentialsSection({ id = "partner-credentials" }: { id?: string }) {
+export function PartnerCredentialsSection({
+  content = partnersPageDefaults.credentials,
+  titleId = "partner-credentials-heading",
+}: {
+  content?: PartnerCredentialsContent;
+  /** Unique per instance — sections can be duplicated in the Studio. */
+  titleId?: string;
+}) {
   return (
     <section
-      id={id}
-      aria-labelledby={`${id}-heading`}
+      aria-labelledby={titleId}
       className="relative isolate overflow-hidden bg-navy-950 py-16 sm:py-24 lg:py-28"
     >
       <div aria-hidden="true" className="bg-grid-dark absolute inset-0" />
@@ -29,17 +40,17 @@ export function PartnerCredentialsSection({ id = "partner-credentials" }: { id?:
         <div>
           <Reveal>
             <SectionHeading
-              titleId={`${id}-heading`}
-              eyebrow="The Paper Trail"
-              title="The Documents Behind the Approvals"
-              description="These are the records each platform verifies against — kept current year-round, and available for your vendor file directly whenever your system isn't one we're already in."
+              titleId={titleId}
+              eyebrow={content.eyebrow}
+              title={content.heading}
+              description={content.description}
               theme="dark"
             />
           </Reveal>
           <Reveal delay={0.12}>
             <div className="mt-9">
-              <Button href="/contact" withArrow>
-                Request Compliance Documents
+              <Button href={content.ctaHref} withArrow>
+                {content.ctaLabel}
               </Button>
             </div>
           </Reveal>
