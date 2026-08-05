@@ -184,23 +184,12 @@ export const HOME_PAGE_QUERY = defineQuery(
 
 export const ABOUT_PAGE_QUERY = defineQuery(
   `*[_type == "aboutPage" && _id == "aboutPage"][0]{
-    heroEyebrow,
-    heroHeading,
-    heroParagraphs,
-    storyHeading,
-    storyParagraphs,
-    storyPhotoPrimary{ asset, hotspot, crop, alt, frameRatio },
-    storyPhotoSubjectPrimary,
-    storyPhotoSecondary{ asset, hotspot, crop, alt },
-    storyPhotoSubjectSecondary,
-    evolutionHeading,
-    evolutionParagraphs,
-    evolutionPhoto{ asset, hotspot, crop, alt, frameRatio },
-    evolutionPhotoSubject,
-    valuesHeading,
-    values[]{ icon, title, description },
-    linksHeading,
-    links[]{ title, description, href }
+    sections[]{
+      ...,
+      photo{ asset, hotspot, crop, alt, frameRatio },
+      photoPrimary{ asset, hotspot, crop, alt, frameRatio },
+      photoSecondary{ asset, hotspot, crop, alt }
+    }
   }`,
 );
 

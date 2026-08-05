@@ -24,11 +24,103 @@ export type SanityImageAssetReference = {
 
 export type Photo = {
   asset?: SanityImageAssetReference;
-  media?: unknown; // Unable to locate the referenced type "photo.media" in schema
+  media?: unknown; // Unable to locate the referenced type "card.photo.media" in schema
   hotspot?: SanityImageHotspot;
   crop?: SanityImageCrop;
   alt?: string;
   _type: "image";
+};
+
+export type PageLinks = {
+  _type: "pageLinks";
+  heading?: string;
+  eyebrow?: string;
+  links?: Array<{
+    title?: string;
+    description?: string;
+    href?: string;
+    _type: "link";
+    _key: string;
+  }>;
+  hidden?: boolean;
+};
+
+export type ValuesGrid = {
+  _type: "valuesGrid";
+  heading?: string;
+  eyebrow?: string;
+  values?: Array<{
+    icon?:
+      | "award"
+      | "shield-check"
+      | "clock"
+      | "siren"
+      | "wrench"
+      | "building-2"
+      | "heart-handshake";
+    title?: string;
+    description?: string;
+    _type: "value";
+    _key: string;
+  }>;
+  hidden?: boolean;
+};
+
+export type AboutEvolution = {
+  _type: "aboutEvolution";
+  heading?: string;
+  eyebrow?: string;
+  paragraphs?: Array<string>;
+  photo?: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    frameRatio?:
+      "default" | "square" | "landscape" | "wide" | "portrait" | "original";
+    _type: "image";
+  };
+  photoSubject?: string;
+  hidden?: boolean;
+};
+
+export type AboutStory = {
+  _type: "aboutStory";
+  heading?: string;
+  eyebrow?: string;
+  paragraphs?: Array<string>;
+  badgeSubtitle?: string;
+  photoPrimary?: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    frameRatio?:
+      "default" | "square" | "landscape" | "wide" | "portrait" | "original";
+    _type: "image";
+  };
+  photoSubjectPrimary?: string;
+  photoSecondary?: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  };
+  photoSubjectSecondary?: string;
+  hidden?: boolean;
+};
+
+export type AboutHero = {
+  _type: "aboutHero";
+  heading?: string;
+  eyebrow?: string;
+  paragraphs?: Array<string>;
+  showCredentials?: boolean;
+  hidden?: boolean;
 };
 
 export type HomeFinalCta = {
@@ -1111,67 +1203,35 @@ export type AboutPage = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  heroEyebrow?: string;
-  heroHeading?: string;
-  heroParagraphs?: Array<string>;
-  storyHeading?: string;
-  storyParagraphs?: Array<string>;
-  storyPhotoPrimary?: {
-    asset?: SanityImageAssetReference;
-    media?: unknown;
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    alt?: string;
-    frameRatio?:
-      "default" | "square" | "landscape" | "wide" | "portrait" | "original";
-    _type: "image";
-  };
-  storyPhotoSubjectPrimary?: string;
-  storyPhotoSecondary?: {
-    asset?: SanityImageAssetReference;
-    media?: unknown;
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    alt?: string;
-    _type: "image";
-  };
-  storyPhotoSubjectSecondary?: string;
-  evolutionHeading?: string;
-  evolutionParagraphs?: Array<string>;
-  evolutionPhoto?: {
-    asset?: SanityImageAssetReference;
-    media?: unknown;
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    alt?: string;
-    frameRatio?:
-      "default" | "square" | "landscape" | "wide" | "portrait" | "original";
-    _type: "image";
-  };
-  evolutionPhotoSubject?: string;
-  valuesHeading?: string;
-  values?: Array<{
-    icon?:
-      | "award"
-      | "shield-check"
-      | "clock"
-      | "siren"
-      | "wrench"
-      | "building-2"
-      | "heart-handshake";
-    title?: string;
-    description?: string;
-    _type: "value";
-    _key: string;
-  }>;
-  linksHeading?: string;
-  links?: Array<{
-    title?: string;
-    description?: string;
-    href?: string;
-    _type: "link";
-    _key: string;
-  }>;
+  sections?: Array<
+    | ({
+        _key: string;
+      } & AboutHero)
+    | ({
+        _key: string;
+      } & AboutStory)
+    | ({
+        _key: string;
+      } & AboutEvolution)
+    | ({
+        _key: string;
+      } & ValuesGrid)
+    | ({
+        _key: string;
+      } & PageLinks)
+    | ({
+        _key: string;
+      } & IconCardSection)
+    | ({
+        _key: string;
+      } & HomeTestimonials)
+    | ({
+        _key: string;
+      } & HomeLocationMap)
+    | ({
+        _key: string;
+      } & HomeFinalCta)
+  >;
 };
 
 export type HomePage = {
@@ -1357,6 +1417,11 @@ export type Geopoint = {
 export type AllSanitySchemaTypes =
   | SanityImageAssetReference
   | Photo
+  | PageLinks
+  | ValuesGrid
+  | AboutEvolution
+  | AboutStory
+  | AboutHero
   | HomeFinalCta
   | HomeLocationMap
   | HomeFaq
@@ -2823,72 +2888,189 @@ export type HOME_PAGE_QUERY_RESULT = {
 
 // Source: sanity/queries.ts
 // Variable: ABOUT_PAGE_QUERY
-// Query: *[_type == "aboutPage" && _id == "aboutPage"][0]{    heroEyebrow,    heroHeading,    heroParagraphs,    storyHeading,    storyParagraphs,    storyPhotoPrimary{ asset, hotspot, crop, alt, frameRatio },    storyPhotoSubjectPrimary,    storyPhotoSecondary{ asset, hotspot, crop, alt },    storyPhotoSubjectSecondary,    evolutionHeading,    evolutionParagraphs,    evolutionPhoto{ asset, hotspot, crop, alt, frameRatio },    evolutionPhotoSubject,    valuesHeading,    values[]{ icon, title, description },    linksHeading,    links[]{ title, description, href }  }
+// Query: *[_type == "aboutPage" && _id == "aboutPage"][0]{    sections[]{      ...,      photo{ asset, hotspot, crop, alt, frameRatio },      photoPrimary{ asset, hotspot, crop, alt, frameRatio },      photoSecondary{ asset, hotspot, crop, alt }    }  }
 export type ABOUT_PAGE_QUERY_RESULT = {
-  heroEyebrow: string | null;
-  heroHeading: string | null;
-  heroParagraphs: Array<string> | null;
-  storyHeading: string | null;
-  storyParagraphs: Array<string> | null;
-  storyPhotoPrimary: {
-    asset: SanityImageAssetReference | null;
-    hotspot: SanityImageHotspot | null;
-    crop: SanityImageCrop | null;
-    alt: string | null;
-    frameRatio:
-      | "default"
-      | "landscape"
-      | "original"
-      | "portrait"
-      | "square"
-      | "wide"
-      | null;
-  } | null;
-  storyPhotoSubjectPrimary: string | null;
-  storyPhotoSecondary: {
-    asset: SanityImageAssetReference | null;
-    hotspot: SanityImageHotspot | null;
-    crop: SanityImageCrop | null;
-    alt: string | null;
-  } | null;
-  storyPhotoSubjectSecondary: string | null;
-  evolutionHeading: string | null;
-  evolutionParagraphs: Array<string> | null;
-  evolutionPhoto: {
-    asset: SanityImageAssetReference | null;
-    hotspot: SanityImageHotspot | null;
-    crop: SanityImageCrop | null;
-    alt: string | null;
-    frameRatio:
-      | "default"
-      | "landscape"
-      | "original"
-      | "portrait"
-      | "square"
-      | "wide"
-      | null;
-  } | null;
-  evolutionPhotoSubject: string | null;
-  valuesHeading: string | null;
-  values: Array<{
-    icon:
-      | "award"
-      | "building-2"
-      | "clock"
-      | "heart-handshake"
-      | "shield-check"
-      | "siren"
-      | "wrench"
-      | null;
-    title: string | null;
-    description: string | null;
-  }> | null;
-  linksHeading: string | null;
-  links: Array<{
-    title: string | null;
-    description: string | null;
-    href: string | null;
-  }> | null;
+  sections: Array<
+    | {
+        _key: string;
+        _type: "aboutEvolution";
+        heading?: string;
+        eyebrow?: string;
+        paragraphs?: Array<string>;
+        photo: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+          frameRatio:
+            | "default"
+            | "landscape"
+            | "original"
+            | "portrait"
+            | "square"
+            | "wide"
+            | null;
+        } | null;
+        photoSubject?: string;
+        hidden?: boolean;
+        photoPrimary: null;
+        photoSecondary: null;
+      }
+    | {
+        _key: string;
+        _type: "aboutHero";
+        heading?: string;
+        eyebrow?: string;
+        paragraphs?: Array<string>;
+        showCredentials?: boolean;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+      }
+    | {
+        _key: string;
+        _type: "aboutStory";
+        heading?: string;
+        eyebrow?: string;
+        paragraphs?: Array<string>;
+        badgeSubtitle?: string;
+        photoPrimary: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+          frameRatio:
+            | "default"
+            | "landscape"
+            | "original"
+            | "portrait"
+            | "square"
+            | "wide"
+            | null;
+        } | null;
+        photoSubjectPrimary?: string;
+        photoSecondary: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+        } | null;
+        photoSubjectSecondary?: string;
+        hidden?: boolean;
+        photo: null;
+      }
+    | {
+        _key: string;
+        _type: "homeFinalCta";
+        heading?: string;
+        eyebrow?: string;
+        description?: string;
+        reassurance?: string;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+      }
+    | {
+        _key: string;
+        _type: "homeLocationMap";
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+      }
+    | {
+        _key: string;
+        _type: "homeTestimonials";
+        heading?: string;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+      }
+    | {
+        _key: string;
+        _type: "iconCardSection";
+        eyebrow?: string;
+        heading?: string;
+        background?: "dark" | "default";
+        photo: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+          frameRatio: null;
+        } | null;
+        defaultCardColor?: "navy" | "offwhite" | "red" | "white";
+        cards?: Array<{
+          icon?:
+            | "award"
+            | "building-2"
+            | "calendar-check"
+            | "clock"
+            | "cog"
+            | "droplets"
+            | "flame"
+            | "gauge"
+            | "map-pin"
+            | "shield-check"
+            | "siren"
+            | "waves"
+            | "wrench";
+          title?: string;
+          description?: string;
+          ctaLabel?: string;
+          ctaHref?: string;
+          cardColor?: "navy" | "offwhite" | "red" | "white";
+          _type: "card";
+          _key: string;
+        }>;
+        photoPrimary: null;
+        photoSecondary: null;
+      }
+    | {
+        _key: string;
+        _type: "pageLinks";
+        heading?: string;
+        eyebrow?: string;
+        links?: Array<{
+          title?: string;
+          description?: string;
+          href?: string;
+          _type: "link";
+          _key: string;
+        }>;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+      }
+    | {
+        _key: string;
+        _type: "valuesGrid";
+        heading?: string;
+        eyebrow?: string;
+        values?: Array<{
+          icon?:
+            | "award"
+            | "building-2"
+            | "clock"
+            | "heart-handshake"
+            | "shield-check"
+            | "siren"
+            | "wrench";
+          title?: string;
+          description?: string;
+          _type: "value";
+          _key: string;
+        }>;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+      }
+  > | null;
 } | null;
 
 // Source: sanity/queries.ts
@@ -3000,7 +3182,7 @@ declare module "@sanity/client" {
     '*[_type == "industry" && slug.current == $slug][0]{\n    title,\n    "slug": slug.current,\n    description,\n    bulletPoints,\n    photo{ asset, hotspot, crop, alt },\n    body,\n    sections[]{\n      ...,\n      photo{ asset, hotspot, crop, alt, frameRatio },\n      photoPrimary{ asset, hotspot, crop, alt, frameRatio }\n    },\n    seoTitle,\n    seoDescription\n  }': INDUSTRY_BY_SLUG_QUERY_RESULT;
     '*[_type == "trustLogo"] | order(order asc){\n    name,\n    logo{ asset, hotspot, crop, alt },\n    headline,\n    blurb,\n    category,\n    url,\n    verified\n  }': TRUST_LOGOS_QUERY_RESULT;
     '*[_type == "homePage" && _id == "homePage"][0]{\n    sections[]{\n      ...,\n      photo{ asset, hotspot, crop, alt, frameRatio },\n      primaryPhoto{ asset, hotspot, crop, alt, frameRatio },\n      secondaryPhoto{ asset, hotspot, crop, alt }\n    }\n  }': HOME_PAGE_QUERY_RESULT;
-    '*[_type == "aboutPage" && _id == "aboutPage"][0]{\n    heroEyebrow,\n    heroHeading,\n    heroParagraphs,\n    storyHeading,\n    storyParagraphs,\n    storyPhotoPrimary{ asset, hotspot, crop, alt, frameRatio },\n    storyPhotoSubjectPrimary,\n    storyPhotoSecondary{ asset, hotspot, crop, alt },\n    storyPhotoSubjectSecondary,\n    evolutionHeading,\n    evolutionParagraphs,\n    evolutionPhoto{ asset, hotspot, crop, alt, frameRatio },\n    evolutionPhotoSubject,\n    valuesHeading,\n    values[]{ icon, title, description },\n    linksHeading,\n    links[]{ title, description, href }\n  }': ABOUT_PAGE_QUERY_RESULT;
+    '*[_type == "aboutPage" && _id == "aboutPage"][0]{\n    sections[]{\n      ...,\n      photo{ asset, hotspot, crop, alt, frameRatio },\n      photoPrimary{ asset, hotspot, crop, alt, frameRatio },\n      photoSecondary{ asset, hotspot, crop, alt }\n    }\n  }': ABOUT_PAGE_QUERY_RESULT;
     '*[_type == "contactPage" && _id == "contactPage"][0]{\n    heroEyebrow,\n    heroHeading,\n    heroIntro,\n    responsePromise,\n    hours[]{ days, hours },\n    emergencyHeading,\n    emergencyBody,\n    faqs[]{ question, answer }\n  }': CONTACT_PAGE_QUERY_RESULT;
     '*[_type == "cityPage" && slug.current == $slug][0]{\n    city,\n    "slug": slug.current,\n    heroHeading,\n    heroIntro,\n    servicesHeading,\n    serviceCards[]{ _key, title, description, href, icon },\n    whyChooseHeading,\n    whyChooseBody,\n    reviewsHeading,\n    heritageHeading,\n    heritageParagraphs,\n    heritagePhoto{ asset, hotspot, crop, alt, frameRatio },\n    heritagePhotoSubject,\n    communitiesHeading,\n    communitiesBody,\n    communities,\n    showLogoStrip,\n    seoTitle,\n    seoDescription\n  }': CITY_PAGE_QUERY_RESULT;
     '*[_type == "navigation" && _id == "navigation"][0]{\n    footerColumns[]{\n      _key,\n      heading,\n      links[]{ _key, label, href }\n    },\n    legalLinks[]{ _key, label, href }\n  }': FOOTER_NAVIGATION_QUERY_RESULT;

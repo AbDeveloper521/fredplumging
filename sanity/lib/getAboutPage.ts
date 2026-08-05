@@ -4,40 +4,28 @@ import {
   PUBLISHED_FETCH_OPTIONS,
   type DynamicFetchOptions,
 } from "@/sanity/lib/live";
-import { resolvePhoto } from "@/sanity/lib/image";
 import { logFallback } from "@/sanity/lib/fallbackLog";
+import { toAboutSections } from "@/sanity/lib/aboutSections";
 import { ABOUT_PAGE_QUERY } from "@/sanity/queries";
 import type { ABOUT_PAGE_QUERY_RESULT } from "@/sanity.types";
-import { NAV_ICON_NAMES, type NavIconName } from "@/data/navigation";
-import {
-  aboutPage as fallbackAboutPage,
-  type AboutPageContent,
-} from "@/data/aboutPage";
+import { defaultAboutSections, type AboutSection } from "@/data/aboutPage";
 
 /** Cache tag: the document `_type`, matching how /api/revalidate resolves. */
 export const ABOUT_PAGE_TAG = "aboutPage";
 
-function toIcon(value: string | null | undefined): NavIconName {
-  return value && (NAV_ICON_NAMES as readonly string[]).includes(value)
-    ? (value as NavIconName)
-    : "wrench";
-}
-
-function strings(value: string[] | null | undefined): string[] | undefined {
-  const list = value?.filter((entry) => entry.trim() !== "");
-  return list?.length ? list : undefined;
-}
-
 /**
- * About-page copy — same singleton seam pattern as `getSite()` and
- * `getContactPage()`: a thrown fetch serves the full fallback (loud); an
- * unpublished singleton serves the fallback quietly (nothing to resurrect —
- * the fallback IS the shipped copy until the document exists); a published
- * document wins field-by-field.
+ * The About-page section stack — same singleton seam pattern as
+ * `getHomePage()`: a thrown fetch serves the full default stack (loud); a
+ * missing document or one without a `sections` array serves it quietly
+ * (that also covers a document still published in the pre-stack fixed-field
+ * shape — its old fields are ignored, the default stack renders, and the
+ * migration script moves the content across); a published stack wins, with
+ * each item's missing fields falling back to that section type's default
+ * copy in `data/aboutPage.ts`.
  */
 export async function getAboutPage(
   options: DynamicFetchOptions = PUBLISHED_FETCH_OPTIONS,
-): Promise<AboutPageContent> {
+): Promise<AboutSection[]> {
   let result: ABOUT_PAGE_QUERY_RESULT;
   try {
     result = await fetchSanityCached(
@@ -50,78 +38,45 @@ export async function getAboutPage(
     logFallback({
       fetcher: "getAboutPage",
       fallbackFile: "data/aboutPage.ts",
-      affects: "/about copy, photos, values, and closing links",
+      affects: "/about section order, copy and photos",
       error,
     });
-    return fallbackAboutPage;
+    return defaultAboutSections;
   }
 
   if (!result) {
     // Expected until the singleton is first published — not an error.
     console.warn(
-      "[sanity] aboutPage document not published yet — /about renders from data/aboutPage.ts.",
+      "[sanity] aboutPage document not published yet — /about renders the default stack from data/aboutPage.ts.",
     );
-    return fallbackAboutPage;
+    return defaultAboutSections;
   }
 
-  const fb = fallbackAboutPage;
-  return {
-    heroEyebrow: result.heroEyebrow ?? fb.heroEyebrow,
-    heroHeading: result.heroHeading ?? fb.heroHeading,
-    heroParagraphs: strings(result.heroParagraphs) ?? fb.heroParagraphs,
-    storyHeading: result.storyHeading ?? fb.storyHeading,
-    storyParagraphs: strings(result.storyParagraphs) ?? fb.storyParagraphs,
-    // Design ratios match the /about frames (AboutCollage 4:3 pair, the
-    // evolution band 4:3) — cropped server-side so the hotspot applies.
-    storyPhotoPrimary: resolvePhoto(
-      result.storyPhotoPrimary,
-      1600,
-      'aboutPage → "Story — main photo"',
-      4 / 3,
-    ),
-    storyPhotoSubjectPrimary:
-      result.storyPhotoSubjectPrimary ?? fb.storyPhotoSubjectPrimary,
-    storyPhotoSecondary: resolvePhoto(
-      result.storyPhotoSecondary,
-      800,
-      'aboutPage → "Story — small overlapping photo"',
-      4 / 3,
-    ),
-    storyPhotoSubjectSecondary:
-      result.storyPhotoSubjectSecondary ?? fb.storyPhotoSubjectSecondary,
-    evolutionHeading: result.evolutionHeading ?? fb.evolutionHeading,
-    evolutionParagraphs:
-      strings(result.evolutionParagraphs) ?? fb.evolutionParagraphs,
-    evolutionPhoto: resolvePhoto(
-      result.evolutionPhoto,
-      1600,
-      'aboutPage → "Evolution photo"',
-      4 / 3,
-    ),
-    evolutionPhotoSubject:
-      result.evolutionPhotoSubject ?? fb.evolutionPhotoSubject,
-    valuesHeading: result.valuesHeading ?? fb.valuesHeading,
-    values:
-      result.values
-        ?.filter((value) => Boolean(value.title) && Boolean(value.description))
-        .map((value) => ({
-          icon: toIcon(value.icon),
-          title: value.title as string,
-          description: value.description as string,
-        })) ?? fb.values,
-    linksHeading: result.linksHeading ?? fb.linksHeading,
-    links:
-      result.links
-        ?.filter(
-          (link) =>
-            Boolean(link.title) &&
-            Boolean(link.description) &&
-            Boolean(link.href),
-        )
-        .map((link) => ({
-          title: link.title as string,
-          description: link.description as string,
-          href: link.href as string,
-        })) ?? fb.links,
-  };
+  if (!result.sections) {
+    console.warn(
+      "[sanity] aboutPage document has no `sections` array (old fixed-field shape or empty) — " +
+        "/about renders the default stack from data/aboutPage.ts. " +
+        "Run scripts/migrate-about-sections.ts, or open About Page in /studio and publish the sections list.",
+    );
+    return defaultAboutSections;
+  }
+
+  // An empty mapping result means every published item is hidden or invalid.
+  // All-hidden is a deliberate owner choice; render nothing rather than
+  // resurrecting the default page over their intent.
+  const sections = toAboutSections(result.sections);
+  if (!sections) {
+    const allHidden =
+      result.sections.length > 0 &&
+      result.sections.every(
+        (item) => (item as { hidden?: boolean }).hidden === true,
+      );
+    if (allHidden) return [];
+    console.warn(
+      "[sanity] aboutPage sections are published but none survived validation — " +
+        "/about renders the default stack from data/aboutPage.ts.",
+    );
+    return defaultAboutSections;
+  }
+  return sections;
 }

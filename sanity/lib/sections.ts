@@ -2,7 +2,11 @@ import "server-only";
 import { resolvePhoto } from "@/sanity/lib/image";
 import { logSectionDropped } from "@/sanity/lib/fallbackLog";
 import type { CmsPhoto } from "@/data/services";
-import { ICON_CARD_COLORS, type ServiceSection } from "@/data/serviceSections";
+import {
+  ICON_CARD_COLORS,
+  type IconCardSection,
+  type ServiceSection,
+} from "@/data/serviceSections";
 import { NAV_ICON_NAMES, type NavIconName } from "@/data/navigation";
 import { isReviewTag } from "@/data/googleReviews";
 
@@ -105,6 +109,46 @@ function ctaPair(
   return l && h ? { label: l, href: h } : undefined;
 }
 
+/**
+ * Icon Card is the same object type on every stack (service, industry,
+ * About), so it validates in exactly one place — the About mapper
+ * (`sanity/lib/aboutSections.ts`) calls this too. Minimum to render: at
+ * least one complete card — the cards ARE the section; eyebrow and heading
+ * are optional dressing. Malformed cards are dropped individually and the
+ * section survives; null only when no card survives.
+ */
+export function toIconCardSection(raw: Raw, index: number): IconCardSection | null {
+  const _key = key(raw, index);
+  const cards = children(raw.cards, (c, i) => {
+    const title = str(c.title);
+    const description = str(c.description);
+    if (!title || !description) return null;
+    const cta = ctaPair(c.ctaLabel, c.ctaHref);
+    return {
+      _key: key(c, i),
+      icon: toIcon(str(c.icon)),
+      title,
+      description,
+      ctaLabel: cta?.label,
+      ctaHref: cta?.href,
+      cardColor: choice(c.cardColor, ICON_CARD_COLORS),
+    };
+  });
+  if (cards.length === 0) return null;
+  return {
+    _type: "iconCardSection",
+    _key,
+    eyebrow: str(raw.eyebrow),
+    heading: str(raw.heading),
+    background: choice(raw.background, ["default", "dark"] as const),
+    // Full-bleed band background — same hotspot-aware wide crop as the
+    // hero; any stale frame-shape override would fight it.
+    photo: photoOf(raw, "photo", 16 / 9, { width: 2400, ignoreFrameRatio: true }),
+    defaultCardColor: choice(raw.defaultCardColor, ICON_CARD_COLORS),
+    cards,
+  };
+}
+
 function toSection(raw: Raw, index: number): ServiceSection | null {
   const _key = key(raw, index);
 
@@ -155,39 +199,7 @@ function toSection(raw: Raw, index: number): ServiceSection | null {
     };
   }
 
-  if (raw._type === "iconCardSection") {
-    // Minimum to render: at least one complete card — the cards ARE the
-    // section; eyebrow and heading are optional dressing. Malformed cards
-    // are dropped individually and the section survives.
-    const cards = children(raw.cards, (c, i) => {
-      const title = str(c.title);
-      const description = str(c.description);
-      if (!title || !description) return null;
-      const cta = ctaPair(c.ctaLabel, c.ctaHref);
-      return {
-        _key: key(c, i),
-        icon: toIcon(str(c.icon)),
-        title,
-        description,
-        ctaLabel: cta?.label,
-        ctaHref: cta?.href,
-        cardColor: choice(c.cardColor, ICON_CARD_COLORS),
-      };
-    });
-    if (cards.length === 0) return null;
-    return {
-      _type: "iconCardSection",
-      _key,
-      eyebrow: str(raw.eyebrow),
-      heading: str(raw.heading),
-      background: choice(raw.background, ["default", "dark"] as const),
-      // Full-bleed band background — same hotspot-aware wide crop as the
-      // hero; any stale frame-shape override would fight it.
-      photo: photoOf(raw, "photo", 16 / 9, { width: 2400, ignoreFrameRatio: true }),
-      defaultCardColor: choice(raw.defaultCardColor, ICON_CARD_COLORS),
-      cards,
-    };
-  }
+  if (raw._type === "iconCardSection") return toIconCardSection(raw, index);
 
   const heading = str(raw.heading);
   // Every remaining type's minimum: the heading. It is the section's h2

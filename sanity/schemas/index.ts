@@ -1,7 +1,7 @@
 import type { SchemaTypeDefinition } from "sanity";
 import { siteSettings } from "./siteSettings";
 import { homePage, homeSectionTypes } from "./homePage";
-import { aboutPage } from "./aboutPage";
+import { aboutPage, aboutSectionTypes } from "./aboutPage";
 import { contactPage } from "./contactPage";
 import { cityPage } from "./cityPage";
 import { reviewSettings } from "./reviewSettings";
@@ -30,4 +30,5 @@ export const schemaTypes: SchemaTypeDefinition[] = [
   jobPosting,
   ...serviceSectionTypes,
   ...homeSectionTypes,
+  ...aboutSectionTypes,
 ];
