@@ -47,6 +47,7 @@ export const NAV_ICON_NAMES = [
   "alert-triangle",
   "lightbulb",
   "trending-up",
+  "users",
 ] as const;
 
 export type NavIconName = (typeof NAV_ICON_NAMES)[number];

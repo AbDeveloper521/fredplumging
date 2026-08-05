@@ -31,6 +31,84 @@ export type Photo = {
   _type: "image";
 };
 
+export type CareersCta = {
+  _type: "careersCta";
+  heading?: string;
+  eyebrow?: string;
+  description?: string;
+  hidden?: boolean;
+};
+
+export type HiringProcess = {
+  _type: "hiringProcess";
+  heading?: string;
+  steps?: Array<{
+    title?: string;
+    description?: string;
+    _type: "step";
+    _key: string;
+  }>;
+  hidden?: boolean;
+};
+
+export type CareerTraits = {
+  _type: "careerTraits";
+  heading?: string;
+  eyebrow?: string;
+  description?: string;
+  traits?: Array<{
+    name?: string;
+    gloss?: string;
+    _type: "trait";
+    _key: string;
+  }>;
+  quote?: string;
+  hidden?: boolean;
+};
+
+export type JobOpenings = {
+  _type: "jobOpenings";
+  heading?: string;
+  hidden?: boolean;
+};
+
+export type CareerValues = {
+  _type: "careerValues";
+  heading?: string;
+  eyebrow?: string;
+  items?: Array<{
+    icon?:
+      | "graduation-cap"
+      | "users"
+      | "shield-check"
+      | "heart-handshake"
+      | "award"
+      | "wrench";
+    title?: string;
+    description?: string;
+    _type: "item";
+    _key: string;
+  }>;
+  hidden?: boolean;
+};
+
+export type CareersHero = {
+  _type: "careersHero";
+  heading?: string;
+  eyebrow?: string;
+  paragraphs?: Array<string>;
+  photo?: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  };
+  darkOverlay?: boolean;
+  hidden?: boolean;
+};
+
 export type PartnerCredentials = {
   _type: "partnerCredentials";
   heading?: string;
@@ -1247,6 +1325,46 @@ export type ContactPage = {
   }>;
 };
 
+export type CareersPage = {
+  _id: string;
+  _type: "careersPage";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  sections?: Array<
+    | ({
+        _key: string;
+      } & CareersHero)
+    | ({
+        _key: string;
+      } & CareerValues)
+    | ({
+        _key: string;
+      } & JobOpenings)
+    | ({
+        _key: string;
+      } & CareerTraits)
+    | ({
+        _key: string;
+      } & HiringProcess)
+    | ({
+        _key: string;
+      } & CareersCta)
+    | ({
+        _key: string;
+      } & IconCardSection)
+    | ({
+        _key: string;
+      } & ServiceTestimonials)
+    | ({
+        _key: string;
+      } & HomeLocationMap)
+    | ({
+        _key: string;
+      } & HomeFinalCta)
+  >;
+};
+
 export type PartnersPage = {
   _id: string;
   _type: "partnersPage";
@@ -1504,6 +1622,12 @@ export type Geopoint = {
 export type AllSanitySchemaTypes =
   | SanityImageAssetReference
   | Photo
+  | CareersCta
+  | HiringProcess
+  | CareerTraits
+  | JobOpenings
+  | CareerValues
+  | CareersHero
   | PartnerCredentials
   | PartnerPlatforms
   | VendorOnboarding
@@ -1556,6 +1680,7 @@ export type AllSanitySchemaTypes =
   | ReviewSettings
   | CityPage
   | ContactPage
+  | CareersPage
   | PartnersPage
   | AboutPage
   | HomePage
@@ -3305,6 +3430,158 @@ export type PARTNERS_PAGE_QUERY_RESULT = {
 } | null;
 
 // Source: sanity/queries.ts
+// Variable: CAREERS_PAGE_QUERY
+// Query: *[_type == "careersPage" && _id == "careersPage"][0]{    sections[]{      ...,      photo{ asset, hotspot, crop, alt, frameRatio }    }  }
+export type CAREERS_PAGE_QUERY_RESULT = {
+  sections: Array<
+    | {
+        _key: string;
+        _type: "careersCta";
+        heading?: string;
+        eyebrow?: string;
+        description?: string;
+        hidden?: boolean;
+        photo: null;
+      }
+    | {
+        _key: string;
+        _type: "careersHero";
+        heading?: string;
+        eyebrow?: string;
+        paragraphs?: Array<string>;
+        photo: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+          frameRatio: null;
+        } | null;
+        darkOverlay?: boolean;
+        hidden?: boolean;
+      }
+    | {
+        _key: string;
+        _type: "careerTraits";
+        heading?: string;
+        eyebrow?: string;
+        description?: string;
+        traits?: Array<{
+          name?: string;
+          gloss?: string;
+          _type: "trait";
+          _key: string;
+        }>;
+        quote?: string;
+        hidden?: boolean;
+        photo: null;
+      }
+    | {
+        _key: string;
+        _type: "careerValues";
+        heading?: string;
+        eyebrow?: string;
+        items?: Array<{
+          icon?:
+            | "award"
+            | "graduation-cap"
+            | "heart-handshake"
+            | "shield-check"
+            | "users"
+            | "wrench";
+          title?: string;
+          description?: string;
+          _type: "item";
+          _key: string;
+        }>;
+        hidden?: boolean;
+        photo: null;
+      }
+    | {
+        _key: string;
+        _type: "hiringProcess";
+        heading?: string;
+        steps?: Array<{
+          title?: string;
+          description?: string;
+          _type: "step";
+          _key: string;
+        }>;
+        hidden?: boolean;
+        photo: null;
+      }
+    | {
+        _key: string;
+        _type: "homeFinalCta";
+        heading?: string;
+        eyebrow?: string;
+        description?: string;
+        reassurance?: string;
+        hidden?: boolean;
+        photo: null;
+      }
+    | {
+        _key: string;
+        _type: "homeLocationMap";
+        hidden?: boolean;
+        photo: null;
+      }
+    | {
+        _key: string;
+        _type: "iconCardSection";
+        eyebrow?: string;
+        heading?: string;
+        background?: "dark" | "default";
+        photo: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+          frameRatio: null;
+        } | null;
+        defaultCardColor?: "navy" | "offwhite" | "red" | "white";
+        cards?: Array<{
+          icon?:
+            | "award"
+            | "building-2"
+            | "calendar-check"
+            | "clock"
+            | "cog"
+            | "droplets"
+            | "flame"
+            | "gauge"
+            | "map-pin"
+            | "shield-check"
+            | "siren"
+            | "waves"
+            | "wrench";
+          title?: string;
+          description?: string;
+          ctaLabel?: string;
+          ctaHref?: string;
+          cardColor?: "navy" | "offwhite" | "red" | "white";
+          _type: "card";
+          _key: string;
+        }>;
+      }
+    | {
+        _key: string;
+        _type: "jobOpenings";
+        heading?: string;
+        hidden?: boolean;
+        photo: null;
+      }
+    | {
+        _key: string;
+        _type: "serviceTestimonials";
+        heading?: string;
+        filterTags?: Array<string>;
+        limit?: number;
+        photo: null;
+      }
+  > | null;
+} | null;
+
+// Source: sanity/queries.ts
 // Variable: CONTACT_PAGE_QUERY
 // Query: *[_type == "contactPage" && _id == "contactPage"][0]{    heroEyebrow,    heroHeading,    heroIntro,    responsePromise,    hours[]{ days, hours },    emergencyHeading,    emergencyBody,    faqs[]{ question, answer }  }
 export type CONTACT_PAGE_QUERY_RESULT = {
@@ -3415,6 +3692,7 @@ declare module "@sanity/client" {
     '*[_type == "homePage" && _id == "homePage"][0]{\n    sections[]{\n      ...,\n      photo{ asset, hotspot, crop, alt, frameRatio },\n      primaryPhoto{ asset, hotspot, crop, alt, frameRatio },\n      secondaryPhoto{ asset, hotspot, crop, alt }\n    }\n  }': HOME_PAGE_QUERY_RESULT;
     '*[_type == "aboutPage" && _id == "aboutPage"][0]{\n    sections[]{\n      ...,\n      photo{ asset, hotspot, crop, alt, frameRatio },\n      photoPrimary{ asset, hotspot, crop, alt, frameRatio },\n      photoSecondary{ asset, hotspot, crop, alt }\n    }\n  }': ABOUT_PAGE_QUERY_RESULT;
     '*[_type == "partnersPage" && _id == "partnersPage"][0]{\n    sections[]{\n      ...,\n      photo{ asset, hotspot, crop, alt, frameRatio }\n    }\n  }': PARTNERS_PAGE_QUERY_RESULT;
+    '*[_type == "careersPage" && _id == "careersPage"][0]{\n    sections[]{\n      ...,\n      photo{ asset, hotspot, crop, alt, frameRatio }\n    }\n  }': CAREERS_PAGE_QUERY_RESULT;
     '*[_type == "contactPage" && _id == "contactPage"][0]{\n    heroEyebrow,\n    heroHeading,\n    heroIntro,\n    responsePromise,\n    hours[]{ days, hours },\n    emergencyHeading,\n    emergencyBody,\n    faqs[]{ question, answer }\n  }': CONTACT_PAGE_QUERY_RESULT;
     '*[_type == "cityPage" && slug.current == $slug][0]{\n    city,\n    "slug": slug.current,\n    heroHeading,\n    heroIntro,\n    servicesHeading,\n    serviceCards[]{ _key, title, description, href, icon },\n    whyChooseHeading,\n    whyChooseBody,\n    reviewsHeading,\n    heritageHeading,\n    heritageParagraphs,\n    heritagePhoto{ asset, hotspot, crop, alt, frameRatio },\n    heritagePhotoSubject,\n    communitiesHeading,\n    communitiesBody,\n    communities,\n    showLogoStrip,\n    seoTitle,\n    seoDescription\n  }': CITY_PAGE_QUERY_RESULT;
     '*[_type == "navigation" && _id == "navigation"][0]{\n    footerColumns[]{\n      _key,\n      heading,\n      links[]{ _key, label, href }\n    },\n    legalLinks[]{ _key, label, href }\n  }': FOOTER_NAVIGATION_QUERY_RESULT;

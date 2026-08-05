@@ -1,51 +1,35 @@
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Reveal } from "@/components/ui/Reveal";
-
-/* PLACEHOLDER — confirm the real hiring process with the client. These four
-   steps are a plausible outline written for layout purposes; nothing here
-   comes from the client's own material. Deliberately no timeline in days —
-   we do not know it. */
-const steps = [
-  {
-    title: "Apply",
-    description:
-      "Email us with a short note about your experience and the role you're after. A résumé helps; a licence number helps more.",
-  },
-  {
-    title: "Talk",
-    description:
-      "A phone conversation about the work, the properties we serve, and the shift — both directions, you're interviewing us too.",
-  },
-  {
-    title: "Ride along",
-    description:
-      "A ride-along or shop visit with the crew you'd join, so you see the actual work and the people before deciding.",
-  },
-  {
-    title: "Offer",
-    description:
-      "An offer, then licence verification and the documentation paperwork to get you on trucks.",
-  },
-];
+import { careersPageDefaults, type HiringProcessContent } from "@/data/careersPage";
 
 /**
  * Same visual pattern as ServiceProcessSection's white variant — that
  * component's props are shaped for a CMS section object, so the pattern is
- * reused rather than the component.
+ * reused rather than the component. The default steps are a PLACEHOLDER
+ * outline (confirm the real hiring process with the client; deliberately no
+ * timeline in days — we do not know it). Retired from the default careers
+ * stack — re-addable in Studio.
  */
-export function HiringProcessSection({ id = "how-hiring-works" }: { id?: string }) {
+export function HiringProcessSection({
+  content = careersPageDefaults.hiringProcess,
+  titleId = "hiring-process-heading",
+}: {
+  content?: HiringProcessContent;
+  /** Unique per instance — sections can be duplicated in the Studio. */
+  titleId?: string;
+}) {
+  const steps = content.steps;
   return (
     <section
-      id={id}
-      aria-labelledby={`${id}-heading`}
+      aria-labelledby={titleId}
       className="bg-white py-16 sm:py-24 lg:py-28"
     >
       <Container>
         <Reveal>
           <SectionHeading
-            titleId={`${id}-heading`}
-            title="How Hiring Works"
+            titleId={titleId}
+            title={content.heading}
             align="center"
           />
         </Reveal>

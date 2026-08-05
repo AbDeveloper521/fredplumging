@@ -27,6 +27,7 @@ import {
   Stethoscope,
   TrendingUp,
   Truck,
+  Users,
   Waves,
   Wrench,
   type LucideIcon,
@@ -68,4 +69,5 @@ export const navIcons: Record<NavIconName, LucideIcon> = {
   "alert-triangle": AlertTriangle,
   lightbulb: Lightbulb,
   "trending-up": TrendingUp,
+  users: Users,
 };

@@ -24,6 +24,8 @@ import type { SiteContent } from "@/data/site";
 interface JobOpeningsSectionProps {
   jobs: JobPosting[];
   site: SiteContent;
+  /** Section heading — overridable from the careers stack item. */
+  heading?: string;
   id?: string;
 }
 
@@ -51,6 +53,7 @@ function MetaPills({ job }: { job: JobPosting }) {
 export function JobOpeningsSection({
   jobs,
   site,
+  heading = "Work With a Company That Invests in Your Success",
   id = "open-roles",
 }: JobOpeningsSectionProps) {
   return (
@@ -64,7 +67,7 @@ export function JobOpeningsSection({
           <SectionHeading
             titleId={`${id}-heading`}
             eyebrow="Open Roles"
-            title="Work With a Company That Invests in Your Success"
+            title={heading}
           />
         </Reveal>
 

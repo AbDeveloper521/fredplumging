@@ -1,54 +1,28 @@
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Reveal } from "@/components/ui/Reveal";
+import { careersPageDefaults, type CareerTraitsContent } from "@/data/careersPage";
 
 /**
  * The client's hiring-philosophy paragraph, broken out of the wall of text
- * into named traits. Every trait traces to a phrase in their own copy — do
- * not add traits the client did not name. One deliberate edit: the source
- * says "the right guys"; rendered as "the right people" (gendered wording in
- * a US job advertisement — flagged for the client).
+ * into named traits. Every default trait traces to a phrase in their own
+ * copy — do not add traits the client did not name. One deliberate edit in
+ * the DEFAULT description: the source says "the right guys"; rendered as
+ * "the right people" (gendered wording in a US job advertisement — flagged
+ * for the client; note the new reference hero uses "guys" verbatim).
+ * Retired from the default careers stack — re-addable in Studio.
  */
-const traits = [
-  {
-    name: "Problem solver under pressure",
-    gloss: "Stays methodical when a call goes sideways.",
-  },
-  {
-    name: "Quiet confidence, no ego",
-    gloss: "Sure of the work without needing to prove it.",
-  },
-  {
-    name: "Situational awareness",
-    gloss: "Reads the building, the resident, and the job.",
-  },
-  {
-    name: "Ownership mindset",
-    gloss: "Treats every job as theirs to finish right.",
-  },
-  {
-    name: "Respect for the trade",
-    gloss: "Takes plumbing seriously as a craft.",
-  },
-  {
-    name: "Curiosity",
-    gloss: "Wants to know how and why, not just what.",
-  },
-  {
-    name: "Integrity when no one is watching",
-    gloss: "The work is right even when nobody checks it.",
-  },
-  {
-    name: "Coachable and consistent",
-    gloss: "Takes feedback and shows up the same every day.",
-  },
-];
-
-export function CareerTraitsSection({ id = "what-we-look-for" }: { id?: string }) {
+export function CareerTraitsSection({
+  content = careersPageDefaults.traits,
+  titleId = "career-traits-heading",
+}: {
+  content?: CareerTraitsContent;
+  /** Unique per instance — sections can be duplicated in the Studio. */
+  titleId?: string;
+}) {
   return (
     <section
-      id={id}
-      aria-labelledby={`${id}-heading`}
+      aria-labelledby={titleId}
       className="relative isolate overflow-hidden bg-navy-950 py-16 sm:py-24 lg:py-28"
     >
       <div aria-hidden="true" className="bg-grid-dark absolute inset-0" />
@@ -60,16 +34,16 @@ export function CareerTraitsSection({ id = "what-we-look-for" }: { id?: string }
       <Container className="relative">
         <Reveal>
           <SectionHeading
-            titleId={`${id}-heading`}
-            eyebrow="Who Thrives Here"
-            title="What We Look For"
-            description="We value character and intangibles over certifications and tenure. We can teach the right people how to be great multifamily plumbers. Intangibles generally can't be taught. We want to hire employees that will be plumbers and team members with us for life."
+            titleId={titleId}
+            eyebrow={content.eyebrow}
+            title={content.heading}
+            description={content.description}
             theme="dark"
           />
         </Reveal>
 
         <ul className="mt-14 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {traits.map(({ name, gloss }, i) => (
+          {content.traits.map(({ name, gloss }, i) => (
             <li key={name}>
               <Reveal delay={Math.min(i, 5) * 0.05} className="h-full">
                 <div className="h-full rounded-2xl border border-white/10 bg-navy-900/70 p-6 backdrop-blur-sm">
@@ -86,11 +60,13 @@ export function CareerTraitsSection({ id = "what-we-look-for" }: { id?: string }
           ))}
         </ul>
 
-        <Reveal delay={0.15}>
-          <p className="mt-12 text-center text-[17px] font-semibold text-white">
-            &ldquo;Respect and communication are essential at Fred&rsquo;s.&rdquo;
-          </p>
-        </Reveal>
+        {content.quote && (
+          <Reveal delay={0.15}>
+            <p className="mt-12 text-center text-[17px] font-semibold text-white">
+              &ldquo;{content.quote}&rdquo;
+            </p>
+          </Reveal>
+        )}
       </Container>
     </section>
   );

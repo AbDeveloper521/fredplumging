@@ -3,6 +3,7 @@ import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
+import { careersPageDefaults, type CareersCtaContent } from "@/data/careersPage";
 import type { SiteContent } from "@/data/site";
 
 /**
@@ -11,12 +12,22 @@ import type { SiteContent } from "@/data/site";
  * and service needed — which at the bottom of a careers page reads like an
  * application form that asks the wrong questions. Applications stay
  * mailto-only (no form backend; see JobOpeningsSection), so this band closes
- * with the two routes that actually work: email and phone.
+ * with the two routes that actually work: email and phone (both from Site
+ * Settings). Retired from the default careers stack — re-addable in Studio.
  */
-export function CareersCtaSection({ site }: { site: SiteContent }) {
+export function CareersCtaSection({
+  site,
+  content = careersPageDefaults.cta,
+  titleId = "careers-cta-heading",
+}: {
+  site: SiteContent;
+  content?: CareersCtaContent;
+  /** Unique per instance — sections can be duplicated in the Studio. */
+  titleId?: string;
+}) {
   return (
     <section
-      aria-labelledby="careers-cta-heading"
+      aria-labelledby={titleId}
       className="relative isolate overflow-hidden bg-navy-950 py-16 sm:py-24 lg:py-28"
     >
       <div aria-hidden="true" className="bg-grid-dark absolute inset-0" />
@@ -29,10 +40,10 @@ export function CareersCtaSection({ site }: { site: SiteContent }) {
       <Container className="relative">
         <Reveal>
           <SectionHeading
-            titleId="careers-cta-heading"
-            eyebrow="Join the Team"
-            title="Think You Belong on This Team?"
-            description="Send a résumé and a short note about your experience — or call and talk to us directly. Every application gets read by a person."
+            titleId={titleId}
+            eyebrow={content.eyebrow}
+            title={content.heading}
+            description={content.description}
             align="center"
             theme="dark"
           />
