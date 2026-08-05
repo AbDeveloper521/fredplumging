@@ -12,6 +12,7 @@ import { ComparisonTableSection } from "./ComparisonTableSection";
 import { ServiceTrustSection } from "./ServiceTrustSection";
 import { TestimonialsSection } from "./TestimonialsSection";
 import { ServicePropertyTypesSection } from "./ServicePropertyTypesSection";
+import { IconCardSection } from "./IconCardSection";
 import { ServiceFaqSection } from "./ServiceFaqSection";
 import { ServiceAreaCmsSection } from "./ServiceAreaCmsSection";
 import { RelatedServicesSection } from "./RelatedServicesSection";
@@ -32,6 +33,7 @@ const SECTION_IDS: Record<ServiceSection["_type"], string> = {
   serviceTrust: "why-trust-us",
   serviceTestimonials: "client-reviews",
   propertyTypes: "property-types",
+  iconCardSection: "icon-cards",
   serviceFaq: "service-faq",
   serviceArea: "service-area",
   trustLogoStrip: "trust-badges",
@@ -116,6 +118,8 @@ export function ServiceSectionRenderer({
             return (
               <ServicePropertyTypesSection key={section._key} section={section} id={id} />
             );
+          case "iconCardSection":
+            return <IconCardSection key={section._key} section={section} id={id} />;
           case "serviceFaq":
             return <ServiceFaqSection key={section._key} section={section} id={id} />;
           case "serviceArea":

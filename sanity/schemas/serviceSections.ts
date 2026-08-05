@@ -109,8 +109,10 @@ function ctaPairFields(options: {
   hrefName: string;
   hrefTitle: string;
   hrefDescription: string;
+  /** Also accept full https:// addresses, not just /pages on this site. */
+  allowExternal?: boolean;
 }) {
-  const { labelName, hrefName } = options;
+  const { labelName, hrefName, allowExternal } = options;
   return [
     defineField({
       name: labelName,
@@ -135,8 +137,14 @@ function ctaPairFields(options: {
       validation: (rule) =>
         rule.custom((value: string | undefined, context) => {
           const parent = context.parent as Record<string, unknown> | undefined;
-          if (filled(value) && !value.startsWith("/"))
-            return "Use a page on this site, starting with a slash — e.g. /contact.";
+          if (
+            filled(value) &&
+            !value.startsWith("/") &&
+            !(allowExternal && value.startsWith("https://"))
+          )
+            return allowExternal
+              ? "Start with a slash for pages on this site (/contact) or https:// for other websites."
+              : "Use a page on this site, starting with a slash — e.g. /contact.";
           if (!filled(value) && filled(parent?.[labelName]))
             return "The button has text but nowhere to go — add the link (usually /contact) or clear the text.";
           return true;
@@ -780,6 +788,121 @@ export const propertyTypes = defineType({
   },
 });
 
+/** Card-colour palette for the Icon Card section — mirror ICON_CARD_COLORS in data/serviceSections.ts. */
+const ICON_CARD_COLOR_CHOICES = [
+  { title: "White", value: "white" },
+  { title: "Off-white", value: "offwhite" },
+  { title: "Navy", value: "navy" },
+  { title: "Red", value: "red" },
+];
+
+export const iconCardSection = defineType({
+  name: "iconCardSection",
+  title: "Icon Card",
+  type: "object",
+  description:
+    "Rows of cards, each with a coloured icon chip, a title, a short paragraph, and an optional link. Rows balance themselves — five cards show as 3 + 2, never 4 + 1.",
+  fields: [
+    defineField({
+      name: "eyebrow",
+      title: "Small label above the heading",
+      description: "Tiny uppercase label above the heading, e.g. “WHAT WE DO”. Leave empty to hide.",
+      type: "string",
+      validation: (rule) =>
+        rule.custom(notJustSpaces("Write real text or clear the field — spaces alone don't count.")),
+    }),
+    defineField({
+      name: "heading",
+      title: "Heading",
+      description: "Optional heading above the cards. Leave empty to show the cards alone.",
+      type: "string",
+      validation: (rule) =>
+        rule.custom(notJustSpaces("Write real text or clear the field — spaces alone don't count.")),
+    }),
+    defineField({
+      name: "background",
+      title: "Background",
+      description:
+        "Which band the cards sit on: the site's normal light background, or the dark navy band like the demo. A background photo below replaces either.",
+      type: "string",
+      options: {
+        layout: "radio",
+        list: [
+          { title: "Site default (light)", value: "default" },
+          { title: "Dark navy", value: "dark" },
+        ],
+      },
+      initialValue: "default",
+    }),
+    imageWithAlt({
+      name: "photo",
+      title: "Background photo",
+      description:
+        "Optional photo BEHIND the cards — when set it replaces the background colour above and is darkened automatically so the cards and heading stay readable. Wide, landscape photos work best. Drag the hotspot circle (click the image → Edit hotspot) over the part that must stay visible.",
+      // Full-bleed band background — a frame-shape override would fight it.
+      frameRatio: false,
+    }),
+    defineField({
+      name: "defaultCardColor",
+      title: "Card colour",
+      description:
+        "The colour of every card in this section (a single card can override it below). Text and icon colours pair up automatically so everything stays readable.",
+      type: "string",
+      options: { list: ICON_CARD_COLOR_CHOICES },
+      initialValue: "white",
+    }),
+    defineField({
+      name: "cards",
+      title: "Cards",
+      description: "Any number of cards — at most 4 sit in one row on desktop, and rows keep themselves balanced.",
+      type: "array",
+      of: [
+        defineArrayMember({
+          name: "card",
+          title: "Card",
+          type: "object",
+          fields: [
+            iconField({ description: "Symbol in the coloured chip at the top of the card.", choices: GENERAL_ICONS }),
+            requiredString("title", "Title", "Short card heading, e.g. “Leak Detection”.", "The card needs a title."),
+            requiredText("description", "Description", "One or two sentences under the title.", "The card needs its description."),
+            ...ctaPairFields({
+              labelName: "ctaLabel",
+              labelTitle: "Link text",
+              labelDescription:
+                "The link at the bottom of the card, e.g. “Get Started”. Leave both link fields empty for no link.",
+              hrefName: "ctaHref",
+              hrefTitle: "Link address",
+              hrefDescription:
+                "Where the link goes — a page on this site starting with a slash (e.g. /contact) or a full https:// web address.",
+              allowExternal: true,
+            }),
+            defineField({
+              name: "cardColor",
+              title: "Card colour (override)",
+              description:
+                "Overrides the section's card colour for this one card. Leave empty to match the others.",
+              type: "string",
+              options: { list: ICON_CARD_COLOR_CHOICES },
+            }),
+          ],
+          preview: {
+            select: { title: "title" },
+            prepare: ({ title }) => ({ title: title ?? "Card" }),
+          },
+        }),
+      ],
+      validation: (rule) => rule.required().min(1).error("Add at least one card."),
+    }),
+  ],
+  preview: {
+    select: { heading: "heading", cards: "cards" },
+    prepare: ({ heading, cards }: { heading?: string; cards?: unknown[] }) => ({
+      title: heading ?? "Icon cards",
+      subtitle: `Icon cards — ${cards?.length ?? 0} card${cards?.length === 1 ? "" : "s"}`,
+    }),
+  },
+});
+
 export const serviceFaq = defineType({
   name: "serviceFaq",
   title: "Questions & answers",
@@ -1013,6 +1136,7 @@ export const serviceSectionTypes = [
   serviceTrust,
   serviceTestimonials,
   propertyTypes,
+  iconCardSection,
   serviceFaq,
   serviceArea,
   trustLogoStrip,

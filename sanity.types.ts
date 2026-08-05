@@ -415,6 +415,45 @@ export type ServiceFaq = {
   background?: "offwhite" | "white";
 };
 
+export type IconCardSection = {
+  _type: "iconCardSection";
+  eyebrow?: string;
+  heading?: string;
+  background?: "default" | "dark";
+  photo?: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  };
+  defaultCardColor?: "white" | "offwhite" | "navy" | "red";
+  cards?: Array<{
+    icon?:
+      | "droplets"
+      | "wrench"
+      | "building-2"
+      | "flame"
+      | "shield-check"
+      | "calendar-check"
+      | "gauge"
+      | "waves"
+      | "siren"
+      | "clock"
+      | "award"
+      | "cog"
+      | "map-pin";
+    title?: string;
+    description?: string;
+    ctaLabel?: string;
+    ctaHref?: string;
+    cardColor?: "white" | "offwhite" | "navy" | "red";
+    _type: "card";
+    _key: string;
+  }>;
+};
+
 export type PropertyTypes = {
   _type: "propertyTypes";
   heading?: string;
@@ -729,6 +768,9 @@ export type Industry = {
       } & PropertyTypes)
     | ({
         _key: string;
+      } & IconCardSection)
+    | ({
+        _key: string;
       } & ServiceFaq)
     | ({
         _key: string;
@@ -811,6 +853,9 @@ export type Service = {
     | ({
         _key: string;
       } & PropertyTypes)
+    | ({
+        _key: string;
+      } & IconCardSection)
     | ({
         _key: string;
       } & ServiceFaq)
@@ -1332,6 +1377,7 @@ export type AllSanitySchemaTypes =
   | TrustLogoStrip
   | ServiceArea
   | ServiceFaq
+  | IconCardSection
   | PropertyTypes
   | ServiceTestimonials
   | ServiceTrust
@@ -1649,6 +1695,45 @@ export type SERVICE_BY_SLUG_QUERY_RESULT = {
         phoneCtaLabel?: string;
         showAvailabilityDot?: boolean;
         photo: null;
+        photoPrimary: null;
+      }
+    | {
+        _key: string;
+        _type: "iconCardSection";
+        eyebrow?: string;
+        heading?: string;
+        background?: "dark" | "default";
+        photo: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+          frameRatio: null;
+        } | null;
+        defaultCardColor?: "navy" | "offwhite" | "red" | "white";
+        cards?: Array<{
+          icon?:
+            | "award"
+            | "building-2"
+            | "calendar-check"
+            | "clock"
+            | "cog"
+            | "droplets"
+            | "flame"
+            | "gauge"
+            | "map-pin"
+            | "shield-check"
+            | "siren"
+            | "waves"
+            | "wrench";
+          title?: string;
+          description?: string;
+          ctaLabel?: string;
+          ctaHref?: string;
+          cardColor?: "navy" | "offwhite" | "red" | "white";
+          _type: "card";
+          _key: string;
+        }>;
         photoPrimary: null;
       }
     | {
@@ -2023,6 +2108,45 @@ export type INDUSTRY_BY_SLUG_QUERY_RESULT = {
         phoneCtaLabel?: string;
         showAvailabilityDot?: boolean;
         photo: null;
+        photoPrimary: null;
+      }
+    | {
+        _key: string;
+        _type: "iconCardSection";
+        eyebrow?: string;
+        heading?: string;
+        background?: "dark" | "default";
+        photo: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+          frameRatio: null;
+        } | null;
+        defaultCardColor?: "navy" | "offwhite" | "red" | "white";
+        cards?: Array<{
+          icon?:
+            | "award"
+            | "building-2"
+            | "calendar-check"
+            | "clock"
+            | "cog"
+            | "droplets"
+            | "flame"
+            | "gauge"
+            | "map-pin"
+            | "shield-check"
+            | "siren"
+            | "waves"
+            | "wrench";
+          title?: string;
+          description?: string;
+          ctaLabel?: string;
+          ctaHref?: string;
+          cardColor?: "navy" | "offwhite" | "red" | "white";
+          _type: "card";
+          _key: string;
+        }>;
         photoPrimary: null;
       }
     | {

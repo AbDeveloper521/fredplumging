@@ -153,6 +153,33 @@ export interface PropertyTypesSection extends SectionBase {
   ctaHref?: string;
 }
 
+/** The card-colour palette — presets only, so every pairing stays on brand. */
+export const ICON_CARD_COLORS = ["white", "offwhite", "navy", "red"] as const;
+export type IconCardColor = (typeof ICON_CARD_COLORS)[number];
+
+export interface IconCardSection extends SectionBase {
+  _type: "iconCardSection";
+  eyebrow?: string;
+  heading?: string;
+  /** Colour band behind the cards — defaults to the light site background. */
+  background?: "default" | "dark";
+  /** Background photo — when set it wins over `background`, always dark-overlaid. */
+  photo?: CmsPhoto;
+  /** Card surface for cards without their own override. Defaults to white. */
+  defaultCardColor?: IconCardColor;
+  cards: Array<{
+    _key: string;
+    icon: NavIconName;
+    title: string;
+    description: string;
+    /** Optional link — set together or not at all (both-or-none). */
+    ctaLabel?: string;
+    ctaHref?: string;
+    /** Per-card override of the section's card colour. */
+    cardColor?: IconCardColor;
+  }>;
+}
+
 export interface ServiceFaqSection extends SectionBase {
   _type: "serviceFaq";
   heading: string;
@@ -221,6 +248,7 @@ export type ServiceSection =
   | ServiceTrustSection
   | ServiceTestimonialsSection
   | PropertyTypesSection
+  | IconCardSection
   | ServiceFaqSection
   | ServiceAreaSection
   | TrustLogoStripSection
