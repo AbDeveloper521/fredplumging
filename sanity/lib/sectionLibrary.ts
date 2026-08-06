@@ -255,6 +255,15 @@ export function toLibrarySection(
         _key,
         background: choice(raw.background, ["offwhite", "white"] as const),
       };
+    case "badgeStrip":
+      // Collection-driven (Trust Logos, association/credential categories):
+      // never drops — an empty heading falls back in the component, and an
+      // empty collection hides the band at render like every logo strip.
+      return {
+        _type: "badgeStrip",
+        _key,
+        heading: str(raw.heading),
+      };
     case "propertyTypes": {
       // Minimum to render: at least one valid card — the cards ARE the
       // section. The optional CTA already renders only when both label+href
@@ -558,6 +567,15 @@ export function toLibrarySection(
         trustIndicators: iconLabelsOr(raw.trustIndicators, fb.trustIndicators),
         experienceBadgeLabel:
           str(raw.experienceBadgeLabel) ?? fb.experienceBadgeLabel,
+        // Full-width banner background — same hotspot-aware wide crop as the
+        // service/careers heroes; the frame here is load-bearing.
+        photo: photoOf(raw, "photo", 16 / 9, {
+          width: 2400,
+          ignoreFrameRatio: true,
+        }),
+        // Missing/absent → true: the overlay only turns off on an explicit
+        // Studio opt-out.
+        darkOverlay: raw.darkOverlay !== false,
       };
     }
     case "homeTrustBar": {
@@ -637,6 +655,8 @@ export function toLibrarySection(
         eyebrow: str(raw.eyebrow) ?? fb.eyebrow,
         heading: str(raw.heading) ?? fb.heading,
         description: str(raw.description) ?? fb.description,
+        photo: bandPhotoOf(raw, "photo", 1600, `${context} → Property types band`, 16 / 10),
+        photoSubject: str(raw.photoSubject) ?? fb.photoSubject,
       };
     }
     case "homeWhyChooseUs": {
@@ -1056,6 +1076,8 @@ export const SECTION_REQUIREMENTS: Record<
   serviceArea: { strings: [{ field: "heading", title: "Heading" }], arrays: [] },
   // Never drops — retired type kept mapped so existing stacks stay warning-free.
   trustLogoStrip: { strings: [], arrays: [] },
+  // Never drops — collection-driven, heading falls back in the component.
+  badgeStrip: { strings: [], arrays: [] },
   relatedServices: {
     strings: [{ field: "heading", title: "Heading" }],
     arrays: [{ field: "serviceSlugs", title: "Which services", valid: nonEmptyString }],

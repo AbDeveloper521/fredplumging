@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { Award } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
@@ -5,6 +6,7 @@ import { EmergencyContactForm } from "@/components/forms/EmergencyContactForm";
 import { navIcons } from "@/components/layout/navIcons";
 import { homePageDefaults, type HomeHeroContent } from "@/data/homePage";
 import type { SiteContent } from "@/data/site";
+import { cn } from "@/lib/utils";
 
 /** CSS-animated wrapper — hero entrances must not wait on JS hydration. */
 function Rise({
@@ -40,34 +42,66 @@ export function HeroSection({
     icon: navIcons[item.icon],
     label: item.label.replace("{foundedYear}", String(site.foundedYear)),
   }));
+  // Absent means on — only an explicit Studio opt-out (photo already dark or
+  // carrying its own baked-in overlay) turns the gradient off.
+  const darkOverlay = content.darkOverlay !== false;
 
   return (
     <section
       aria-labelledby={titleId}
       className="relative isolate overflow-hidden bg-navy-950"
     >
-      {/*
-        Cinematic background composition.
-        Swap the gradient stack for /images/hero-commercial-plumbing.webp
-        (professional technician at a commercial property, DFW context)
-        behind the same navy overlay when photography is available.
-      */}
-      <div aria-hidden="true" className="bg-grid-dark absolute inset-0" />
-      <div
-        aria-hidden="true"
-        className="absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_20%_10%,rgb(27_48_73/0.9),transparent_70%)]"
-      />
-      <div
-        aria-hidden="true"
-        className="absolute inset-0 bg-[radial-gradient(ellipse_50%_45%_at_85%_80%,rgb(211_33_39/0.16),transparent_65%)]"
-      />
-      {/* Skyline-suggestion band along the base */}
-      <div
-        aria-hidden="true"
-        className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-navy-900/80 to-transparent"
-      />
+      {/* Background: the editor's photo under a navy gradient, or the styled
+          navy wash when no photo is set. */}
+      {content.photo ? (
+        <>
+          <Image
+            src={content.photo.url}
+            alt={content.photo.alt}
+            fill
+            // Above the fold; `priority` is deprecated in Next 16 in favor
+            // of loading="eager" (see ServiceHeroSection).
+            loading="eager"
+            sizes="100vw"
+            className="object-cover"
+          />
+          {darkOverlay && (
+            <div
+              aria-hidden="true"
+              className="absolute inset-0 bg-gradient-to-b from-navy-950/90 via-navy-950/75 to-navy-950/85"
+            />
+          )}
+        </>
+      ) : (
+        <>
+          <div aria-hidden="true" className="bg-grid-dark absolute inset-0" />
+          <div
+            aria-hidden="true"
+            className="absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_20%_10%,rgb(27_48_73/0.9),transparent_70%)]"
+          />
+          <div
+            aria-hidden="true"
+            className="absolute inset-0 bg-[radial-gradient(ellipse_50%_45%_at_85%_80%,rgb(211_33_39/0.16),transparent_65%)]"
+          />
+          {/* Skyline-suggestion band along the base */}
+          <div
+            aria-hidden="true"
+            className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-navy-900/80 to-transparent"
+          />
+        </>
+      )}
 
-      <Container className="relative grid grid-cols-1 gap-14 pt-[120px] pb-20 lg:min-h-[800px] lg:grid-cols-[1.08fr_0.92fr] lg:items-center lg:gap-16 lg:pt-[170px] lg:pb-28">
+      <Container
+        className={cn(
+          "relative grid grid-cols-1 gap-14 pt-[120px] pb-20 lg:min-h-[800px] lg:grid-cols-[1.08fr_0.92fr] lg:items-center lg:gap-16 lg:pt-[170px] lg:pb-28",
+          // Readability floor with the overlay off: a soft navy text-shadow
+          // keeps white text legible over an unknown photo, near-invisible
+          // over a dark one (same treatment as the service hero).
+          content.photo &&
+            !darkOverlay &&
+            "[text-shadow:0_1px_2px_rgb(7_17_31/0.6),0_2px_18px_rgb(7_17_31/0.45)]",
+        )}
+      >
         {/* Message */}
         <div>
           <Rise>
@@ -101,8 +135,8 @@ export function HeroSection({
 
           <Rise delay={0.24}>
             <div className="mt-9 flex flex-col gap-4 sm:flex-row">
-              <Button href="/contact" size="lg" withArrow className="sm:min-w-[240px]">
-                Request Immediate Service
+              <Button href="/services" size="lg" withArrow className="sm:min-w-[220px]">
+                Our Services
               </Button>
               <Button
                 href={site.phoneHref}

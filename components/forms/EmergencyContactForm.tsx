@@ -99,7 +99,7 @@ export function EmergencyContactForm({ site }: { site: SiteContent }) {
   return (
     <div className="rounded-2xl bg-white p-6 shadow-(--shadow-card-lg) sm:p-8">
       <h2 className="text-[22px] font-extrabold tracking-tight text-navy-900">
-        Need Plumbing Assistance?
+        Emergency? Contact Us 24/7
       </h2>
       <p className="mt-1.5 text-sm leading-relaxed text-grey-500">
         Tell us what is happening and our team will contact you shortly.

@@ -109,6 +109,10 @@ export function AboutSection({
     label: metric.label,
     icon: navIcons[metric.icon],
   }));
+  const paragraphs = content.description
+    .split(/\n+/)
+    .map((paragraph) => paragraph.trim())
+    .filter(Boolean);
 
   return (
     <section aria-labelledby={titleId} className="bg-offwhite py-16 sm:py-24 lg:py-28">
@@ -133,44 +137,59 @@ export function AboutSection({
                 titleId={titleId}
                 eyebrow={content.eyebrow}
                 title={content.heading}
-                description={content.description}
               />
+              {/* Blank-line breaks in the Studio text field become real
+                  paragraphs — the heritage band carries two. */}
+              <div className="mt-5 space-y-4">
+                {paragraphs.map((paragraph) => (
+                  <p
+                    key={paragraph.slice(0, 40)}
+                    className="text-[17px] leading-relaxed text-grey-500"
+                  >
+                    {paragraph}
+                  </p>
+                ))}
+              </div>
             </Reveal>
 
-            <Reveal delay={0.1}>
-              <ul className="mt-8 space-y-3.5">
-                {content.highlights.map((item) => (
-                  <li key={item} className="flex items-center gap-3 text-[16px] font-semibold text-navy-900">
-                    <CheckCircle2 aria-hidden="true" className="size-5 shrink-0 text-red-600" />
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </Reveal>
+            {content.highlights.length > 0 && (
+              <Reveal delay={0.1}>
+                <ul className="mt-8 space-y-3.5">
+                  {content.highlights.map((item) => (
+                    <li key={item} className="flex items-center gap-3 text-[16px] font-semibold text-navy-900">
+                      <CheckCircle2 aria-hidden="true" className="size-5 shrink-0 text-red-600" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </Reveal>
+            )}
 
             <Reveal delay={0.18}>
               <div className="mt-10">
                 <Button href="/about" variant="dark" withArrow>
-                  Learn About Fred&rsquo;s Plumbing
+                  Learn More
                 </Button>
               </div>
             </Reveal>
           </div>
         </div>
 
-        {/* Metrics row */}
-        <Reveal delay={0.1}>
-          <div className="mt-20 grid grid-cols-2 gap-x-6 gap-y-10 border-t border-grey-300/60 pt-12 sm:mt-24 lg:grid-cols-4">
-            {metrics.map((metric) => (
-              <StatCard
-                key={metric.label}
-                value={metric.value}
-                label={metric.label}
-                icon={metric.icon}
-              />
-            ))}
-          </div>
-        </Reveal>
+        {/* Metrics row — only when the section carries metrics */}
+        {metrics.length > 0 && (
+          <Reveal delay={0.1}>
+            <div className="mt-20 grid grid-cols-2 gap-x-6 gap-y-10 border-t border-grey-300/60 pt-12 sm:mt-24 lg:grid-cols-4">
+              {metrics.map((metric) => (
+                <StatCard
+                  key={metric.label}
+                  value={metric.value}
+                  label={metric.label}
+                  icon={metric.icon}
+                />
+              ))}
+            </div>
+          </Reveal>
+        )}
       </Container>
     </section>
   );

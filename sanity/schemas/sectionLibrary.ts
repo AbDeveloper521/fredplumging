@@ -76,6 +76,7 @@ export const SECTION_LIBRARY_GROUPS = [
       "homeFaq",
       "jobOpenings",
       "partnerPlatforms",
+      "badgeStrip",
       "homeLocationMap",
     ],
   },

@@ -137,6 +137,12 @@ export default async function IndustryPage({
     (section): section is ServiceFaqSection => section._type === "serviceFaq",
   );
 
+  // A badgeStrip placed in the stack takes over from the automatic strip —
+  // same rule as the service pages.
+  const stackHasBadgeStrip = industry.sections.some(
+    (section) => section._type === "badgeStrip",
+  );
+
   return (
     <>
       {structuredData}
@@ -149,7 +155,7 @@ export default async function IndustryPage({
       />
       {/* Association/certification badges close the content, matching the
           service pages. */}
-      <AssociationBadgeStrip logos={data.trustLogos} />
+      {!stackHasBadgeStrip && <AssociationBadgeStrip logos={data.trustLogos} />}
     </>
   );
 }

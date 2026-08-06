@@ -218,6 +218,19 @@ export interface TrustLogoStripSection extends SectionBase {
   background?: "offwhite" | "white";
 }
 
+/**
+ * The association/certification badge row as a placeable section. The badges
+ * themselves stay collection-driven (Trust Logos, association/credential
+ * categories) — this section only controls WHERE the strip appears. A stack
+ * instance overrides the automatic template render on service/city pages.
+ */
+export interface BadgeStripSection extends SectionBase {
+  _type: "badgeStrip";
+  /** Line above the badges — defaults to the site-wide strip heading. */
+  heading?: string;
+  hidden?: boolean;
+}
+
 export interface RelatedServicesSection extends SectionBase {
   _type: "relatedServices";
   heading: string;
@@ -252,5 +265,6 @@ export type ServiceSection =
   | ServiceFaqSection
   | ServiceAreaSection
   | TrustLogoStripSection
+  | BadgeStripSection
   | RelatedServicesSection
   | FinalCtaSection;

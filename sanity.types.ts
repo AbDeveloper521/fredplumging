@@ -456,6 +456,17 @@ export type HomeIndustries = {
   heading?: string;
   eyebrow?: string;
   description?: string;
+  photo?: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    frameRatio?:
+      "default" | "square" | "landscape" | "wide" | "portrait" | "original";
+    _type: "image";
+  };
+  photoSubject?: string;
   hidden?: boolean;
 };
 
@@ -607,6 +618,15 @@ export type HomeHero = {
     _key: string;
   }>;
   experienceBadgeLabel?: string;
+  photo?: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  };
+  darkOverlay?: boolean;
   hidden?: boolean;
 };
 
@@ -624,6 +644,12 @@ export type RelatedServices = {
   _type: "relatedServices";
   heading?: string;
   serviceSlugs?: Array<string>;
+};
+
+export type BadgeStrip = {
+  _type: "badgeStrip";
+  heading?: string;
+  hidden?: boolean;
 };
 
 export type TrustLogoStrip = {
@@ -1130,6 +1156,9 @@ export type Industry = {
       } & PartnerPlatforms)
     | ({
         _key: string;
+      } & BadgeStrip)
+    | ({
+        _key: string;
       } & HomeLocationMap)
     | ({
         _key: string;
@@ -1308,6 +1337,9 @@ export type Service = {
     | ({
         _key: string;
       } & PartnerPlatforms)
+    | ({
+        _key: string;
+      } & BadgeStrip)
     | ({
         _key: string;
       } & HomeLocationMap)
@@ -1615,6 +1647,9 @@ export type CityPage = {
       } & PartnerPlatforms)
     | ({
         _key: string;
+      } & BadgeStrip)
+    | ({
+        _key: string;
       } & HomeLocationMap)
     | ({
         _key: string;
@@ -1791,6 +1826,9 @@ export type CareersPage = {
       } & PartnerPlatforms)
     | ({
         _key: string;
+      } & BadgeStrip)
+    | ({
+        _key: string;
       } & HomeLocationMap)
     | ({
         _key: string;
@@ -1937,6 +1975,9 @@ export type PartnersPage = {
     | ({
         _key: string;
       } & PartnerPlatforms)
+    | ({
+        _key: string;
+      } & BadgeStrip)
     | ({
         _key: string;
       } & HomeLocationMap)
@@ -2087,6 +2128,9 @@ export type AboutPage = {
       } & PartnerPlatforms)
     | ({
         _key: string;
+      } & BadgeStrip)
+    | ({
+        _key: string;
       } & HomeLocationMap)
     | ({
         _key: string;
@@ -2233,6 +2277,9 @@ export type HomePage = {
     | ({
         _key: string;
       } & PartnerPlatforms)
+    | ({
+        _key: string;
+      } & BadgeStrip)
     | ({
         _key: string;
       } & HomeLocationMap)
@@ -2412,6 +2459,7 @@ export type AllSanitySchemaTypes =
   | HomeHero
   | FinalCta
   | RelatedServices
+  | BadgeStrip
   | TrustLogoStrip
   | ServiceArea
   | ServiceFaq
@@ -2779,6 +2827,17 @@ export type SERVICE_BY_SLUG_QUERY_RESULT = {
         photoSubjectSecondary?: string;
         hidden?: boolean;
         photo: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "badgeStrip";
+        heading?: string;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
       }
@@ -3184,8 +3243,15 @@ export type SERVICE_BY_SLUG_QUERY_RESULT = {
           _key: string;
         }>;
         experienceBadgeLabel?: string;
+        photo: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+          frameRatio: null;
+        } | null;
+        darkOverlay?: boolean;
         hidden?: boolean;
-        photo: null;
         photoPrimary: null;
         photoSecondary: null;
         primaryPhoto: null;
@@ -3197,8 +3263,22 @@ export type SERVICE_BY_SLUG_QUERY_RESULT = {
         heading?: string;
         eyebrow?: string;
         description?: string;
+        photo: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+          frameRatio:
+            | "default"
+            | "landscape"
+            | "original"
+            | "portrait"
+            | "square"
+            | "wide"
+            | null;
+        } | null;
+        photoSubject?: string;
         hidden?: boolean;
-        photo: null;
         photoPrimary: null;
         photoSecondary: null;
         primaryPhoto: null;
@@ -3998,6 +4078,17 @@ export type INDUSTRY_BY_SLUG_QUERY_RESULT = {
       }
     | {
         _key: string;
+        _type: "badgeStrip";
+        heading?: string;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
         _type: "careersCta";
         heading?: string;
         eyebrow?: string;
@@ -4398,8 +4489,15 @@ export type INDUSTRY_BY_SLUG_QUERY_RESULT = {
           _key: string;
         }>;
         experienceBadgeLabel?: string;
+        photo: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+          frameRatio: null;
+        } | null;
+        darkOverlay?: boolean;
         hidden?: boolean;
-        photo: null;
         photoPrimary: null;
         photoSecondary: null;
         primaryPhoto: null;
@@ -4411,8 +4509,22 @@ export type INDUSTRY_BY_SLUG_QUERY_RESULT = {
         heading?: string;
         eyebrow?: string;
         description?: string;
+        photo: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+          frameRatio:
+            | "default"
+            | "landscape"
+            | "original"
+            | "portrait"
+            | "square"
+            | "wide"
+            | null;
+        } | null;
+        photoSubject?: string;
         hidden?: boolean;
-        photo: null;
         photoPrimary: null;
         photoSecondary: null;
         primaryPhoto: null;
@@ -5153,6 +5265,17 @@ export type HOME_PAGE_QUERY_RESULT = {
       }
     | {
         _key: string;
+        _type: "badgeStrip";
+        heading?: string;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
         _type: "careersCta";
         heading?: string;
         eyebrow?: string;
@@ -5553,8 +5676,15 @@ export type HOME_PAGE_QUERY_RESULT = {
           _key: string;
         }>;
         experienceBadgeLabel?: string;
+        photo: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+          frameRatio: null;
+        } | null;
+        darkOverlay?: boolean;
         hidden?: boolean;
-        photo: null;
         photoPrimary: null;
         photoSecondary: null;
         primaryPhoto: null;
@@ -5566,8 +5696,22 @@ export type HOME_PAGE_QUERY_RESULT = {
         heading?: string;
         eyebrow?: string;
         description?: string;
+        photo: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+          frameRatio:
+            | "default"
+            | "landscape"
+            | "original"
+            | "portrait"
+            | "square"
+            | "wide"
+            | null;
+        } | null;
+        photoSubject?: string;
         hidden?: boolean;
-        photo: null;
         photoPrimary: null;
         photoSecondary: null;
         primaryPhoto: null;
@@ -6283,6 +6427,17 @@ export type ABOUT_PAGE_QUERY_RESULT = {
       }
     | {
         _key: string;
+        _type: "badgeStrip";
+        heading?: string;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
         _type: "careersCta";
         heading?: string;
         eyebrow?: string;
@@ -6683,8 +6838,15 @@ export type ABOUT_PAGE_QUERY_RESULT = {
           _key: string;
         }>;
         experienceBadgeLabel?: string;
+        photo: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+          frameRatio: null;
+        } | null;
+        darkOverlay?: boolean;
         hidden?: boolean;
-        photo: null;
         photoPrimary: null;
         photoSecondary: null;
         primaryPhoto: null;
@@ -6696,8 +6858,22 @@ export type ABOUT_PAGE_QUERY_RESULT = {
         heading?: string;
         eyebrow?: string;
         description?: string;
+        photo: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+          frameRatio:
+            | "default"
+            | "landscape"
+            | "original"
+            | "portrait"
+            | "square"
+            | "wide"
+            | null;
+        } | null;
+        photoSubject?: string;
         hidden?: boolean;
-        photo: null;
         photoPrimary: null;
         photoSecondary: null;
         primaryPhoto: null;
@@ -7413,6 +7589,17 @@ export type PARTNERS_PAGE_QUERY_RESULT = {
       }
     | {
         _key: string;
+        _type: "badgeStrip";
+        heading?: string;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
         _type: "careersCta";
         heading?: string;
         eyebrow?: string;
@@ -7813,8 +8000,15 @@ export type PARTNERS_PAGE_QUERY_RESULT = {
           _key: string;
         }>;
         experienceBadgeLabel?: string;
+        photo: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+          frameRatio: null;
+        } | null;
+        darkOverlay?: boolean;
         hidden?: boolean;
-        photo: null;
         photoPrimary: null;
         photoSecondary: null;
         primaryPhoto: null;
@@ -7826,8 +8020,22 @@ export type PARTNERS_PAGE_QUERY_RESULT = {
         heading?: string;
         eyebrow?: string;
         description?: string;
+        photo: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+          frameRatio:
+            | "default"
+            | "landscape"
+            | "original"
+            | "portrait"
+            | "square"
+            | "wide"
+            | null;
+        } | null;
+        photoSubject?: string;
         hidden?: boolean;
-        photo: null;
         photoPrimary: null;
         photoSecondary: null;
         primaryPhoto: null;
@@ -8543,6 +8751,17 @@ export type CAREERS_PAGE_QUERY_RESULT = {
       }
     | {
         _key: string;
+        _type: "badgeStrip";
+        heading?: string;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
         _type: "careersCta";
         heading?: string;
         eyebrow?: string;
@@ -8943,8 +9162,15 @@ export type CAREERS_PAGE_QUERY_RESULT = {
           _key: string;
         }>;
         experienceBadgeLabel?: string;
+        photo: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+          frameRatio: null;
+        } | null;
+        darkOverlay?: boolean;
         hidden?: boolean;
-        photo: null;
         photoPrimary: null;
         photoSecondary: null;
         primaryPhoto: null;
@@ -8956,8 +9182,22 @@ export type CAREERS_PAGE_QUERY_RESULT = {
         heading?: string;
         eyebrow?: string;
         description?: string;
+        photo: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+          frameRatio:
+            | "default"
+            | "landscape"
+            | "original"
+            | "portrait"
+            | "square"
+            | "wide"
+            | null;
+        } | null;
+        photoSubject?: string;
         hidden?: boolean;
-        photo: null;
         photoPrimary: null;
         photoSecondary: null;
         primaryPhoto: null;
@@ -9695,6 +9935,17 @@ export type CITY_PAGE_QUERY_RESULT = {
       }
     | {
         _key: string;
+        _type: "badgeStrip";
+        heading?: string;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
         _type: "careersCta";
         heading?: string;
         eyebrow?: string;
@@ -10095,8 +10346,15 @@ export type CITY_PAGE_QUERY_RESULT = {
           _key: string;
         }>;
         experienceBadgeLabel?: string;
+        photo: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+          frameRatio: null;
+        } | null;
+        darkOverlay?: boolean;
         hidden?: boolean;
-        photo: null;
         photoPrimary: null;
         photoSecondary: null;
         primaryPhoto: null;
@@ -10108,8 +10366,22 @@ export type CITY_PAGE_QUERY_RESULT = {
         heading?: string;
         eyebrow?: string;
         description?: string;
+        photo: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+          frameRatio:
+            | "default"
+            | "landscape"
+            | "original"
+            | "portrait"
+            | "square"
+            | "wide"
+            | null;
+        } | null;
+        photoSubject?: string;
         hidden?: boolean;
-        photo: null;
         photoPrimary: null;
         photoSecondary: null;
         primaryPhoto: null;

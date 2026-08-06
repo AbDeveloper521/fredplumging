@@ -26,6 +26,12 @@ export function CityPage({ content, data }: CityPageProps) {
     (section): section is ServiceFaqSection => section._type === "serviceFaq",
   );
 
+  // A badgeStrip placed in the stack takes over from the automatic strip —
+  // same rule as the service pages.
+  const stackHasBadgeStrip = content.sections.some(
+    (section) => section._type === "badgeStrip",
+  );
+
   return (
     <>
       {faqSection && <FaqJsonLd faqs={faqSection.faqs} />}
@@ -41,7 +47,7 @@ export function CityPage({ content, data }: CityPageProps) {
       />
       {/* Association/certification badges close the content on every city
           page, per the owner's reference — then the map band. */}
-      <AssociationBadgeStrip logos={data.trustLogos} />
+      {!stackHasBadgeStrip && <AssociationBadgeStrip logos={data.trustLogos} />}
       <LocationMapSection site={data.site} directionsUrl={data.profile.reviewsUrl} />
     </>
   );

@@ -44,6 +44,7 @@ import { CareerTraitsSection } from "./CareerTraitsSection";
 import { HiringProcessSection } from "./HiringProcessSection";
 import { CareersCtaSection } from "./CareersCtaSection";
 import { CityCommunitiesSection } from "./CityCommunitiesSection";
+import { AssociationBadgeStrip } from "./AssociationBadgeStrip";
 
 /**
  * Stable in-page ids per section type on the ANCHOR scheme (service and
@@ -67,6 +68,10 @@ const SECTION_IDS: Record<LibrarySection["_type"], string> = {
   serviceFaq: "service-faq",
   serviceArea: "service-area",
   trustLogoStrip: "trust-badges",
+  // Not "association-badges": the template-rendered strip on service/city
+  // pages defaults its own titleId to "association-badges-heading" — a stack
+  // copy of the band must not collide with it.
+  badgeStrip: "certification-badges",
   relatedServices: "related-services",
   finalCta: "final-cta",
   homeHero: "home-hero",
@@ -213,9 +218,18 @@ export function SectionRenderer({
               />
             );
           case "trustLogoStrip":
-            // Retired: renders nothing — AssociationBadgeStrip is the
-            // credentials band, template-rendered on service/city pages.
+            // Retired: renders nothing — the placeable credentials band is
+            // the badgeStrip section below.
             return null;
+          case "badgeStrip":
+            return (
+              <AssociationBadgeStrip
+                key={section._key}
+                logos={trustLogos}
+                heading={section.heading}
+                titleId={titleId}
+              />
+            );
           case "relatedServices":
             return (
               <RelatedServicesSection

@@ -136,6 +136,14 @@ export default async function ServicePage({
     (section): section is ServiceFaqSection => section._type === "serviceFaq",
   );
 
+  // A badgeStrip placed in the stack takes over from the automatic strip —
+  // the owner chose its position, so the template copy stands down. (A
+  // hidden stack instance doesn't survive mapping, so hiding it restores
+  // this default placement.)
+  const stackHasBadgeStrip = service.sections.some(
+    (section) => section._type === "badgeStrip",
+  );
+
   return (
     <>
       {structuredData}
@@ -148,7 +156,7 @@ export default async function ServicePage({
       />
       {/* Association/certification badges close the content on every
           service page, per the owner's reference — then the map band. */}
-      <AssociationBadgeStrip logos={data.trustLogos} />
+      {!stackHasBadgeStrip && <AssociationBadgeStrip logos={data.trustLogos} />}
       <LocationMapSection site={data.site} directionsUrl={data.profile.reviewsUrl} />
     </>
   );

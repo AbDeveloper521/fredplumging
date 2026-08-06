@@ -25,24 +25,37 @@ import {
  * six fit one line at `lg`+ inside the Container, tablets wrap 3-up, phones
  * 2-up. Nothing hardcodes the count: a seventh badge wraps to a tidy centred
  * second line instead of shrinking the row into illegibility.
+ *
+ * Rendered two ways: automatically by the service/city templates (default
+ * props), and as a `badgeStrip` stack section — which can override the line
+ * above the badges and needs a per-instance titleId (sections can be
+ * duplicated in the Studio).
  */
-export function AssociationBadgeStrip({ logos }: { logos: TrustLogo[] }) {
+export function AssociationBadgeStrip({
+  logos,
+  heading = ASSOCIATION_STRIP_HEADING,
+  titleId = "association-badges-heading",
+}: {
+  logos: TrustLogo[];
+  heading?: string;
+  titleId?: string;
+}) {
   const badges = associationBadgeLogos(logos);
   if (badges.length === 0) return null;
 
   return (
     <section
-      aria-labelledby="association-badges-heading"
+      aria-labelledby={titleId}
       className="bg-white py-12 sm:py-16"
     >
       <Container>
         <Reveal>
           <h2
-            id="association-badges-heading"
+            id={titleId}
             className="flex items-center justify-center gap-3 text-center text-[13px] font-bold tracking-[0.14em] text-grey-500 uppercase"
           >
             <span aria-hidden="true" className="h-px w-8 bg-grey-300" />
-            {ASSOCIATION_STRIP_HEADING}
+            {heading}
             <span aria-hidden="true" className="h-px w-8 bg-grey-300" />
           </h2>
         </Reveal>

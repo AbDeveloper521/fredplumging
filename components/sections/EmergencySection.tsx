@@ -25,26 +25,27 @@ export function EmergencySection({
   return (
     <section
       aria-labelledby={titleId}
-      className="relative isolate overflow-hidden bg-navy-900 py-16 sm:py-24 lg:py-28"
+      className="relative isolate overflow-hidden bg-red-600 py-16 sm:py-24 lg:py-28"
     >
-      {/* Controlled red glow + texture */}
-      <div aria-hidden="true" className="bg-grid-dark absolute inset-0" />
+      {/* The reference's alarm-red band: navy shading for depth instead of
+          the old navy band's red glow. */}
+      <div aria-hidden="true" className="bg-grid-dark absolute inset-0 opacity-40" />
       <div
         aria-hidden="true"
-        className="absolute inset-0 bg-[radial-gradient(ellipse_55%_60%_at_15%_50%,rgb(211_33_39/0.18),transparent_60%)]"
+        className="absolute inset-0 bg-[radial-gradient(ellipse_55%_60%_at_15%_50%,rgb(7_17_31/0.28),transparent_60%)]"
       />
       <div
         aria-hidden="true"
-        className="absolute inset-y-0 right-0 w-1/2 bg-[radial-gradient(ellipse_at_center,rgb(18_34_56/0.9),transparent_70%)]"
+        className="absolute inset-y-0 right-0 w-1/2 bg-[radial-gradient(ellipse_at_center,rgb(7_17_31/0.35),transparent_70%)]"
       />
 
       <Container className="relative grid grid-cols-1 items-center gap-14 lg:grid-cols-[1.1fr_0.9fr] lg:gap-20">
         <div>
           <Reveal>
-            <p className="flex items-center gap-3 text-[13px] font-bold tracking-[0.14em] text-red-500 uppercase">
+            <p className="flex items-center gap-3 text-[13px] font-bold tracking-[0.14em] text-white uppercase">
               <span
                 aria-hidden="true"
-                className="availability-dot size-2 rounded-full bg-red-500"
+                className="size-2 rounded-full bg-white"
               />
               {content.eyebrow}
             </p>
@@ -60,25 +61,25 @@ export function EmergencySection({
           </Reveal>
 
           <Reveal delay={0.14}>
-            <p className="mt-5 max-w-xl text-[17px] leading-relaxed text-grey-300">
+            <p className="mt-5 max-w-xl text-[17px] leading-relaxed text-white/85">
               {content.body}
             </p>
           </Reveal>
 
-          {/* Dominant phone number */}
+          {/* Dominant phone card — white on the red band */}
           <Reveal delay={0.2}>
             <a
               href={site.phoneHref}
-              className="group mt-8 inline-flex items-center gap-4 rounded-2xl border border-red-500/30 bg-red-600/10 px-6 py-4 transition-colors hover:border-red-500/60 hover:bg-red-600/15 sm:gap-5 sm:px-8 sm:py-5"
+              className="group mt-8 inline-flex items-center gap-4 rounded-2xl bg-white px-6 py-4 shadow-(--shadow-card-lg) transition-transform duration-200 hover:-translate-y-0.5 sm:gap-5 sm:px-8 sm:py-5"
             >
               <span className="flex size-12 items-center justify-center rounded-xl bg-red-600 transition-transform duration-200 group-hover:scale-105 sm:size-14">
                 <Phone aria-hidden="true" className="size-6 text-white sm:size-7" />
               </span>
               <span>
-                <span className="block text-xs font-bold tracking-[0.14em] text-red-500 uppercase">
-                  Emergency line
+                <span className="block text-xs font-bold tracking-[0.14em] text-red-600 uppercase">
+                  Give Us a Call!
                 </span>
-                <span className="font-heading mt-1 block text-3xl font-extrabold tracking-tight text-white sm:text-[40px]">
+                <span className="font-heading mt-1 block text-3xl font-extrabold tracking-tight text-navy-900 sm:text-[40px]">
                   {site.phone}
                 </span>
               </span>
@@ -90,10 +91,10 @@ export function EmergencySection({
               {benefits.map(({ icon: Icon, label }) => (
                 <li
                   key={label}
-                  className="flex items-center gap-3 text-[15px] font-semibold text-white/90"
+                  className="flex items-center gap-3 text-[15px] font-semibold text-white"
                 >
-                  <span className="flex size-9 items-center justify-center rounded-lg border border-white/12 bg-white/5">
-                    <Icon aria-hidden="true" className="size-4 text-red-500" />
+                  <span className="flex size-9 items-center justify-center rounded-lg border border-white/25 bg-white/10">
+                    <Icon aria-hidden="true" className="size-4 text-white" />
                   </span>
                   {label}
                 </li>

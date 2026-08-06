@@ -1085,6 +1085,46 @@ export const trustLogoStrip = defineType({
   },
 });
 
+export const badgeStrip = defineType({
+  name: "badgeStrip",
+  title: "Certification badges",
+  type: "object",
+  description:
+    "The row of association and certification badges (AAGD, TDLR, …). The badges themselves are managed under Partners & Vendor Systems — this section only controls where the row appears on the page.",
+  fields: [
+    defineField({
+      name: "heading",
+      title: "Line above the badges",
+      description:
+        "Small uppercase line over the badge row. Leave empty for the standard “Licensed, certified, and affiliated”.",
+      type: "string",
+      validation: (rule) =>
+        rule.custom(
+          notJustSpaces(
+            "Write real text or clear the field — spaces alone don't count.",
+          ),
+        ),
+    }),
+    defineField({
+      name: "hidden",
+      title: "Hide this section",
+      description:
+        "Keeps the section but stops showing it on the site. Untick to bring it back exactly as it was.",
+      type: "boolean",
+      initialValue: false,
+    }),
+  ],
+  preview: {
+    select: { heading: "heading", hidden: "hidden" },
+    prepare: ({ heading, hidden }) => ({
+      title: `${hidden ? "🚫 " : ""}Certification badges`,
+      subtitle: hidden
+        ? "HIDDEN — not shown on the site"
+        : (heading ?? "Badges from Partners & Vendor Systems"),
+    }),
+  },
+});
+
 export const finalCta = defineType({
   name: "finalCta",
   title: "Closing band (call buttons)",
@@ -1146,6 +1186,7 @@ export const serviceSectionTypes = [
   serviceFaq,
   serviceArea,
   trustLogoStrip,
+  badgeStrip,
   relatedServices,
   finalCta,
 ];

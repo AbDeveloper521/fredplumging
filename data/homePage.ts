@@ -1,5 +1,6 @@
 import type { NavIconName } from "./navigation";
 import type { CmsPhoto } from "./services";
+import type { BadgeStripSection } from "./serviceSections";
 
 /**
  * Homepage section stack — FALLBACK for the `homePage` Sanity singleton (see
@@ -7,10 +8,13 @@ import type { CmsPhoto } from "./services";
  * sections, mirroring the service-page section-stack pattern: the owner can
  * reorder, hide, duplicate, add and remove sections natively in Studio.
  *
- * `defaultHomeSections` below is the shipped page: the same client-approved
- * copy as before, in the same order — minus the "Who We Serve"
- * (`homeIndustries`) band, which was removed from the default on request.
- * Its type still exists, so Studio can re-add it with one click.
+ * `defaultHomeSections` below is the shipped page: the client's reference
+ * homepage (their old WordPress site), transcribed — hero with the emergency
+ * form, red emergency band, heritage band, certification badges, services
+ * grid, vendor compliance, property types, reviews, map, closing form.
+ * Types absent from the reference (trust bar, why-choose-us, process, case
+ * study, service area, FAQ) keep their defaults below so Studio can re-add
+ * any of them with one click.
  *
  * Business facts (phone, cities, years) stay in `data/site.ts` — copy here
  * may reference them via tokens replaced at render time:
@@ -41,6 +45,13 @@ export interface HomeHeroContent {
   trustIndicators: HomeIconLabel[];
   /** Line under the derived "{years} Years" figure in the hero badge. */
   experienceBadgeLabel: string;
+  /** Editable background photo behind the banner; navy wash when unset. */
+  photo?: CmsPhoto;
+  /**
+   * Dark gradient over the background photo for text contrast. Absent means
+   * true — only an explicit Studio opt-out turns it off.
+   */
+  darkOverlay?: boolean;
 }
 
 /** Collection band: logos come from Trust Logos — only the tagline is copy. */
@@ -86,11 +97,13 @@ export interface HomeEmergencyContent {
   photoCaption: string;
 }
 
-/** Collection band: property types come from Property Types — heading block only. */
+/** Collection band: the cards come from Property Types — copy + photo here. */
 export interface HomeIndustriesContent {
   eyebrow: string;
   heading: string;
   description: string;
+  photo?: CmsPhoto;
+  photoSubject: string;
 }
 
 export interface HomeWhyChooseUsContent {
@@ -191,11 +204,11 @@ export interface HomePageDefaults {
 export const homePageDefaults: HomePageDefaults = {
   hero: {
     eyebrow: "Commercial & Multi-Family Plumbing Experts",
-    headingBefore: "Reliable Plumbing Solutions for",
+    headingBefore: "Expert Plumbing Services in the",
     headingHighlight: "Dallas–Fort Worth",
-    headingAfter: "Properties",
+    headingAfter: "Metroplex",
     subcopy:
-      "Fred’s Plumbing provides responsive emergency repairs, preventive maintenance, drain and sewer services, specialty plumbing, and property-wide solutions for commercial and multi-family facilities across the DFW Metroplex.",
+      "Fred's Plumbing provides 24/7 plumbing and specialty services for multi-family and commercial buildings throughout the Dallas–Fort Worth Metroplex. From emergency repairs to large-scale installations, our licensed team delivers fast, efficient, and long-lasting results for apartments, condos, assisted living facilities, and more.",
     trustIndicators: [
       { icon: "clock", label: "24/7 Emergency Response" },
       { icon: "shield-check", label: "Licensed & Insured" },
@@ -207,22 +220,16 @@ export const homePageDefaults: HomePageDefaults = {
     tagline: "Trusted by property managers and commercial facilities across DFW",
   },
   about: {
-    eyebrow: "Built on Experience. Trusted Across DFW.",
-    heading: "Commercial Plumbing Expertise Since 1996",
+    eyebrow: "Fred’s Plumbing",
+    heading: "Trusted Commercial Plumbers Serving the DFW Metroplex Since 1996",
+    // Blank-line breaks render as separate paragraphs (the reference band
+    // carries two). The reference shows no checkmark list and no metrics
+    // row, so both default empty — Studio can still add them back.
     description:
-      "Fred's Plumbing has supported apartment communities, property managers, commercial buildings, and multi-family facilities throughout the Dallas–Fort Worth Metroplex for more than two decades. Our team combines responsive service, reliable communication, and practical plumbing solutions designed to reduce disruption and protect your property.",
-    highlights: [
-      "Commercial and multi-family specialists",
-      "Responsive scheduling and emergency support",
-      "Clear communication from start to finish",
-    ],
+      "Founded in 1996, Fred’s Plumbing has proudly served the Dallas–Fort Worth Metroplex (DFW) with a long-standing reputation for professionalism, reliability, and high-quality workmanship. Our team specializes in providing commercial and multi-family plumbing services for property management companies, facility owners, and real estate investors across Dallas, Fort Worth, and surrounding North Texas communities.\n\nFrom large-scale installations to ongoing maintenance and emergency repairs, we deliver efficient, safety-focused solutions that minimize downtime and protect your investment. Every project we complete reflects our dedication to precision, code compliance, and lasting performance, making Fred’s Plumbing one of the most trusted names in DFW commercial plumbing for nearly three decades.",
+    highlights: [],
     badgeSubtitle: "Family-owned & operated",
-    metrics: [
-      { icon: "award", label: "Years of Experience" },
-      { icon: "clock", value: "24/7", label: "Emergency Availability" },
-      { icon: "map-pin", value: "DFW", label: "Metroplex-Wide Coverage" },
-      { icon: "shield-check", value: "100%", label: "Licensed and Insured" },
-    ],
+    metrics: [],
     primaryPhotoSubject:
       "Fred's Plumbing commercial service team on site — /images/commercial-plumber-team.webp",
     secondaryPhotoSubject:
@@ -230,14 +237,14 @@ export const homePageDefaults: HomePageDefaults = {
   },
   services: {
     eyebrow: "What We Do",
-    heading: "Complete Plumbing Support for Commercial Properties",
+    heading: "Reliable Plumbing Services in Dallas & Fort Worth",
     description:
       "From emergency repairs to planned maintenance, our team provides dependable plumbing services tailored to the demands of commercial and multi-family environments.",
   },
   emergency: {
     eyebrow: "Available Day and Night",
-    heading: "Plumbing Emergency? Our Team Is Ready 24/7.",
-    body: "Get fast support for active leaks, sewer backups, burst pipes, overflowing fixtures, and other urgent commercial plumbing problems.",
+    heading: "24/7 Emergency Plumbing Services in Dallas & Fort Worth",
+    body: "Plumbing problems don't wait, and neither do we. Fred's Plumbing offers around-the-clock emergency plumbing services across the Dallas–Fort Worth Metroplex.",
     benefits: [
       { icon: "truck", label: "Fast dispatch" },
       { icon: "message-square", label: "Clear communication" },
@@ -250,9 +257,11 @@ export const homePageDefaults: HomePageDefaults = {
   },
   industries: {
     eyebrow: "Who We Serve",
-    heading: "Plumbing Solutions Built Around Your Property",
+    heading: "Plumbing Solutions Tailored to Multi-Family and Commercial Needs",
     description:
-      "Every property type runs differently. We tailor scheduling, communication, and service scope to the way your community or facility operates.",
+      "Our team understands the challenges of multi-family and commercial maintenance, providing fast, professional service that minimizes downtime and keeps your operations running smoothly.",
+    photoSubject:
+      "Fred's Plumbing technician at a multi-family property — /images/multifamily-property.webp",
   },
   whyChooseUs: {
     eyebrow: "Why Property Managers Choose Fred's",
@@ -334,9 +343,9 @@ export const homePageDefaults: HomePageDefaults = {
   },
   compliance: {
     eyebrow: "Vendor-Ready and Fully Compliant",
-    heading: "Approved Across Leading Property Management Systems",
+    heading: "Fully Compliant and Approved Across Leading Vendor Systems",
     description:
-      "Fred's Plumbing maintains the insurance, licensing, documentation, and vendor credentials required by commercial property management organizations. Our team helps simplify onboarding, compliance, and ongoing service coordination.",
+      "Property managers throughout the Dallas–Fort Worth Metroplex trust Fred's Plumbing because we are verified and active within the platforms they use every day. Our team maintains complete vendor compliance with background checks, insurance verification, safety certifications, and documentation updates so you can schedule and manage service with confidence.",
     items: [
       "Licensing documentation",
       "Insurance verification",
@@ -389,7 +398,7 @@ export const homePageDefaults: HomePageDefaults = {
   },
   finalCta: {
     eyebrow: "Let's Solve the Problem",
-    heading: "Schedule Commercial Plumbing Service Today",
+    heading: "Schedule Plumbing Service in Dallas–Fort Worth Today!",
     description:
       "Tell us about your property and the plumbing support you need. Our team will contact you to discuss the next steps.",
     reassurance:
@@ -424,35 +433,27 @@ export type HomeSection =
 export type HomeSectionType = HomeSection["_type"];
 
 /**
- * The shipped homepage, in order. "Who We Serve" (`homeIndustries`) is
- * deliberately absent; the map band sits between FAQ and the closing CTA so
- * the CTA still closes the page.
+ * The shipped homepage: the client's reference page, top to bottom. The
+ * certification badge strip is the shared `badgeStrip` library section (its
+ * logos come from Trust Logos). The reference has no map band, but the
+ * Google-map band keeps its "right before the closing CTA" slot — it exists
+ * for local SEO and the owner can remove it in Studio with one click.
+ * Types absent here (trust bar, why-choose-us, process, case study, service
+ * area, FAQ) stay in the library for re-adding in Studio.
  */
-export const defaultHomeSections: HomeSection[] = [
+export const defaultHomeSections: (HomeSection | BadgeStripSection)[] = [
   { _type: "homeHero", _key: "hero", ...homePageDefaults.hero },
-  { _type: "homeTrustBar", _key: "trustBar", ...homePageDefaults.trustBar },
-  { _type: "homeAbout", _key: "about", ...homePageDefaults.about },
-  { _type: "homeServices", _key: "services", ...homePageDefaults.services },
   { _type: "homeEmergency", _key: "emergency", ...homePageDefaults.emergency },
-  {
-    _type: "homeWhyChooseUs",
-    _key: "whyChooseUs",
-    ...homePageDefaults.whyChooseUs,
-  },
-  { _type: "homeProcess", _key: "process", ...homePageDefaults.process },
+  { _type: "homeAbout", _key: "about", ...homePageDefaults.about },
+  { _type: "badgeStrip", _key: "badgeStrip" },
+  { _type: "homeServices", _key: "services", ...homePageDefaults.services },
   { _type: "homeCompliance", _key: "compliance", ...homePageDefaults.compliance },
+  { _type: "homeIndustries", _key: "industries", ...homePageDefaults.industries },
   {
     _type: "homeTestimonials",
     _key: "testimonials",
     ...homePageDefaults.testimonials,
   },
-  { _type: "homeCaseStudy", _key: "caseStudy", ...homePageDefaults.caseStudy },
-  {
-    _type: "homeServiceArea",
-    _key: "serviceArea",
-    ...homePageDefaults.serviceArea,
-  },
-  { _type: "homeFaq", _key: "faq", ...homePageDefaults.faq },
   { _type: "homeLocationMap", _key: "locationMap" },
   { _type: "homeFinalCta", _key: "finalCta", ...homePageDefaults.finalCta },
 ];

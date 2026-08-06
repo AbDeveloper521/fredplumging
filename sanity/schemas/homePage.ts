@@ -240,6 +240,23 @@ export const homeHero = defineType({
       "Experience badge — line under the years",
       "The small line inside the badge, e.g. “Serving DFW property teams”. The “30+ Years” figure above it comes from Site Settings automatically.",
     ),
+    imageWithAlt({
+      name: "photo",
+      title: "Background photo",
+      description:
+        "The photo BEHIND the whole banner — it fills the width of the band, darkened so the text stays readable. Wide, landscape photos work best (a crew, truck, or property shot). Until one is uploaded the site shows the styled dark background. Drag the hotspot circle (click the image → Edit hotspot) over the part that must stay visible — the banner crops wide, so the hotspot matters here.",
+      // The wide banner crop is load-bearing — a stale portrait/square
+      // override would break the composition, so no Frame-shape control.
+      frameRatio: false,
+    }),
+    defineField({
+      name: "darkOverlay",
+      title: "Dark overlay over the photo",
+      description:
+        "Keeps text readable over bright photos. Turn this off only if your image is already dark or has its own overlay — the text must stay readable.",
+      type: "boolean",
+      initialValue: true,
+    }),
     hiddenField(),
   ],
   preview: {
@@ -401,11 +418,18 @@ export const homeIndustries = defineType({
   title: "Who we serve (property types)",
   type: "object",
   description:
-    "The property-type explorer. The property types themselves are managed under Property Types — only the heading block lives here.",
+    "The dark property-type band: intro copy, photo, and one card per property type. The property types themselves are managed under Property Types — only the copy and photo live here.",
   fields: [
-    optionalString("heading", "Heading", "e.g. “Plumbing Solutions Built Around Your Property”. Leave empty for the default."),
+    optionalString("heading", "Heading", "e.g. “Plumbing Solutions Tailored to Multi-Family and Commercial Needs”. Leave empty for the default."),
     optionalString("eyebrow", "Small label above the heading", "e.g. “Who We Serve”."),
     optionalText("description", "Paragraph", "One or two sentences under the heading.", 3),
+    imageWithAlt({
+      name: "photo",
+      title: "Photo",
+      description:
+        "The photo beside the intro copy. The “Frame shape” control below the upload can change the frame's shape or show the photo uncropped.",
+    }),
+    photoSubjectField("photoSubject", "What the photo should eventually show."),
     hiddenField(),
   ],
   preview: sectionPreview("Who we serve (property types)"),
