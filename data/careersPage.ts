@@ -44,9 +44,14 @@ export interface CareerValuesContent {
   items: Array<{ icon: NavIconName; title: string; description: string }>;
 }
 
-/** Heading only — the job cards come from the Job Postings collection. */
+/**
+ * Band heading + apply-button label only — the job cards themselves come
+ * from the Job Postings collection.
+ */
 export interface JobOpeningsContent {
   heading: string;
+  /** The red button on every card. Studio-overridable; defaults to “Apply Now”. */
+  applyLabel: string;
 }
 
 export interface CareerTraitsContent {
@@ -116,6 +121,7 @@ export const careersPageDefaults: CareersPageDefaults = {
   },
   jobs: {
     heading: "Work With a Company That Invests in Your Success",
+    applyLabel: "Apply Now",
   },
   // ——— Retired bands: not in the default stack, re-addable in Studio ———
   traits: {

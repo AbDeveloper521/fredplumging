@@ -1,12 +1,10 @@
-import Link from "next/link";
-import { ArrowUpRight, Mail } from "lucide-react";
+import { Mail } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
 import {
   applyHref,
-  jobHref,
   EMPLOYMENT_TYPE_LABELS,
   type JobPosting,
 } from "@/data/jobs";
@@ -19,6 +17,13 @@ import type { SiteContent } from "@/data/site";
  * the applicant loses a career move and the client a hire they never knew
  * applied. Apply routes stay mailto/external until a real backend exists
  * (see GO-LIVE.md).
+ *
+ * The card shows ONLY title / employment type / summary / Apply — the
+ * owner's reference card, by request. Team, shift and openings still exist
+ * on jobPosting and render on the role's own page; don't re-add them here.
+ * The card deliberately does NOT link to that page (owner's reference has
+ * no such link) — /about/careers/[slug] stays for direct URLs and its own
+ * JobPosting structured data. Don't re-add a link without the owner asking.
  */
 
 interface JobOpeningsSectionProps {
@@ -26,34 +31,16 @@ interface JobOpeningsSectionProps {
   site: SiteContent;
   /** Section heading — overridable from the careers stack item. */
   heading?: string;
+  /** Apply-button label — overridable from the careers stack item. */
+  applyLabel?: string;
   id?: string;
-}
-
-function MetaPills({ job }: { job: JobPosting }) {
-  const pills = [
-    EMPLOYMENT_TYPE_LABELS[job.employmentType],
-    job.team,
-    job.shift,
-  ].filter(Boolean) as string[];
-
-  return (
-    <ul aria-label="Role details" className="flex flex-wrap gap-2">
-      {pills.map((pill) => (
-        <li
-          key={pill}
-          className="rounded-full bg-grey-100 px-3 py-1 text-xs font-bold text-navy-900"
-        >
-          {pill}
-        </li>
-      ))}
-    </ul>
-  );
 }
 
 export function JobOpeningsSection({
   jobs,
   site,
   heading = "Work With a Company That Invests in Your Success",
+  applyLabel = "Apply Now",
   id = "open-roles",
 }: JobOpeningsSectionProps) {
   return (
@@ -97,39 +84,23 @@ export function JobOpeningsSection({
             {jobs.map((job, i) => (
               <li key={job.slug}>
                 <Reveal delay={i * 0.08} className="h-full">
-                  <article className="relative flex h-full flex-col overflow-hidden rounded-2xl border border-grey-100 bg-white p-7 shadow-(--shadow-card)">
-                    <span
-                      aria-hidden="true"
-                      className="absolute inset-x-0 top-0 h-1 bg-red-600"
-                    />
+                  <article className="flex h-full flex-col rounded-2xl border border-grey-100 bg-white p-7 shadow-(--shadow-card)">
                     <h3 className="text-xl font-extrabold tracking-tight text-navy-900">
                       {job.title}
                     </h3>
-                    <div className="mt-4">
-                      <MetaPills job={job} />
-                    </div>
-                    {(job.openings ?? 1) > 1 && (
-                      <p className="mt-3 text-[13px] font-bold text-red-600">
-                        {job.openings} positions
-                      </p>
-                    )}
+                    <p className="mt-2 text-[13px] font-bold text-red-600">
+                      {EMPLOYMENT_TYPE_LABELS[job.employmentType]}
+                    </p>
                     <p className="mt-4 flex-1 text-[15px] leading-relaxed text-grey-500">
                       {job.summary}
                     </p>
-                    <div className="mt-7 flex flex-wrap items-center gap-x-6 gap-y-4">
+                    <div className="mt-7">
                       <Button href={applyHref(job, site.email)}>
                         <span className="inline-flex items-center gap-2.5">
                           <Mail aria-hidden="true" className="size-[18px]" />
-                          Apply Now
+                          {applyLabel}
                         </span>
                       </Button>
-                      <Link
-                        href={jobHref(job.slug)}
-                        className="inline-flex items-center gap-1.5 text-[15px] font-bold text-navy-900 underline decoration-red-600/50 underline-offset-4 transition-colors hover:text-red-600"
-                      >
-                        See the full role
-                        <ArrowUpRight aria-hidden="true" className="size-4 text-red-600" />
-                      </Link>
                     </div>
                   </article>
                 </Reveal>

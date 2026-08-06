@@ -207,6 +207,11 @@ export const jobOpenings = defineType({
       "e.g. “Work With a Company That Invests in Your Success”.",
       "The section needs a heading.",
     ),
+    optionalString(
+      "applyLabel",
+      "Apply button label",
+      "The red button on every job card. Leave empty for “Apply Now”.",
+    ),
     hiddenField(),
   ],
   preview: sectionPreview("Job openings"),

@@ -26,7 +26,8 @@ interface CareersSectionRendererProps {
  * Maps the Careers-page section stack to its components. Sections can be
  * duplicated in Studio, so every DOM id derives from the item's `_key` —
  * never a fixed string. Job cards stay collection-driven (the section item
- * holds only the heading); the JobOpeningsSection keeps its own empty-state
+ * holds only the heading and apply-button label); the JobOpeningsSection
+ * keeps its own empty-state
  * card, so an empty collection still renders the band with the mailto
  * route.
  */
@@ -66,6 +67,7 @@ export function CareersSectionRenderer({
                 jobs={jobs}
                 site={site}
                 heading={section.heading}
+                applyLabel={section.applyLabel}
                 id={`careers-${section._key}`}
               />
             );

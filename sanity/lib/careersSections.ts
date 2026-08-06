@@ -148,6 +148,7 @@ function toSection(raw: Raw, index: number): CareersSection | null {
         _type: "jobOpenings",
         _key,
         heading: str(raw.heading) ?? fb.heading,
+        applyLabel: str(raw.applyLabel) ?? fb.applyLabel,
       };
     }
     case "careerTraits": {

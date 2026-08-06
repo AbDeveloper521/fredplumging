@@ -31,9 +31,10 @@ export const EMPLOYMENT_TYPES: readonly EmploymentType[] = [
   "TEMPORARY",
 ];
 
+/** Display text per stored enum — written as the owner's reference writes it ("Full Time"). */
 export const EMPLOYMENT_TYPE_LABELS: Record<EmploymentType, string> = {
-  FULL_TIME: "Full-time",
-  PART_TIME: "Part-time",
+  FULL_TIME: "Full Time",
+  PART_TIME: "Part Time",
   CONTRACTOR: "Contractor",
   TEMPORARY: "Temporary",
 };

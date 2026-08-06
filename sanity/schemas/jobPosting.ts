@@ -27,8 +27,8 @@ export const jobPosting = defineType({
       type: "string",
       options: {
         list: [
-          { title: "Full-time", value: "FULL_TIME" },
-          { title: "Part-time", value: "PART_TIME" },
+          { title: "Full Time", value: "FULL_TIME" },
+          { title: "Part Time", value: "PART_TIME" },
           { title: "Contractor", value: "CONTRACTOR" },
           { title: "Temporary", value: "TEMPORARY" },
         ],
@@ -40,20 +40,22 @@ export const jobPosting = defineType({
     defineField({
       name: "team",
       title: "Team",
-      description: "e.g. “Field Operations”. Shown as a pill on the card.",
+      description:
+        "e.g. “Field Operations”. Shown on the role's own page — the listing card keeps to title, type, summary and Apply.",
       type: "string",
     }),
     defineField({
       name: "shift",
       title: "Shift",
       description:
-        "Only for roles with a fixed shift, e.g. “Evening shift · 4 PM – 12 AM”. Leave empty otherwise.",
+        "Only for roles with a fixed shift, e.g. “Evening shift · 4 PM – 12 AM”. Leave empty otherwise. Shown on the role's own page.",
       type: "string",
     }),
     defineField({
       name: "openings",
       title: "Number of openings",
-      description: "How many positions are open for this role.",
+      description:
+        "How many positions are open for this role. Shown on the role's own page and in Google's job data.",
       type: "number",
       validation: (rule) =>
         rule

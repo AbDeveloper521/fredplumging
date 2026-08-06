@@ -69,6 +69,7 @@ export type CareerTraits = {
 export type JobOpenings = {
   _type: "jobOpenings";
   heading?: string;
+  applyLabel?: string;
   hidden?: boolean;
 };
 
@@ -3567,6 +3568,7 @@ export type CAREERS_PAGE_QUERY_RESULT = {
         _key: string;
         _type: "jobOpenings";
         heading?: string;
+        applyLabel?: string;
         hidden?: boolean;
         photo: null;
       }
