@@ -5,11 +5,12 @@ import { getSite } from "@/sanity/lib/getSite";
 import { getTestimonials } from "@/sanity/lib/getTestimonials";
 import { getReviewSettings } from "@/sanity/lib/getReviewSettings";
 import { getTrustLogos } from "@/sanity/lib/getTrustLogos";
+import { getSectionData } from "@/sanity/lib/getSectionData";
 import { serviceHref } from "@/data/services";
 import { DEFAULT_PAGE_REVIEW_TAGS } from "@/data/googleReviews";
 import type { ServiceFaqSection } from "@/data/serviceSections";
 import { CmsDetailPage } from "@/components/layout/CmsDetailPage";
-import { ServiceSectionRenderer } from "@/components/sections/ServiceSectionRenderer";
+import { SectionRenderer } from "@/components/sections/SectionRenderer";
 import { TestimonialsSection } from "@/components/sections/TestimonialsSection";
 import { AssociationBadgeStrip } from "@/components/sections/AssociationBadgeStrip";
 import { LocationMapSection } from "@/components/sections/LocationMapSection";
@@ -128,13 +129,7 @@ export default async function ServicePage({
     );
   }
 
-  const [site, services, testimonials, profile, trustLogos] = await Promise.all([
-    getSite(),
-    getServices(),
-    getTestimonials(),
-    getReviewSettings(),
-    getTrustLogos(),
-  ]);
+  const data = await getSectionData();
 
   // FAQPage schema uses the exact strings the FAQ section renders.
   const faqSection = service.sections.find(
@@ -145,19 +140,16 @@ export default async function ServicePage({
     <>
       {structuredData}
       {faqSection && <FaqJsonLd faqs={faqSection.faqs} />}
-      <ServiceSectionRenderer
+      <SectionRenderer
         sections={service.sections}
-        site={site}
+        data={data}
         currentSlug={service.slug}
         breadcrumbs={breadcrumbs}
-        services={services}
-        testimonials={testimonials}
-        profile={profile}
       />
       {/* Association/certification badges close the content on every
           service page, per the owner's reference — then the map band. */}
-      <AssociationBadgeStrip logos={trustLogos} />
-      <LocationMapSection site={site} directionsUrl={profile.reviewsUrl} />
+      <AssociationBadgeStrip logos={data.trustLogos} />
+      <LocationMapSection site={data.site} directionsUrl={data.profile.reviewsUrl} />
     </>
   );
 }

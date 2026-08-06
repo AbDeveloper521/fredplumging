@@ -1,10 +1,9 @@
 import type { Metadata } from "next";
-import { getSite } from "@/sanity/lib/getSite";
 import { getAboutPage } from "@/sanity/lib/getAboutPage";
-import { getTestimonials } from "@/sanity/lib/getTestimonials";
-import { getReviewSettings } from "@/sanity/lib/getReviewSettings";
-import { AboutSectionRenderer } from "@/components/sections/AboutSectionRenderer";
-import { BreadcrumbJsonLd } from "@/components/seo/JsonLd";
+import { getSectionData } from "@/sanity/lib/getSectionData";
+import type { ServiceFaqSection } from "@/data/serviceSections";
+import { SectionRenderer } from "@/components/sections/SectionRenderer";
+import { BreadcrumbJsonLd, FaqJsonLd } from "@/components/seo/JsonLd";
 
 export const metadata: Metadata = {
   title: "About Us | Fred's Plumbing",
@@ -14,29 +13,28 @@ export const metadata: Metadata = {
 };
 
 export default async function AboutPage() {
-  // Testimonials/reviews are fetched even though the default stack has no
-  // reviews band — the owner can add one in Studio, and the map band needs
-  // the reviews profile for its directions link.
-  const [site, sections, testimonials, profile] = await Promise.all([
-    getSite(),
-    getAboutPage(),
-    getTestimonials(),
-    getReviewSettings(),
-  ]);
+  const [sections, data] = await Promise.all([getAboutPage(), getSectionData()]);
+
+  // FAQPage schema uses the exact strings a Q&A section renders — relevant
+  // only if the owner adds one in Studio.
+  const faqSection = sections.find(
+    (section): section is ServiceFaqSection => section._type === "serviceFaq",
+  );
+
+  const breadcrumbs = [
+    { label: "Home", href: "/" },
+    { label: "About Us", href: "/about" },
+  ];
 
   return (
     <>
-      <BreadcrumbJsonLd
-        items={[
-          { label: "Home", href: "/" },
-          { label: "About Us", href: "/about" },
-        ]}
-      />
-      <AboutSectionRenderer
+      <BreadcrumbJsonLd items={breadcrumbs} />
+      {faqSection && <FaqJsonLd faqs={faqSection.faqs} />}
+      <SectionRenderer
         sections={sections}
-        site={site}
-        testimonials={testimonials}
-        profile={profile}
+        data={data}
+        idPrefix="about"
+        breadcrumbs={breadcrumbs}
       />
     </>
   );

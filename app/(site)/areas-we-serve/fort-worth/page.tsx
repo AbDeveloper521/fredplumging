@@ -2,9 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getCityPage } from "@/sanity/lib/getCityPage";
 import { getSite } from "@/sanity/lib/getSite";
-import { getTestimonials } from "@/sanity/lib/getTestimonials";
-import { getReviewSettings } from "@/sanity/lib/getReviewSettings";
-import { getTrustLogos } from "@/sanity/lib/getTrustLogos";
+import { getSectionData } from "@/sanity/lib/getSectionData";
 import { cityHeroIntro, cityHref } from "@/data/cities";
 import { CityPage } from "@/components/layout/CityPage";
 import { BreadcrumbJsonLd } from "@/components/seo/JsonLd";
@@ -42,13 +40,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function FortWorthPage() {
-  const [content, site, testimonials, profile, trustLogos] = await Promise.all([
-    getCityPage(SLUG),
-    getSite(),
-    getTestimonials(),
-    getReviewSettings(),
-    getTrustLogos(),
-  ]);
+  const [content, data] = await Promise.all([getCityPage(SLUG), getSectionData()]);
   if (!content) notFound();
 
   return (
@@ -60,13 +52,7 @@ export default async function FortWorthPage() {
           { label: content.city, href: cityHref(SLUG) },
         ]}
       />
-      <CityPage
-        content={content}
-        site={site}
-        testimonials={testimonials}
-        profile={profile}
-        trustLogos={trustLogos}
-      />
+      <CityPage content={content} data={data} />
     </>
   );
 }

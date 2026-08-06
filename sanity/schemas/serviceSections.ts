@@ -155,7 +155,7 @@ function ctaPairFields(options: {
 
 export const serviceHero = defineType({
   name: "serviceHero",
-  title: "Top banner (hero)",
+  title: "Photo banner (hero)",
   type: "object",
   description: "The dark banner at the very top of the page: big heading, intro, call buttons, credentials strip.",
   fields: [
@@ -251,7 +251,7 @@ export const serviceHero = defineType({
   preview: {
     select: { heading: "heading" },
     prepare: ({ heading }) => ({
-      title: "Top banner (hero)",
+      title: "Photo banner (hero)",
       subtitle: heading ?? "No heading yet",
     }),
   },
@@ -259,7 +259,7 @@ export const serviceHero = defineType({
 
 export const serviceAbout = defineType({
   name: "serviceAbout",
-  title: "About this service",
+  title: "Photo collage band (24/7 badge)",
   type: "object",
   description: "Photo collage with the red 24/7 badge on the left, company story on the right.",
   fields: [
@@ -312,7 +312,7 @@ export const serviceAbout = defineType({
   preview: {
     select: { heading: "heading", paragraphs: "paragraphs" },
     prepare: ({ heading, paragraphs }) => ({
-      title: heading ?? "About this service",
+      title: heading ?? "Photo collage band",
       subtitle: `About — ${paragraphs?.length ?? 0} paragraph${paragraphs?.length === 1 ? "" : "s"}`,
     }),
   },
@@ -632,7 +632,7 @@ export const serviceTrust = defineType({
 
 export const serviceTestimonials = defineType({
   name: "serviceTestimonials",
-  title: "Client reviews",
+  title: "Client reviews (tags & count)",
   type: "object",
   description: "Shows reviews from the site-wide Testimonials collection — edit the reviews there, not here.",
   fields: [
@@ -669,7 +669,7 @@ export const serviceTestimonials = defineType({
 
 export const propertyTypes = defineType({
   name: "propertyTypes",
-  title: "Property cards",
+  title: "Property & sub-service cards",
   type: "object",
   description:
     "A grid of cards — link cards into other pages, or informational cards (no link) with photos.",
@@ -804,7 +804,7 @@ const ICON_CARD_COLOR_CHOICES = [
 
 export const iconCardSection = defineType({
   name: "iconCardSection",
-  title: "Icon Card",
+  title: "Icon cards",
   type: "object",
   description:
     "Rows of cards, each with a coloured icon chip, a title, a short paragraph, and an optional link. Rows balance themselves — five cards show as 3 + 2, never 4 + 1.",
@@ -911,7 +911,7 @@ export const iconCardSection = defineType({
 
 export const serviceFaq = defineType({
   name: "serviceFaq",
-  title: "Questions & answers",
+  title: "Q&A (written in this section)",
   type: "object",
   description:
     "FAQ for this service. Also published to search engines as structured data, so the text here must be exactly what visitors should read.",
@@ -984,7 +984,7 @@ export const serviceFaq = defineType({
 
 export const serviceArea = defineType({
   name: "serviceArea",
-  title: "Service area",
+  title: "Service area (photo + city chips)",
   type: "object",
   description: "Where we work: copy plus the city list. Cities come from Site Settings — edit them there.",
   fields: [
@@ -1087,7 +1087,7 @@ export const trustLogoStrip = defineType({
 
 export const finalCta = defineType({
   name: "finalCta",
-  title: "Closing call-to-action",
+  title: "Closing band (call buttons)",
   type: "object",
   description: "The centered dark band at the end of the page: heading, one line, call buttons.",
   fields: [
@@ -1149,12 +1149,3 @@ export const serviceSectionTypes = [
   relatedServices,
   finalCta,
 ];
-
-/**
- * The section array's member list — shared by every document type that
- * carries a `sections` field (service, industry), so the library stays one
- * set of types with no per-document duplication.
- */
-export const sectionArrayMembers = serviceSectionTypes.map((type) => ({
-  type: type.name,
-}));

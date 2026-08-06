@@ -1,48 +1,25 @@
-import { getSite } from "@/sanity/lib/getSite";
 import { getHomePage } from "@/sanity/lib/getHomePage";
-import { getFaqs } from "@/sanity/lib/getFaqs";
-import { getTestimonials } from "@/sanity/lib/getTestimonials";
-import { getReviewSettings } from "@/sanity/lib/getReviewSettings";
-import { getServices } from "@/sanity/lib/getServices";
-import { getIndustries } from "@/sanity/lib/getIndustries";
-import { getTrustLogos } from "@/sanity/lib/getTrustLogos";
-import { HomeSectionRenderer } from "@/components/sections/HomeSectionRenderer";
+import { getSectionData } from "@/sanity/lib/getSectionData";
+import type { ServiceFaqSection } from "@/data/serviceSections";
+import { SectionRenderer } from "@/components/sections/SectionRenderer";
+import { FaqJsonLd } from "@/components/seo/JsonLd";
 
 export default async function HomePage() {
-  const [
-    site,
-    sections,
-    faqs,
-    testimonials,
-    profile,
-    services,
-    industries,
-    trustLogos,
-  ] = await Promise.all([
-    getSite(),
-    getHomePage(),
-    getFaqs(),
-    getTestimonials(),
-    getReviewSettings(),
-    getServices(),
-    getIndustries(),
-    getTrustLogos(),
-  ]);
+  const [sections, data] = await Promise.all([getHomePage(), getSectionData()]);
+
+  // FAQPage schema uses the exact strings a Q&A section renders — same rule
+  // as every other page, relevant only if the owner adds one in Studio.
+  const faqSection = sections.find(
+    (section): section is ServiceFaqSection => section._type === "serviceFaq",
+  );
 
   // The homepage is an ordered section stack (reorder/hide/duplicate in the
   // Studio). Collections still gate their sections: an empty collection
-  // hides its band. Industries stays fetched even though the default stack
-  // omits "Who We Serve" — the owner can re-add that section in Studio.
+  // hides its band.
   return (
-    <HomeSectionRenderer
-      sections={sections}
-      site={site}
-      services={services}
-      industries={industries}
-      testimonials={testimonials}
-      profile={profile}
-      trustLogos={trustLogos}
-      faqs={faqs}
-    />
+    <>
+      {faqSection && <FaqJsonLd faqs={faqSection.faqs} />}
+      <SectionRenderer sections={sections} data={data} idPrefix="home" />
+    </>
   );
 }

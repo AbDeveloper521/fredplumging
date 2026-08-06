@@ -6,7 +6,7 @@ import {
 } from "@/sanity/lib/live";
 import { resolvePhoto } from "@/sanity/lib/image";
 import { logEmpty, logFallback } from "@/sanity/lib/fallbackLog";
-import { toSections } from "@/sanity/lib/sections";
+import { toLibrarySections } from "@/sanity/lib/sectionLibrary";
 import { INDUSTRIES_QUERY, INDUSTRY_BY_SLUG_QUERY } from "@/sanity/queries";
 import type {
   INDUSTRIES_QUERY_RESULT,
@@ -32,7 +32,7 @@ function toIndustry(item: IndustryListItem | IndustryDetailItem): Industry | nul
     body: item.body?.length ? (item.body as RichBody) : undefined,
     sections:
       "sections" in item && item.sections
-        ? toSections(item.sections as unknown, `industry "${item.slug}"`)
+        ? toLibrarySections(item.sections as unknown, `industry "${item.slug}"`)
         : undefined,
     seoTitle: item.seoTitle ?? undefined,
     seoDescription: item.seoDescription ?? undefined,

@@ -1,7 +1,7 @@
 import { defineField, defineType } from "sanity";
 import type { NavIconName } from "@/data/navigation";
 import { imageWithAlt, lockedSlug, richBody, seoFields } from "./fields";
-import { sectionArrayMembers } from "./serviceSections";
+import { sectionsField } from "./sectionLibrary";
 
 const ICON_CHOICES: Array<{ title: string; value: NavIconName }> = [
   { title: "Wrench (general plumbing)", value: "wrench" },
@@ -47,13 +47,10 @@ export const service = defineType({
           .max(200)
           .error("Keep it under 200 characters so it fits on the card."),
     }),
-    defineField({
-      name: "sections",
+    sectionsField({
       title: "Page sections",
       description:
-        "The service page, built section by section, in order. Remove a section and the page simply renders without it. Leave the whole list empty to use the simple “Page content” layout below instead.",
-      type: "array",
-      of: sectionArrayMembers,
+        "The service page, built section by section, in order — the same section library every page uses. Remove a section and the page simply renders without it. Leave the whole list empty to use the simple “Page content” layout below instead.",
     }),
     richBody({
       description:

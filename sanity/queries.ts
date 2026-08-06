@@ -1,5 +1,21 @@
 import { defineQuery } from "next-sanity";
 
+/**
+ * The one `sections[]` projection every page query shares — the library is
+ * one union everywhere, so every query must surface every photo field any
+ * library type carries (fields a section doesn't have project as null and
+ * the mapper ignores them). Secondary photos carry no "Frame shape"
+ * override (their frames are fixed compositions), so no frameRatio there.
+ */
+const SECTIONS_PROJECTION = `sections[]{
+    ...,
+    photo{ asset, hotspot, crop, alt, frameRatio },
+    photoPrimary{ asset, hotspot, crop, alt, frameRatio },
+    photoSecondary{ asset, hotspot, crop, alt },
+    primaryPhoto{ asset, hotspot, crop, alt, frameRatio },
+    secondaryPhoto{ asset, hotspot, crop, alt }
+  }`;
+
 export const SITE_SETTINGS_QUERY = defineQuery(
   `*[_type == "siteSettings" && _id == "siteSettings"][0]{
     name,
@@ -118,11 +134,7 @@ export const SERVICE_BY_SLUG_QUERY = defineQuery(
     featured,
     photo{ asset, hotspot, crop, alt },
     body,
-    sections[]{
-      ...,
-      photo{ asset, hotspot, crop, alt, frameRatio },
-      photoPrimary{ asset, hotspot, crop, alt, frameRatio }
-    },
+    ${SECTIONS_PROJECTION},
     seoTitle,
     seoDescription
   }`,
@@ -149,11 +161,7 @@ export const INDUSTRY_BY_SLUG_QUERY = defineQuery(
     bulletPoints,
     photo{ asset, hotspot, crop, alt },
     body,
-    sections[]{
-      ...,
-      photo{ asset, hotspot, crop, alt, frameRatio },
-      photoPrimary{ asset, hotspot, crop, alt, frameRatio }
-    },
+    ${SECTIONS_PROJECTION},
     seoTitle,
     seoDescription
   }`,
@@ -173,41 +181,25 @@ export const TRUST_LOGOS_QUERY = defineQuery(
 
 export const HOME_PAGE_QUERY = defineQuery(
   `*[_type == "homePage" && _id == "homePage"][0]{
-    sections[]{
-      ...,
-      photo{ asset, hotspot, crop, alt, frameRatio },
-      primaryPhoto{ asset, hotspot, crop, alt, frameRatio },
-      secondaryPhoto{ asset, hotspot, crop, alt }
-    }
+    ${SECTIONS_PROJECTION}
   }`,
 );
 
 export const ABOUT_PAGE_QUERY = defineQuery(
   `*[_type == "aboutPage" && _id == "aboutPage"][0]{
-    sections[]{
-      ...,
-      photo{ asset, hotspot, crop, alt, frameRatio },
-      photoPrimary{ asset, hotspot, crop, alt, frameRatio },
-      photoSecondary{ asset, hotspot, crop, alt }
-    }
+    ${SECTIONS_PROJECTION}
   }`,
 );
 
 export const PARTNERS_PAGE_QUERY = defineQuery(
   `*[_type == "partnersPage" && _id == "partnersPage"][0]{
-    sections[]{
-      ...,
-      photo{ asset, hotspot, crop, alt, frameRatio }
-    }
+    ${SECTIONS_PROJECTION}
   }`,
 );
 
 export const CAREERS_PAGE_QUERY = defineQuery(
   `*[_type == "careersPage" && _id == "careersPage"][0]{
-    sections[]{
-      ...,
-      photo{ asset, hotspot, crop, alt, frameRatio }
-    }
+    ${SECTIONS_PROJECTION}
   }`,
 );
 
@@ -228,12 +220,7 @@ export const CITY_PAGE_QUERY = defineQuery(
   `*[_type == "cityPage" && slug.current == $slug][0]{
     city,
     "slug": slug.current,
-    sections[]{
-      ...,
-      photo{ asset, hotspot, crop, alt, frameRatio },
-      photoPrimary{ asset, hotspot, crop, alt, frameRatio },
-      photoSecondary{ asset, hotspot, crop, alt }
-    },
+    ${SECTIONS_PROJECTION},
     seoTitle,
     seoDescription
   }`,

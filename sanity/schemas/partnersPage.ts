@@ -1,6 +1,7 @@
 import { defineArrayMember, defineField, defineType } from "sanity";
 import type { NavIconName } from "@/data/navigation";
 import { defaultPartnersSections } from "@/data/partnersPage";
+import { sectionsField } from "./sectionLibrary";
 
 /**
  * The Partners page (/about/partners) as an orderable section stack — same
@@ -12,8 +13,8 @@ import { defaultPartnersSections } from "@/data/partnersPage";
  * reused, not forked.
  *
  * TypeScript twins live in `data/partnersPage.ts`; mapping in
- * `sanity/lib/partnersSections.ts`; rendering in
- * `components/sections/PartnersSectionRenderer.tsx`.
+ * `sanity/lib/sectionLibrary.ts`; rendering in
+ * `components/sections/SectionRenderer.tsx`.
  *
  * Collection-driven: the per-platform cards come from Trust Logos (an entry
  * WITH a paragraph gets a card), reviews from Testimonials. Derived: the
@@ -95,7 +96,7 @@ function sectionPreview(bandTitle: string) {
 
 export const partnersHero = defineType({
   name: "partnersHero",
-  title: "Top banner (hero)",
+  title: "Partners banner (hero)",
   type: "object",
   description:
     "The dark banner at the top: small label, big heading, intro paragraphs. The credential chips (licence, years, dispatch) come from Site Settings.",
@@ -129,7 +130,7 @@ export const partnersHero = defineType({
     }),
     hiddenField(),
   ],
-  preview: sectionPreview("Top banner (hero)"),
+  preview: sectionPreview("Partners banner (hero)"),
 });
 
 export const vendorOnboarding = defineType({
@@ -253,34 +254,15 @@ export const partnersSectionTypes = [
   partnerCredentials,
 ];
 
-/**
- * Shared library types the Partners stack also accepts — the same object
- * types the other stacks use, so a section edited here behaves identically
- * everywhere.
- */
-const SHARED_PARTNERS_SECTION_TYPES = [
-  "serviceTestimonials",
-  "serviceFaq",
-  "iconCardSection",
-  "homeLocationMap",
-  "homeFinalCta",
-];
-
 export const partnersPage = defineType({
   name: "partnersPage",
   title: "Partners Page",
   type: "document",
   fields: [
-    defineField({
-      name: "sections",
+    sectionsField({
       title: "Partners-page sections",
       description:
-        "The Partners page, top to bottom. Drag to reorder. The ⋮ menu on each section offers Duplicate and Remove; open a section and tick “Hide this section” to keep its content without showing it.",
-      type: "array",
-      of: [
-        ...partnersSectionTypes.map((type) => ({ type: type.name })),
-        ...SHARED_PARTNERS_SECTION_TYPES.map((type) => ({ type })),
-      ],
+        "The Partners page, top to bottom — the same section library every page uses. Drag to reorder. The ⋮ menu on each section offers Duplicate and Remove; open a section and tick “Hide this section” to keep its content without showing it.",
     }),
   ],
   // The Studio document starts prefilled with the shipped stack, so the

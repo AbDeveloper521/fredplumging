@@ -1,11 +1,8 @@
 import type { Metadata } from "next";
-import { getSite } from "@/sanity/lib/getSite";
 import { getPartnersPage } from "@/sanity/lib/getPartnersPage";
-import { getTrustLogos } from "@/sanity/lib/getTrustLogos";
-import { getTestimonials } from "@/sanity/lib/getTestimonials";
-import { getReviewSettings } from "@/sanity/lib/getReviewSettings";
+import { getSectionData } from "@/sanity/lib/getSectionData";
 import type { ServiceFaqSection } from "@/data/serviceSections";
-import { PartnersSectionRenderer } from "@/components/sections/PartnersSectionRenderer";
+import { SectionRenderer } from "@/components/sections/SectionRenderer";
 import { BreadcrumbJsonLd, FaqJsonLd } from "@/components/seo/JsonLd";
 
 export const metadata: Metadata = {
@@ -16,12 +13,9 @@ export const metadata: Metadata = {
 };
 
 export default async function PartnersPage() {
-  const [site, sections, trustLogos, testimonials, profile] = await Promise.all([
-    getSite(),
+  const [sections, data] = await Promise.all([
     getPartnersPage(),
-    getTrustLogos(),
-    getTestimonials(),
-    getReviewSettings(),
+    getSectionData(),
   ]);
 
   // FAQPage schema uses the exact strings the FAQ section renders — same
@@ -30,22 +24,21 @@ export default async function PartnersPage() {
     (section): section is ServiceFaqSection => section._type === "serviceFaq",
   );
 
+  const breadcrumbs = [
+    { label: "Home", href: "/" },
+    { label: "About Us", href: "/about" },
+    { label: "Partners", href: "/about/partners" },
+  ];
+
   return (
     <>
-      <BreadcrumbJsonLd
-        items={[
-          { label: "Home", href: "/" },
-          { label: "About Us", href: "/about" },
-          { label: "Partners", href: "/about/partners" },
-        ]}
-      />
+      <BreadcrumbJsonLd items={breadcrumbs} />
       {faqSection && <FaqJsonLd faqs={faqSection.faqs} />}
-      <PartnersSectionRenderer
+      <SectionRenderer
         sections={sections}
-        site={site}
-        trustLogos={trustLogos}
-        testimonials={testimonials}
-        profile={profile}
+        data={data}
+        idPrefix="partners"
+        breadcrumbs={breadcrumbs}
       />
     </>
   );

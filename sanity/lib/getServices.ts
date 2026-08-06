@@ -5,7 +5,7 @@ import {
   type DynamicFetchOptions,
 } from "@/sanity/lib/live";
 import { resolvePhoto } from "@/sanity/lib/image";
-import { toSections } from "@/sanity/lib/sections";
+import { toLibrarySections } from "@/sanity/lib/sectionLibrary";
 import { logEmpty, logFallback } from "@/sanity/lib/fallbackLog";
 import { SERVICES_QUERY, SERVICE_BY_SLUG_QUERY } from "@/sanity/queries";
 import type {
@@ -40,7 +40,7 @@ function toService(item: ServiceListItem | ServiceDetailItem): Service | null {
     body: item.body?.length ? (item.body as RichBody) : undefined,
     sections:
       "sections" in item && item.sections
-        ? toSections(item.sections as unknown, `service "${item.slug}"`)
+        ? toLibrarySections(item.sections as unknown, `service "${item.slug}"`)
         : undefined,
     seoTitle: item.seoTitle ?? undefined,
     seoDescription: item.seoDescription ?? undefined,

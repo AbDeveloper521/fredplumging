@@ -2,6 +2,7 @@ import { defineArrayMember, defineField, defineType } from "sanity";
 import type { NavIconName } from "@/data/navigation";
 import { defaultCareersSections } from "@/data/careersPage";
 import { imageWithAlt } from "./fields";
+import { sectionsField } from "./sectionLibrary";
 
 /**
  * The Careers page (/about/careers) as an orderable section stack — same
@@ -12,8 +13,8 @@ import { imageWithAlt } from "./fields";
  * shared library types (Icon Card, reviews, map band, closing CTA).
  *
  * TypeScript twins live in `data/careersPage.ts`; mapping in
- * `sanity/lib/careersSections.ts`; rendering in
- * `components/sections/CareersSectionRenderer.tsx`.
+ * `sanity/lib/sectionLibrary.ts`; rendering in
+ * `components/sections/SectionRenderer.tsx`.
  *
  * Collection-driven: the job cards come from Job Postings — never duplicate
  * job content into this document. Applications stay mailto-only (no form
@@ -91,7 +92,7 @@ function sectionPreview(bandTitle: string) {
 
 export const careersHero = defineType({
   name: "careersHero",
-  title: "Top banner (hero)",
+  title: "Careers banner (hero)",
   type: "object",
   description:
     "The dark banner at the top: small label, big heading, the hiring-voice paragraphs, and an optional background photo.",
@@ -133,12 +134,12 @@ export const careersHero = defineType({
     }),
     hiddenField(),
   ],
-  preview: sectionPreview("Top banner (hero)"),
+  preview: sectionPreview("Careers banner (hero)"),
 });
 
 export const careerValues = defineType({
   name: "careerValues",
-  title: "Values band",
+  title: "Values cards (dark band)",
   type: "object",
   description:
     "The dark band of three cards — what working here is like. Icon, title, and a sentence or two each.",
@@ -191,7 +192,7 @@ export const careerValues = defineType({
     }),
     hiddenField(),
   ],
-  preview: sectionPreview("Values band"),
+  preview: sectionPreview("Values cards (dark band)"),
 });
 
 export const jobOpenings = defineType({
@@ -219,7 +220,7 @@ export const jobOpenings = defineType({
 
 export const careerTraits = defineType({
   name: "careerTraits",
-  title: "Traits band (retired from the default page)",
+  title: "Traits band (What we look for)",
   type: "object",
   description:
     "The dark “What We Look For” trait grid from the earlier careers page — add it back here if the owner wants it again.",
@@ -257,7 +258,7 @@ export const careerTraits = defineType({
 
 export const hiringProcess = defineType({
   name: "hiringProcess",
-  title: "Hiring process (retired from the default page)",
+  title: "Hiring process (steps)",
   type: "object",
   description:
     "The numbered hiring-steps band from the earlier careers page — add it back here if the owner wants it again. Step numbers are automatic.",
@@ -299,7 +300,7 @@ export const hiringProcess = defineType({
 
 export const careersCta = defineType({
   name: "careersCta",
-  title: "Careers closing band (retired from the default page)",
+  title: "Closing band (careers email + call)",
   type: "object",
   description:
     "The dark closing band with the email and call buttons (both come from Site Settings) — add it back here if the owner wants it again.",
@@ -309,7 +310,7 @@ export const careersCta = defineType({
     optionalText("description", "Paragraph", "One or two sentences under the heading.", 3),
     hiddenField(),
   ],
-  preview: sectionPreview("Careers closing band"),
+  preview: sectionPreview("Closing band (careers email + call)"),
 });
 
 export const careersSectionTypes = [
@@ -321,33 +322,15 @@ export const careersSectionTypes = [
   careersCta,
 ];
 
-/**
- * Shared library types the Careers stack also accepts — the same object
- * types the other stacks use, so a section edited here behaves identically
- * everywhere.
- */
-const SHARED_CAREERS_SECTION_TYPES = [
-  "iconCardSection",
-  "serviceTestimonials",
-  "homeLocationMap",
-  "homeFinalCta",
-];
-
 export const careersPage = defineType({
   name: "careersPage",
   title: "Careers Page",
   type: "document",
   fields: [
-    defineField({
-      name: "sections",
+    sectionsField({
       title: "Careers-page sections",
       description:
-        "The Careers page, top to bottom. Drag to reorder. The ⋮ menu on each section offers Duplicate and Remove; open a section and tick “Hide this section” to keep its content without showing it.",
-      type: "array",
-      of: [
-        ...careersSectionTypes.map((type) => ({ type: type.name })),
-        ...SHARED_CAREERS_SECTION_TYPES.map((type) => ({ type })),
-      ],
+        "The Careers page, top to bottom — the same section library every page uses. Drag to reorder. The ⋮ menu on each section offers Duplicate and Remove; open a section and tick “Hide this section” to keep its content without showing it.",
     }),
   ],
   // The Studio document starts prefilled with the shipped three-band stack.

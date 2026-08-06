@@ -1,6 +1,6 @@
 import { defineField, defineType } from "sanity";
 import { imageWithAlt, lockedSlug, richBody, seoFields } from "./fields";
-import { sectionArrayMembers } from "./serviceSections";
+import { sectionsField } from "./sectionLibrary";
 
 export const industry = defineType({
   name: "industry",
@@ -66,13 +66,10 @@ export const industry = defineType({
           .min(0)
           .error("Use 0 or higher."),
     }),
-    defineField({
-      name: "sections",
+    sectionsField({
       title: "Page sections",
       description:
-        "The property-type page, built section by section, in order — the same section library the service pages use. Remove a section and the page simply renders without it. Leave the whole list empty to use the simple “Page content” layout below instead.",
-      type: "array",
-      of: sectionArrayMembers,
+        "The property-type page, built section by section, in order — the same section library every page uses. Remove a section and the page simply renders without it. Leave the whole list empty to use the simple “Page content” layout below instead.",
     }),
     richBody({
       description:

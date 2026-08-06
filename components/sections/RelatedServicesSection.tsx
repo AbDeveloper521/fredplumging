@@ -9,8 +9,9 @@ interface RelatedServicesSectionProps {
   section: RelatedData;
   /** Full resolved service list — cards are picked from it by slug. */
   services: Service[];
-  /** Slug of the page being rendered, so it never links to itself. */
-  currentSlug: string;
+  /** Slug of the page being rendered, so it never links to itself. Absent
+   * on non-service pages, where no card can be a self-link. */
+  currentSlug?: string;
   id: string;
 }
 

@@ -1,5 +1,5 @@
 import type { CmsPhoto, RichBody } from "./services";
-import type { ServiceSection } from "./serviceSections";
+import type { LibrarySection } from "./sectionLibrary";
 
 /**
  * As of Sanity phase 3 these constants are the FALLBACK: read via
@@ -23,7 +23,7 @@ export interface Industry {
    * Optional ordered section stack from the shared section library.
    * When present the detail page renders these instead of `body`.
    */
-  sections?: ServiceSection[];
+  sections?: LibrarySection[];
   /** Optional per-page SEO overrides. */
   seoTitle?: string;
   seoDescription?: string;

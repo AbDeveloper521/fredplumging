@@ -5,7 +5,7 @@ import {
   type DynamicFetchOptions,
 } from "@/sanity/lib/live";
 import { logEmpty, logFallback } from "@/sanity/lib/fallbackLog";
-import { toCitySections } from "@/sanity/lib/citySections";
+import { toLibrarySections } from "@/sanity/lib/sectionLibrary";
 import { CITY_PAGE_QUERY } from "@/sanity/queries";
 import type { CITY_PAGE_QUERY_RESULT } from "@/sanity.types";
 import { cities, cityHref, type CityPageContent } from "@/data/cities";
@@ -91,7 +91,7 @@ export async function getCityPage(
     return null;
   }
 
-  const sections = toCitySections(result.sections, `cityPage "${slug}"`);
+  const sections = toLibrarySections(result.sections, `cityPage "${slug}"`);
   if (!sections) {
     const allHidden =
       result.sections.length > 0 &&

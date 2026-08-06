@@ -2,6 +2,7 @@ import { defineArrayMember, defineField, defineType } from "sanity";
 import type { NavIconName } from "@/data/navigation";
 import { defaultHomeSections } from "@/data/homePage";
 import { imageWithAlt } from "./fields";
+import { sectionsField } from "./sectionLibrary";
 
 /**
  * The homepage as an orderable section stack — same architecture as the
@@ -12,8 +13,8 @@ import { imageWithAlt } from "./fields";
  * `finalCta` are already taken by the service-section library.
  *
  * TypeScript twins live in `data/homePage.ts`; mapping in
- * `sanity/lib/homeSections.ts`; rendering in
- * `components/sections/HomeSectionRenderer.tsx`.
+ * `sanity/lib/sectionLibrary.ts`; rendering in
+ * `components/sections/SectionRenderer.tsx`.
  *
  * Collection-driven bands (trust bar, services, property types,
  * testimonials, FAQ, and the compliance logo strip) only carry their heading
@@ -197,7 +198,7 @@ function sectionPreview(bandTitle: string) {
 
 export const homeHero = defineType({
   name: "homeHero",
-  title: "Top banner (hero)",
+  title: "Homepage banner (split headline)",
   type: "object",
   description:
     "The dark banner at the top: headline, intro, trust strip. Buttons, phone number, and the years figure come from Site Settings.",
@@ -244,7 +245,7 @@ export const homeHero = defineType({
   preview: {
     select: { heading: "headingBefore", hidden: "hidden" },
     prepare: ({ heading, hidden }) => ({
-      title: `${hidden ? "🚫 " : ""}Top banner (hero)`,
+      title: `${hidden ? "🚫 " : ""}Homepage banner (split headline)`,
       subtitle: hidden ? "HIDDEN — not shown on the site" : heading,
     }),
   },
@@ -275,7 +276,7 @@ export const homeTrustBar = defineType({
 
 export const homeAbout = defineType({
   name: "homeAbout",
-  title: "About band",
+  title: "About band (collage + metrics)",
   type: "object",
   description:
     "Photo collage left, company story right, metrics row underneath. The red badge's year and the years metric come from Site Settings.",
@@ -345,7 +346,7 @@ export const homeAbout = defineType({
     photoSubjectField("secondaryPhotoSubject", "What the small photo should eventually show."),
     hiddenField(),
   ],
-  preview: sectionPreview("About band"),
+  preview: sectionPreview("About band (collage + metrics)"),
 });
 
 export const homeServices = defineType({
@@ -473,7 +474,7 @@ export const homeCompliance = defineType({
 
 export const homeTestimonials = defineType({
   name: "homeTestimonials",
-  title: "Client reviews",
+  title: "Client reviews (simple)",
   type: "object",
   description:
     "Shows reviews from the site-wide Testimonials collection — edit the reviews there, not here.",
@@ -481,7 +482,7 @@ export const homeTestimonials = defineType({
     optionalString("heading", "Heading", "e.g. “Trusted by Property Managers Across DFW”. Leave empty for the default."),
     hiddenField(),
   ],
-  preview: sectionPreview("Client reviews"),
+  preview: sectionPreview("Client reviews (simple)"),
 });
 
 export const homeCaseStudy = defineType({
@@ -542,7 +543,7 @@ export const homeCaseStudy = defineType({
 
 export const homeServiceArea = defineType({
   name: "homeServiceArea",
-  title: "Service area",
+  title: "Service area (map graphic)",
   type: "object",
   description:
     "Where we work. The city chips and the map graphic come from Site Settings and the design — only the copy lives here.",
@@ -558,12 +559,12 @@ export const homeServiceArea = defineType({
     ),
     hiddenField(),
   ],
-  preview: sectionPreview("Service area"),
+  preview: sectionPreview("Service area (map graphic)"),
 });
 
 export const homeFaq = defineType({
   name: "homeFaq",
-  title: "Questions & answers",
+  title: "Q&A (from the FAQs list)",
   type: "object",
   description:
     "The homepage FAQ accordion. The questions themselves are managed under FAQs — only the heading block lives here.",
@@ -572,7 +573,7 @@ export const homeFaq = defineType({
     optionalString("eyebrow", "Small label above the heading", "e.g. “Good to Know”."),
     hiddenField(),
   ],
-  preview: sectionPreview("Questions & answers"),
+  preview: sectionPreview("Q&A (from the FAQs list)"),
 });
 
 export const homeLocationMap = defineType({
@@ -595,7 +596,7 @@ export const homeLocationMap = defineType({
 
 export const homeFinalCta = defineType({
   name: "homeFinalCta",
-  title: "Closing call-to-action",
+  title: "Closing band (quote form)",
   type: "object",
   description:
     "The dark closing band with the quote form. Buttons and the phone number come from Site Settings.",
@@ -611,7 +612,7 @@ export const homeFinalCta = defineType({
     ),
     hiddenField(),
   ],
-  preview: sectionPreview("Closing call-to-action"),
+  preview: sectionPreview("Closing band (quote form)"),
 });
 
 export const homeSectionTypes = [
@@ -637,13 +638,10 @@ export const homePage = defineType({
   title: "Home Page",
   type: "document",
   fields: [
-    defineField({
-      name: "sections",
+    sectionsField({
       title: "Homepage sections",
       description:
-        "The homepage, top to bottom. Drag to reorder. The ⋮ menu on each section offers Duplicate and Remove; open a section and tick “Hide this section” to keep its content without showing it.",
-      type: "array",
-      of: homeSectionTypes.map((type) => ({ type: type.name })),
+        "The homepage, top to bottom — the same section library every page uses. Drag to reorder. The ⋮ menu on each section offers Duplicate and Remove; open a section and tick “Hide this section” to keep its content without showing it.",
     }),
   ],
   // The Studio document starts prefilled with the shipped stack, so the

@@ -1,4 +1,5 @@
 import type { CmsPhoto } from "./services";
+import type { LibrarySection } from "./sectionLibrary";
 import type {
   FinalCtaSection,
   IconCardSection,
@@ -72,8 +73,8 @@ export interface CityPageContent {
   city: string;
   /** URL slug under /areas-we-serve. */
   slug: string;
-  /** The page, top to bottom — hero through communities. */
-  sections: CitySection[];
+  /** The page, top to bottom — any library section, hero through communities. */
+  sections: LibrarySection[];
   /** Optional per-page SEO overrides. */
   seoTitle?: string;
   seoDescription?: string;
@@ -87,7 +88,7 @@ export function cityHref(slug: string): string {
 /** The hero intro paragraph — the metadata description fallback. */
 export function cityHeroIntro(content: CityPageContent): string | undefined {
   const hero = content.sections.find(
-    (section): section is Extract<CitySection, { _type: "serviceHero" }> =>
+    (section): section is Extract<LibrarySection, { _type: "serviceHero" }> =>
       section._type === "serviceHero",
   );
   return hero?.subheading;

@@ -1,16 +1,16 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getIndustries, getIndustryBySlug } from "@/sanity/lib/getIndustries";
-import { getServices } from "@/sanity/lib/getServices";
 import { getSite } from "@/sanity/lib/getSite";
 import { getTestimonials } from "@/sanity/lib/getTestimonials";
 import { getReviewSettings } from "@/sanity/lib/getReviewSettings";
 import { getTrustLogos } from "@/sanity/lib/getTrustLogos";
+import { getSectionData } from "@/sanity/lib/getSectionData";
 import { industryHref } from "@/data/industries";
 import { DEFAULT_PAGE_REVIEW_TAGS } from "@/data/googleReviews";
 import type { ServiceFaqSection } from "@/data/serviceSections";
 import { CmsDetailPage } from "@/components/layout/CmsDetailPage";
-import { ServiceSectionRenderer } from "@/components/sections/ServiceSectionRenderer";
+import { SectionRenderer } from "@/components/sections/SectionRenderer";
 import { TestimonialsSection } from "@/components/sections/TestimonialsSection";
 import { AssociationBadgeStrip } from "@/components/sections/AssociationBadgeStrip";
 import {
@@ -130,13 +130,7 @@ export default async function IndustryPage({
     );
   }
 
-  const [site, services, testimonials, profile, trustLogos] = await Promise.all([
-    getSite(),
-    getServices(),
-    getTestimonials(),
-    getReviewSettings(),
-    getTrustLogos(),
-  ]);
+  const data = await getSectionData();
 
   // FAQPage schema uses the exact strings the FAQ section renders.
   const faqSection = industry.sections.find(
@@ -147,18 +141,15 @@ export default async function IndustryPage({
     <>
       {structuredData}
       {faqSection && <FaqJsonLd faqs={faqSection.faqs} />}
-      <ServiceSectionRenderer
+      <SectionRenderer
         sections={industry.sections}
-        site={site}
+        data={data}
         currentSlug={industry.slug}
         breadcrumbs={breadcrumbs}
-        services={services}
-        testimonials={testimonials}
-        profile={profile}
       />
       {/* Association/certification badges close the content, matching the
           service pages. */}
-      <AssociationBadgeStrip logos={trustLogos} />
+      <AssociationBadgeStrip logos={data.trustLogos} />
     </>
   );
 }

@@ -42,7 +42,7 @@ function show(value: unknown): string {
 
 async function main() {
   // Imported after the server-only shim is installed.
-  const { toSectionsWithReport } = await import("../sanity/lib/sections");
+  const { toSectionsWithReport } = await import("../sanity/lib/sectionLibrary");
   const { SERVICE_BY_SLUG_QUERY, INDUSTRY_BY_SLUG_QUERY } = await import(
     "../sanity/queries"
   );

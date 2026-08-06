@@ -49,7 +49,8 @@
 import { getCliClient } from "sanity/cli";
 import { serviceSectionTypes } from "../sanity/schemas/serviceSections";
 import { citySectionTypes } from "../sanity/schemas/cityPage";
-import { cities, type CityPageContent, type CitySection } from "../data/cities";
+import { cities, type CityPageContent } from "../data/cities";
+import type { LibrarySection } from "../data/sectionLibrary";
 
 type Raw = Record<string, unknown>;
 
@@ -116,7 +117,7 @@ function assetRefs(value: unknown, out: string[] = []): string[] {
 }
 
 /** Sanity-shapes a fallback section: strip undefineds, add child _types. */
-function toSanitySection(section: CitySection): Raw {
+function toSanitySection(section: LibrarySection): Raw {
   const out = JSON.parse(JSON.stringify(section)) as Raw;
   delete out.hidden;
   for (const [field, childType] of Object.entries(CHILD_TYPE)) {
@@ -132,15 +133,15 @@ function toSanitySection(section: CitySection): Raw {
 }
 
 /** The fallback stack's section of a type by occurrence (0-based). */
-function fallbackSection<T extends CitySection["_type"]>(
+function fallbackSection<T extends LibrarySection["_type"]>(
   fb: CityPageContent,
   type: T,
   occurrence = 0,
-): Extract<CitySection, { _type: T }> {
+): Extract<LibrarySection, { _type: T }> {
   const matches = fb.sections.filter((section) => section._type === type);
   const section = matches[occurrence] ?? matches[0];
   if (!section) throw new Error(`fallback stack for "${fb.slug}" has no ${type} #${occurrence}`);
-  return section as Extract<CitySection, { _type: T }>;
+  return section as Extract<LibrarySection, { _type: T }>;
 }
 
 interface BuiltSection {

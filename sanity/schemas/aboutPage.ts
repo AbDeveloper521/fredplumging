@@ -2,6 +2,7 @@ import { defineArrayMember, defineField, defineType } from "sanity";
 import type { NavIconName } from "@/data/navigation";
 import { defaultAboutSections } from "@/data/aboutPage";
 import { imageWithAlt } from "./fields";
+import { sectionsField } from "./sectionLibrary";
 
 /**
  * The About page as an orderable section stack — same architecture as the
@@ -12,8 +13,8 @@ import { imageWithAlt } from "./fields";
  * reviews, map band, closing CTA) — reused, not forked.
  *
  * TypeScript twins live in `data/aboutPage.ts`; mapping in
- * `sanity/lib/aboutSections.ts`; rendering in
- * `components/sections/AboutSectionRenderer.tsx`.
+ * `sanity/lib/sectionLibrary.ts`; rendering in
+ * `components/sections/SectionRenderer.tsx`.
  *
  * Derived, never stored: the hero credential chips (licence, years, service
  * area) and the story badge's "Since {year}" title come from Site Settings.
@@ -98,7 +99,7 @@ function sectionPreview(bandTitle: string) {
 
 export const aboutHero = defineType({
   name: "aboutHero",
-  title: "Top banner (hero)",
+  title: "About banner (hero)",
   type: "object",
   description:
     "The dark banner at the top: small label, big heading, intro paragraphs. The credential chips (licence, years, service area) come from Site Settings.",
@@ -129,7 +130,7 @@ export const aboutHero = defineType({
     }),
     hiddenField(),
   ],
-  preview: sectionPreview("Top banner (hero)"),
+  preview: sectionPreview("About banner (hero)"),
 });
 
 export const aboutStory = defineType({
@@ -330,35 +331,15 @@ export const aboutSectionTypes = [
   pageLinks,
 ];
 
-/**
- * Shared library types the About stack also accepts — the same object types
- * the homepage/service stacks use, so a section edited here behaves
- * identically everywhere. (The service-page-only types — service hero, FAQ
- * with its FAQPage schema wiring, related services, property types — stay
- * out deliberately.)
- */
-const SHARED_ABOUT_SECTION_TYPES = [
-  "iconCardSection",
-  "homeTestimonials",
-  "homeLocationMap",
-  "homeFinalCta",
-];
-
 export const aboutPage = defineType({
   name: "aboutPage",
   title: "About Page",
   type: "document",
   fields: [
-    defineField({
-      name: "sections",
+    sectionsField({
       title: "About-page sections",
       description:
-        "The About page, top to bottom. Drag to reorder. The ⋮ menu on each section offers Duplicate and Remove; open a section and tick “Hide this section” to keep its content without showing it.",
-      type: "array",
-      of: [
-        ...aboutSectionTypes.map((type) => ({ type: type.name })),
-        ...SHARED_ABOUT_SECTION_TYPES.map((type) => ({ type })),
-      ],
+        "The About page, top to bottom — the same section library every page uses. Drag to reorder. The ⋮ menu on each section offers Duplicate and Remove; open a section and tick “Hide this section” to keep its content without showing it.",
     }),
   ],
   // The Studio document starts prefilled with the shipped stack, so the

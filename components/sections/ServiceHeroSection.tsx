@@ -16,7 +16,8 @@ export interface Breadcrumb {
 interface ServiceHeroSectionProps {
   section: HeroData;
   site: SiteContent;
-  /** Trail ending at the current page (last item is not linked). */
+  /** Trail ending at the current page (last item is not linked). May be
+   * empty on pages without a breadcrumb trail — the nav row is skipped. */
   breadcrumbs: Breadcrumb[];
   id: string;
 }
@@ -118,6 +119,7 @@ export function ServiceHeroSection({
             "[text-shadow:0_1px_2px_rgb(7_17_31/0.6),0_2px_18px_rgb(7_17_31/0.45)]",
         )}
       >
+        {breadcrumbs.length > 0 && (
         <Rise>
           <nav aria-label="Breadcrumb">
             <ol className="flex flex-wrap items-center justify-center gap-1.5 text-[13px] font-semibold text-grey-300">
@@ -149,6 +151,7 @@ export function ServiceHeroSection({
             </ol>
           </nav>
         </Rise>
+        )}
 
         {section.eyebrow && (
           <Rise delay={0.06}>

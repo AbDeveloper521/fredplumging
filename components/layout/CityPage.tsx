@@ -1,20 +1,14 @@
-import { CitySectionRenderer } from "@/components/sections/CitySectionRenderer";
+import { SectionRenderer } from "@/components/sections/SectionRenderer";
 import { AssociationBadgeStrip } from "@/components/sections/AssociationBadgeStrip";
 import { LocationMapSection } from "@/components/sections/LocationMapSection";
 import { FaqJsonLd } from "@/components/seo/JsonLd";
 import { cityHref, type CityPageContent } from "@/data/cities";
 import type { ServiceFaqSection } from "@/data/serviceSections";
-import type { TrustLogo } from "@/data/navigation";
-import type { GoogleReviewProfile } from "@/data/googleReviews";
-import type { Testimonial } from "@/data/testimonials";
-import type { SiteContent } from "@/data/site";
+import type { SectionData } from "@/sanity/lib/getSectionData";
 
 interface CityPageProps {
   content: CityPageContent;
-  site: SiteContent;
-  testimonials: Testimonial[];
-  profile: GoogleReviewProfile;
-  trustLogos: TrustLogo[];
+  data: SectionData;
 }
 
 /**
@@ -25,13 +19,7 @@ interface CityPageProps {
  * a published `cityPage` document) plus a thin route file that calls
  * `getCityPage(slug)` — no new components.
  */
-export function CityPage({
-  content,
-  site,
-  testimonials,
-  profile,
-  trustLogos,
-}: CityPageProps) {
+export function CityPage({ content, data }: CityPageProps) {
   // FAQPage schema uses the exact strings the FAQ section renders — parity
   // with the service pages if the owner adds a Q&A band in Studio.
   const faqSection = content.sections.find(
@@ -41,21 +29,20 @@ export function CityPage({
   return (
     <>
       {faqSection && <FaqJsonLd faqs={faqSection.faqs} />}
-      <CitySectionRenderer
+      <SectionRenderer
         sections={content.sections}
-        site={site}
+        data={data}
+        idPrefix="city"
         breadcrumbs={[
           { label: "Home", href: "/" },
           { label: "Areas We Serve", href: "/areas-we-serve" },
           { label: content.city, href: cityHref(content.slug) },
         ]}
-        testimonials={testimonials}
-        profile={profile}
       />
       {/* Association/certification badges close the content on every city
           page, per the owner's reference — then the map band. */}
-      <AssociationBadgeStrip logos={trustLogos} />
-      <LocationMapSection site={site} directionsUrl={profile.reviewsUrl} />
+      <AssociationBadgeStrip logos={data.trustLogos} />
+      <LocationMapSection site={data.site} directionsUrl={data.profile.reviewsUrl} />
     </>
   );
 }

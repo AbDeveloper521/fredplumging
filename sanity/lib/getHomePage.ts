@@ -5,10 +5,11 @@ import {
   type DynamicFetchOptions,
 } from "@/sanity/lib/live";
 import { logFallback } from "@/sanity/lib/fallbackLog";
-import { toHomeSections } from "@/sanity/lib/homeSections";
+import { toLibrarySections } from "@/sanity/lib/sectionLibrary";
 import { HOME_PAGE_QUERY } from "@/sanity/queries";
 import type { HOME_PAGE_QUERY_RESULT } from "@/sanity.types";
-import { defaultHomeSections, type HomeSection } from "@/data/homePage";
+import { defaultHomeSections } from "@/data/homePage";
+import type { LibrarySection } from "@/data/sectionLibrary";
 
 /** Cache tag: the document `_type`, matching how /api/revalidate resolves. */
 export const HOME_PAGE_TAG = "homePage";
@@ -24,7 +25,7 @@ export const HOME_PAGE_TAG = "homePage";
  */
 export async function getHomePage(
   options: DynamicFetchOptions = PUBLISHED_FETCH_OPTIONS,
-): Promise<HomeSection[]> {
+): Promise<LibrarySection[]> {
   let result: HOME_PAGE_QUERY_RESULT;
   try {
     result = await fetchSanityCached(HOME_PAGE_QUERY, {}, HOME_PAGE_TAG, options);
@@ -58,7 +59,7 @@ export async function getHomePage(
   // An empty mapping result means every published item is hidden or invalid.
   // All-hidden is a deliberate owner choice; render nothing rather than
   // resurrecting the default page over their intent.
-  const sections = toHomeSections(result.sections);
+  const sections = toLibrarySections(result.sections, "homePage");
   if (!sections) {
     const allHidden =
       result.sections.length > 0 &&

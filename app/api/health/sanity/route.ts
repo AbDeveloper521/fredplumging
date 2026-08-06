@@ -2,7 +2,7 @@ import { timingSafeEqual } from "node:crypto";
 import { type NextRequest, NextResponse } from "next/server";
 import { client } from "@/sanity/client";
 import { resolvePhoto } from "@/sanity/lib/image";
-import { toSectionsWithReport } from "@/sanity/lib/sections";
+import { toSectionsWithReport } from "@/sanity/lib/sectionLibrary";
 import { apiVersion, dataset, projectId } from "@/sanity/env";
 
 /**

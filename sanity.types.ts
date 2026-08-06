@@ -1007,28 +1007,76 @@ export type Industry = {
   sections?: Array<
     | ({
         _key: string;
+      } & HomeHero)
+    | ({
+        _key: string;
       } & ServiceHero)
+    | ({
+        _key: string;
+      } & AboutHero)
+    | ({
+        _key: string;
+      } & PartnersHero)
+    | ({
+        _key: string;
+      } & CareersHero)
     | ({
         _key: string;
       } & ServiceAbout)
     | ({
         _key: string;
+      } & HomeAbout)
+    | ({
+        _key: string;
+      } & AboutStory)
+    | ({
+        _key: string;
+      } & AboutEvolution)
+    | ({
+        _key: string;
+      } & HomeEmergency)
+    | ({
+        _key: string;
+      } & HomeWhyChooseUs)
+    | ({
+        _key: string;
+      } & HomeCaseStudy)
+    | ({
+        _key: string;
+      } & HomeCompliance)
+    | ({
+        _key: string;
+      } & PartnerCredentials)
+    | ({
+        _key: string;
       } & WhatsIncluded)
-    | ({
-        _key: string;
-      } & SignsYouNeed)
-    | ({
-        _key: string;
-      } & ProcessSteps)
     | ({
         _key: string;
       } & ComparisonTable)
     | ({
         _key: string;
-      } & ServiceTrust)
+      } & ServiceArea)
     | ({
         _key: string;
-      } & ServiceTestimonials)
+      } & HomeServiceArea)
+    | ({
+        _key: string;
+      } & CityCommunities)
+    | ({
+        _key: string;
+      } & ProcessSteps)
+    | ({
+        _key: string;
+      } & HomeProcess)
+    | ({
+        _key: string;
+      } & HiringProcess)
+    | ({
+        _key: string;
+      } & CareerTraits)
+    | ({
+        _key: string;
+      } & ServiceFaq)
     | ({
         _key: string;
       } & PropertyTypes)
@@ -1037,19 +1085,64 @@ export type Industry = {
       } & IconCardSection)
     | ({
         _key: string;
-      } & ServiceFaq)
+      } & SignsYouNeed)
     | ({
         _key: string;
-      } & ServiceArea)
+      } & ServiceTrust)
     | ({
         _key: string;
-      } & TrustLogoStrip)
+      } & ValuesGrid)
+    | ({
+        _key: string;
+      } & CareerValues)
+    | ({
+        _key: string;
+      } & VendorOnboarding)
+    | ({
+        _key: string;
+      } & PageLinks)
     | ({
         _key: string;
       } & RelatedServices)
     | ({
         _key: string;
+      } & ServiceTestimonials)
+    | ({
+        _key: string;
+      } & HomeTestimonials)
+    | ({
+        _key: string;
+      } & HomeTrustBar)
+    | ({
+        _key: string;
+      } & HomeServices)
+    | ({
+        _key: string;
+      } & HomeIndustries)
+    | ({
+        _key: string;
+      } & HomeFaq)
+    | ({
+        _key: string;
+      } & JobOpenings)
+    | ({
+        _key: string;
+      } & PartnerPlatforms)
+    | ({
+        _key: string;
+      } & HomeLocationMap)
+    | ({
+        _key: string;
       } & FinalCta)
+    | ({
+        _key: string;
+      } & HomeFinalCta)
+    | ({
+        _key: string;
+      } & CareersCta)
+    | ({
+        _key: string;
+      } & TrustLogoStrip)
   >;
   body?: Array<
     | {
@@ -1094,28 +1187,76 @@ export type Service = {
   sections?: Array<
     | ({
         _key: string;
+      } & HomeHero)
+    | ({
+        _key: string;
       } & ServiceHero)
+    | ({
+        _key: string;
+      } & AboutHero)
+    | ({
+        _key: string;
+      } & PartnersHero)
+    | ({
+        _key: string;
+      } & CareersHero)
     | ({
         _key: string;
       } & ServiceAbout)
     | ({
         _key: string;
+      } & HomeAbout)
+    | ({
+        _key: string;
+      } & AboutStory)
+    | ({
+        _key: string;
+      } & AboutEvolution)
+    | ({
+        _key: string;
+      } & HomeEmergency)
+    | ({
+        _key: string;
+      } & HomeWhyChooseUs)
+    | ({
+        _key: string;
+      } & HomeCaseStudy)
+    | ({
+        _key: string;
+      } & HomeCompliance)
+    | ({
+        _key: string;
+      } & PartnerCredentials)
+    | ({
+        _key: string;
       } & WhatsIncluded)
-    | ({
-        _key: string;
-      } & SignsYouNeed)
-    | ({
-        _key: string;
-      } & ProcessSteps)
     | ({
         _key: string;
       } & ComparisonTable)
     | ({
         _key: string;
-      } & ServiceTrust)
+      } & ServiceArea)
     | ({
         _key: string;
-      } & ServiceTestimonials)
+      } & HomeServiceArea)
+    | ({
+        _key: string;
+      } & CityCommunities)
+    | ({
+        _key: string;
+      } & ProcessSteps)
+    | ({
+        _key: string;
+      } & HomeProcess)
+    | ({
+        _key: string;
+      } & HiringProcess)
+    | ({
+        _key: string;
+      } & CareerTraits)
+    | ({
+        _key: string;
+      } & ServiceFaq)
     | ({
         _key: string;
       } & PropertyTypes)
@@ -1124,19 +1265,64 @@ export type Service = {
       } & IconCardSection)
     | ({
         _key: string;
-      } & ServiceFaq)
+      } & SignsYouNeed)
     | ({
         _key: string;
-      } & ServiceArea)
+      } & ServiceTrust)
     | ({
         _key: string;
-      } & TrustLogoStrip)
+      } & ValuesGrid)
+    | ({
+        _key: string;
+      } & CareerValues)
+    | ({
+        _key: string;
+      } & VendorOnboarding)
+    | ({
+        _key: string;
+      } & PageLinks)
     | ({
         _key: string;
       } & RelatedServices)
     | ({
         _key: string;
+      } & ServiceTestimonials)
+    | ({
+        _key: string;
+      } & HomeTestimonials)
+    | ({
+        _key: string;
+      } & HomeTrustBar)
+    | ({
+        _key: string;
+      } & HomeServices)
+    | ({
+        _key: string;
+      } & HomeIndustries)
+    | ({
+        _key: string;
+      } & HomeFaq)
+    | ({
+        _key: string;
+      } & JobOpenings)
+    | ({
+        _key: string;
+      } & PartnerPlatforms)
+    | ({
+        _key: string;
+      } & HomeLocationMap)
+    | ({
+        _key: string;
       } & FinalCta)
+    | ({
+        _key: string;
+      } & HomeFinalCta)
+    | ({
+        _key: string;
+      } & CareersCta)
+    | ({
+        _key: string;
+      } & TrustLogoStrip)
   >;
   body?: Array<
     | {
@@ -1306,28 +1492,142 @@ export type CityPage = {
   sections?: Array<
     | ({
         _key: string;
+      } & HomeHero)
+    | ({
+        _key: string;
       } & ServiceHero)
     | ({
         _key: string;
-      } & PropertyTypes)
+      } & AboutHero)
+    | ({
+        _key: string;
+      } & PartnersHero)
+    | ({
+        _key: string;
+      } & CareersHero)
     | ({
         _key: string;
       } & ServiceAbout)
     | ({
         _key: string;
-      } & ServiceTestimonials)
+      } & HomeAbout)
     | ({
         _key: string;
-      } & IconCardSection)
+      } & AboutStory)
+    | ({
+        _key: string;
+      } & AboutEvolution)
+    | ({
+        _key: string;
+      } & HomeEmergency)
+    | ({
+        _key: string;
+      } & HomeWhyChooseUs)
+    | ({
+        _key: string;
+      } & HomeCaseStudy)
+    | ({
+        _key: string;
+      } & HomeCompliance)
+    | ({
+        _key: string;
+      } & PartnerCredentials)
+    | ({
+        _key: string;
+      } & WhatsIncluded)
+    | ({
+        _key: string;
+      } & ComparisonTable)
+    | ({
+        _key: string;
+      } & ServiceArea)
+    | ({
+        _key: string;
+      } & HomeServiceArea)
+    | ({
+        _key: string;
+      } & CityCommunities)
+    | ({
+        _key: string;
+      } & ProcessSteps)
+    | ({
+        _key: string;
+      } & HomeProcess)
+    | ({
+        _key: string;
+      } & HiringProcess)
+    | ({
+        _key: string;
+      } & CareerTraits)
     | ({
         _key: string;
       } & ServiceFaq)
     | ({
         _key: string;
+      } & PropertyTypes)
+    | ({
+        _key: string;
+      } & IconCardSection)
+    | ({
+        _key: string;
+      } & SignsYouNeed)
+    | ({
+        _key: string;
+      } & ServiceTrust)
+    | ({
+        _key: string;
+      } & ValuesGrid)
+    | ({
+        _key: string;
+      } & CareerValues)
+    | ({
+        _key: string;
+      } & VendorOnboarding)
+    | ({
+        _key: string;
+      } & PageLinks)
+    | ({
+        _key: string;
+      } & RelatedServices)
+    | ({
+        _key: string;
+      } & ServiceTestimonials)
+    | ({
+        _key: string;
+      } & HomeTestimonials)
+    | ({
+        _key: string;
+      } & HomeTrustBar)
+    | ({
+        _key: string;
+      } & HomeServices)
+    | ({
+        _key: string;
+      } & HomeIndustries)
+    | ({
+        _key: string;
+      } & HomeFaq)
+    | ({
+        _key: string;
+      } & JobOpenings)
+    | ({
+        _key: string;
+      } & PartnerPlatforms)
+    | ({
+        _key: string;
+      } & HomeLocationMap)
+    | ({
+        _key: string;
       } & FinalCta)
     | ({
         _key: string;
-      } & CityCommunities)
+      } & HomeFinalCta)
+    | ({
+        _key: string;
+      } & CareersCta)
+    | ({
+        _key: string;
+      } & TrustLogoStrip)
   >;
   seoTitle?: string;
   seoDescription?: string;
@@ -1368,34 +1668,142 @@ export type CareersPage = {
   sections?: Array<
     | ({
         _key: string;
+      } & HomeHero)
+    | ({
+        _key: string;
+      } & ServiceHero)
+    | ({
+        _key: string;
+      } & AboutHero)
+    | ({
+        _key: string;
+      } & PartnersHero)
+    | ({
+        _key: string;
       } & CareersHero)
     | ({
         _key: string;
-      } & CareerValues)
+      } & ServiceAbout)
     | ({
         _key: string;
-      } & JobOpenings)
+      } & HomeAbout)
     | ({
         _key: string;
-      } & CareerTraits)
+      } & AboutStory)
+    | ({
+        _key: string;
+      } & AboutEvolution)
+    | ({
+        _key: string;
+      } & HomeEmergency)
+    | ({
+        _key: string;
+      } & HomeWhyChooseUs)
+    | ({
+        _key: string;
+      } & HomeCaseStudy)
+    | ({
+        _key: string;
+      } & HomeCompliance)
+    | ({
+        _key: string;
+      } & PartnerCredentials)
+    | ({
+        _key: string;
+      } & WhatsIncluded)
+    | ({
+        _key: string;
+      } & ComparisonTable)
+    | ({
+        _key: string;
+      } & ServiceArea)
+    | ({
+        _key: string;
+      } & HomeServiceArea)
+    | ({
+        _key: string;
+      } & CityCommunities)
+    | ({
+        _key: string;
+      } & ProcessSteps)
+    | ({
+        _key: string;
+      } & HomeProcess)
     | ({
         _key: string;
       } & HiringProcess)
     | ({
         _key: string;
-      } & CareersCta)
+      } & CareerTraits)
+    | ({
+        _key: string;
+      } & ServiceFaq)
+    | ({
+        _key: string;
+      } & PropertyTypes)
     | ({
         _key: string;
       } & IconCardSection)
     | ({
         _key: string;
+      } & SignsYouNeed)
+    | ({
+        _key: string;
+      } & ServiceTrust)
+    | ({
+        _key: string;
+      } & ValuesGrid)
+    | ({
+        _key: string;
+      } & CareerValues)
+    | ({
+        _key: string;
+      } & VendorOnboarding)
+    | ({
+        _key: string;
+      } & PageLinks)
+    | ({
+        _key: string;
+      } & RelatedServices)
+    | ({
+        _key: string;
       } & ServiceTestimonials)
+    | ({
+        _key: string;
+      } & HomeTestimonials)
+    | ({
+        _key: string;
+      } & HomeTrustBar)
+    | ({
+        _key: string;
+      } & HomeServices)
+    | ({
+        _key: string;
+      } & HomeIndustries)
+    | ({
+        _key: string;
+      } & HomeFaq)
+    | ({
+        _key: string;
+      } & JobOpenings)
+    | ({
+        _key: string;
+      } & PartnerPlatforms)
     | ({
         _key: string;
       } & HomeLocationMap)
     | ({
         _key: string;
+      } & FinalCta)
+    | ({
+        _key: string;
       } & HomeFinalCta)
+    | ({
+        _key: string;
+      } & CareersCta)
+    | ({
+        _key: string;
+      } & TrustLogoStrip)
   >;
 };
 
@@ -1408,31 +1816,142 @@ export type PartnersPage = {
   sections?: Array<
     | ({
         _key: string;
+      } & HomeHero)
+    | ({
+        _key: string;
+      } & ServiceHero)
+    | ({
+        _key: string;
+      } & AboutHero)
+    | ({
+        _key: string;
       } & PartnersHero)
     | ({
         _key: string;
-      } & VendorOnboarding)
+      } & CareersHero)
     | ({
         _key: string;
-      } & PartnerPlatforms)
+      } & ServiceAbout)
+    | ({
+        _key: string;
+      } & HomeAbout)
+    | ({
+        _key: string;
+      } & AboutStory)
+    | ({
+        _key: string;
+      } & AboutEvolution)
+    | ({
+        _key: string;
+      } & HomeEmergency)
+    | ({
+        _key: string;
+      } & HomeWhyChooseUs)
+    | ({
+        _key: string;
+      } & HomeCaseStudy)
+    | ({
+        _key: string;
+      } & HomeCompliance)
     | ({
         _key: string;
       } & PartnerCredentials)
     | ({
         _key: string;
-      } & ServiceTestimonials)
+      } & WhatsIncluded)
+    | ({
+        _key: string;
+      } & ComparisonTable)
+    | ({
+        _key: string;
+      } & ServiceArea)
+    | ({
+        _key: string;
+      } & HomeServiceArea)
+    | ({
+        _key: string;
+      } & CityCommunities)
+    | ({
+        _key: string;
+      } & ProcessSteps)
+    | ({
+        _key: string;
+      } & HomeProcess)
+    | ({
+        _key: string;
+      } & HiringProcess)
+    | ({
+        _key: string;
+      } & CareerTraits)
     | ({
         _key: string;
       } & ServiceFaq)
     | ({
         _key: string;
+      } & PropertyTypes)
+    | ({
+        _key: string;
       } & IconCardSection)
+    | ({
+        _key: string;
+      } & SignsYouNeed)
+    | ({
+        _key: string;
+      } & ServiceTrust)
+    | ({
+        _key: string;
+      } & ValuesGrid)
+    | ({
+        _key: string;
+      } & CareerValues)
+    | ({
+        _key: string;
+      } & VendorOnboarding)
+    | ({
+        _key: string;
+      } & PageLinks)
+    | ({
+        _key: string;
+      } & RelatedServices)
+    | ({
+        _key: string;
+      } & ServiceTestimonials)
+    | ({
+        _key: string;
+      } & HomeTestimonials)
+    | ({
+        _key: string;
+      } & HomeTrustBar)
+    | ({
+        _key: string;
+      } & HomeServices)
+    | ({
+        _key: string;
+      } & HomeIndustries)
+    | ({
+        _key: string;
+      } & HomeFaq)
+    | ({
+        _key: string;
+      } & JobOpenings)
+    | ({
+        _key: string;
+      } & PartnerPlatforms)
     | ({
         _key: string;
       } & HomeLocationMap)
     | ({
         _key: string;
+      } & FinalCta)
+    | ({
+        _key: string;
       } & HomeFinalCta)
+    | ({
+        _key: string;
+      } & CareersCta)
+    | ({
+        _key: string;
+      } & TrustLogoStrip)
   >;
 };
 
@@ -1445,7 +1964,25 @@ export type AboutPage = {
   sections?: Array<
     | ({
         _key: string;
+      } & HomeHero)
+    | ({
+        _key: string;
+      } & ServiceHero)
+    | ({
+        _key: string;
       } & AboutHero)
+    | ({
+        _key: string;
+      } & PartnersHero)
+    | ({
+        _key: string;
+      } & CareersHero)
+    | ({
+        _key: string;
+      } & ServiceAbout)
+    | ({
+        _key: string;
+      } & HomeAbout)
     | ({
         _key: string;
       } & AboutStory)
@@ -1454,22 +1991,115 @@ export type AboutPage = {
       } & AboutEvolution)
     | ({
         _key: string;
-      } & ValuesGrid)
+      } & HomeEmergency)
     | ({
         _key: string;
-      } & PageLinks)
+      } & HomeWhyChooseUs)
+    | ({
+        _key: string;
+      } & HomeCaseStudy)
+    | ({
+        _key: string;
+      } & HomeCompliance)
+    | ({
+        _key: string;
+      } & PartnerCredentials)
+    | ({
+        _key: string;
+      } & WhatsIncluded)
+    | ({
+        _key: string;
+      } & ComparisonTable)
+    | ({
+        _key: string;
+      } & ServiceArea)
+    | ({
+        _key: string;
+      } & HomeServiceArea)
+    | ({
+        _key: string;
+      } & CityCommunities)
+    | ({
+        _key: string;
+      } & ProcessSteps)
+    | ({
+        _key: string;
+      } & HomeProcess)
+    | ({
+        _key: string;
+      } & HiringProcess)
+    | ({
+        _key: string;
+      } & CareerTraits)
+    | ({
+        _key: string;
+      } & ServiceFaq)
+    | ({
+        _key: string;
+      } & PropertyTypes)
     | ({
         _key: string;
       } & IconCardSection)
     | ({
         _key: string;
+      } & SignsYouNeed)
+    | ({
+        _key: string;
+      } & ServiceTrust)
+    | ({
+        _key: string;
+      } & ValuesGrid)
+    | ({
+        _key: string;
+      } & CareerValues)
+    | ({
+        _key: string;
+      } & VendorOnboarding)
+    | ({
+        _key: string;
+      } & PageLinks)
+    | ({
+        _key: string;
+      } & RelatedServices)
+    | ({
+        _key: string;
+      } & ServiceTestimonials)
+    | ({
+        _key: string;
       } & HomeTestimonials)
+    | ({
+        _key: string;
+      } & HomeTrustBar)
+    | ({
+        _key: string;
+      } & HomeServices)
+    | ({
+        _key: string;
+      } & HomeIndustries)
+    | ({
+        _key: string;
+      } & HomeFaq)
+    | ({
+        _key: string;
+      } & JobOpenings)
+    | ({
+        _key: string;
+      } & PartnerPlatforms)
     | ({
         _key: string;
       } & HomeLocationMap)
     | ({
         _key: string;
+      } & FinalCta)
+    | ({
+        _key: string;
       } & HomeFinalCta)
+    | ({
+        _key: string;
+      } & CareersCta)
+    | ({
+        _key: string;
+      } & TrustLogoStrip)
   >;
 };
 
@@ -1485,46 +2115,139 @@ export type HomePage = {
       } & HomeHero)
     | ({
         _key: string;
-      } & HomeTrustBar)
+      } & ServiceHero)
+    | ({
+        _key: string;
+      } & AboutHero)
+    | ({
+        _key: string;
+      } & PartnersHero)
+    | ({
+        _key: string;
+      } & CareersHero)
+    | ({
+        _key: string;
+      } & ServiceAbout)
     | ({
         _key: string;
       } & HomeAbout)
     | ({
         _key: string;
-      } & HomeServices)
+      } & AboutStory)
+    | ({
+        _key: string;
+      } & AboutEvolution)
     | ({
         _key: string;
       } & HomeEmergency)
     | ({
         _key: string;
-      } & HomeIndustries)
-    | ({
-        _key: string;
       } & HomeWhyChooseUs)
-    | ({
-        _key: string;
-      } & HomeProcess)
-    | ({
-        _key: string;
-      } & HomeCompliance)
-    | ({
-        _key: string;
-      } & HomeTestimonials)
     | ({
         _key: string;
       } & HomeCaseStudy)
     | ({
         _key: string;
+      } & HomeCompliance)
+    | ({
+        _key: string;
+      } & PartnerCredentials)
+    | ({
+        _key: string;
+      } & WhatsIncluded)
+    | ({
+        _key: string;
+      } & ComparisonTable)
+    | ({
+        _key: string;
+      } & ServiceArea)
+    | ({
+        _key: string;
       } & HomeServiceArea)
+    | ({
+        _key: string;
+      } & CityCommunities)
+    | ({
+        _key: string;
+      } & ProcessSteps)
+    | ({
+        _key: string;
+      } & HomeProcess)
+    | ({
+        _key: string;
+      } & HiringProcess)
+    | ({
+        _key: string;
+      } & CareerTraits)
+    | ({
+        _key: string;
+      } & ServiceFaq)
+    | ({
+        _key: string;
+      } & PropertyTypes)
+    | ({
+        _key: string;
+      } & IconCardSection)
+    | ({
+        _key: string;
+      } & SignsYouNeed)
+    | ({
+        _key: string;
+      } & ServiceTrust)
+    | ({
+        _key: string;
+      } & ValuesGrid)
+    | ({
+        _key: string;
+      } & CareerValues)
+    | ({
+        _key: string;
+      } & VendorOnboarding)
+    | ({
+        _key: string;
+      } & PageLinks)
+    | ({
+        _key: string;
+      } & RelatedServices)
+    | ({
+        _key: string;
+      } & ServiceTestimonials)
+    | ({
+        _key: string;
+      } & HomeTestimonials)
+    | ({
+        _key: string;
+      } & HomeTrustBar)
+    | ({
+        _key: string;
+      } & HomeServices)
+    | ({
+        _key: string;
+      } & HomeIndustries)
     | ({
         _key: string;
       } & HomeFaq)
     | ({
         _key: string;
+      } & JobOpenings)
+    | ({
+        _key: string;
+      } & PartnerPlatforms)
+    | ({
+        _key: string;
       } & HomeLocationMap)
     | ({
         _key: string;
+      } & FinalCta)
+    | ({
+        _key: string;
       } & HomeFinalCta)
+    | ({
+        _key: string;
+      } & CareersCta)
+    | ({
+        _key: string;
+      } & TrustLogoStrip)
   >;
 };
 
@@ -1933,7 +2656,7 @@ export type SERVICES_QUERY_RESULT = Array<{
 
 // Source: sanity/queries.ts
 // Variable: SERVICE_BY_SLUG_QUERY
-// Query: *[_type == "service" && slug.current == $slug][0]{    title,    "slug": slug.current,    shortDescription,    icon,    featured,    photo{ asset, hotspot, crop, alt },    body,    sections[]{      ...,      photo{ asset, hotspot, crop, alt, frameRatio },      photoPrimary{ asset, hotspot, crop, alt, frameRatio }    },    seoTitle,    seoDescription  }
+// Query: *[_type == "service" && slug.current == $slug][0]{    title,    "slug": slug.current,    shortDescription,    icon,    featured,    photo{ asset, hotspot, crop, alt },    body,    sections[]{    ...,    photo{ asset, hotspot, crop, alt, frameRatio },    photoPrimary{ asset, hotspot, crop, alt, frameRatio },    photoSecondary{ asset, hotspot, crop, alt },    primaryPhoto{ asset, hotspot, crop, alt, frameRatio },    secondaryPhoto{ asset, hotspot, crop, alt }  },    seoTitle,    seoDescription  }
 export type SERVICE_BY_SLUG_QUERY_RESULT = {
   title: string | null;
   slug: string | null;
@@ -1986,141 +2709,52 @@ export type SERVICE_BY_SLUG_QUERY_RESULT = {
   sections: Array<
     | {
         _key: string;
-        _type: "comparisonTable";
+        _type: "aboutEvolution";
         heading?: string;
-        intro?: string;
-        columnLabels?: Array<string>;
-        rows?: Array<{
-          situation?: string;
-          recommendation?: string;
-          why?: string;
-          _type: "row";
-          _key: string;
-        }>;
-        footnote?: string;
-        background?: "dark" | "white";
-        photo: null;
-        photoPrimary: null;
-      }
-    | {
-        _key: string;
-        _type: "finalCta";
-        heading?: string;
-        body?: string;
-        secondaryCtaLabel?: string;
-        secondaryCtaHref?: string;
-        phoneCtaLabel?: string;
-        showAvailabilityDot?: boolean;
-        photo: null;
-        photoPrimary: null;
-      }
-    | {
-        _key: string;
-        _type: "iconCardSection";
         eyebrow?: string;
-        heading?: string;
-        background?: "dark" | "default";
+        paragraphs?: Array<string>;
         photo: {
           asset: SanityImageAssetReference | null;
           hotspot: SanityImageHotspot | null;
           crop: SanityImageCrop | null;
           alt: string | null;
-          frameRatio: null;
+          frameRatio:
+            | "default"
+            | "landscape"
+            | "original"
+            | "portrait"
+            | "square"
+            | "wide"
+            | null;
         } | null;
-        defaultCardColor?: "navy" | "offwhite" | "red" | "white";
-        cards?: Array<{
-          icon?:
-            | "award"
-            | "building-2"
-            | "calendar-check"
-            | "clock"
-            | "cog"
-            | "droplets"
-            | "flame"
-            | "gauge"
-            | "map-pin"
-            | "shield-check"
-            | "siren"
-            | "waves"
-            | "wrench";
-          title?: string;
-          description?: string;
-          ctaLabel?: string;
-          ctaHref?: string;
-          cardColor?: "navy" | "offwhite" | "red" | "white";
-          _type: "card";
-          _key: string;
-        }>;
+        photoSubject?: string;
+        hidden?: boolean;
         photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
       }
     | {
         _key: string;
-        _type: "processSteps";
+        _type: "aboutHero";
         heading?: string;
-        steps?: Array<{
-          title?: string;
-          description?: string;
-          _type: "step";
-          _key: string;
-        }>;
-        background?: "dark" | "white";
-        photo: null;
-        photoPrimary: null;
-      }
-    | {
-        _key: string;
-        _type: "propertyTypes";
-        heading?: string;
-        cards?: Array<{
-          title?: string;
-          blurb?: string;
-          slug?: string;
-          href?: string;
-          linkLabel?: string;
-          icon?:
-            | "award"
-            | "building-2"
-            | "building"
-            | "calendar-check"
-            | "clock"
-            | "cog"
-            | "droplets"
-            | "flame"
-            | "gauge"
-            | "heart-handshake"
-            | "hotel"
-            | "map-pin"
-            | "shield-check"
-            | "siren"
-            | "stethoscope"
-            | "waves"
-            | "wrench";
-          photo?: Photo;
-          photoSubject?: string;
-          _type: "card";
-          _key: string;
-        }>;
-        background?: "dark" | "offwhite" | "white";
-        ctaLabel?: string;
-        ctaHref?: string;
-        photo: null;
-        photoPrimary: null;
-      }
-    | {
-        _key: string;
-        _type: "relatedServices";
-        heading?: string;
-        serviceSlugs?: Array<string>;
-        photo: null;
-        photoPrimary: null;
-      }
-    | {
-        _key: string;
-        _type: "serviceAbout";
-        heading?: string;
+        eyebrow?: string;
         paragraphs?: Array<string>;
-        ctaLabel?: string;
-        ctaHref?: string;
+        showCredentials?: boolean;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "aboutStory";
+        heading?: string;
+        eyebrow?: string;
+        paragraphs?: Array<string>;
+        badgeSubtitle?: string;
         photoPrimary: {
           asset: SanityImageAssetReference | null;
           hotspot: SanityImageHotspot | null;
@@ -2136,78 +2770,37 @@ export type SERVICE_BY_SLUG_QUERY_RESULT = {
             | null;
         } | null;
         photoSubjectPrimary?: string;
-        background?: "dark" | "white";
-        photo: null;
-      }
-    | {
-        _key: string;
-        _type: "serviceArea";
-        heading?: string;
-        body?: string;
-        ctaLabel?: string;
-        ctaHref?: string;
-        photo: {
+        photoSecondary: {
           asset: SanityImageAssetReference | null;
           hotspot: SanityImageHotspot | null;
           crop: SanityImageCrop | null;
           alt: string | null;
-          frameRatio:
-            | "default"
-            | "landscape"
-            | "original"
-            | "portrait"
-            | "square"
-            | "wide"
-            | null;
         } | null;
-        photoSubject?: string;
-        photoPrimary: null;
+        photoSubjectSecondary?: string;
+        hidden?: boolean;
+        photo: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
       }
     | {
         _key: string;
-        _type: "serviceFaq";
+        _type: "careersCta";
         heading?: string;
-        faqs?: Array<{
-          question?: string;
-          answer?: string;
-          href?: string;
-          linkLabel?: string;
-          _type: "faq";
-          _key: string;
-        }>;
-        background?: "offwhite" | "white";
+        eyebrow?: string;
+        description?: string;
+        hidden?: boolean;
         photo: null;
         photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
       }
     | {
         _key: string;
-        _type: "serviceHero";
+        _type: "careersHero";
         heading?: string;
-        subheading?: string;
-        secondaryCtaLabel?: string;
-        secondaryCtaHref?: string;
-        credentials?: Array<{
-          icon?:
-            | "award"
-            | "building-2"
-            | "calendar-check"
-            | "clock"
-            | "cog"
-            | "droplets"
-            | "flame"
-            | "gauge"
-            | "map-pin"
-            | "shield-check"
-            | "siren"
-            | "waves"
-            | "wrench";
-          label?: string;
-          _type: "credential";
-          _key: string;
-        }>;
         eyebrow?: string;
-        phoneCtaLabel?: string;
-        showAvailabilityDot?: boolean;
+        paragraphs?: Array<string>;
         photo: {
           asset: SanityImageAssetReference | null;
           hotspot: SanityImageHotspot | null;
@@ -2216,204 +2809,85 @@ export type SERVICE_BY_SLUG_QUERY_RESULT = {
           frameRatio: null;
         } | null;
         darkOverlay?: boolean;
-        photoSubject?: string;
+        hidden?: boolean;
         photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
       }
     | {
         _key: string;
-        _type: "serviceTestimonials";
+        _type: "careerTraits";
         heading?: string;
-        filterTags?: Array<string>;
-        limit?: number;
+        eyebrow?: string;
+        description?: string;
+        traits?: Array<{
+          name?: string;
+          gloss?: string;
+          _type: "trait";
+          _key: string;
+        }>;
+        quote?: string;
+        hidden?: boolean;
         photo: null;
         photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
       }
     | {
         _key: string;
-        _type: "serviceTrust";
+        _type: "careerValues";
         heading?: string;
+        eyebrow?: string;
         items?: Array<{
-          title?: string;
-          description?: string;
           icon?:
             | "award"
-            | "building-2"
-            | "calendar-check"
-            | "clock"
-            | "cog"
-            | "droplets"
-            | "flame"
-            | "gauge"
-            | "map-pin"
+            | "graduation-cap"
+            | "heart-handshake"
             | "shield-check"
-            | "siren"
-            | "waves"
+            | "users"
             | "wrench";
+          title?: string;
+          description?: string;
           _type: "item";
           _key: string;
         }>;
-        showLogos?: boolean;
+        hidden?: boolean;
         photo: null;
         photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
       }
     | {
         _key: string;
-        _type: "signsYouNeed";
+        _type: "cityCommunities";
         heading?: string;
-        cards?: Array<{
-          question?: string;
-          answer?: string;
-          icon?:
-            | "award"
-            | "building-2"
-            | "calendar-check"
-            | "clock"
-            | "cog"
-            | "droplets"
-            | "flame"
-            | "gauge"
-            | "map-pin"
-            | "shield-check"
-            | "siren"
-            | "waves"
-            | "wrench";
-          _type: "card";
-          _key: string;
-        }>;
+        body?: string;
+        communities?: Array<string>;
+        photoPrimary: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+          frameRatio: null;
+        } | null;
+        photoSubjectPrimary?: string;
+        photoSecondary: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+        } | null;
+        photoSubjectSecondary?: string;
         ctaLabel?: string;
         ctaHref?: string;
-        background?: "dark" | "white";
+        hidden?: boolean;
         photo: null;
-        photoPrimary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
       }
-    | {
-        _key: string;
-        _type: "trustLogoStrip";
-        background?: "offwhite" | "white";
-        photo: null;
-        photoPrimary: null;
-      }
-    | {
-        _key: string;
-        _type: "whatsIncluded";
-        heading?: string;
-        intro?: string;
-        items?: Array<{
-          title?: string;
-          description?: string;
-          icon?:
-            | "award"
-            | "building-2"
-            | "calendar-check"
-            | "clock"
-            | "cog"
-            | "droplets"
-            | "flame"
-            | "gauge"
-            | "map-pin"
-            | "shield-check"
-            | "siren"
-            | "waves"
-            | "wrench";
-          href?: string;
-          _type: "item";
-          _key: string;
-        }>;
-        photo: null;
-        photoPrimary: null;
-      }
-  > | null;
-  seoTitle: string | null;
-  seoDescription: string | null;
-} | null;
-
-// Source: sanity/queries.ts
-// Variable: INDUSTRIES_QUERY
-// Query: *[_type == "industry"] | order(order asc){    title,    "slug": slug.current,    description,    bulletPoints,    photo{ asset, hotspot, crop, alt },    body,    seoTitle,    seoDescription  }
-export type INDUSTRIES_QUERY_RESULT = Array<{
-  title: string | null;
-  slug: string | null;
-  description: string | null;
-  bulletPoints: Array<string> | null;
-  photo: {
-    asset: SanityImageAssetReference | null;
-    hotspot: SanityImageHotspot | null;
-    crop: SanityImageCrop | null;
-    alt: string | null;
-  } | null;
-  body: Array<
-    | {
-        children?: Array<{
-          marks?: Array<string>;
-          text?: string;
-          _type: "span";
-          _key: string;
-        }>;
-        style?: "h2" | "h3" | "normal";
-        listItem?: "bullet" | "number";
-        markDefs?: Array<{
-          href?: string;
-          _type: "link";
-          _key: string;
-        }>;
-        level?: number;
-        _type: "block";
-        _key: string;
-      }
-    | {
-        heading?: string;
-        text?: string;
-        showPhoneButton?: boolean;
-        _type: "callout";
-        _key: string;
-      }
-  > | null;
-  seoTitle: string | null;
-  seoDescription: string | null;
-}>;
-
-// Source: sanity/queries.ts
-// Variable: INDUSTRY_BY_SLUG_QUERY
-// Query: *[_type == "industry" && slug.current == $slug][0]{    title,    "slug": slug.current,    description,    bulletPoints,    photo{ asset, hotspot, crop, alt },    body,    sections[]{      ...,      photo{ asset, hotspot, crop, alt, frameRatio },      photoPrimary{ asset, hotspot, crop, alt, frameRatio }    },    seoTitle,    seoDescription  }
-export type INDUSTRY_BY_SLUG_QUERY_RESULT = {
-  title: string | null;
-  slug: string | null;
-  description: string | null;
-  bulletPoints: Array<string> | null;
-  photo: {
-    asset: SanityImageAssetReference | null;
-    hotspot: SanityImageHotspot | null;
-    crop: SanityImageCrop | null;
-    alt: string | null;
-  } | null;
-  body: Array<
-    | {
-        children?: Array<{
-          marks?: Array<string>;
-          text?: string;
-          _type: "span";
-          _key: string;
-        }>;
-        style?: "h2" | "h3" | "normal";
-        listItem?: "bullet" | "number";
-        markDefs?: Array<{
-          href?: string;
-          _type: "link";
-          _key: string;
-        }>;
-        level?: number;
-        _type: "block";
-        _key: string;
-      }
-    | {
-        heading?: string;
-        text?: string;
-        showPhoneButton?: boolean;
-        _type: "callout";
-        _key: string;
-      }
-  > | null;
-  sections: Array<
     | {
         _key: string;
         _type: "comparisonTable";
@@ -2431,6 +2905,9 @@ export type INDUSTRY_BY_SLUG_QUERY_RESULT = {
         background?: "dark" | "white";
         photo: null;
         photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
       }
     | {
         _key: string;
@@ -2443,49 +2920,13 @@ export type INDUSTRY_BY_SLUG_QUERY_RESULT = {
         showAvailabilityDot?: boolean;
         photo: null;
         photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
       }
     | {
         _key: string;
-        _type: "iconCardSection";
-        eyebrow?: string;
-        heading?: string;
-        background?: "dark" | "default";
-        photo: {
-          asset: SanityImageAssetReference | null;
-          hotspot: SanityImageHotspot | null;
-          crop: SanityImageCrop | null;
-          alt: string | null;
-          frameRatio: null;
-        } | null;
-        defaultCardColor?: "navy" | "offwhite" | "red" | "white";
-        cards?: Array<{
-          icon?:
-            | "award"
-            | "building-2"
-            | "calendar-check"
-            | "clock"
-            | "cog"
-            | "droplets"
-            | "flame"
-            | "gauge"
-            | "map-pin"
-            | "shield-check"
-            | "siren"
-            | "waves"
-            | "wrench";
-          title?: string;
-          description?: string;
-          ctaLabel?: string;
-          ctaHref?: string;
-          cardColor?: "navy" | "offwhite" | "red" | "white";
-          _type: "card";
-          _key: string;
-        }>;
-        photoPrimary: null;
-      }
-    | {
-        _key: string;
-        _type: "processSteps";
+        _type: "hiringProcess";
         heading?: string;
         steps?: Array<{
           title?: string;
@@ -2493,298 +2934,13 @@ export type INDUSTRY_BY_SLUG_QUERY_RESULT = {
           _type: "step";
           _key: string;
         }>;
-        background?: "dark" | "white";
+        hidden?: boolean;
         photo: null;
         photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
       }
-    | {
-        _key: string;
-        _type: "propertyTypes";
-        heading?: string;
-        cards?: Array<{
-          title?: string;
-          blurb?: string;
-          slug?: string;
-          href?: string;
-          linkLabel?: string;
-          icon?:
-            | "award"
-            | "building-2"
-            | "building"
-            | "calendar-check"
-            | "clock"
-            | "cog"
-            | "droplets"
-            | "flame"
-            | "gauge"
-            | "heart-handshake"
-            | "hotel"
-            | "map-pin"
-            | "shield-check"
-            | "siren"
-            | "stethoscope"
-            | "waves"
-            | "wrench";
-          photo?: Photo;
-          photoSubject?: string;
-          _type: "card";
-          _key: string;
-        }>;
-        background?: "dark" | "offwhite" | "white";
-        ctaLabel?: string;
-        ctaHref?: string;
-        photo: null;
-        photoPrimary: null;
-      }
-    | {
-        _key: string;
-        _type: "relatedServices";
-        heading?: string;
-        serviceSlugs?: Array<string>;
-        photo: null;
-        photoPrimary: null;
-      }
-    | {
-        _key: string;
-        _type: "serviceAbout";
-        heading?: string;
-        paragraphs?: Array<string>;
-        ctaLabel?: string;
-        ctaHref?: string;
-        photoPrimary: {
-          asset: SanityImageAssetReference | null;
-          hotspot: SanityImageHotspot | null;
-          crop: SanityImageCrop | null;
-          alt: string | null;
-          frameRatio:
-            | "default"
-            | "landscape"
-            | "original"
-            | "portrait"
-            | "square"
-            | "wide"
-            | null;
-        } | null;
-        photoSubjectPrimary?: string;
-        background?: "dark" | "white";
-        photo: null;
-      }
-    | {
-        _key: string;
-        _type: "serviceArea";
-        heading?: string;
-        body?: string;
-        ctaLabel?: string;
-        ctaHref?: string;
-        photo: {
-          asset: SanityImageAssetReference | null;
-          hotspot: SanityImageHotspot | null;
-          crop: SanityImageCrop | null;
-          alt: string | null;
-          frameRatio:
-            | "default"
-            | "landscape"
-            | "original"
-            | "portrait"
-            | "square"
-            | "wide"
-            | null;
-        } | null;
-        photoSubject?: string;
-        photoPrimary: null;
-      }
-    | {
-        _key: string;
-        _type: "serviceFaq";
-        heading?: string;
-        faqs?: Array<{
-          question?: string;
-          answer?: string;
-          href?: string;
-          linkLabel?: string;
-          _type: "faq";
-          _key: string;
-        }>;
-        background?: "offwhite" | "white";
-        photo: null;
-        photoPrimary: null;
-      }
-    | {
-        _key: string;
-        _type: "serviceHero";
-        heading?: string;
-        subheading?: string;
-        secondaryCtaLabel?: string;
-        secondaryCtaHref?: string;
-        credentials?: Array<{
-          icon?:
-            | "award"
-            | "building-2"
-            | "calendar-check"
-            | "clock"
-            | "cog"
-            | "droplets"
-            | "flame"
-            | "gauge"
-            | "map-pin"
-            | "shield-check"
-            | "siren"
-            | "waves"
-            | "wrench";
-          label?: string;
-          _type: "credential";
-          _key: string;
-        }>;
-        eyebrow?: string;
-        phoneCtaLabel?: string;
-        showAvailabilityDot?: boolean;
-        photo: {
-          asset: SanityImageAssetReference | null;
-          hotspot: SanityImageHotspot | null;
-          crop: SanityImageCrop | null;
-          alt: string | null;
-          frameRatio: null;
-        } | null;
-        darkOverlay?: boolean;
-        photoSubject?: string;
-        photoPrimary: null;
-      }
-    | {
-        _key: string;
-        _type: "serviceTestimonials";
-        heading?: string;
-        filterTags?: Array<string>;
-        limit?: number;
-        photo: null;
-        photoPrimary: null;
-      }
-    | {
-        _key: string;
-        _type: "serviceTrust";
-        heading?: string;
-        items?: Array<{
-          title?: string;
-          description?: string;
-          icon?:
-            | "award"
-            | "building-2"
-            | "calendar-check"
-            | "clock"
-            | "cog"
-            | "droplets"
-            | "flame"
-            | "gauge"
-            | "map-pin"
-            | "shield-check"
-            | "siren"
-            | "waves"
-            | "wrench";
-          _type: "item";
-          _key: string;
-        }>;
-        showLogos?: boolean;
-        photo: null;
-        photoPrimary: null;
-      }
-    | {
-        _key: string;
-        _type: "signsYouNeed";
-        heading?: string;
-        cards?: Array<{
-          question?: string;
-          answer?: string;
-          icon?:
-            | "award"
-            | "building-2"
-            | "calendar-check"
-            | "clock"
-            | "cog"
-            | "droplets"
-            | "flame"
-            | "gauge"
-            | "map-pin"
-            | "shield-check"
-            | "siren"
-            | "waves"
-            | "wrench";
-          _type: "card";
-          _key: string;
-        }>;
-        ctaLabel?: string;
-        ctaHref?: string;
-        background?: "dark" | "white";
-        photo: null;
-        photoPrimary: null;
-      }
-    | {
-        _key: string;
-        _type: "trustLogoStrip";
-        background?: "offwhite" | "white";
-        photo: null;
-        photoPrimary: null;
-      }
-    | {
-        _key: string;
-        _type: "whatsIncluded";
-        heading?: string;
-        intro?: string;
-        items?: Array<{
-          title?: string;
-          description?: string;
-          icon?:
-            | "award"
-            | "building-2"
-            | "calendar-check"
-            | "clock"
-            | "cog"
-            | "droplets"
-            | "flame"
-            | "gauge"
-            | "map-pin"
-            | "shield-check"
-            | "siren"
-            | "waves"
-            | "wrench";
-          href?: string;
-          _type: "item";
-          _key: string;
-        }>;
-        photo: null;
-        photoPrimary: null;
-      }
-  > | null;
-  seoTitle: string | null;
-  seoDescription: string | null;
-} | null;
-
-// Source: sanity/queries.ts
-// Variable: TRUST_LOGOS_QUERY
-// Query: *[_type == "trustLogo"] | order(order asc){    name,    logo{ asset, hotspot, crop, alt },    headline,    blurb,    category,    url,    verified  }
-export type TRUST_LOGOS_QUERY_RESULT = Array<{
-  name: string | null;
-  logo: {
-    asset: SanityImageAssetReference | null;
-    hotspot: SanityImageHotspot | null;
-    crop: SanityImageCrop | null;
-    alt: string | null;
-  } | null;
-  headline: string | null;
-  blurb: string | null;
-  category:
-    | "association"
-    | "compliance-network"
-    | "credential"
-    | "vendor-portal"
-    | null;
-  url: string | null;
-  verified: boolean | null;
-}>;
-
-// Source: sanity/queries.ts
-// Variable: HOME_PAGE_QUERY
-// Query: *[_type == "homePage" && _id == "homePage"][0]{    sections[]{      ...,      photo{ asset, hotspot, crop, alt, frameRatio },      primaryPhoto{ asset, hotspot, crop, alt, frameRatio },      secondaryPhoto{ asset, hotspot, crop, alt }    }  }
-export type HOME_PAGE_QUERY_RESULT = {
-  sections: Array<
     | {
         _key: string;
         _type: "homeAbout";
@@ -2843,6 +2999,8 @@ export type HOME_PAGE_QUERY_RESULT = {
         secondaryPhotoSubject?: string;
         hidden?: boolean;
         photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
       }
     | {
         _key: string;
@@ -2894,6 +3052,8 @@ export type HOME_PAGE_QUERY_RESULT = {
         photoCardTitle?: string;
         photoCardSubtitle?: string;
         hidden?: boolean;
+        photoPrimary: null;
+        photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
       }
@@ -2906,6 +3066,8 @@ export type HOME_PAGE_QUERY_RESULT = {
         items?: Array<string>;
         hidden?: boolean;
         photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
       }
@@ -2957,6 +3119,8 @@ export type HOME_PAGE_QUERY_RESULT = {
         photoSubject?: string;
         photoCaption?: string;
         hidden?: boolean;
+        photoPrimary: null;
+        photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
       }
@@ -2967,6 +3131,8 @@ export type HOME_PAGE_QUERY_RESULT = {
         eyebrow?: string;
         hidden?: boolean;
         photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
       }
@@ -2979,6 +3145,8 @@ export type HOME_PAGE_QUERY_RESULT = {
         reassurance?: string;
         hidden?: boolean;
         photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
       }
@@ -3018,6 +3186,8 @@ export type HOME_PAGE_QUERY_RESULT = {
         experienceBadgeLabel?: string;
         hidden?: boolean;
         photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
       }
@@ -3029,6 +3199,8 @@ export type HOME_PAGE_QUERY_RESULT = {
         description?: string;
         hidden?: boolean;
         photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
       }
@@ -3037,6 +3209,8 @@ export type HOME_PAGE_QUERY_RESULT = {
         _type: "homeLocationMap";
         hidden?: boolean;
         photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
       }
@@ -3073,6 +3247,8 @@ export type HOME_PAGE_QUERY_RESULT = {
         }>;
         hidden?: boolean;
         photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
       }
@@ -3085,6 +3261,8 @@ export type HOME_PAGE_QUERY_RESULT = {
         calloutBody?: string;
         hidden?: boolean;
         photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
       }
@@ -3096,6 +3274,8 @@ export type HOME_PAGE_QUERY_RESULT = {
         description?: string;
         hidden?: boolean;
         photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
       }
@@ -3105,6 +3285,8 @@ export type HOME_PAGE_QUERY_RESULT = {
         heading?: string;
         hidden?: boolean;
         photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
       }
@@ -3114,6 +3296,8 @@ export type HOME_PAGE_QUERY_RESULT = {
         tagline?: string;
         hidden?: boolean;
         photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
       }
@@ -3166,114 +3350,10 @@ export type HOME_PAGE_QUERY_RESULT = {
         photoSubject?: string;
         photoCaption?: string;
         hidden?: boolean;
+        photoPrimary: null;
+        photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
-      }
-  > | null;
-} | null;
-
-// Source: sanity/queries.ts
-// Variable: ABOUT_PAGE_QUERY
-// Query: *[_type == "aboutPage" && _id == "aboutPage"][0]{    sections[]{      ...,      photo{ asset, hotspot, crop, alt, frameRatio },      photoPrimary{ asset, hotspot, crop, alt, frameRatio },      photoSecondary{ asset, hotspot, crop, alt }    }  }
-export type ABOUT_PAGE_QUERY_RESULT = {
-  sections: Array<
-    | {
-        _key: string;
-        _type: "aboutEvolution";
-        heading?: string;
-        eyebrow?: string;
-        paragraphs?: Array<string>;
-        photo: {
-          asset: SanityImageAssetReference | null;
-          hotspot: SanityImageHotspot | null;
-          crop: SanityImageCrop | null;
-          alt: string | null;
-          frameRatio:
-            | "default"
-            | "landscape"
-            | "original"
-            | "portrait"
-            | "square"
-            | "wide"
-            | null;
-        } | null;
-        photoSubject?: string;
-        hidden?: boolean;
-        photoPrimary: null;
-        photoSecondary: null;
-      }
-    | {
-        _key: string;
-        _type: "aboutHero";
-        heading?: string;
-        eyebrow?: string;
-        paragraphs?: Array<string>;
-        showCredentials?: boolean;
-        hidden?: boolean;
-        photo: null;
-        photoPrimary: null;
-        photoSecondary: null;
-      }
-    | {
-        _key: string;
-        _type: "aboutStory";
-        heading?: string;
-        eyebrow?: string;
-        paragraphs?: Array<string>;
-        badgeSubtitle?: string;
-        photoPrimary: {
-          asset: SanityImageAssetReference | null;
-          hotspot: SanityImageHotspot | null;
-          crop: SanityImageCrop | null;
-          alt: string | null;
-          frameRatio:
-            | "default"
-            | "landscape"
-            | "original"
-            | "portrait"
-            | "square"
-            | "wide"
-            | null;
-        } | null;
-        photoSubjectPrimary?: string;
-        photoSecondary: {
-          asset: SanityImageAssetReference | null;
-          hotspot: SanityImageHotspot | null;
-          crop: SanityImageCrop | null;
-          alt: string | null;
-        } | null;
-        photoSubjectSecondary?: string;
-        hidden?: boolean;
-        photo: null;
-      }
-    | {
-        _key: string;
-        _type: "homeFinalCta";
-        heading?: string;
-        eyebrow?: string;
-        description?: string;
-        reassurance?: string;
-        hidden?: boolean;
-        photo: null;
-        photoPrimary: null;
-        photoSecondary: null;
-      }
-    | {
-        _key: string;
-        _type: "homeLocationMap";
-        hidden?: boolean;
-        photo: null;
-        photoPrimary: null;
-        photoSecondary: null;
-      }
-    | {
-        _key: string;
-        _type: "homeTestimonials";
-        heading?: string;
-        hidden?: boolean;
-        photo: null;
-        photoPrimary: null;
-        photoSecondary: null;
       }
     | {
         _key: string;
@@ -3314,6 +3394,20 @@ export type ABOUT_PAGE_QUERY_RESULT = {
         }>;
         photoPrimary: null;
         photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "jobOpenings";
+        heading?: string;
+        applyLabel?: string;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
       }
     | {
         _key: string;
@@ -3331,92 +3425,8 @@ export type ABOUT_PAGE_QUERY_RESULT = {
         photo: null;
         photoPrimary: null;
         photoSecondary: null;
-      }
-    | {
-        _key: string;
-        _type: "valuesGrid";
-        heading?: string;
-        eyebrow?: string;
-        values?: Array<{
-          icon?:
-            | "award"
-            | "building-2"
-            | "clock"
-            | "heart-handshake"
-            | "shield-check"
-            | "siren"
-            | "wrench";
-          title?: string;
-          description?: string;
-          _type: "value";
-          _key: string;
-        }>;
-        hidden?: boolean;
-        photo: null;
-        photoPrimary: null;
-        photoSecondary: null;
-      }
-  > | null;
-} | null;
-
-// Source: sanity/queries.ts
-// Variable: PARTNERS_PAGE_QUERY
-// Query: *[_type == "partnersPage" && _id == "partnersPage"][0]{    sections[]{      ...,      photo{ asset, hotspot, crop, alt, frameRatio }    }  }
-export type PARTNERS_PAGE_QUERY_RESULT = {
-  sections: Array<
-    | {
-        _key: string;
-        _type: "homeFinalCta";
-        heading?: string;
-        eyebrow?: string;
-        description?: string;
-        reassurance?: string;
-        hidden?: boolean;
-        photo: null;
-      }
-    | {
-        _key: string;
-        _type: "homeLocationMap";
-        hidden?: boolean;
-        photo: null;
-      }
-    | {
-        _key: string;
-        _type: "iconCardSection";
-        eyebrow?: string;
-        heading?: string;
-        background?: "dark" | "default";
-        photo: {
-          asset: SanityImageAssetReference | null;
-          hotspot: SanityImageHotspot | null;
-          crop: SanityImageCrop | null;
-          alt: string | null;
-          frameRatio: null;
-        } | null;
-        defaultCardColor?: "navy" | "offwhite" | "red" | "white";
-        cards?: Array<{
-          icon?:
-            | "award"
-            | "building-2"
-            | "calendar-check"
-            | "clock"
-            | "cog"
-            | "droplets"
-            | "flame"
-            | "gauge"
-            | "map-pin"
-            | "shield-check"
-            | "siren"
-            | "waves"
-            | "wrench";
-          title?: string;
-          description?: string;
-          ctaLabel?: string;
-          ctaHref?: string;
-          cardColor?: "navy" | "offwhite" | "red" | "white";
-          _type: "card";
-          _key: string;
-        }>;
+        primaryPhoto: null;
+        secondaryPhoto: null;
       }
     | {
         _key: string;
@@ -3428,6 +3438,10 @@ export type PARTNERS_PAGE_QUERY_RESULT = {
         ctaHref?: string;
         hidden?: boolean;
         photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
       }
     | {
         _key: string;
@@ -3437,6 +3451,10 @@ export type PARTNERS_PAGE_QUERY_RESULT = {
         description?: string;
         hidden?: boolean;
         photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
       }
     | {
         _key: string;
@@ -3447,127 +3465,14 @@ export type PARTNERS_PAGE_QUERY_RESULT = {
         showCredentials?: boolean;
         hidden?: boolean;
         photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
       }
     | {
         _key: string;
-        _type: "serviceFaq";
-        heading?: string;
-        faqs?: Array<{
-          question?: string;
-          answer?: string;
-          href?: string;
-          linkLabel?: string;
-          _type: "faq";
-          _key: string;
-        }>;
-        background?: "offwhite" | "white";
-        photo: null;
-      }
-    | {
-        _key: string;
-        _type: "serviceTestimonials";
-        heading?: string;
-        filterTags?: Array<string>;
-        limit?: number;
-        photo: null;
-      }
-    | {
-        _key: string;
-        _type: "vendorOnboarding";
-        heading?: string;
-        eyebrow?: string;
-        description?: string;
-        items?: Array<{
-          icon?:
-            | "building-2"
-            | "clipboard-list"
-            | "clock-4"
-            | "file-check-2"
-            | "phone-call"
-            | "shield-check"
-            | "truck"
-            | "wrench";
-          title?: string;
-          description?: string;
-          _type: "item";
-          _key: string;
-        }>;
-        hidden?: boolean;
-        photo: null;
-      }
-  > | null;
-} | null;
-
-// Source: sanity/queries.ts
-// Variable: CAREERS_PAGE_QUERY
-// Query: *[_type == "careersPage" && _id == "careersPage"][0]{    sections[]{      ...,      photo{ asset, hotspot, crop, alt, frameRatio }    }  }
-export type CAREERS_PAGE_QUERY_RESULT = {
-  sections: Array<
-    | {
-        _key: string;
-        _type: "careersCta";
-        heading?: string;
-        eyebrow?: string;
-        description?: string;
-        hidden?: boolean;
-        photo: null;
-      }
-    | {
-        _key: string;
-        _type: "careersHero";
-        heading?: string;
-        eyebrow?: string;
-        paragraphs?: Array<string>;
-        photo: {
-          asset: SanityImageAssetReference | null;
-          hotspot: SanityImageHotspot | null;
-          crop: SanityImageCrop | null;
-          alt: string | null;
-          frameRatio: null;
-        } | null;
-        darkOverlay?: boolean;
-        hidden?: boolean;
-      }
-    | {
-        _key: string;
-        _type: "careerTraits";
-        heading?: string;
-        eyebrow?: string;
-        description?: string;
-        traits?: Array<{
-          name?: string;
-          gloss?: string;
-          _type: "trait";
-          _key: string;
-        }>;
-        quote?: string;
-        hidden?: boolean;
-        photo: null;
-      }
-    | {
-        _key: string;
-        _type: "careerValues";
-        heading?: string;
-        eyebrow?: string;
-        items?: Array<{
-          icon?:
-            | "award"
-            | "graduation-cap"
-            | "heart-handshake"
-            | "shield-check"
-            | "users"
-            | "wrench";
-          title?: string;
-          description?: string;
-          _type: "item";
-          _key: string;
-        }>;
-        hidden?: boolean;
-        photo: null;
-      }
-    | {
-        _key: string;
-        _type: "hiringProcess";
+        _type: "processSteps";
         heading?: string;
         steps?: Array<{
           title?: string;
@@ -3575,187 +3480,12 @@ export type CAREERS_PAGE_QUERY_RESULT = {
           _type: "step";
           _key: string;
         }>;
-        hidden?: boolean;
-        photo: null;
-      }
-    | {
-        _key: string;
-        _type: "homeFinalCta";
-        heading?: string;
-        eyebrow?: string;
-        description?: string;
-        reassurance?: string;
-        hidden?: boolean;
-        photo: null;
-      }
-    | {
-        _key: string;
-        _type: "homeLocationMap";
-        hidden?: boolean;
-        photo: null;
-      }
-    | {
-        _key: string;
-        _type: "iconCardSection";
-        eyebrow?: string;
-        heading?: string;
-        background?: "dark" | "default";
-        photo: {
-          asset: SanityImageAssetReference | null;
-          hotspot: SanityImageHotspot | null;
-          crop: SanityImageCrop | null;
-          alt: string | null;
-          frameRatio: null;
-        } | null;
-        defaultCardColor?: "navy" | "offwhite" | "red" | "white";
-        cards?: Array<{
-          icon?:
-            | "award"
-            | "building-2"
-            | "calendar-check"
-            | "clock"
-            | "cog"
-            | "droplets"
-            | "flame"
-            | "gauge"
-            | "map-pin"
-            | "shield-check"
-            | "siren"
-            | "waves"
-            | "wrench";
-          title?: string;
-          description?: string;
-          ctaLabel?: string;
-          ctaHref?: string;
-          cardColor?: "navy" | "offwhite" | "red" | "white";
-          _type: "card";
-          _key: string;
-        }>;
-      }
-    | {
-        _key: string;
-        _type: "jobOpenings";
-        heading?: string;
-        applyLabel?: string;
-        hidden?: boolean;
-        photo: null;
-      }
-    | {
-        _key: string;
-        _type: "serviceTestimonials";
-        heading?: string;
-        filterTags?: Array<string>;
-        limit?: number;
-        photo: null;
-      }
-  > | null;
-} | null;
-
-// Source: sanity/queries.ts
-// Variable: CONTACT_PAGE_QUERY
-// Query: *[_type == "contactPage" && _id == "contactPage"][0]{    heroEyebrow,    heroHeading,    heroIntro,    responsePromise,    hours[]{ days, hours },    emergencyHeading,    emergencyBody,    faqs[]{ question, answer }  }
-export type CONTACT_PAGE_QUERY_RESULT = {
-  heroEyebrow: string | null;
-  heroHeading: string | null;
-  heroIntro: string | null;
-  responsePromise: string | null;
-  hours: Array<{
-    days: string | null;
-    hours: string | null;
-  }> | null;
-  emergencyHeading: string | null;
-  emergencyBody: string | null;
-  faqs: Array<{
-    question: string | null;
-    answer: string | null;
-  }> | null;
-} | null;
-
-// Source: sanity/queries.ts
-// Variable: CITY_PAGE_QUERY
-// Query: *[_type == "cityPage" && slug.current == $slug][0]{    city,    "slug": slug.current,    sections[]{      ...,      photo{ asset, hotspot, crop, alt, frameRatio },      photoPrimary{ asset, hotspot, crop, alt, frameRatio },      photoSecondary{ asset, hotspot, crop, alt }    },    seoTitle,    seoDescription  }
-export type CITY_PAGE_QUERY_RESULT = {
-  city: string | null;
-  slug: string | null;
-  sections: Array<
-    | {
-        _key: string;
-        _type: "cityCommunities";
-        heading?: string;
-        body?: string;
-        communities?: Array<string>;
-        photoPrimary: {
-          asset: SanityImageAssetReference | null;
-          hotspot: SanityImageHotspot | null;
-          crop: SanityImageCrop | null;
-          alt: string | null;
-          frameRatio: null;
-        } | null;
-        photoSubjectPrimary?: string;
-        photoSecondary: {
-          asset: SanityImageAssetReference | null;
-          hotspot: SanityImageHotspot | null;
-          crop: SanityImageCrop | null;
-          alt: string | null;
-        } | null;
-        photoSubjectSecondary?: string;
-        ctaLabel?: string;
-        ctaHref?: string;
-        hidden?: boolean;
-        photo: null;
-      }
-    | {
-        _key: string;
-        _type: "finalCta";
-        heading?: string;
-        body?: string;
-        secondaryCtaLabel?: string;
-        secondaryCtaHref?: string;
-        phoneCtaLabel?: string;
-        showAvailabilityDot?: boolean;
+        background?: "dark" | "white";
         photo: null;
         photoPrimary: null;
         photoSecondary: null;
-      }
-    | {
-        _key: string;
-        _type: "iconCardSection";
-        eyebrow?: string;
-        heading?: string;
-        background?: "dark" | "default";
-        photo: {
-          asset: SanityImageAssetReference | null;
-          hotspot: SanityImageHotspot | null;
-          crop: SanityImageCrop | null;
-          alt: string | null;
-          frameRatio: null;
-        } | null;
-        defaultCardColor?: "navy" | "offwhite" | "red" | "white";
-        cards?: Array<{
-          icon?:
-            | "award"
-            | "building-2"
-            | "calendar-check"
-            | "clock"
-            | "cog"
-            | "droplets"
-            | "flame"
-            | "gauge"
-            | "map-pin"
-            | "shield-check"
-            | "siren"
-            | "waves"
-            | "wrench";
-          title?: string;
-          description?: string;
-          ctaLabel?: string;
-          ctaHref?: string;
-          cardColor?: "navy" | "offwhite" | "red" | "white";
-          _type: "card";
-          _key: string;
-        }>;
-        photoPrimary: null;
-        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
       }
     | {
         _key: string;
@@ -3796,6 +3526,19 @@ export type CITY_PAGE_QUERY_RESULT = {
         photo: null;
         photoPrimary: null;
         photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "relatedServices";
+        heading?: string;
+        serviceSlugs?: Array<string>;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
       }
     | {
         _key: string;
@@ -3822,6 +3565,35 @@ export type CITY_PAGE_QUERY_RESULT = {
         background?: "dark" | "white";
         photo: null;
         photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "serviceArea";
+        heading?: string;
+        body?: string;
+        ctaLabel?: string;
+        ctaHref?: string;
+        photo: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+          frameRatio:
+            | "default"
+            | "landscape"
+            | "original"
+            | "portrait"
+            | "square"
+            | "wide"
+            | null;
+        } | null;
+        photoSubject?: string;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
       }
     | {
         _key: string;
@@ -3839,6 +3611,8 @@ export type CITY_PAGE_QUERY_RESULT = {
         photo: null;
         photoPrimary: null;
         photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
       }
     | {
         _key: string;
@@ -3880,6 +3654,8 @@ export type CITY_PAGE_QUERY_RESULT = {
         photoSubject?: string;
         photoPrimary: null;
         photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
       }
     | {
         _key: string;
@@ -3890,6 +3666,7079 @@ export type CITY_PAGE_QUERY_RESULT = {
         photo: null;
         photoPrimary: null;
         photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "serviceTrust";
+        heading?: string;
+        items?: Array<{
+          title?: string;
+          description?: string;
+          icon?:
+            | "award"
+            | "building-2"
+            | "calendar-check"
+            | "clock"
+            | "cog"
+            | "droplets"
+            | "flame"
+            | "gauge"
+            | "map-pin"
+            | "shield-check"
+            | "siren"
+            | "waves"
+            | "wrench";
+          _type: "item";
+          _key: string;
+        }>;
+        showLogos?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "signsYouNeed";
+        heading?: string;
+        cards?: Array<{
+          question?: string;
+          answer?: string;
+          icon?:
+            | "award"
+            | "building-2"
+            | "calendar-check"
+            | "clock"
+            | "cog"
+            | "droplets"
+            | "flame"
+            | "gauge"
+            | "map-pin"
+            | "shield-check"
+            | "siren"
+            | "waves"
+            | "wrench";
+          _type: "card";
+          _key: string;
+        }>;
+        ctaLabel?: string;
+        ctaHref?: string;
+        background?: "dark" | "white";
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "trustLogoStrip";
+        background?: "offwhite" | "white";
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "valuesGrid";
+        heading?: string;
+        eyebrow?: string;
+        values?: Array<{
+          icon?:
+            | "award"
+            | "building-2"
+            | "clock"
+            | "heart-handshake"
+            | "shield-check"
+            | "siren"
+            | "wrench";
+          title?: string;
+          description?: string;
+          _type: "value";
+          _key: string;
+        }>;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "vendorOnboarding";
+        heading?: string;
+        eyebrow?: string;
+        description?: string;
+        items?: Array<{
+          icon?:
+            | "building-2"
+            | "clipboard-list"
+            | "clock-4"
+            | "file-check-2"
+            | "phone-call"
+            | "shield-check"
+            | "truck"
+            | "wrench";
+          title?: string;
+          description?: string;
+          _type: "item";
+          _key: string;
+        }>;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "whatsIncluded";
+        heading?: string;
+        intro?: string;
+        items?: Array<{
+          title?: string;
+          description?: string;
+          icon?:
+            | "award"
+            | "building-2"
+            | "calendar-check"
+            | "clock"
+            | "cog"
+            | "droplets"
+            | "flame"
+            | "gauge"
+            | "map-pin"
+            | "shield-check"
+            | "siren"
+            | "waves"
+            | "wrench";
+          href?: string;
+          _type: "item";
+          _key: string;
+        }>;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+  > | null;
+  seoTitle: string | null;
+  seoDescription: string | null;
+} | null;
+
+// Source: sanity/queries.ts
+// Variable: INDUSTRIES_QUERY
+// Query: *[_type == "industry"] | order(order asc){    title,    "slug": slug.current,    description,    bulletPoints,    photo{ asset, hotspot, crop, alt },    body,    seoTitle,    seoDescription  }
+export type INDUSTRIES_QUERY_RESULT = Array<{
+  title: string | null;
+  slug: string | null;
+  description: string | null;
+  bulletPoints: Array<string> | null;
+  photo: {
+    asset: SanityImageAssetReference | null;
+    hotspot: SanityImageHotspot | null;
+    crop: SanityImageCrop | null;
+    alt: string | null;
+  } | null;
+  body: Array<
+    | {
+        children?: Array<{
+          marks?: Array<string>;
+          text?: string;
+          _type: "span";
+          _key: string;
+        }>;
+        style?: "h2" | "h3" | "normal";
+        listItem?: "bullet" | "number";
+        markDefs?: Array<{
+          href?: string;
+          _type: "link";
+          _key: string;
+        }>;
+        level?: number;
+        _type: "block";
+        _key: string;
+      }
+    | {
+        heading?: string;
+        text?: string;
+        showPhoneButton?: boolean;
+        _type: "callout";
+        _key: string;
+      }
+  > | null;
+  seoTitle: string | null;
+  seoDescription: string | null;
+}>;
+
+// Source: sanity/queries.ts
+// Variable: INDUSTRY_BY_SLUG_QUERY
+// Query: *[_type == "industry" && slug.current == $slug][0]{    title,    "slug": slug.current,    description,    bulletPoints,    photo{ asset, hotspot, crop, alt },    body,    sections[]{    ...,    photo{ asset, hotspot, crop, alt, frameRatio },    photoPrimary{ asset, hotspot, crop, alt, frameRatio },    photoSecondary{ asset, hotspot, crop, alt },    primaryPhoto{ asset, hotspot, crop, alt, frameRatio },    secondaryPhoto{ asset, hotspot, crop, alt }  },    seoTitle,    seoDescription  }
+export type INDUSTRY_BY_SLUG_QUERY_RESULT = {
+  title: string | null;
+  slug: string | null;
+  description: string | null;
+  bulletPoints: Array<string> | null;
+  photo: {
+    asset: SanityImageAssetReference | null;
+    hotspot: SanityImageHotspot | null;
+    crop: SanityImageCrop | null;
+    alt: string | null;
+  } | null;
+  body: Array<
+    | {
+        children?: Array<{
+          marks?: Array<string>;
+          text?: string;
+          _type: "span";
+          _key: string;
+        }>;
+        style?: "h2" | "h3" | "normal";
+        listItem?: "bullet" | "number";
+        markDefs?: Array<{
+          href?: string;
+          _type: "link";
+          _key: string;
+        }>;
+        level?: number;
+        _type: "block";
+        _key: string;
+      }
+    | {
+        heading?: string;
+        text?: string;
+        showPhoneButton?: boolean;
+        _type: "callout";
+        _key: string;
+      }
+  > | null;
+  sections: Array<
+    | {
+        _key: string;
+        _type: "aboutEvolution";
+        heading?: string;
+        eyebrow?: string;
+        paragraphs?: Array<string>;
+        photo: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+          frameRatio:
+            | "default"
+            | "landscape"
+            | "original"
+            | "portrait"
+            | "square"
+            | "wide"
+            | null;
+        } | null;
+        photoSubject?: string;
+        hidden?: boolean;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "aboutHero";
+        heading?: string;
+        eyebrow?: string;
+        paragraphs?: Array<string>;
+        showCredentials?: boolean;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "aboutStory";
+        heading?: string;
+        eyebrow?: string;
+        paragraphs?: Array<string>;
+        badgeSubtitle?: string;
+        photoPrimary: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+          frameRatio:
+            | "default"
+            | "landscape"
+            | "original"
+            | "portrait"
+            | "square"
+            | "wide"
+            | null;
+        } | null;
+        photoSubjectPrimary?: string;
+        photoSecondary: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+        } | null;
+        photoSubjectSecondary?: string;
+        hidden?: boolean;
+        photo: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "careersCta";
+        heading?: string;
+        eyebrow?: string;
+        description?: string;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "careersHero";
+        heading?: string;
+        eyebrow?: string;
+        paragraphs?: Array<string>;
+        photo: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+          frameRatio: null;
+        } | null;
+        darkOverlay?: boolean;
+        hidden?: boolean;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "careerTraits";
+        heading?: string;
+        eyebrow?: string;
+        description?: string;
+        traits?: Array<{
+          name?: string;
+          gloss?: string;
+          _type: "trait";
+          _key: string;
+        }>;
+        quote?: string;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "careerValues";
+        heading?: string;
+        eyebrow?: string;
+        items?: Array<{
+          icon?:
+            | "award"
+            | "graduation-cap"
+            | "heart-handshake"
+            | "shield-check"
+            | "users"
+            | "wrench";
+          title?: string;
+          description?: string;
+          _type: "item";
+          _key: string;
+        }>;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "cityCommunities";
+        heading?: string;
+        body?: string;
+        communities?: Array<string>;
+        photoPrimary: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+          frameRatio: null;
+        } | null;
+        photoSubjectPrimary?: string;
+        photoSecondary: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+        } | null;
+        photoSubjectSecondary?: string;
+        ctaLabel?: string;
+        ctaHref?: string;
+        hidden?: boolean;
+        photo: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "comparisonTable";
+        heading?: string;
+        intro?: string;
+        columnLabels?: Array<string>;
+        rows?: Array<{
+          situation?: string;
+          recommendation?: string;
+          why?: string;
+          _type: "row";
+          _key: string;
+        }>;
+        footnote?: string;
+        background?: "dark" | "white";
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "finalCta";
+        heading?: string;
+        body?: string;
+        secondaryCtaLabel?: string;
+        secondaryCtaHref?: string;
+        phoneCtaLabel?: string;
+        showAvailabilityDot?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "hiringProcess";
+        heading?: string;
+        steps?: Array<{
+          title?: string;
+          description?: string;
+          _type: "step";
+          _key: string;
+        }>;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "homeAbout";
+        heading?: string;
+        eyebrow?: string;
+        description?: string;
+        highlights?: Array<string>;
+        badgeSubtitle?: string;
+        metrics?: Array<{
+          icon?:
+            | "alert-triangle"
+            | "award"
+            | "building-2"
+            | "calendar-check"
+            | "clipboard-check"
+            | "clock"
+            | "droplets"
+            | "file-check-2"
+            | "lightbulb"
+            | "map-pin"
+            | "message-square"
+            | "phone-call"
+            | "search-check"
+            | "shield-check"
+            | "siren"
+            | "trending-up"
+            | "truck"
+            | "waves"
+            | "wrench";
+          value?: string;
+          label?: string;
+          _type: "metric";
+          _key: string;
+        }>;
+        primaryPhoto: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+          frameRatio:
+            | "default"
+            | "landscape"
+            | "original"
+            | "portrait"
+            | "square"
+            | "wide"
+            | null;
+        } | null;
+        primaryPhotoSubject?: string;
+        secondaryPhoto: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+        } | null;
+        secondaryPhotoSubject?: string;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+      }
+    | {
+        _key: string;
+        _type: "homeCaseStudy";
+        heading?: string;
+        eyebrow?: string;
+        badgeLabel?: string;
+        storyBlocks?: Array<{
+          icon?:
+            | "alert-triangle"
+            | "award"
+            | "building-2"
+            | "calendar-check"
+            | "clipboard-check"
+            | "clock"
+            | "droplets"
+            | "file-check-2"
+            | "lightbulb"
+            | "map-pin"
+            | "message-square"
+            | "phone-call"
+            | "search-check"
+            | "shield-check"
+            | "siren"
+            | "trending-up"
+            | "truck"
+            | "waves"
+            | "wrench";
+          label?: string;
+          copy?: string;
+          _type: "storyBlock";
+          _key: string;
+        }>;
+        photo: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+          frameRatio:
+            | "default"
+            | "landscape"
+            | "original"
+            | "portrait"
+            | "square"
+            | "wide"
+            | null;
+        } | null;
+        photoSubject?: string;
+        photoCardTitle?: string;
+        photoCardSubtitle?: string;
+        hidden?: boolean;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "homeCompliance";
+        heading?: string;
+        eyebrow?: string;
+        description?: string;
+        items?: Array<string>;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "homeEmergency";
+        heading?: string;
+        eyebrow?: string;
+        body?: string;
+        benefits?: Array<{
+          icon?:
+            | "alert-triangle"
+            | "award"
+            | "building-2"
+            | "calendar-check"
+            | "clipboard-check"
+            | "clock"
+            | "droplets"
+            | "file-check-2"
+            | "lightbulb"
+            | "map-pin"
+            | "message-square"
+            | "phone-call"
+            | "search-check"
+            | "shield-check"
+            | "siren"
+            | "trending-up"
+            | "truck"
+            | "waves"
+            | "wrench";
+          label?: string;
+          _type: "item";
+          _key: string;
+        }>;
+        photo: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+          frameRatio:
+            | "default"
+            | "landscape"
+            | "original"
+            | "portrait"
+            | "square"
+            | "wide"
+            | null;
+        } | null;
+        photoSubject?: string;
+        photoCaption?: string;
+        hidden?: boolean;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "homeFaq";
+        heading?: string;
+        eyebrow?: string;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "homeFinalCta";
+        heading?: string;
+        eyebrow?: string;
+        description?: string;
+        reassurance?: string;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "homeHero";
+        headingBefore?: string;
+        headingHighlight?: string;
+        headingAfter?: string;
+        subcopy?: string;
+        eyebrow?: string;
+        trustIndicators?: Array<{
+          icon?:
+            | "alert-triangle"
+            | "award"
+            | "building-2"
+            | "calendar-check"
+            | "clipboard-check"
+            | "clock"
+            | "droplets"
+            | "file-check-2"
+            | "lightbulb"
+            | "map-pin"
+            | "message-square"
+            | "phone-call"
+            | "search-check"
+            | "shield-check"
+            | "siren"
+            | "trending-up"
+            | "truck"
+            | "waves"
+            | "wrench";
+          label?: string;
+          _type: "item";
+          _key: string;
+        }>;
+        experienceBadgeLabel?: string;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "homeIndustries";
+        heading?: string;
+        eyebrow?: string;
+        description?: string;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "homeLocationMap";
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "homeProcess";
+        heading?: string;
+        eyebrow?: string;
+        steps?: Array<{
+          icon?:
+            | "alert-triangle"
+            | "award"
+            | "building-2"
+            | "calendar-check"
+            | "clipboard-check"
+            | "clock"
+            | "droplets"
+            | "file-check-2"
+            | "lightbulb"
+            | "map-pin"
+            | "message-square"
+            | "phone-call"
+            | "search-check"
+            | "shield-check"
+            | "siren"
+            | "trending-up"
+            | "truck"
+            | "waves"
+            | "wrench";
+          title?: string;
+          description?: string;
+          _type: "item";
+          _key: string;
+        }>;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "homeServiceArea";
+        heading?: string;
+        eyebrow?: string;
+        description?: string;
+        calloutBody?: string;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "homeServices";
+        heading?: string;
+        eyebrow?: string;
+        description?: string;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "homeTestimonials";
+        heading?: string;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "homeTrustBar";
+        tagline?: string;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "homeWhyChooseUs";
+        heading?: string;
+        eyebrow?: string;
+        description?: string;
+        features?: Array<{
+          icon?:
+            | "alert-triangle"
+            | "award"
+            | "building-2"
+            | "calendar-check"
+            | "clipboard-check"
+            | "clock"
+            | "droplets"
+            | "file-check-2"
+            | "lightbulb"
+            | "map-pin"
+            | "message-square"
+            | "phone-call"
+            | "search-check"
+            | "shield-check"
+            | "siren"
+            | "trending-up"
+            | "truck"
+            | "waves"
+            | "wrench";
+          title?: string;
+          description?: string;
+          _type: "item";
+          _key: string;
+        }>;
+        photo: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+          frameRatio:
+            | "default"
+            | "landscape"
+            | "original"
+            | "portrait"
+            | "square"
+            | "wide"
+            | null;
+        } | null;
+        photoSubject?: string;
+        photoCaption?: string;
+        hidden?: boolean;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "iconCardSection";
+        eyebrow?: string;
+        heading?: string;
+        background?: "dark" | "default";
+        photo: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+          frameRatio: null;
+        } | null;
+        defaultCardColor?: "navy" | "offwhite" | "red" | "white";
+        cards?: Array<{
+          icon?:
+            | "award"
+            | "building-2"
+            | "calendar-check"
+            | "clock"
+            | "cog"
+            | "droplets"
+            | "flame"
+            | "gauge"
+            | "map-pin"
+            | "shield-check"
+            | "siren"
+            | "waves"
+            | "wrench";
+          title?: string;
+          description?: string;
+          ctaLabel?: string;
+          ctaHref?: string;
+          cardColor?: "navy" | "offwhite" | "red" | "white";
+          _type: "card";
+          _key: string;
+        }>;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "jobOpenings";
+        heading?: string;
+        applyLabel?: string;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "pageLinks";
+        heading?: string;
+        eyebrow?: string;
+        links?: Array<{
+          title?: string;
+          description?: string;
+          href?: string;
+          _type: "link";
+          _key: string;
+        }>;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "partnerCredentials";
+        heading?: string;
+        eyebrow?: string;
+        description?: string;
+        ctaLabel?: string;
+        ctaHref?: string;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "partnerPlatforms";
+        heading?: string;
+        eyebrow?: string;
+        description?: string;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "partnersHero";
+        heading?: string;
+        eyebrow?: string;
+        paragraphs?: Array<string>;
+        showCredentials?: boolean;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "processSteps";
+        heading?: string;
+        steps?: Array<{
+          title?: string;
+          description?: string;
+          _type: "step";
+          _key: string;
+        }>;
+        background?: "dark" | "white";
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "propertyTypes";
+        heading?: string;
+        cards?: Array<{
+          title?: string;
+          blurb?: string;
+          slug?: string;
+          href?: string;
+          linkLabel?: string;
+          icon?:
+            | "award"
+            | "building-2"
+            | "building"
+            | "calendar-check"
+            | "clock"
+            | "cog"
+            | "droplets"
+            | "flame"
+            | "gauge"
+            | "heart-handshake"
+            | "hotel"
+            | "map-pin"
+            | "shield-check"
+            | "siren"
+            | "stethoscope"
+            | "waves"
+            | "wrench";
+          photo?: Photo;
+          photoSubject?: string;
+          _type: "card";
+          _key: string;
+        }>;
+        background?: "dark" | "offwhite" | "white";
+        ctaLabel?: string;
+        ctaHref?: string;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "relatedServices";
+        heading?: string;
+        serviceSlugs?: Array<string>;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "serviceAbout";
+        heading?: string;
+        paragraphs?: Array<string>;
+        ctaLabel?: string;
+        ctaHref?: string;
+        photoPrimary: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+          frameRatio:
+            | "default"
+            | "landscape"
+            | "original"
+            | "portrait"
+            | "square"
+            | "wide"
+            | null;
+        } | null;
+        photoSubjectPrimary?: string;
+        background?: "dark" | "white";
+        photo: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "serviceArea";
+        heading?: string;
+        body?: string;
+        ctaLabel?: string;
+        ctaHref?: string;
+        photo: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+          frameRatio:
+            | "default"
+            | "landscape"
+            | "original"
+            | "portrait"
+            | "square"
+            | "wide"
+            | null;
+        } | null;
+        photoSubject?: string;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "serviceFaq";
+        heading?: string;
+        faqs?: Array<{
+          question?: string;
+          answer?: string;
+          href?: string;
+          linkLabel?: string;
+          _type: "faq";
+          _key: string;
+        }>;
+        background?: "offwhite" | "white";
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "serviceHero";
+        heading?: string;
+        subheading?: string;
+        secondaryCtaLabel?: string;
+        secondaryCtaHref?: string;
+        credentials?: Array<{
+          icon?:
+            | "award"
+            | "building-2"
+            | "calendar-check"
+            | "clock"
+            | "cog"
+            | "droplets"
+            | "flame"
+            | "gauge"
+            | "map-pin"
+            | "shield-check"
+            | "siren"
+            | "waves"
+            | "wrench";
+          label?: string;
+          _type: "credential";
+          _key: string;
+        }>;
+        eyebrow?: string;
+        phoneCtaLabel?: string;
+        showAvailabilityDot?: boolean;
+        photo: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+          frameRatio: null;
+        } | null;
+        darkOverlay?: boolean;
+        photoSubject?: string;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "serviceTestimonials";
+        heading?: string;
+        filterTags?: Array<string>;
+        limit?: number;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "serviceTrust";
+        heading?: string;
+        items?: Array<{
+          title?: string;
+          description?: string;
+          icon?:
+            | "award"
+            | "building-2"
+            | "calendar-check"
+            | "clock"
+            | "cog"
+            | "droplets"
+            | "flame"
+            | "gauge"
+            | "map-pin"
+            | "shield-check"
+            | "siren"
+            | "waves"
+            | "wrench";
+          _type: "item";
+          _key: string;
+        }>;
+        showLogos?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "signsYouNeed";
+        heading?: string;
+        cards?: Array<{
+          question?: string;
+          answer?: string;
+          icon?:
+            | "award"
+            | "building-2"
+            | "calendar-check"
+            | "clock"
+            | "cog"
+            | "droplets"
+            | "flame"
+            | "gauge"
+            | "map-pin"
+            | "shield-check"
+            | "siren"
+            | "waves"
+            | "wrench";
+          _type: "card";
+          _key: string;
+        }>;
+        ctaLabel?: string;
+        ctaHref?: string;
+        background?: "dark" | "white";
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "trustLogoStrip";
+        background?: "offwhite" | "white";
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "valuesGrid";
+        heading?: string;
+        eyebrow?: string;
+        values?: Array<{
+          icon?:
+            | "award"
+            | "building-2"
+            | "clock"
+            | "heart-handshake"
+            | "shield-check"
+            | "siren"
+            | "wrench";
+          title?: string;
+          description?: string;
+          _type: "value";
+          _key: string;
+        }>;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "vendorOnboarding";
+        heading?: string;
+        eyebrow?: string;
+        description?: string;
+        items?: Array<{
+          icon?:
+            | "building-2"
+            | "clipboard-list"
+            | "clock-4"
+            | "file-check-2"
+            | "phone-call"
+            | "shield-check"
+            | "truck"
+            | "wrench";
+          title?: string;
+          description?: string;
+          _type: "item";
+          _key: string;
+        }>;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "whatsIncluded";
+        heading?: string;
+        intro?: string;
+        items?: Array<{
+          title?: string;
+          description?: string;
+          icon?:
+            | "award"
+            | "building-2"
+            | "calendar-check"
+            | "clock"
+            | "cog"
+            | "droplets"
+            | "flame"
+            | "gauge"
+            | "map-pin"
+            | "shield-check"
+            | "siren"
+            | "waves"
+            | "wrench";
+          href?: string;
+          _type: "item";
+          _key: string;
+        }>;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+  > | null;
+  seoTitle: string | null;
+  seoDescription: string | null;
+} | null;
+
+// Source: sanity/queries.ts
+// Variable: TRUST_LOGOS_QUERY
+// Query: *[_type == "trustLogo"] | order(order asc){    name,    logo{ asset, hotspot, crop, alt },    headline,    blurb,    category,    url,    verified  }
+export type TRUST_LOGOS_QUERY_RESULT = Array<{
+  name: string | null;
+  logo: {
+    asset: SanityImageAssetReference | null;
+    hotspot: SanityImageHotspot | null;
+    crop: SanityImageCrop | null;
+    alt: string | null;
+  } | null;
+  headline: string | null;
+  blurb: string | null;
+  category:
+    | "association"
+    | "compliance-network"
+    | "credential"
+    | "vendor-portal"
+    | null;
+  url: string | null;
+  verified: boolean | null;
+}>;
+
+// Source: sanity/queries.ts
+// Variable: HOME_PAGE_QUERY
+// Query: *[_type == "homePage" && _id == "homePage"][0]{    sections[]{    ...,    photo{ asset, hotspot, crop, alt, frameRatio },    photoPrimary{ asset, hotspot, crop, alt, frameRatio },    photoSecondary{ asset, hotspot, crop, alt },    primaryPhoto{ asset, hotspot, crop, alt, frameRatio },    secondaryPhoto{ asset, hotspot, crop, alt }  }  }
+export type HOME_PAGE_QUERY_RESULT = {
+  sections: Array<
+    | {
+        _key: string;
+        _type: "aboutEvolution";
+        heading?: string;
+        eyebrow?: string;
+        paragraphs?: Array<string>;
+        photo: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+          frameRatio:
+            | "default"
+            | "landscape"
+            | "original"
+            | "portrait"
+            | "square"
+            | "wide"
+            | null;
+        } | null;
+        photoSubject?: string;
+        hidden?: boolean;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "aboutHero";
+        heading?: string;
+        eyebrow?: string;
+        paragraphs?: Array<string>;
+        showCredentials?: boolean;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "aboutStory";
+        heading?: string;
+        eyebrow?: string;
+        paragraphs?: Array<string>;
+        badgeSubtitle?: string;
+        photoPrimary: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+          frameRatio:
+            | "default"
+            | "landscape"
+            | "original"
+            | "portrait"
+            | "square"
+            | "wide"
+            | null;
+        } | null;
+        photoSubjectPrimary?: string;
+        photoSecondary: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+        } | null;
+        photoSubjectSecondary?: string;
+        hidden?: boolean;
+        photo: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "careersCta";
+        heading?: string;
+        eyebrow?: string;
+        description?: string;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "careersHero";
+        heading?: string;
+        eyebrow?: string;
+        paragraphs?: Array<string>;
+        photo: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+          frameRatio: null;
+        } | null;
+        darkOverlay?: boolean;
+        hidden?: boolean;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "careerTraits";
+        heading?: string;
+        eyebrow?: string;
+        description?: string;
+        traits?: Array<{
+          name?: string;
+          gloss?: string;
+          _type: "trait";
+          _key: string;
+        }>;
+        quote?: string;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "careerValues";
+        heading?: string;
+        eyebrow?: string;
+        items?: Array<{
+          icon?:
+            | "award"
+            | "graduation-cap"
+            | "heart-handshake"
+            | "shield-check"
+            | "users"
+            | "wrench";
+          title?: string;
+          description?: string;
+          _type: "item";
+          _key: string;
+        }>;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "cityCommunities";
+        heading?: string;
+        body?: string;
+        communities?: Array<string>;
+        photoPrimary: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+          frameRatio: null;
+        } | null;
+        photoSubjectPrimary?: string;
+        photoSecondary: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+        } | null;
+        photoSubjectSecondary?: string;
+        ctaLabel?: string;
+        ctaHref?: string;
+        hidden?: boolean;
+        photo: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "comparisonTable";
+        heading?: string;
+        intro?: string;
+        columnLabels?: Array<string>;
+        rows?: Array<{
+          situation?: string;
+          recommendation?: string;
+          why?: string;
+          _type: "row";
+          _key: string;
+        }>;
+        footnote?: string;
+        background?: "dark" | "white";
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "finalCta";
+        heading?: string;
+        body?: string;
+        secondaryCtaLabel?: string;
+        secondaryCtaHref?: string;
+        phoneCtaLabel?: string;
+        showAvailabilityDot?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "hiringProcess";
+        heading?: string;
+        steps?: Array<{
+          title?: string;
+          description?: string;
+          _type: "step";
+          _key: string;
+        }>;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "homeAbout";
+        heading?: string;
+        eyebrow?: string;
+        description?: string;
+        highlights?: Array<string>;
+        badgeSubtitle?: string;
+        metrics?: Array<{
+          icon?:
+            | "alert-triangle"
+            | "award"
+            | "building-2"
+            | "calendar-check"
+            | "clipboard-check"
+            | "clock"
+            | "droplets"
+            | "file-check-2"
+            | "lightbulb"
+            | "map-pin"
+            | "message-square"
+            | "phone-call"
+            | "search-check"
+            | "shield-check"
+            | "siren"
+            | "trending-up"
+            | "truck"
+            | "waves"
+            | "wrench";
+          value?: string;
+          label?: string;
+          _type: "metric";
+          _key: string;
+        }>;
+        primaryPhoto: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+          frameRatio:
+            | "default"
+            | "landscape"
+            | "original"
+            | "portrait"
+            | "square"
+            | "wide"
+            | null;
+        } | null;
+        primaryPhotoSubject?: string;
+        secondaryPhoto: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+        } | null;
+        secondaryPhotoSubject?: string;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+      }
+    | {
+        _key: string;
+        _type: "homeCaseStudy";
+        heading?: string;
+        eyebrow?: string;
+        badgeLabel?: string;
+        storyBlocks?: Array<{
+          icon?:
+            | "alert-triangle"
+            | "award"
+            | "building-2"
+            | "calendar-check"
+            | "clipboard-check"
+            | "clock"
+            | "droplets"
+            | "file-check-2"
+            | "lightbulb"
+            | "map-pin"
+            | "message-square"
+            | "phone-call"
+            | "search-check"
+            | "shield-check"
+            | "siren"
+            | "trending-up"
+            | "truck"
+            | "waves"
+            | "wrench";
+          label?: string;
+          copy?: string;
+          _type: "storyBlock";
+          _key: string;
+        }>;
+        photo: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+          frameRatio:
+            | "default"
+            | "landscape"
+            | "original"
+            | "portrait"
+            | "square"
+            | "wide"
+            | null;
+        } | null;
+        photoSubject?: string;
+        photoCardTitle?: string;
+        photoCardSubtitle?: string;
+        hidden?: boolean;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "homeCompliance";
+        heading?: string;
+        eyebrow?: string;
+        description?: string;
+        items?: Array<string>;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "homeEmergency";
+        heading?: string;
+        eyebrow?: string;
+        body?: string;
+        benefits?: Array<{
+          icon?:
+            | "alert-triangle"
+            | "award"
+            | "building-2"
+            | "calendar-check"
+            | "clipboard-check"
+            | "clock"
+            | "droplets"
+            | "file-check-2"
+            | "lightbulb"
+            | "map-pin"
+            | "message-square"
+            | "phone-call"
+            | "search-check"
+            | "shield-check"
+            | "siren"
+            | "trending-up"
+            | "truck"
+            | "waves"
+            | "wrench";
+          label?: string;
+          _type: "item";
+          _key: string;
+        }>;
+        photo: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+          frameRatio:
+            | "default"
+            | "landscape"
+            | "original"
+            | "portrait"
+            | "square"
+            | "wide"
+            | null;
+        } | null;
+        photoSubject?: string;
+        photoCaption?: string;
+        hidden?: boolean;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "homeFaq";
+        heading?: string;
+        eyebrow?: string;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "homeFinalCta";
+        heading?: string;
+        eyebrow?: string;
+        description?: string;
+        reassurance?: string;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "homeHero";
+        headingBefore?: string;
+        headingHighlight?: string;
+        headingAfter?: string;
+        subcopy?: string;
+        eyebrow?: string;
+        trustIndicators?: Array<{
+          icon?:
+            | "alert-triangle"
+            | "award"
+            | "building-2"
+            | "calendar-check"
+            | "clipboard-check"
+            | "clock"
+            | "droplets"
+            | "file-check-2"
+            | "lightbulb"
+            | "map-pin"
+            | "message-square"
+            | "phone-call"
+            | "search-check"
+            | "shield-check"
+            | "siren"
+            | "trending-up"
+            | "truck"
+            | "waves"
+            | "wrench";
+          label?: string;
+          _type: "item";
+          _key: string;
+        }>;
+        experienceBadgeLabel?: string;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "homeIndustries";
+        heading?: string;
+        eyebrow?: string;
+        description?: string;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "homeLocationMap";
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "homeProcess";
+        heading?: string;
+        eyebrow?: string;
+        steps?: Array<{
+          icon?:
+            | "alert-triangle"
+            | "award"
+            | "building-2"
+            | "calendar-check"
+            | "clipboard-check"
+            | "clock"
+            | "droplets"
+            | "file-check-2"
+            | "lightbulb"
+            | "map-pin"
+            | "message-square"
+            | "phone-call"
+            | "search-check"
+            | "shield-check"
+            | "siren"
+            | "trending-up"
+            | "truck"
+            | "waves"
+            | "wrench";
+          title?: string;
+          description?: string;
+          _type: "item";
+          _key: string;
+        }>;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "homeServiceArea";
+        heading?: string;
+        eyebrow?: string;
+        description?: string;
+        calloutBody?: string;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "homeServices";
+        heading?: string;
+        eyebrow?: string;
+        description?: string;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "homeTestimonials";
+        heading?: string;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "homeTrustBar";
+        tagline?: string;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "homeWhyChooseUs";
+        heading?: string;
+        eyebrow?: string;
+        description?: string;
+        features?: Array<{
+          icon?:
+            | "alert-triangle"
+            | "award"
+            | "building-2"
+            | "calendar-check"
+            | "clipboard-check"
+            | "clock"
+            | "droplets"
+            | "file-check-2"
+            | "lightbulb"
+            | "map-pin"
+            | "message-square"
+            | "phone-call"
+            | "search-check"
+            | "shield-check"
+            | "siren"
+            | "trending-up"
+            | "truck"
+            | "waves"
+            | "wrench";
+          title?: string;
+          description?: string;
+          _type: "item";
+          _key: string;
+        }>;
+        photo: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+          frameRatio:
+            | "default"
+            | "landscape"
+            | "original"
+            | "portrait"
+            | "square"
+            | "wide"
+            | null;
+        } | null;
+        photoSubject?: string;
+        photoCaption?: string;
+        hidden?: boolean;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "iconCardSection";
+        eyebrow?: string;
+        heading?: string;
+        background?: "dark" | "default";
+        photo: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+          frameRatio: null;
+        } | null;
+        defaultCardColor?: "navy" | "offwhite" | "red" | "white";
+        cards?: Array<{
+          icon?:
+            | "award"
+            | "building-2"
+            | "calendar-check"
+            | "clock"
+            | "cog"
+            | "droplets"
+            | "flame"
+            | "gauge"
+            | "map-pin"
+            | "shield-check"
+            | "siren"
+            | "waves"
+            | "wrench";
+          title?: string;
+          description?: string;
+          ctaLabel?: string;
+          ctaHref?: string;
+          cardColor?: "navy" | "offwhite" | "red" | "white";
+          _type: "card";
+          _key: string;
+        }>;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "jobOpenings";
+        heading?: string;
+        applyLabel?: string;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "pageLinks";
+        heading?: string;
+        eyebrow?: string;
+        links?: Array<{
+          title?: string;
+          description?: string;
+          href?: string;
+          _type: "link";
+          _key: string;
+        }>;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "partnerCredentials";
+        heading?: string;
+        eyebrow?: string;
+        description?: string;
+        ctaLabel?: string;
+        ctaHref?: string;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "partnerPlatforms";
+        heading?: string;
+        eyebrow?: string;
+        description?: string;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "partnersHero";
+        heading?: string;
+        eyebrow?: string;
+        paragraphs?: Array<string>;
+        showCredentials?: boolean;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "processSteps";
+        heading?: string;
+        steps?: Array<{
+          title?: string;
+          description?: string;
+          _type: "step";
+          _key: string;
+        }>;
+        background?: "dark" | "white";
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "propertyTypes";
+        heading?: string;
+        cards?: Array<{
+          title?: string;
+          blurb?: string;
+          slug?: string;
+          href?: string;
+          linkLabel?: string;
+          icon?:
+            | "award"
+            | "building-2"
+            | "building"
+            | "calendar-check"
+            | "clock"
+            | "cog"
+            | "droplets"
+            | "flame"
+            | "gauge"
+            | "heart-handshake"
+            | "hotel"
+            | "map-pin"
+            | "shield-check"
+            | "siren"
+            | "stethoscope"
+            | "waves"
+            | "wrench";
+          photo?: Photo;
+          photoSubject?: string;
+          _type: "card";
+          _key: string;
+        }>;
+        background?: "dark" | "offwhite" | "white";
+        ctaLabel?: string;
+        ctaHref?: string;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "relatedServices";
+        heading?: string;
+        serviceSlugs?: Array<string>;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "serviceAbout";
+        heading?: string;
+        paragraphs?: Array<string>;
+        ctaLabel?: string;
+        ctaHref?: string;
+        photoPrimary: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+          frameRatio:
+            | "default"
+            | "landscape"
+            | "original"
+            | "portrait"
+            | "square"
+            | "wide"
+            | null;
+        } | null;
+        photoSubjectPrimary?: string;
+        background?: "dark" | "white";
+        photo: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "serviceArea";
+        heading?: string;
+        body?: string;
+        ctaLabel?: string;
+        ctaHref?: string;
+        photo: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+          frameRatio:
+            | "default"
+            | "landscape"
+            | "original"
+            | "portrait"
+            | "square"
+            | "wide"
+            | null;
+        } | null;
+        photoSubject?: string;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "serviceFaq";
+        heading?: string;
+        faqs?: Array<{
+          question?: string;
+          answer?: string;
+          href?: string;
+          linkLabel?: string;
+          _type: "faq";
+          _key: string;
+        }>;
+        background?: "offwhite" | "white";
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "serviceHero";
+        heading?: string;
+        subheading?: string;
+        secondaryCtaLabel?: string;
+        secondaryCtaHref?: string;
+        credentials?: Array<{
+          icon?:
+            | "award"
+            | "building-2"
+            | "calendar-check"
+            | "clock"
+            | "cog"
+            | "droplets"
+            | "flame"
+            | "gauge"
+            | "map-pin"
+            | "shield-check"
+            | "siren"
+            | "waves"
+            | "wrench";
+          label?: string;
+          _type: "credential";
+          _key: string;
+        }>;
+        eyebrow?: string;
+        phoneCtaLabel?: string;
+        showAvailabilityDot?: boolean;
+        photo: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+          frameRatio: null;
+        } | null;
+        darkOverlay?: boolean;
+        photoSubject?: string;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "serviceTestimonials";
+        heading?: string;
+        filterTags?: Array<string>;
+        limit?: number;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "serviceTrust";
+        heading?: string;
+        items?: Array<{
+          title?: string;
+          description?: string;
+          icon?:
+            | "award"
+            | "building-2"
+            | "calendar-check"
+            | "clock"
+            | "cog"
+            | "droplets"
+            | "flame"
+            | "gauge"
+            | "map-pin"
+            | "shield-check"
+            | "siren"
+            | "waves"
+            | "wrench";
+          _type: "item";
+          _key: string;
+        }>;
+        showLogos?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "signsYouNeed";
+        heading?: string;
+        cards?: Array<{
+          question?: string;
+          answer?: string;
+          icon?:
+            | "award"
+            | "building-2"
+            | "calendar-check"
+            | "clock"
+            | "cog"
+            | "droplets"
+            | "flame"
+            | "gauge"
+            | "map-pin"
+            | "shield-check"
+            | "siren"
+            | "waves"
+            | "wrench";
+          _type: "card";
+          _key: string;
+        }>;
+        ctaLabel?: string;
+        ctaHref?: string;
+        background?: "dark" | "white";
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "trustLogoStrip";
+        background?: "offwhite" | "white";
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "valuesGrid";
+        heading?: string;
+        eyebrow?: string;
+        values?: Array<{
+          icon?:
+            | "award"
+            | "building-2"
+            | "clock"
+            | "heart-handshake"
+            | "shield-check"
+            | "siren"
+            | "wrench";
+          title?: string;
+          description?: string;
+          _type: "value";
+          _key: string;
+        }>;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "vendorOnboarding";
+        heading?: string;
+        eyebrow?: string;
+        description?: string;
+        items?: Array<{
+          icon?:
+            | "building-2"
+            | "clipboard-list"
+            | "clock-4"
+            | "file-check-2"
+            | "phone-call"
+            | "shield-check"
+            | "truck"
+            | "wrench";
+          title?: string;
+          description?: string;
+          _type: "item";
+          _key: string;
+        }>;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "whatsIncluded";
+        heading?: string;
+        intro?: string;
+        items?: Array<{
+          title?: string;
+          description?: string;
+          icon?:
+            | "award"
+            | "building-2"
+            | "calendar-check"
+            | "clock"
+            | "cog"
+            | "droplets"
+            | "flame"
+            | "gauge"
+            | "map-pin"
+            | "shield-check"
+            | "siren"
+            | "waves"
+            | "wrench";
+          href?: string;
+          _type: "item";
+          _key: string;
+        }>;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+  > | null;
+} | null;
+
+// Source: sanity/queries.ts
+// Variable: ABOUT_PAGE_QUERY
+// Query: *[_type == "aboutPage" && _id == "aboutPage"][0]{    sections[]{    ...,    photo{ asset, hotspot, crop, alt, frameRatio },    photoPrimary{ asset, hotspot, crop, alt, frameRatio },    photoSecondary{ asset, hotspot, crop, alt },    primaryPhoto{ asset, hotspot, crop, alt, frameRatio },    secondaryPhoto{ asset, hotspot, crop, alt }  }  }
+export type ABOUT_PAGE_QUERY_RESULT = {
+  sections: Array<
+    | {
+        _key: string;
+        _type: "aboutEvolution";
+        heading?: string;
+        eyebrow?: string;
+        paragraphs?: Array<string>;
+        photo: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+          frameRatio:
+            | "default"
+            | "landscape"
+            | "original"
+            | "portrait"
+            | "square"
+            | "wide"
+            | null;
+        } | null;
+        photoSubject?: string;
+        hidden?: boolean;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "aboutHero";
+        heading?: string;
+        eyebrow?: string;
+        paragraphs?: Array<string>;
+        showCredentials?: boolean;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "aboutStory";
+        heading?: string;
+        eyebrow?: string;
+        paragraphs?: Array<string>;
+        badgeSubtitle?: string;
+        photoPrimary: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+          frameRatio:
+            | "default"
+            | "landscape"
+            | "original"
+            | "portrait"
+            | "square"
+            | "wide"
+            | null;
+        } | null;
+        photoSubjectPrimary?: string;
+        photoSecondary: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+        } | null;
+        photoSubjectSecondary?: string;
+        hidden?: boolean;
+        photo: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "careersCta";
+        heading?: string;
+        eyebrow?: string;
+        description?: string;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "careersHero";
+        heading?: string;
+        eyebrow?: string;
+        paragraphs?: Array<string>;
+        photo: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+          frameRatio: null;
+        } | null;
+        darkOverlay?: boolean;
+        hidden?: boolean;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "careerTraits";
+        heading?: string;
+        eyebrow?: string;
+        description?: string;
+        traits?: Array<{
+          name?: string;
+          gloss?: string;
+          _type: "trait";
+          _key: string;
+        }>;
+        quote?: string;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "careerValues";
+        heading?: string;
+        eyebrow?: string;
+        items?: Array<{
+          icon?:
+            | "award"
+            | "graduation-cap"
+            | "heart-handshake"
+            | "shield-check"
+            | "users"
+            | "wrench";
+          title?: string;
+          description?: string;
+          _type: "item";
+          _key: string;
+        }>;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "cityCommunities";
+        heading?: string;
+        body?: string;
+        communities?: Array<string>;
+        photoPrimary: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+          frameRatio: null;
+        } | null;
+        photoSubjectPrimary?: string;
+        photoSecondary: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+        } | null;
+        photoSubjectSecondary?: string;
+        ctaLabel?: string;
+        ctaHref?: string;
+        hidden?: boolean;
+        photo: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "comparisonTable";
+        heading?: string;
+        intro?: string;
+        columnLabels?: Array<string>;
+        rows?: Array<{
+          situation?: string;
+          recommendation?: string;
+          why?: string;
+          _type: "row";
+          _key: string;
+        }>;
+        footnote?: string;
+        background?: "dark" | "white";
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "finalCta";
+        heading?: string;
+        body?: string;
+        secondaryCtaLabel?: string;
+        secondaryCtaHref?: string;
+        phoneCtaLabel?: string;
+        showAvailabilityDot?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "hiringProcess";
+        heading?: string;
+        steps?: Array<{
+          title?: string;
+          description?: string;
+          _type: "step";
+          _key: string;
+        }>;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "homeAbout";
+        heading?: string;
+        eyebrow?: string;
+        description?: string;
+        highlights?: Array<string>;
+        badgeSubtitle?: string;
+        metrics?: Array<{
+          icon?:
+            | "alert-triangle"
+            | "award"
+            | "building-2"
+            | "calendar-check"
+            | "clipboard-check"
+            | "clock"
+            | "droplets"
+            | "file-check-2"
+            | "lightbulb"
+            | "map-pin"
+            | "message-square"
+            | "phone-call"
+            | "search-check"
+            | "shield-check"
+            | "siren"
+            | "trending-up"
+            | "truck"
+            | "waves"
+            | "wrench";
+          value?: string;
+          label?: string;
+          _type: "metric";
+          _key: string;
+        }>;
+        primaryPhoto: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+          frameRatio:
+            | "default"
+            | "landscape"
+            | "original"
+            | "portrait"
+            | "square"
+            | "wide"
+            | null;
+        } | null;
+        primaryPhotoSubject?: string;
+        secondaryPhoto: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+        } | null;
+        secondaryPhotoSubject?: string;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+      }
+    | {
+        _key: string;
+        _type: "homeCaseStudy";
+        heading?: string;
+        eyebrow?: string;
+        badgeLabel?: string;
+        storyBlocks?: Array<{
+          icon?:
+            | "alert-triangle"
+            | "award"
+            | "building-2"
+            | "calendar-check"
+            | "clipboard-check"
+            | "clock"
+            | "droplets"
+            | "file-check-2"
+            | "lightbulb"
+            | "map-pin"
+            | "message-square"
+            | "phone-call"
+            | "search-check"
+            | "shield-check"
+            | "siren"
+            | "trending-up"
+            | "truck"
+            | "waves"
+            | "wrench";
+          label?: string;
+          copy?: string;
+          _type: "storyBlock";
+          _key: string;
+        }>;
+        photo: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+          frameRatio:
+            | "default"
+            | "landscape"
+            | "original"
+            | "portrait"
+            | "square"
+            | "wide"
+            | null;
+        } | null;
+        photoSubject?: string;
+        photoCardTitle?: string;
+        photoCardSubtitle?: string;
+        hidden?: boolean;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "homeCompliance";
+        heading?: string;
+        eyebrow?: string;
+        description?: string;
+        items?: Array<string>;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "homeEmergency";
+        heading?: string;
+        eyebrow?: string;
+        body?: string;
+        benefits?: Array<{
+          icon?:
+            | "alert-triangle"
+            | "award"
+            | "building-2"
+            | "calendar-check"
+            | "clipboard-check"
+            | "clock"
+            | "droplets"
+            | "file-check-2"
+            | "lightbulb"
+            | "map-pin"
+            | "message-square"
+            | "phone-call"
+            | "search-check"
+            | "shield-check"
+            | "siren"
+            | "trending-up"
+            | "truck"
+            | "waves"
+            | "wrench";
+          label?: string;
+          _type: "item";
+          _key: string;
+        }>;
+        photo: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+          frameRatio:
+            | "default"
+            | "landscape"
+            | "original"
+            | "portrait"
+            | "square"
+            | "wide"
+            | null;
+        } | null;
+        photoSubject?: string;
+        photoCaption?: string;
+        hidden?: boolean;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "homeFaq";
+        heading?: string;
+        eyebrow?: string;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "homeFinalCta";
+        heading?: string;
+        eyebrow?: string;
+        description?: string;
+        reassurance?: string;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "homeHero";
+        headingBefore?: string;
+        headingHighlight?: string;
+        headingAfter?: string;
+        subcopy?: string;
+        eyebrow?: string;
+        trustIndicators?: Array<{
+          icon?:
+            | "alert-triangle"
+            | "award"
+            | "building-2"
+            | "calendar-check"
+            | "clipboard-check"
+            | "clock"
+            | "droplets"
+            | "file-check-2"
+            | "lightbulb"
+            | "map-pin"
+            | "message-square"
+            | "phone-call"
+            | "search-check"
+            | "shield-check"
+            | "siren"
+            | "trending-up"
+            | "truck"
+            | "waves"
+            | "wrench";
+          label?: string;
+          _type: "item";
+          _key: string;
+        }>;
+        experienceBadgeLabel?: string;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "homeIndustries";
+        heading?: string;
+        eyebrow?: string;
+        description?: string;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "homeLocationMap";
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "homeProcess";
+        heading?: string;
+        eyebrow?: string;
+        steps?: Array<{
+          icon?:
+            | "alert-triangle"
+            | "award"
+            | "building-2"
+            | "calendar-check"
+            | "clipboard-check"
+            | "clock"
+            | "droplets"
+            | "file-check-2"
+            | "lightbulb"
+            | "map-pin"
+            | "message-square"
+            | "phone-call"
+            | "search-check"
+            | "shield-check"
+            | "siren"
+            | "trending-up"
+            | "truck"
+            | "waves"
+            | "wrench";
+          title?: string;
+          description?: string;
+          _type: "item";
+          _key: string;
+        }>;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "homeServiceArea";
+        heading?: string;
+        eyebrow?: string;
+        description?: string;
+        calloutBody?: string;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "homeServices";
+        heading?: string;
+        eyebrow?: string;
+        description?: string;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "homeTestimonials";
+        heading?: string;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "homeTrustBar";
+        tagline?: string;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "homeWhyChooseUs";
+        heading?: string;
+        eyebrow?: string;
+        description?: string;
+        features?: Array<{
+          icon?:
+            | "alert-triangle"
+            | "award"
+            | "building-2"
+            | "calendar-check"
+            | "clipboard-check"
+            | "clock"
+            | "droplets"
+            | "file-check-2"
+            | "lightbulb"
+            | "map-pin"
+            | "message-square"
+            | "phone-call"
+            | "search-check"
+            | "shield-check"
+            | "siren"
+            | "trending-up"
+            | "truck"
+            | "waves"
+            | "wrench";
+          title?: string;
+          description?: string;
+          _type: "item";
+          _key: string;
+        }>;
+        photo: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+          frameRatio:
+            | "default"
+            | "landscape"
+            | "original"
+            | "portrait"
+            | "square"
+            | "wide"
+            | null;
+        } | null;
+        photoSubject?: string;
+        photoCaption?: string;
+        hidden?: boolean;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "iconCardSection";
+        eyebrow?: string;
+        heading?: string;
+        background?: "dark" | "default";
+        photo: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+          frameRatio: null;
+        } | null;
+        defaultCardColor?: "navy" | "offwhite" | "red" | "white";
+        cards?: Array<{
+          icon?:
+            | "award"
+            | "building-2"
+            | "calendar-check"
+            | "clock"
+            | "cog"
+            | "droplets"
+            | "flame"
+            | "gauge"
+            | "map-pin"
+            | "shield-check"
+            | "siren"
+            | "waves"
+            | "wrench";
+          title?: string;
+          description?: string;
+          ctaLabel?: string;
+          ctaHref?: string;
+          cardColor?: "navy" | "offwhite" | "red" | "white";
+          _type: "card";
+          _key: string;
+        }>;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "jobOpenings";
+        heading?: string;
+        applyLabel?: string;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "pageLinks";
+        heading?: string;
+        eyebrow?: string;
+        links?: Array<{
+          title?: string;
+          description?: string;
+          href?: string;
+          _type: "link";
+          _key: string;
+        }>;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "partnerCredentials";
+        heading?: string;
+        eyebrow?: string;
+        description?: string;
+        ctaLabel?: string;
+        ctaHref?: string;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "partnerPlatforms";
+        heading?: string;
+        eyebrow?: string;
+        description?: string;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "partnersHero";
+        heading?: string;
+        eyebrow?: string;
+        paragraphs?: Array<string>;
+        showCredentials?: boolean;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "processSteps";
+        heading?: string;
+        steps?: Array<{
+          title?: string;
+          description?: string;
+          _type: "step";
+          _key: string;
+        }>;
+        background?: "dark" | "white";
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "propertyTypes";
+        heading?: string;
+        cards?: Array<{
+          title?: string;
+          blurb?: string;
+          slug?: string;
+          href?: string;
+          linkLabel?: string;
+          icon?:
+            | "award"
+            | "building-2"
+            | "building"
+            | "calendar-check"
+            | "clock"
+            | "cog"
+            | "droplets"
+            | "flame"
+            | "gauge"
+            | "heart-handshake"
+            | "hotel"
+            | "map-pin"
+            | "shield-check"
+            | "siren"
+            | "stethoscope"
+            | "waves"
+            | "wrench";
+          photo?: Photo;
+          photoSubject?: string;
+          _type: "card";
+          _key: string;
+        }>;
+        background?: "dark" | "offwhite" | "white";
+        ctaLabel?: string;
+        ctaHref?: string;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "relatedServices";
+        heading?: string;
+        serviceSlugs?: Array<string>;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "serviceAbout";
+        heading?: string;
+        paragraphs?: Array<string>;
+        ctaLabel?: string;
+        ctaHref?: string;
+        photoPrimary: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+          frameRatio:
+            | "default"
+            | "landscape"
+            | "original"
+            | "portrait"
+            | "square"
+            | "wide"
+            | null;
+        } | null;
+        photoSubjectPrimary?: string;
+        background?: "dark" | "white";
+        photo: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "serviceArea";
+        heading?: string;
+        body?: string;
+        ctaLabel?: string;
+        ctaHref?: string;
+        photo: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+          frameRatio:
+            | "default"
+            | "landscape"
+            | "original"
+            | "portrait"
+            | "square"
+            | "wide"
+            | null;
+        } | null;
+        photoSubject?: string;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "serviceFaq";
+        heading?: string;
+        faqs?: Array<{
+          question?: string;
+          answer?: string;
+          href?: string;
+          linkLabel?: string;
+          _type: "faq";
+          _key: string;
+        }>;
+        background?: "offwhite" | "white";
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "serviceHero";
+        heading?: string;
+        subheading?: string;
+        secondaryCtaLabel?: string;
+        secondaryCtaHref?: string;
+        credentials?: Array<{
+          icon?:
+            | "award"
+            | "building-2"
+            | "calendar-check"
+            | "clock"
+            | "cog"
+            | "droplets"
+            | "flame"
+            | "gauge"
+            | "map-pin"
+            | "shield-check"
+            | "siren"
+            | "waves"
+            | "wrench";
+          label?: string;
+          _type: "credential";
+          _key: string;
+        }>;
+        eyebrow?: string;
+        phoneCtaLabel?: string;
+        showAvailabilityDot?: boolean;
+        photo: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+          frameRatio: null;
+        } | null;
+        darkOverlay?: boolean;
+        photoSubject?: string;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "serviceTestimonials";
+        heading?: string;
+        filterTags?: Array<string>;
+        limit?: number;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "serviceTrust";
+        heading?: string;
+        items?: Array<{
+          title?: string;
+          description?: string;
+          icon?:
+            | "award"
+            | "building-2"
+            | "calendar-check"
+            | "clock"
+            | "cog"
+            | "droplets"
+            | "flame"
+            | "gauge"
+            | "map-pin"
+            | "shield-check"
+            | "siren"
+            | "waves"
+            | "wrench";
+          _type: "item";
+          _key: string;
+        }>;
+        showLogos?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "signsYouNeed";
+        heading?: string;
+        cards?: Array<{
+          question?: string;
+          answer?: string;
+          icon?:
+            | "award"
+            | "building-2"
+            | "calendar-check"
+            | "clock"
+            | "cog"
+            | "droplets"
+            | "flame"
+            | "gauge"
+            | "map-pin"
+            | "shield-check"
+            | "siren"
+            | "waves"
+            | "wrench";
+          _type: "card";
+          _key: string;
+        }>;
+        ctaLabel?: string;
+        ctaHref?: string;
+        background?: "dark" | "white";
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "trustLogoStrip";
+        background?: "offwhite" | "white";
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "valuesGrid";
+        heading?: string;
+        eyebrow?: string;
+        values?: Array<{
+          icon?:
+            | "award"
+            | "building-2"
+            | "clock"
+            | "heart-handshake"
+            | "shield-check"
+            | "siren"
+            | "wrench";
+          title?: string;
+          description?: string;
+          _type: "value";
+          _key: string;
+        }>;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "vendorOnboarding";
+        heading?: string;
+        eyebrow?: string;
+        description?: string;
+        items?: Array<{
+          icon?:
+            | "building-2"
+            | "clipboard-list"
+            | "clock-4"
+            | "file-check-2"
+            | "phone-call"
+            | "shield-check"
+            | "truck"
+            | "wrench";
+          title?: string;
+          description?: string;
+          _type: "item";
+          _key: string;
+        }>;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "whatsIncluded";
+        heading?: string;
+        intro?: string;
+        items?: Array<{
+          title?: string;
+          description?: string;
+          icon?:
+            | "award"
+            | "building-2"
+            | "calendar-check"
+            | "clock"
+            | "cog"
+            | "droplets"
+            | "flame"
+            | "gauge"
+            | "map-pin"
+            | "shield-check"
+            | "siren"
+            | "waves"
+            | "wrench";
+          href?: string;
+          _type: "item";
+          _key: string;
+        }>;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+  > | null;
+} | null;
+
+// Source: sanity/queries.ts
+// Variable: PARTNERS_PAGE_QUERY
+// Query: *[_type == "partnersPage" && _id == "partnersPage"][0]{    sections[]{    ...,    photo{ asset, hotspot, crop, alt, frameRatio },    photoPrimary{ asset, hotspot, crop, alt, frameRatio },    photoSecondary{ asset, hotspot, crop, alt },    primaryPhoto{ asset, hotspot, crop, alt, frameRatio },    secondaryPhoto{ asset, hotspot, crop, alt }  }  }
+export type PARTNERS_PAGE_QUERY_RESULT = {
+  sections: Array<
+    | {
+        _key: string;
+        _type: "aboutEvolution";
+        heading?: string;
+        eyebrow?: string;
+        paragraphs?: Array<string>;
+        photo: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+          frameRatio:
+            | "default"
+            | "landscape"
+            | "original"
+            | "portrait"
+            | "square"
+            | "wide"
+            | null;
+        } | null;
+        photoSubject?: string;
+        hidden?: boolean;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "aboutHero";
+        heading?: string;
+        eyebrow?: string;
+        paragraphs?: Array<string>;
+        showCredentials?: boolean;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "aboutStory";
+        heading?: string;
+        eyebrow?: string;
+        paragraphs?: Array<string>;
+        badgeSubtitle?: string;
+        photoPrimary: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+          frameRatio:
+            | "default"
+            | "landscape"
+            | "original"
+            | "portrait"
+            | "square"
+            | "wide"
+            | null;
+        } | null;
+        photoSubjectPrimary?: string;
+        photoSecondary: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+        } | null;
+        photoSubjectSecondary?: string;
+        hidden?: boolean;
+        photo: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "careersCta";
+        heading?: string;
+        eyebrow?: string;
+        description?: string;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "careersHero";
+        heading?: string;
+        eyebrow?: string;
+        paragraphs?: Array<string>;
+        photo: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+          frameRatio: null;
+        } | null;
+        darkOverlay?: boolean;
+        hidden?: boolean;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "careerTraits";
+        heading?: string;
+        eyebrow?: string;
+        description?: string;
+        traits?: Array<{
+          name?: string;
+          gloss?: string;
+          _type: "trait";
+          _key: string;
+        }>;
+        quote?: string;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "careerValues";
+        heading?: string;
+        eyebrow?: string;
+        items?: Array<{
+          icon?:
+            | "award"
+            | "graduation-cap"
+            | "heart-handshake"
+            | "shield-check"
+            | "users"
+            | "wrench";
+          title?: string;
+          description?: string;
+          _type: "item";
+          _key: string;
+        }>;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "cityCommunities";
+        heading?: string;
+        body?: string;
+        communities?: Array<string>;
+        photoPrimary: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+          frameRatio: null;
+        } | null;
+        photoSubjectPrimary?: string;
+        photoSecondary: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+        } | null;
+        photoSubjectSecondary?: string;
+        ctaLabel?: string;
+        ctaHref?: string;
+        hidden?: boolean;
+        photo: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "comparisonTable";
+        heading?: string;
+        intro?: string;
+        columnLabels?: Array<string>;
+        rows?: Array<{
+          situation?: string;
+          recommendation?: string;
+          why?: string;
+          _type: "row";
+          _key: string;
+        }>;
+        footnote?: string;
+        background?: "dark" | "white";
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "finalCta";
+        heading?: string;
+        body?: string;
+        secondaryCtaLabel?: string;
+        secondaryCtaHref?: string;
+        phoneCtaLabel?: string;
+        showAvailabilityDot?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "hiringProcess";
+        heading?: string;
+        steps?: Array<{
+          title?: string;
+          description?: string;
+          _type: "step";
+          _key: string;
+        }>;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "homeAbout";
+        heading?: string;
+        eyebrow?: string;
+        description?: string;
+        highlights?: Array<string>;
+        badgeSubtitle?: string;
+        metrics?: Array<{
+          icon?:
+            | "alert-triangle"
+            | "award"
+            | "building-2"
+            | "calendar-check"
+            | "clipboard-check"
+            | "clock"
+            | "droplets"
+            | "file-check-2"
+            | "lightbulb"
+            | "map-pin"
+            | "message-square"
+            | "phone-call"
+            | "search-check"
+            | "shield-check"
+            | "siren"
+            | "trending-up"
+            | "truck"
+            | "waves"
+            | "wrench";
+          value?: string;
+          label?: string;
+          _type: "metric";
+          _key: string;
+        }>;
+        primaryPhoto: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+          frameRatio:
+            | "default"
+            | "landscape"
+            | "original"
+            | "portrait"
+            | "square"
+            | "wide"
+            | null;
+        } | null;
+        primaryPhotoSubject?: string;
+        secondaryPhoto: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+        } | null;
+        secondaryPhotoSubject?: string;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+      }
+    | {
+        _key: string;
+        _type: "homeCaseStudy";
+        heading?: string;
+        eyebrow?: string;
+        badgeLabel?: string;
+        storyBlocks?: Array<{
+          icon?:
+            | "alert-triangle"
+            | "award"
+            | "building-2"
+            | "calendar-check"
+            | "clipboard-check"
+            | "clock"
+            | "droplets"
+            | "file-check-2"
+            | "lightbulb"
+            | "map-pin"
+            | "message-square"
+            | "phone-call"
+            | "search-check"
+            | "shield-check"
+            | "siren"
+            | "trending-up"
+            | "truck"
+            | "waves"
+            | "wrench";
+          label?: string;
+          copy?: string;
+          _type: "storyBlock";
+          _key: string;
+        }>;
+        photo: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+          frameRatio:
+            | "default"
+            | "landscape"
+            | "original"
+            | "portrait"
+            | "square"
+            | "wide"
+            | null;
+        } | null;
+        photoSubject?: string;
+        photoCardTitle?: string;
+        photoCardSubtitle?: string;
+        hidden?: boolean;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "homeCompliance";
+        heading?: string;
+        eyebrow?: string;
+        description?: string;
+        items?: Array<string>;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "homeEmergency";
+        heading?: string;
+        eyebrow?: string;
+        body?: string;
+        benefits?: Array<{
+          icon?:
+            | "alert-triangle"
+            | "award"
+            | "building-2"
+            | "calendar-check"
+            | "clipboard-check"
+            | "clock"
+            | "droplets"
+            | "file-check-2"
+            | "lightbulb"
+            | "map-pin"
+            | "message-square"
+            | "phone-call"
+            | "search-check"
+            | "shield-check"
+            | "siren"
+            | "trending-up"
+            | "truck"
+            | "waves"
+            | "wrench";
+          label?: string;
+          _type: "item";
+          _key: string;
+        }>;
+        photo: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+          frameRatio:
+            | "default"
+            | "landscape"
+            | "original"
+            | "portrait"
+            | "square"
+            | "wide"
+            | null;
+        } | null;
+        photoSubject?: string;
+        photoCaption?: string;
+        hidden?: boolean;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "homeFaq";
+        heading?: string;
+        eyebrow?: string;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "homeFinalCta";
+        heading?: string;
+        eyebrow?: string;
+        description?: string;
+        reassurance?: string;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "homeHero";
+        headingBefore?: string;
+        headingHighlight?: string;
+        headingAfter?: string;
+        subcopy?: string;
+        eyebrow?: string;
+        trustIndicators?: Array<{
+          icon?:
+            | "alert-triangle"
+            | "award"
+            | "building-2"
+            | "calendar-check"
+            | "clipboard-check"
+            | "clock"
+            | "droplets"
+            | "file-check-2"
+            | "lightbulb"
+            | "map-pin"
+            | "message-square"
+            | "phone-call"
+            | "search-check"
+            | "shield-check"
+            | "siren"
+            | "trending-up"
+            | "truck"
+            | "waves"
+            | "wrench";
+          label?: string;
+          _type: "item";
+          _key: string;
+        }>;
+        experienceBadgeLabel?: string;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "homeIndustries";
+        heading?: string;
+        eyebrow?: string;
+        description?: string;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "homeLocationMap";
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "homeProcess";
+        heading?: string;
+        eyebrow?: string;
+        steps?: Array<{
+          icon?:
+            | "alert-triangle"
+            | "award"
+            | "building-2"
+            | "calendar-check"
+            | "clipboard-check"
+            | "clock"
+            | "droplets"
+            | "file-check-2"
+            | "lightbulb"
+            | "map-pin"
+            | "message-square"
+            | "phone-call"
+            | "search-check"
+            | "shield-check"
+            | "siren"
+            | "trending-up"
+            | "truck"
+            | "waves"
+            | "wrench";
+          title?: string;
+          description?: string;
+          _type: "item";
+          _key: string;
+        }>;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "homeServiceArea";
+        heading?: string;
+        eyebrow?: string;
+        description?: string;
+        calloutBody?: string;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "homeServices";
+        heading?: string;
+        eyebrow?: string;
+        description?: string;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "homeTestimonials";
+        heading?: string;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "homeTrustBar";
+        tagline?: string;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "homeWhyChooseUs";
+        heading?: string;
+        eyebrow?: string;
+        description?: string;
+        features?: Array<{
+          icon?:
+            | "alert-triangle"
+            | "award"
+            | "building-2"
+            | "calendar-check"
+            | "clipboard-check"
+            | "clock"
+            | "droplets"
+            | "file-check-2"
+            | "lightbulb"
+            | "map-pin"
+            | "message-square"
+            | "phone-call"
+            | "search-check"
+            | "shield-check"
+            | "siren"
+            | "trending-up"
+            | "truck"
+            | "waves"
+            | "wrench";
+          title?: string;
+          description?: string;
+          _type: "item";
+          _key: string;
+        }>;
+        photo: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+          frameRatio:
+            | "default"
+            | "landscape"
+            | "original"
+            | "portrait"
+            | "square"
+            | "wide"
+            | null;
+        } | null;
+        photoSubject?: string;
+        photoCaption?: string;
+        hidden?: boolean;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "iconCardSection";
+        eyebrow?: string;
+        heading?: string;
+        background?: "dark" | "default";
+        photo: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+          frameRatio: null;
+        } | null;
+        defaultCardColor?: "navy" | "offwhite" | "red" | "white";
+        cards?: Array<{
+          icon?:
+            | "award"
+            | "building-2"
+            | "calendar-check"
+            | "clock"
+            | "cog"
+            | "droplets"
+            | "flame"
+            | "gauge"
+            | "map-pin"
+            | "shield-check"
+            | "siren"
+            | "waves"
+            | "wrench";
+          title?: string;
+          description?: string;
+          ctaLabel?: string;
+          ctaHref?: string;
+          cardColor?: "navy" | "offwhite" | "red" | "white";
+          _type: "card";
+          _key: string;
+        }>;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "jobOpenings";
+        heading?: string;
+        applyLabel?: string;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "pageLinks";
+        heading?: string;
+        eyebrow?: string;
+        links?: Array<{
+          title?: string;
+          description?: string;
+          href?: string;
+          _type: "link";
+          _key: string;
+        }>;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "partnerCredentials";
+        heading?: string;
+        eyebrow?: string;
+        description?: string;
+        ctaLabel?: string;
+        ctaHref?: string;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "partnerPlatforms";
+        heading?: string;
+        eyebrow?: string;
+        description?: string;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "partnersHero";
+        heading?: string;
+        eyebrow?: string;
+        paragraphs?: Array<string>;
+        showCredentials?: boolean;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "processSteps";
+        heading?: string;
+        steps?: Array<{
+          title?: string;
+          description?: string;
+          _type: "step";
+          _key: string;
+        }>;
+        background?: "dark" | "white";
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "propertyTypes";
+        heading?: string;
+        cards?: Array<{
+          title?: string;
+          blurb?: string;
+          slug?: string;
+          href?: string;
+          linkLabel?: string;
+          icon?:
+            | "award"
+            | "building-2"
+            | "building"
+            | "calendar-check"
+            | "clock"
+            | "cog"
+            | "droplets"
+            | "flame"
+            | "gauge"
+            | "heart-handshake"
+            | "hotel"
+            | "map-pin"
+            | "shield-check"
+            | "siren"
+            | "stethoscope"
+            | "waves"
+            | "wrench";
+          photo?: Photo;
+          photoSubject?: string;
+          _type: "card";
+          _key: string;
+        }>;
+        background?: "dark" | "offwhite" | "white";
+        ctaLabel?: string;
+        ctaHref?: string;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "relatedServices";
+        heading?: string;
+        serviceSlugs?: Array<string>;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "serviceAbout";
+        heading?: string;
+        paragraphs?: Array<string>;
+        ctaLabel?: string;
+        ctaHref?: string;
+        photoPrimary: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+          frameRatio:
+            | "default"
+            | "landscape"
+            | "original"
+            | "portrait"
+            | "square"
+            | "wide"
+            | null;
+        } | null;
+        photoSubjectPrimary?: string;
+        background?: "dark" | "white";
+        photo: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "serviceArea";
+        heading?: string;
+        body?: string;
+        ctaLabel?: string;
+        ctaHref?: string;
+        photo: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+          frameRatio:
+            | "default"
+            | "landscape"
+            | "original"
+            | "portrait"
+            | "square"
+            | "wide"
+            | null;
+        } | null;
+        photoSubject?: string;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "serviceFaq";
+        heading?: string;
+        faqs?: Array<{
+          question?: string;
+          answer?: string;
+          href?: string;
+          linkLabel?: string;
+          _type: "faq";
+          _key: string;
+        }>;
+        background?: "offwhite" | "white";
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "serviceHero";
+        heading?: string;
+        subheading?: string;
+        secondaryCtaLabel?: string;
+        secondaryCtaHref?: string;
+        credentials?: Array<{
+          icon?:
+            | "award"
+            | "building-2"
+            | "calendar-check"
+            | "clock"
+            | "cog"
+            | "droplets"
+            | "flame"
+            | "gauge"
+            | "map-pin"
+            | "shield-check"
+            | "siren"
+            | "waves"
+            | "wrench";
+          label?: string;
+          _type: "credential";
+          _key: string;
+        }>;
+        eyebrow?: string;
+        phoneCtaLabel?: string;
+        showAvailabilityDot?: boolean;
+        photo: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+          frameRatio: null;
+        } | null;
+        darkOverlay?: boolean;
+        photoSubject?: string;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "serviceTestimonials";
+        heading?: string;
+        filterTags?: Array<string>;
+        limit?: number;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "serviceTrust";
+        heading?: string;
+        items?: Array<{
+          title?: string;
+          description?: string;
+          icon?:
+            | "award"
+            | "building-2"
+            | "calendar-check"
+            | "clock"
+            | "cog"
+            | "droplets"
+            | "flame"
+            | "gauge"
+            | "map-pin"
+            | "shield-check"
+            | "siren"
+            | "waves"
+            | "wrench";
+          _type: "item";
+          _key: string;
+        }>;
+        showLogos?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "signsYouNeed";
+        heading?: string;
+        cards?: Array<{
+          question?: string;
+          answer?: string;
+          icon?:
+            | "award"
+            | "building-2"
+            | "calendar-check"
+            | "clock"
+            | "cog"
+            | "droplets"
+            | "flame"
+            | "gauge"
+            | "map-pin"
+            | "shield-check"
+            | "siren"
+            | "waves"
+            | "wrench";
+          _type: "card";
+          _key: string;
+        }>;
+        ctaLabel?: string;
+        ctaHref?: string;
+        background?: "dark" | "white";
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "trustLogoStrip";
+        background?: "offwhite" | "white";
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "valuesGrid";
+        heading?: string;
+        eyebrow?: string;
+        values?: Array<{
+          icon?:
+            | "award"
+            | "building-2"
+            | "clock"
+            | "heart-handshake"
+            | "shield-check"
+            | "siren"
+            | "wrench";
+          title?: string;
+          description?: string;
+          _type: "value";
+          _key: string;
+        }>;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "vendorOnboarding";
+        heading?: string;
+        eyebrow?: string;
+        description?: string;
+        items?: Array<{
+          icon?:
+            | "building-2"
+            | "clipboard-list"
+            | "clock-4"
+            | "file-check-2"
+            | "phone-call"
+            | "shield-check"
+            | "truck"
+            | "wrench";
+          title?: string;
+          description?: string;
+          _type: "item";
+          _key: string;
+        }>;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "whatsIncluded";
+        heading?: string;
+        intro?: string;
+        items?: Array<{
+          title?: string;
+          description?: string;
+          icon?:
+            | "award"
+            | "building-2"
+            | "calendar-check"
+            | "clock"
+            | "cog"
+            | "droplets"
+            | "flame"
+            | "gauge"
+            | "map-pin"
+            | "shield-check"
+            | "siren"
+            | "waves"
+            | "wrench";
+          href?: string;
+          _type: "item";
+          _key: string;
+        }>;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+  > | null;
+} | null;
+
+// Source: sanity/queries.ts
+// Variable: CAREERS_PAGE_QUERY
+// Query: *[_type == "careersPage" && _id == "careersPage"][0]{    sections[]{    ...,    photo{ asset, hotspot, crop, alt, frameRatio },    photoPrimary{ asset, hotspot, crop, alt, frameRatio },    photoSecondary{ asset, hotspot, crop, alt },    primaryPhoto{ asset, hotspot, crop, alt, frameRatio },    secondaryPhoto{ asset, hotspot, crop, alt }  }  }
+export type CAREERS_PAGE_QUERY_RESULT = {
+  sections: Array<
+    | {
+        _key: string;
+        _type: "aboutEvolution";
+        heading?: string;
+        eyebrow?: string;
+        paragraphs?: Array<string>;
+        photo: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+          frameRatio:
+            | "default"
+            | "landscape"
+            | "original"
+            | "portrait"
+            | "square"
+            | "wide"
+            | null;
+        } | null;
+        photoSubject?: string;
+        hidden?: boolean;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "aboutHero";
+        heading?: string;
+        eyebrow?: string;
+        paragraphs?: Array<string>;
+        showCredentials?: boolean;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "aboutStory";
+        heading?: string;
+        eyebrow?: string;
+        paragraphs?: Array<string>;
+        badgeSubtitle?: string;
+        photoPrimary: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+          frameRatio:
+            | "default"
+            | "landscape"
+            | "original"
+            | "portrait"
+            | "square"
+            | "wide"
+            | null;
+        } | null;
+        photoSubjectPrimary?: string;
+        photoSecondary: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+        } | null;
+        photoSubjectSecondary?: string;
+        hidden?: boolean;
+        photo: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "careersCta";
+        heading?: string;
+        eyebrow?: string;
+        description?: string;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "careersHero";
+        heading?: string;
+        eyebrow?: string;
+        paragraphs?: Array<string>;
+        photo: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+          frameRatio: null;
+        } | null;
+        darkOverlay?: boolean;
+        hidden?: boolean;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "careerTraits";
+        heading?: string;
+        eyebrow?: string;
+        description?: string;
+        traits?: Array<{
+          name?: string;
+          gloss?: string;
+          _type: "trait";
+          _key: string;
+        }>;
+        quote?: string;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "careerValues";
+        heading?: string;
+        eyebrow?: string;
+        items?: Array<{
+          icon?:
+            | "award"
+            | "graduation-cap"
+            | "heart-handshake"
+            | "shield-check"
+            | "users"
+            | "wrench";
+          title?: string;
+          description?: string;
+          _type: "item";
+          _key: string;
+        }>;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "cityCommunities";
+        heading?: string;
+        body?: string;
+        communities?: Array<string>;
+        photoPrimary: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+          frameRatio: null;
+        } | null;
+        photoSubjectPrimary?: string;
+        photoSecondary: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+        } | null;
+        photoSubjectSecondary?: string;
+        ctaLabel?: string;
+        ctaHref?: string;
+        hidden?: boolean;
+        photo: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "comparisonTable";
+        heading?: string;
+        intro?: string;
+        columnLabels?: Array<string>;
+        rows?: Array<{
+          situation?: string;
+          recommendation?: string;
+          why?: string;
+          _type: "row";
+          _key: string;
+        }>;
+        footnote?: string;
+        background?: "dark" | "white";
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "finalCta";
+        heading?: string;
+        body?: string;
+        secondaryCtaLabel?: string;
+        secondaryCtaHref?: string;
+        phoneCtaLabel?: string;
+        showAvailabilityDot?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "hiringProcess";
+        heading?: string;
+        steps?: Array<{
+          title?: string;
+          description?: string;
+          _type: "step";
+          _key: string;
+        }>;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "homeAbout";
+        heading?: string;
+        eyebrow?: string;
+        description?: string;
+        highlights?: Array<string>;
+        badgeSubtitle?: string;
+        metrics?: Array<{
+          icon?:
+            | "alert-triangle"
+            | "award"
+            | "building-2"
+            | "calendar-check"
+            | "clipboard-check"
+            | "clock"
+            | "droplets"
+            | "file-check-2"
+            | "lightbulb"
+            | "map-pin"
+            | "message-square"
+            | "phone-call"
+            | "search-check"
+            | "shield-check"
+            | "siren"
+            | "trending-up"
+            | "truck"
+            | "waves"
+            | "wrench";
+          value?: string;
+          label?: string;
+          _type: "metric";
+          _key: string;
+        }>;
+        primaryPhoto: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+          frameRatio:
+            | "default"
+            | "landscape"
+            | "original"
+            | "portrait"
+            | "square"
+            | "wide"
+            | null;
+        } | null;
+        primaryPhotoSubject?: string;
+        secondaryPhoto: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+        } | null;
+        secondaryPhotoSubject?: string;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+      }
+    | {
+        _key: string;
+        _type: "homeCaseStudy";
+        heading?: string;
+        eyebrow?: string;
+        badgeLabel?: string;
+        storyBlocks?: Array<{
+          icon?:
+            | "alert-triangle"
+            | "award"
+            | "building-2"
+            | "calendar-check"
+            | "clipboard-check"
+            | "clock"
+            | "droplets"
+            | "file-check-2"
+            | "lightbulb"
+            | "map-pin"
+            | "message-square"
+            | "phone-call"
+            | "search-check"
+            | "shield-check"
+            | "siren"
+            | "trending-up"
+            | "truck"
+            | "waves"
+            | "wrench";
+          label?: string;
+          copy?: string;
+          _type: "storyBlock";
+          _key: string;
+        }>;
+        photo: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+          frameRatio:
+            | "default"
+            | "landscape"
+            | "original"
+            | "portrait"
+            | "square"
+            | "wide"
+            | null;
+        } | null;
+        photoSubject?: string;
+        photoCardTitle?: string;
+        photoCardSubtitle?: string;
+        hidden?: boolean;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "homeCompliance";
+        heading?: string;
+        eyebrow?: string;
+        description?: string;
+        items?: Array<string>;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "homeEmergency";
+        heading?: string;
+        eyebrow?: string;
+        body?: string;
+        benefits?: Array<{
+          icon?:
+            | "alert-triangle"
+            | "award"
+            | "building-2"
+            | "calendar-check"
+            | "clipboard-check"
+            | "clock"
+            | "droplets"
+            | "file-check-2"
+            | "lightbulb"
+            | "map-pin"
+            | "message-square"
+            | "phone-call"
+            | "search-check"
+            | "shield-check"
+            | "siren"
+            | "trending-up"
+            | "truck"
+            | "waves"
+            | "wrench";
+          label?: string;
+          _type: "item";
+          _key: string;
+        }>;
+        photo: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+          frameRatio:
+            | "default"
+            | "landscape"
+            | "original"
+            | "portrait"
+            | "square"
+            | "wide"
+            | null;
+        } | null;
+        photoSubject?: string;
+        photoCaption?: string;
+        hidden?: boolean;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "homeFaq";
+        heading?: string;
+        eyebrow?: string;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "homeFinalCta";
+        heading?: string;
+        eyebrow?: string;
+        description?: string;
+        reassurance?: string;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "homeHero";
+        headingBefore?: string;
+        headingHighlight?: string;
+        headingAfter?: string;
+        subcopy?: string;
+        eyebrow?: string;
+        trustIndicators?: Array<{
+          icon?:
+            | "alert-triangle"
+            | "award"
+            | "building-2"
+            | "calendar-check"
+            | "clipboard-check"
+            | "clock"
+            | "droplets"
+            | "file-check-2"
+            | "lightbulb"
+            | "map-pin"
+            | "message-square"
+            | "phone-call"
+            | "search-check"
+            | "shield-check"
+            | "siren"
+            | "trending-up"
+            | "truck"
+            | "waves"
+            | "wrench";
+          label?: string;
+          _type: "item";
+          _key: string;
+        }>;
+        experienceBadgeLabel?: string;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "homeIndustries";
+        heading?: string;
+        eyebrow?: string;
+        description?: string;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "homeLocationMap";
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "homeProcess";
+        heading?: string;
+        eyebrow?: string;
+        steps?: Array<{
+          icon?:
+            | "alert-triangle"
+            | "award"
+            | "building-2"
+            | "calendar-check"
+            | "clipboard-check"
+            | "clock"
+            | "droplets"
+            | "file-check-2"
+            | "lightbulb"
+            | "map-pin"
+            | "message-square"
+            | "phone-call"
+            | "search-check"
+            | "shield-check"
+            | "siren"
+            | "trending-up"
+            | "truck"
+            | "waves"
+            | "wrench";
+          title?: string;
+          description?: string;
+          _type: "item";
+          _key: string;
+        }>;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "homeServiceArea";
+        heading?: string;
+        eyebrow?: string;
+        description?: string;
+        calloutBody?: string;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "homeServices";
+        heading?: string;
+        eyebrow?: string;
+        description?: string;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "homeTestimonials";
+        heading?: string;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "homeTrustBar";
+        tagline?: string;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "homeWhyChooseUs";
+        heading?: string;
+        eyebrow?: string;
+        description?: string;
+        features?: Array<{
+          icon?:
+            | "alert-triangle"
+            | "award"
+            | "building-2"
+            | "calendar-check"
+            | "clipboard-check"
+            | "clock"
+            | "droplets"
+            | "file-check-2"
+            | "lightbulb"
+            | "map-pin"
+            | "message-square"
+            | "phone-call"
+            | "search-check"
+            | "shield-check"
+            | "siren"
+            | "trending-up"
+            | "truck"
+            | "waves"
+            | "wrench";
+          title?: string;
+          description?: string;
+          _type: "item";
+          _key: string;
+        }>;
+        photo: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+          frameRatio:
+            | "default"
+            | "landscape"
+            | "original"
+            | "portrait"
+            | "square"
+            | "wide"
+            | null;
+        } | null;
+        photoSubject?: string;
+        photoCaption?: string;
+        hidden?: boolean;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "iconCardSection";
+        eyebrow?: string;
+        heading?: string;
+        background?: "dark" | "default";
+        photo: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+          frameRatio: null;
+        } | null;
+        defaultCardColor?: "navy" | "offwhite" | "red" | "white";
+        cards?: Array<{
+          icon?:
+            | "award"
+            | "building-2"
+            | "calendar-check"
+            | "clock"
+            | "cog"
+            | "droplets"
+            | "flame"
+            | "gauge"
+            | "map-pin"
+            | "shield-check"
+            | "siren"
+            | "waves"
+            | "wrench";
+          title?: string;
+          description?: string;
+          ctaLabel?: string;
+          ctaHref?: string;
+          cardColor?: "navy" | "offwhite" | "red" | "white";
+          _type: "card";
+          _key: string;
+        }>;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "jobOpenings";
+        heading?: string;
+        applyLabel?: string;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "pageLinks";
+        heading?: string;
+        eyebrow?: string;
+        links?: Array<{
+          title?: string;
+          description?: string;
+          href?: string;
+          _type: "link";
+          _key: string;
+        }>;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "partnerCredentials";
+        heading?: string;
+        eyebrow?: string;
+        description?: string;
+        ctaLabel?: string;
+        ctaHref?: string;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "partnerPlatforms";
+        heading?: string;
+        eyebrow?: string;
+        description?: string;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "partnersHero";
+        heading?: string;
+        eyebrow?: string;
+        paragraphs?: Array<string>;
+        showCredentials?: boolean;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "processSteps";
+        heading?: string;
+        steps?: Array<{
+          title?: string;
+          description?: string;
+          _type: "step";
+          _key: string;
+        }>;
+        background?: "dark" | "white";
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "propertyTypes";
+        heading?: string;
+        cards?: Array<{
+          title?: string;
+          blurb?: string;
+          slug?: string;
+          href?: string;
+          linkLabel?: string;
+          icon?:
+            | "award"
+            | "building-2"
+            | "building"
+            | "calendar-check"
+            | "clock"
+            | "cog"
+            | "droplets"
+            | "flame"
+            | "gauge"
+            | "heart-handshake"
+            | "hotel"
+            | "map-pin"
+            | "shield-check"
+            | "siren"
+            | "stethoscope"
+            | "waves"
+            | "wrench";
+          photo?: Photo;
+          photoSubject?: string;
+          _type: "card";
+          _key: string;
+        }>;
+        background?: "dark" | "offwhite" | "white";
+        ctaLabel?: string;
+        ctaHref?: string;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "relatedServices";
+        heading?: string;
+        serviceSlugs?: Array<string>;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "serviceAbout";
+        heading?: string;
+        paragraphs?: Array<string>;
+        ctaLabel?: string;
+        ctaHref?: string;
+        photoPrimary: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+          frameRatio:
+            | "default"
+            | "landscape"
+            | "original"
+            | "portrait"
+            | "square"
+            | "wide"
+            | null;
+        } | null;
+        photoSubjectPrimary?: string;
+        background?: "dark" | "white";
+        photo: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "serviceArea";
+        heading?: string;
+        body?: string;
+        ctaLabel?: string;
+        ctaHref?: string;
+        photo: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+          frameRatio:
+            | "default"
+            | "landscape"
+            | "original"
+            | "portrait"
+            | "square"
+            | "wide"
+            | null;
+        } | null;
+        photoSubject?: string;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "serviceFaq";
+        heading?: string;
+        faqs?: Array<{
+          question?: string;
+          answer?: string;
+          href?: string;
+          linkLabel?: string;
+          _type: "faq";
+          _key: string;
+        }>;
+        background?: "offwhite" | "white";
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "serviceHero";
+        heading?: string;
+        subheading?: string;
+        secondaryCtaLabel?: string;
+        secondaryCtaHref?: string;
+        credentials?: Array<{
+          icon?:
+            | "award"
+            | "building-2"
+            | "calendar-check"
+            | "clock"
+            | "cog"
+            | "droplets"
+            | "flame"
+            | "gauge"
+            | "map-pin"
+            | "shield-check"
+            | "siren"
+            | "waves"
+            | "wrench";
+          label?: string;
+          _type: "credential";
+          _key: string;
+        }>;
+        eyebrow?: string;
+        phoneCtaLabel?: string;
+        showAvailabilityDot?: boolean;
+        photo: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+          frameRatio: null;
+        } | null;
+        darkOverlay?: boolean;
+        photoSubject?: string;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "serviceTestimonials";
+        heading?: string;
+        filterTags?: Array<string>;
+        limit?: number;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "serviceTrust";
+        heading?: string;
+        items?: Array<{
+          title?: string;
+          description?: string;
+          icon?:
+            | "award"
+            | "building-2"
+            | "calendar-check"
+            | "clock"
+            | "cog"
+            | "droplets"
+            | "flame"
+            | "gauge"
+            | "map-pin"
+            | "shield-check"
+            | "siren"
+            | "waves"
+            | "wrench";
+          _type: "item";
+          _key: string;
+        }>;
+        showLogos?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "signsYouNeed";
+        heading?: string;
+        cards?: Array<{
+          question?: string;
+          answer?: string;
+          icon?:
+            | "award"
+            | "building-2"
+            | "calendar-check"
+            | "clock"
+            | "cog"
+            | "droplets"
+            | "flame"
+            | "gauge"
+            | "map-pin"
+            | "shield-check"
+            | "siren"
+            | "waves"
+            | "wrench";
+          _type: "card";
+          _key: string;
+        }>;
+        ctaLabel?: string;
+        ctaHref?: string;
+        background?: "dark" | "white";
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "trustLogoStrip";
+        background?: "offwhite" | "white";
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "valuesGrid";
+        heading?: string;
+        eyebrow?: string;
+        values?: Array<{
+          icon?:
+            | "award"
+            | "building-2"
+            | "clock"
+            | "heart-handshake"
+            | "shield-check"
+            | "siren"
+            | "wrench";
+          title?: string;
+          description?: string;
+          _type: "value";
+          _key: string;
+        }>;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "vendorOnboarding";
+        heading?: string;
+        eyebrow?: string;
+        description?: string;
+        items?: Array<{
+          icon?:
+            | "building-2"
+            | "clipboard-list"
+            | "clock-4"
+            | "file-check-2"
+            | "phone-call"
+            | "shield-check"
+            | "truck"
+            | "wrench";
+          title?: string;
+          description?: string;
+          _type: "item";
+          _key: string;
+        }>;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "whatsIncluded";
+        heading?: string;
+        intro?: string;
+        items?: Array<{
+          title?: string;
+          description?: string;
+          icon?:
+            | "award"
+            | "building-2"
+            | "calendar-check"
+            | "clock"
+            | "cog"
+            | "droplets"
+            | "flame"
+            | "gauge"
+            | "map-pin"
+            | "shield-check"
+            | "siren"
+            | "waves"
+            | "wrench";
+          href?: string;
+          _type: "item";
+          _key: string;
+        }>;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+  > | null;
+} | null;
+
+// Source: sanity/queries.ts
+// Variable: CONTACT_PAGE_QUERY
+// Query: *[_type == "contactPage" && _id == "contactPage"][0]{    heroEyebrow,    heroHeading,    heroIntro,    responsePromise,    hours[]{ days, hours },    emergencyHeading,    emergencyBody,    faqs[]{ question, answer }  }
+export type CONTACT_PAGE_QUERY_RESULT = {
+  heroEyebrow: string | null;
+  heroHeading: string | null;
+  heroIntro: string | null;
+  responsePromise: string | null;
+  hours: Array<{
+    days: string | null;
+    hours: string | null;
+  }> | null;
+  emergencyHeading: string | null;
+  emergencyBody: string | null;
+  faqs: Array<{
+    question: string | null;
+    answer: string | null;
+  }> | null;
+} | null;
+
+// Source: sanity/queries.ts
+// Variable: CITY_PAGE_QUERY
+// Query: *[_type == "cityPage" && slug.current == $slug][0]{    city,    "slug": slug.current,    sections[]{    ...,    photo{ asset, hotspot, crop, alt, frameRatio },    photoPrimary{ asset, hotspot, crop, alt, frameRatio },    photoSecondary{ asset, hotspot, crop, alt },    primaryPhoto{ asset, hotspot, crop, alt, frameRatio },    secondaryPhoto{ asset, hotspot, crop, alt }  },    seoTitle,    seoDescription  }
+export type CITY_PAGE_QUERY_RESULT = {
+  city: string | null;
+  slug: string | null;
+  sections: Array<
+    | {
+        _key: string;
+        _type: "aboutEvolution";
+        heading?: string;
+        eyebrow?: string;
+        paragraphs?: Array<string>;
+        photo: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+          frameRatio:
+            | "default"
+            | "landscape"
+            | "original"
+            | "portrait"
+            | "square"
+            | "wide"
+            | null;
+        } | null;
+        photoSubject?: string;
+        hidden?: boolean;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "aboutHero";
+        heading?: string;
+        eyebrow?: string;
+        paragraphs?: Array<string>;
+        showCredentials?: boolean;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "aboutStory";
+        heading?: string;
+        eyebrow?: string;
+        paragraphs?: Array<string>;
+        badgeSubtitle?: string;
+        photoPrimary: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+          frameRatio:
+            | "default"
+            | "landscape"
+            | "original"
+            | "portrait"
+            | "square"
+            | "wide"
+            | null;
+        } | null;
+        photoSubjectPrimary?: string;
+        photoSecondary: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+        } | null;
+        photoSubjectSecondary?: string;
+        hidden?: boolean;
+        photo: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "careersCta";
+        heading?: string;
+        eyebrow?: string;
+        description?: string;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "careersHero";
+        heading?: string;
+        eyebrow?: string;
+        paragraphs?: Array<string>;
+        photo: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+          frameRatio: null;
+        } | null;
+        darkOverlay?: boolean;
+        hidden?: boolean;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "careerTraits";
+        heading?: string;
+        eyebrow?: string;
+        description?: string;
+        traits?: Array<{
+          name?: string;
+          gloss?: string;
+          _type: "trait";
+          _key: string;
+        }>;
+        quote?: string;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "careerValues";
+        heading?: string;
+        eyebrow?: string;
+        items?: Array<{
+          icon?:
+            | "award"
+            | "graduation-cap"
+            | "heart-handshake"
+            | "shield-check"
+            | "users"
+            | "wrench";
+          title?: string;
+          description?: string;
+          _type: "item";
+          _key: string;
+        }>;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "cityCommunities";
+        heading?: string;
+        body?: string;
+        communities?: Array<string>;
+        photoPrimary: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+          frameRatio: null;
+        } | null;
+        photoSubjectPrimary?: string;
+        photoSecondary: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+        } | null;
+        photoSubjectSecondary?: string;
+        ctaLabel?: string;
+        ctaHref?: string;
+        hidden?: boolean;
+        photo: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "comparisonTable";
+        heading?: string;
+        intro?: string;
+        columnLabels?: Array<string>;
+        rows?: Array<{
+          situation?: string;
+          recommendation?: string;
+          why?: string;
+          _type: "row";
+          _key: string;
+        }>;
+        footnote?: string;
+        background?: "dark" | "white";
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "finalCta";
+        heading?: string;
+        body?: string;
+        secondaryCtaLabel?: string;
+        secondaryCtaHref?: string;
+        phoneCtaLabel?: string;
+        showAvailabilityDot?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "hiringProcess";
+        heading?: string;
+        steps?: Array<{
+          title?: string;
+          description?: string;
+          _type: "step";
+          _key: string;
+        }>;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "homeAbout";
+        heading?: string;
+        eyebrow?: string;
+        description?: string;
+        highlights?: Array<string>;
+        badgeSubtitle?: string;
+        metrics?: Array<{
+          icon?:
+            | "alert-triangle"
+            | "award"
+            | "building-2"
+            | "calendar-check"
+            | "clipboard-check"
+            | "clock"
+            | "droplets"
+            | "file-check-2"
+            | "lightbulb"
+            | "map-pin"
+            | "message-square"
+            | "phone-call"
+            | "search-check"
+            | "shield-check"
+            | "siren"
+            | "trending-up"
+            | "truck"
+            | "waves"
+            | "wrench";
+          value?: string;
+          label?: string;
+          _type: "metric";
+          _key: string;
+        }>;
+        primaryPhoto: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+          frameRatio:
+            | "default"
+            | "landscape"
+            | "original"
+            | "portrait"
+            | "square"
+            | "wide"
+            | null;
+        } | null;
+        primaryPhotoSubject?: string;
+        secondaryPhoto: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+        } | null;
+        secondaryPhotoSubject?: string;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+      }
+    | {
+        _key: string;
+        _type: "homeCaseStudy";
+        heading?: string;
+        eyebrow?: string;
+        badgeLabel?: string;
+        storyBlocks?: Array<{
+          icon?:
+            | "alert-triangle"
+            | "award"
+            | "building-2"
+            | "calendar-check"
+            | "clipboard-check"
+            | "clock"
+            | "droplets"
+            | "file-check-2"
+            | "lightbulb"
+            | "map-pin"
+            | "message-square"
+            | "phone-call"
+            | "search-check"
+            | "shield-check"
+            | "siren"
+            | "trending-up"
+            | "truck"
+            | "waves"
+            | "wrench";
+          label?: string;
+          copy?: string;
+          _type: "storyBlock";
+          _key: string;
+        }>;
+        photo: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+          frameRatio:
+            | "default"
+            | "landscape"
+            | "original"
+            | "portrait"
+            | "square"
+            | "wide"
+            | null;
+        } | null;
+        photoSubject?: string;
+        photoCardTitle?: string;
+        photoCardSubtitle?: string;
+        hidden?: boolean;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "homeCompliance";
+        heading?: string;
+        eyebrow?: string;
+        description?: string;
+        items?: Array<string>;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "homeEmergency";
+        heading?: string;
+        eyebrow?: string;
+        body?: string;
+        benefits?: Array<{
+          icon?:
+            | "alert-triangle"
+            | "award"
+            | "building-2"
+            | "calendar-check"
+            | "clipboard-check"
+            | "clock"
+            | "droplets"
+            | "file-check-2"
+            | "lightbulb"
+            | "map-pin"
+            | "message-square"
+            | "phone-call"
+            | "search-check"
+            | "shield-check"
+            | "siren"
+            | "trending-up"
+            | "truck"
+            | "waves"
+            | "wrench";
+          label?: string;
+          _type: "item";
+          _key: string;
+        }>;
+        photo: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+          frameRatio:
+            | "default"
+            | "landscape"
+            | "original"
+            | "portrait"
+            | "square"
+            | "wide"
+            | null;
+        } | null;
+        photoSubject?: string;
+        photoCaption?: string;
+        hidden?: boolean;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "homeFaq";
+        heading?: string;
+        eyebrow?: string;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "homeFinalCta";
+        heading?: string;
+        eyebrow?: string;
+        description?: string;
+        reassurance?: string;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "homeHero";
+        headingBefore?: string;
+        headingHighlight?: string;
+        headingAfter?: string;
+        subcopy?: string;
+        eyebrow?: string;
+        trustIndicators?: Array<{
+          icon?:
+            | "alert-triangle"
+            | "award"
+            | "building-2"
+            | "calendar-check"
+            | "clipboard-check"
+            | "clock"
+            | "droplets"
+            | "file-check-2"
+            | "lightbulb"
+            | "map-pin"
+            | "message-square"
+            | "phone-call"
+            | "search-check"
+            | "shield-check"
+            | "siren"
+            | "trending-up"
+            | "truck"
+            | "waves"
+            | "wrench";
+          label?: string;
+          _type: "item";
+          _key: string;
+        }>;
+        experienceBadgeLabel?: string;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "homeIndustries";
+        heading?: string;
+        eyebrow?: string;
+        description?: string;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "homeLocationMap";
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "homeProcess";
+        heading?: string;
+        eyebrow?: string;
+        steps?: Array<{
+          icon?:
+            | "alert-triangle"
+            | "award"
+            | "building-2"
+            | "calendar-check"
+            | "clipboard-check"
+            | "clock"
+            | "droplets"
+            | "file-check-2"
+            | "lightbulb"
+            | "map-pin"
+            | "message-square"
+            | "phone-call"
+            | "search-check"
+            | "shield-check"
+            | "siren"
+            | "trending-up"
+            | "truck"
+            | "waves"
+            | "wrench";
+          title?: string;
+          description?: string;
+          _type: "item";
+          _key: string;
+        }>;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "homeServiceArea";
+        heading?: string;
+        eyebrow?: string;
+        description?: string;
+        calloutBody?: string;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "homeServices";
+        heading?: string;
+        eyebrow?: string;
+        description?: string;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "homeTestimonials";
+        heading?: string;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "homeTrustBar";
+        tagline?: string;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "homeWhyChooseUs";
+        heading?: string;
+        eyebrow?: string;
+        description?: string;
+        features?: Array<{
+          icon?:
+            | "alert-triangle"
+            | "award"
+            | "building-2"
+            | "calendar-check"
+            | "clipboard-check"
+            | "clock"
+            | "droplets"
+            | "file-check-2"
+            | "lightbulb"
+            | "map-pin"
+            | "message-square"
+            | "phone-call"
+            | "search-check"
+            | "shield-check"
+            | "siren"
+            | "trending-up"
+            | "truck"
+            | "waves"
+            | "wrench";
+          title?: string;
+          description?: string;
+          _type: "item";
+          _key: string;
+        }>;
+        photo: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+          frameRatio:
+            | "default"
+            | "landscape"
+            | "original"
+            | "portrait"
+            | "square"
+            | "wide"
+            | null;
+        } | null;
+        photoSubject?: string;
+        photoCaption?: string;
+        hidden?: boolean;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "iconCardSection";
+        eyebrow?: string;
+        heading?: string;
+        background?: "dark" | "default";
+        photo: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+          frameRatio: null;
+        } | null;
+        defaultCardColor?: "navy" | "offwhite" | "red" | "white";
+        cards?: Array<{
+          icon?:
+            | "award"
+            | "building-2"
+            | "calendar-check"
+            | "clock"
+            | "cog"
+            | "droplets"
+            | "flame"
+            | "gauge"
+            | "map-pin"
+            | "shield-check"
+            | "siren"
+            | "waves"
+            | "wrench";
+          title?: string;
+          description?: string;
+          ctaLabel?: string;
+          ctaHref?: string;
+          cardColor?: "navy" | "offwhite" | "red" | "white";
+          _type: "card";
+          _key: string;
+        }>;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "jobOpenings";
+        heading?: string;
+        applyLabel?: string;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "pageLinks";
+        heading?: string;
+        eyebrow?: string;
+        links?: Array<{
+          title?: string;
+          description?: string;
+          href?: string;
+          _type: "link";
+          _key: string;
+        }>;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "partnerCredentials";
+        heading?: string;
+        eyebrow?: string;
+        description?: string;
+        ctaLabel?: string;
+        ctaHref?: string;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "partnerPlatforms";
+        heading?: string;
+        eyebrow?: string;
+        description?: string;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "partnersHero";
+        heading?: string;
+        eyebrow?: string;
+        paragraphs?: Array<string>;
+        showCredentials?: boolean;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "processSteps";
+        heading?: string;
+        steps?: Array<{
+          title?: string;
+          description?: string;
+          _type: "step";
+          _key: string;
+        }>;
+        background?: "dark" | "white";
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "propertyTypes";
+        heading?: string;
+        cards?: Array<{
+          title?: string;
+          blurb?: string;
+          slug?: string;
+          href?: string;
+          linkLabel?: string;
+          icon?:
+            | "award"
+            | "building-2"
+            | "building"
+            | "calendar-check"
+            | "clock"
+            | "cog"
+            | "droplets"
+            | "flame"
+            | "gauge"
+            | "heart-handshake"
+            | "hotel"
+            | "map-pin"
+            | "shield-check"
+            | "siren"
+            | "stethoscope"
+            | "waves"
+            | "wrench";
+          photo?: Photo;
+          photoSubject?: string;
+          _type: "card";
+          _key: string;
+        }>;
+        background?: "dark" | "offwhite" | "white";
+        ctaLabel?: string;
+        ctaHref?: string;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "relatedServices";
+        heading?: string;
+        serviceSlugs?: Array<string>;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "serviceAbout";
+        heading?: string;
+        paragraphs?: Array<string>;
+        ctaLabel?: string;
+        ctaHref?: string;
+        photoPrimary: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+          frameRatio:
+            | "default"
+            | "landscape"
+            | "original"
+            | "portrait"
+            | "square"
+            | "wide"
+            | null;
+        } | null;
+        photoSubjectPrimary?: string;
+        background?: "dark" | "white";
+        photo: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "serviceArea";
+        heading?: string;
+        body?: string;
+        ctaLabel?: string;
+        ctaHref?: string;
+        photo: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+          frameRatio:
+            | "default"
+            | "landscape"
+            | "original"
+            | "portrait"
+            | "square"
+            | "wide"
+            | null;
+        } | null;
+        photoSubject?: string;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "serviceFaq";
+        heading?: string;
+        faqs?: Array<{
+          question?: string;
+          answer?: string;
+          href?: string;
+          linkLabel?: string;
+          _type: "faq";
+          _key: string;
+        }>;
+        background?: "offwhite" | "white";
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "serviceHero";
+        heading?: string;
+        subheading?: string;
+        secondaryCtaLabel?: string;
+        secondaryCtaHref?: string;
+        credentials?: Array<{
+          icon?:
+            | "award"
+            | "building-2"
+            | "calendar-check"
+            | "clock"
+            | "cog"
+            | "droplets"
+            | "flame"
+            | "gauge"
+            | "map-pin"
+            | "shield-check"
+            | "siren"
+            | "waves"
+            | "wrench";
+          label?: string;
+          _type: "credential";
+          _key: string;
+        }>;
+        eyebrow?: string;
+        phoneCtaLabel?: string;
+        showAvailabilityDot?: boolean;
+        photo: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+          frameRatio: null;
+        } | null;
+        darkOverlay?: boolean;
+        photoSubject?: string;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "serviceTestimonials";
+        heading?: string;
+        filterTags?: Array<string>;
+        limit?: number;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "serviceTrust";
+        heading?: string;
+        items?: Array<{
+          title?: string;
+          description?: string;
+          icon?:
+            | "award"
+            | "building-2"
+            | "calendar-check"
+            | "clock"
+            | "cog"
+            | "droplets"
+            | "flame"
+            | "gauge"
+            | "map-pin"
+            | "shield-check"
+            | "siren"
+            | "waves"
+            | "wrench";
+          _type: "item";
+          _key: string;
+        }>;
+        showLogos?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "signsYouNeed";
+        heading?: string;
+        cards?: Array<{
+          question?: string;
+          answer?: string;
+          icon?:
+            | "award"
+            | "building-2"
+            | "calendar-check"
+            | "clock"
+            | "cog"
+            | "droplets"
+            | "flame"
+            | "gauge"
+            | "map-pin"
+            | "shield-check"
+            | "siren"
+            | "waves"
+            | "wrench";
+          _type: "card";
+          _key: string;
+        }>;
+        ctaLabel?: string;
+        ctaHref?: string;
+        background?: "dark" | "white";
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "trustLogoStrip";
+        background?: "offwhite" | "white";
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "valuesGrid";
+        heading?: string;
+        eyebrow?: string;
+        values?: Array<{
+          icon?:
+            | "award"
+            | "building-2"
+            | "clock"
+            | "heart-handshake"
+            | "shield-check"
+            | "siren"
+            | "wrench";
+          title?: string;
+          description?: string;
+          _type: "value";
+          _key: string;
+        }>;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "vendorOnboarding";
+        heading?: string;
+        eyebrow?: string;
+        description?: string;
+        items?: Array<{
+          icon?:
+            | "building-2"
+            | "clipboard-list"
+            | "clock-4"
+            | "file-check-2"
+            | "phone-call"
+            | "shield-check"
+            | "truck"
+            | "wrench";
+          title?: string;
+          description?: string;
+          _type: "item";
+          _key: string;
+        }>;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
+      }
+    | {
+        _key: string;
+        _type: "whatsIncluded";
+        heading?: string;
+        intro?: string;
+        items?: Array<{
+          title?: string;
+          description?: string;
+          icon?:
+            | "award"
+            | "building-2"
+            | "calendar-check"
+            | "clock"
+            | "cog"
+            | "droplets"
+            | "flame"
+            | "gauge"
+            | "map-pin"
+            | "shield-check"
+            | "siren"
+            | "waves"
+            | "wrench";
+          href?: string;
+          _type: "item";
+          _key: string;
+        }>;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
       }
   > | null;
   seoTitle: string | null;
@@ -3928,16 +10777,16 @@ declare module "@sanity/client" {
     '*[_type == "testimonial"] | order(order asc){\n    "id": _id, name, role, rating, quote, date, featured,\n    source, reviewerMeta, sourceUrl, serviceTags, verified,\n    ownerReply, ownerReplyDate\n  }': TESTIMONIALS_QUERY_RESULT;
     '*[_type == "reviewSettings" && _id == "reviewSettings"][0]{\n    rating,\n    reviewCount,\n    verifiedOn,\n    reviewsUrl,\n    writeReviewUrl,\n    headline\n  }': REVIEW_SETTINGS_QUERY_RESULT;
     '*[_type == "service"] | order(order asc){\n    title,\n    "slug": slug.current,\n    shortDescription,\n    icon,\n    featured,\n    photo{ asset, hotspot, crop, alt },\n    body,\n    seoTitle,\n    seoDescription\n  }': SERVICES_QUERY_RESULT;
-    '*[_type == "service" && slug.current == $slug][0]{\n    title,\n    "slug": slug.current,\n    shortDescription,\n    icon,\n    featured,\n    photo{ asset, hotspot, crop, alt },\n    body,\n    sections[]{\n      ...,\n      photo{ asset, hotspot, crop, alt, frameRatio },\n      photoPrimary{ asset, hotspot, crop, alt, frameRatio }\n    },\n    seoTitle,\n    seoDescription\n  }': SERVICE_BY_SLUG_QUERY_RESULT;
+    '*[_type == "service" && slug.current == $slug][0]{\n    title,\n    "slug": slug.current,\n    shortDescription,\n    icon,\n    featured,\n    photo{ asset, hotspot, crop, alt },\n    body,\n    sections[]{\n    ...,\n    photo{ asset, hotspot, crop, alt, frameRatio },\n    photoPrimary{ asset, hotspot, crop, alt, frameRatio },\n    photoSecondary{ asset, hotspot, crop, alt },\n    primaryPhoto{ asset, hotspot, crop, alt, frameRatio },\n    secondaryPhoto{ asset, hotspot, crop, alt }\n  },\n    seoTitle,\n    seoDescription\n  }': SERVICE_BY_SLUG_QUERY_RESULT;
     '*[_type == "industry"] | order(order asc){\n    title,\n    "slug": slug.current,\n    description,\n    bulletPoints,\n    photo{ asset, hotspot, crop, alt },\n    body,\n    seoTitle,\n    seoDescription\n  }': INDUSTRIES_QUERY_RESULT;
-    '*[_type == "industry" && slug.current == $slug][0]{\n    title,\n    "slug": slug.current,\n    description,\n    bulletPoints,\n    photo{ asset, hotspot, crop, alt },\n    body,\n    sections[]{\n      ...,\n      photo{ asset, hotspot, crop, alt, frameRatio },\n      photoPrimary{ asset, hotspot, crop, alt, frameRatio }\n    },\n    seoTitle,\n    seoDescription\n  }': INDUSTRY_BY_SLUG_QUERY_RESULT;
+    '*[_type == "industry" && slug.current == $slug][0]{\n    title,\n    "slug": slug.current,\n    description,\n    bulletPoints,\n    photo{ asset, hotspot, crop, alt },\n    body,\n    sections[]{\n    ...,\n    photo{ asset, hotspot, crop, alt, frameRatio },\n    photoPrimary{ asset, hotspot, crop, alt, frameRatio },\n    photoSecondary{ asset, hotspot, crop, alt },\n    primaryPhoto{ asset, hotspot, crop, alt, frameRatio },\n    secondaryPhoto{ asset, hotspot, crop, alt }\n  },\n    seoTitle,\n    seoDescription\n  }': INDUSTRY_BY_SLUG_QUERY_RESULT;
     '*[_type == "trustLogo"] | order(order asc){\n    name,\n    logo{ asset, hotspot, crop, alt },\n    headline,\n    blurb,\n    category,\n    url,\n    verified\n  }': TRUST_LOGOS_QUERY_RESULT;
-    '*[_type == "homePage" && _id == "homePage"][0]{\n    sections[]{\n      ...,\n      photo{ asset, hotspot, crop, alt, frameRatio },\n      primaryPhoto{ asset, hotspot, crop, alt, frameRatio },\n      secondaryPhoto{ asset, hotspot, crop, alt }\n    }\n  }': HOME_PAGE_QUERY_RESULT;
-    '*[_type == "aboutPage" && _id == "aboutPage"][0]{\n    sections[]{\n      ...,\n      photo{ asset, hotspot, crop, alt, frameRatio },\n      photoPrimary{ asset, hotspot, crop, alt, frameRatio },\n      photoSecondary{ asset, hotspot, crop, alt }\n    }\n  }': ABOUT_PAGE_QUERY_RESULT;
-    '*[_type == "partnersPage" && _id == "partnersPage"][0]{\n    sections[]{\n      ...,\n      photo{ asset, hotspot, crop, alt, frameRatio }\n    }\n  }': PARTNERS_PAGE_QUERY_RESULT;
-    '*[_type == "careersPage" && _id == "careersPage"][0]{\n    sections[]{\n      ...,\n      photo{ asset, hotspot, crop, alt, frameRatio }\n    }\n  }': CAREERS_PAGE_QUERY_RESULT;
+    '*[_type == "homePage" && _id == "homePage"][0]{\n    sections[]{\n    ...,\n    photo{ asset, hotspot, crop, alt, frameRatio },\n    photoPrimary{ asset, hotspot, crop, alt, frameRatio },\n    photoSecondary{ asset, hotspot, crop, alt },\n    primaryPhoto{ asset, hotspot, crop, alt, frameRatio },\n    secondaryPhoto{ asset, hotspot, crop, alt }\n  }\n  }': HOME_PAGE_QUERY_RESULT;
+    '*[_type == "aboutPage" && _id == "aboutPage"][0]{\n    sections[]{\n    ...,\n    photo{ asset, hotspot, crop, alt, frameRatio },\n    photoPrimary{ asset, hotspot, crop, alt, frameRatio },\n    photoSecondary{ asset, hotspot, crop, alt },\n    primaryPhoto{ asset, hotspot, crop, alt, frameRatio },\n    secondaryPhoto{ asset, hotspot, crop, alt }\n  }\n  }': ABOUT_PAGE_QUERY_RESULT;
+    '*[_type == "partnersPage" && _id == "partnersPage"][0]{\n    sections[]{\n    ...,\n    photo{ asset, hotspot, crop, alt, frameRatio },\n    photoPrimary{ asset, hotspot, crop, alt, frameRatio },\n    photoSecondary{ asset, hotspot, crop, alt },\n    primaryPhoto{ asset, hotspot, crop, alt, frameRatio },\n    secondaryPhoto{ asset, hotspot, crop, alt }\n  }\n  }': PARTNERS_PAGE_QUERY_RESULT;
+    '*[_type == "careersPage" && _id == "careersPage"][0]{\n    sections[]{\n    ...,\n    photo{ asset, hotspot, crop, alt, frameRatio },\n    photoPrimary{ asset, hotspot, crop, alt, frameRatio },\n    photoSecondary{ asset, hotspot, crop, alt },\n    primaryPhoto{ asset, hotspot, crop, alt, frameRatio },\n    secondaryPhoto{ asset, hotspot, crop, alt }\n  }\n  }': CAREERS_PAGE_QUERY_RESULT;
     '*[_type == "contactPage" && _id == "contactPage"][0]{\n    heroEyebrow,\n    heroHeading,\n    heroIntro,\n    responsePromise,\n    hours[]{ days, hours },\n    emergencyHeading,\n    emergencyBody,\n    faqs[]{ question, answer }\n  }': CONTACT_PAGE_QUERY_RESULT;
-    '*[_type == "cityPage" && slug.current == $slug][0]{\n    city,\n    "slug": slug.current,\n    sections[]{\n      ...,\n      photo{ asset, hotspot, crop, alt, frameRatio },\n      photoPrimary{ asset, hotspot, crop, alt, frameRatio },\n      photoSecondary{ asset, hotspot, crop, alt }\n    },\n    seoTitle,\n    seoDescription\n  }': CITY_PAGE_QUERY_RESULT;
+    '*[_type == "cityPage" && slug.current == $slug][0]{\n    city,\n    "slug": slug.current,\n    sections[]{\n    ...,\n    photo{ asset, hotspot, crop, alt, frameRatio },\n    photoPrimary{ asset, hotspot, crop, alt, frameRatio },\n    photoSecondary{ asset, hotspot, crop, alt },\n    primaryPhoto{ asset, hotspot, crop, alt, frameRatio },\n    secondaryPhoto{ asset, hotspot, crop, alt }\n  },\n    seoTitle,\n    seoDescription\n  }': CITY_PAGE_QUERY_RESULT;
     '*[_type == "navigation" && _id == "navigation"][0]{\n    footerColumns[]{\n      _key,\n      heading,\n      links[]{ _key, label, href }\n    },\n    legalLinks[]{ _key, label, href }\n  }': FOOTER_NAVIGATION_QUERY_RESULT;
   }
 }

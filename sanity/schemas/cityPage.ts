@@ -1,5 +1,6 @@
 import { defineArrayMember, defineField, defineType } from "sanity";
 import { imageWithAlt, lockedSlug, seoFields } from "./fields";
+import { sectionsField } from "./sectionLibrary";
 
 /**
  * "Areas We Serve" city page — a slug-keyed document (one per city), NOT a
@@ -10,8 +11,8 @@ import { imageWithAlt, lockedSlug, seoFields } from "./fields";
  * communities band below is city-specific.
  *
  * TypeScript twins live in `data/cities.ts`; mapping in
- * `sanity/lib/citySections.ts`; rendering in
- * `components/sections/CitySectionRenderer.tsx`. The association badge
+ * `sanity/lib/sectionLibrary.ts`; rendering in
+ * `components/sections/SectionRenderer.tsx`. The association badge
  * strip and the Google-map band are NOT stack items — the city template
  * renders them automatically after the stack, same as the service pages.
  *
@@ -20,17 +21,6 @@ import { imageWithAlt, lockedSlug, seoFields } from "./fields";
  * near-duplicate city pages as doorway pages and may ignore or penalize
  * them.
  */
-
-/** Shared library types the city stack accepts — reused, not forked. */
-const SHARED_CITY_SECTION_TYPES = [
-  "serviceHero",
-  "propertyTypes",
-  "serviceAbout",
-  "serviceTestimonials",
-  "iconCardSection",
-  "serviceFaq",
-  "finalCta",
-];
 
 /** `rule.required()` alone accepts whitespace — refuse it at publish time. */
 const notJustSpaces = (message: string) => (value?: string) =>
@@ -174,16 +164,10 @@ export const cityPage = defineType({
       validation: (rule) => rule.required().error("Every city page needs a city name."),
     }),
     lockedSlug({ source: "city", prefix: "/areas-we-serve" }),
-    defineField({
-      name: "sections",
+    sectionsField({
       title: "City-page sections",
       description:
-        "The page, top to bottom. Drag to reorder. The ⋮ menu on each section offers Duplicate and Remove. The certification-badge strip and the Google-map band close the page automatically — they are not sections here. Write every band's copy for THIS city; never copy another city's text and swap the name.",
-      type: "array",
-      of: [
-        ...SHARED_CITY_SECTION_TYPES.map((type) => ({ type })),
-        ...citySectionTypes.map((type) => ({ type: type.name })),
-      ],
+        "The page, top to bottom — the same section library every page uses. Drag to reorder. The ⋮ menu on each section offers Duplicate and Remove. The certification-badge strip and the Google-map band close the page automatically — they are not sections here. Write every band's copy for THIS city; never copy another city's text and swap the name.",
     }),
     ...seoFields(),
   ],
