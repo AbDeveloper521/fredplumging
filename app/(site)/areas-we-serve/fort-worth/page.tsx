@@ -5,7 +5,7 @@ import { getSite } from "@/sanity/lib/getSite";
 import { getTestimonials } from "@/sanity/lib/getTestimonials";
 import { getReviewSettings } from "@/sanity/lib/getReviewSettings";
 import { getTrustLogos } from "@/sanity/lib/getTrustLogos";
-import { cityHref } from "@/data/cities";
+import { cityHeroIntro, cityHref } from "@/data/cities";
 import { CityPage } from "@/components/layout/CityPage";
 import { BreadcrumbJsonLd } from "@/components/seo/JsonLd";
 
@@ -17,7 +17,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
   const title =
     content.seoTitle ?? `Plumbing Services in ${content.city}, TX | ${site.name}`;
-  const description = content.seoDescription ?? content.heroIntro;
+  const description = content.seoDescription ?? cityHeroIntro(content);
   const path = cityHref(SLUG);
 
   return {

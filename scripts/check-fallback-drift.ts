@@ -133,9 +133,12 @@ async function main() {
       query: `*[_type=="jobPosting"]|order(order asc){title,"slug":slug.current,employmentType,team,shift,openings,summary,responsibilities,requirements,compensationNote,applyEmail,applyUrl,datePosted,validThrough,open}`,
     },
     {
+      // Section stacks are not drift-compared (the `sections` key is in the
+      // skip list, same as services/homepage) — this now guards the
+      // document's identity fields only.
       name: "city pages (data/cities.ts)",
       fallback: cities,
-      query: `*[_type=="cityPage"]|order(city asc){city,"slug":slug.current,heroHeading,heroIntro,servicesHeading,serviceCards[]{title,description,href,icon},whyChooseHeading,whyChooseBody,reviewsHeading,heritageHeading,heritageParagraphs,heritagePhotoSubject,communitiesHeading,communitiesBody,communities,showLogoStrip}`,
+      query: `*[_type=="cityPage"]|order(city asc){city,"slug":slug.current}`,
     },
     {
       name: "industries (data/industries.ts)",

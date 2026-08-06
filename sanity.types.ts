@@ -31,6 +31,34 @@ export type Photo = {
   _type: "image";
 };
 
+export type CityCommunities = {
+  _type: "cityCommunities";
+  heading?: string;
+  body?: string;
+  communities?: Array<string>;
+  photoPrimary?: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  };
+  photoSubjectPrimary?: string;
+  photoSecondary?: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  };
+  photoSubjectSecondary?: string;
+  ctaLabel?: string;
+  ctaHref?: string;
+  hidden?: boolean;
+};
+
 export type CareersCta = {
   _type: "careersCta";
   heading?: string;
@@ -684,7 +712,24 @@ export type PropertyTypes = {
     slug?: string;
     href?: string;
     linkLabel?: string;
-    icon?: "building" | "hotel" | "heart-handshake" | "stethoscope";
+    icon?:
+      | "droplets"
+      | "wrench"
+      | "building-2"
+      | "flame"
+      | "shield-check"
+      | "calendar-check"
+      | "gauge"
+      | "waves"
+      | "siren"
+      | "clock"
+      | "award"
+      | "cog"
+      | "map-pin"
+      | "building"
+      | "hotel"
+      | "heart-handshake"
+      | "stethoscope";
     photo?: Photo;
     photoSubject?: string;
     _type: "card";
@@ -1258,44 +1303,32 @@ export type CityPage = {
   _rev: string;
   city?: string;
   slug?: Slug;
-  heroHeading?: string;
-  heroIntro?: string;
-  servicesHeading?: string;
-  serviceCards?: Array<{
-    title?: string;
-    description?: string;
-    href?: string;
-    icon?:
-      | "wrench"
-      | "waves"
-      | "cog"
-      | "calendar-check"
-      | "siren"
-      | "building-2"
-      | "shield-check";
-    _type: "card";
-    _key: string;
-  }>;
-  whyChooseHeading?: string;
-  whyChooseBody?: string;
-  reviewsHeading?: string;
-  heritageHeading?: string;
-  heritageParagraphs?: Array<string>;
-  heritagePhoto?: {
-    asset?: SanityImageAssetReference;
-    media?: unknown;
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    alt?: string;
-    frameRatio?:
-      "default" | "square" | "landscape" | "wide" | "portrait" | "original";
-    _type: "image";
-  };
-  heritagePhotoSubject?: string;
-  communitiesHeading?: string;
-  communitiesBody?: string;
-  communities?: Array<string>;
-  showLogoStrip?: boolean;
+  sections?: Array<
+    | ({
+        _key: string;
+      } & ServiceHero)
+    | ({
+        _key: string;
+      } & PropertyTypes)
+    | ({
+        _key: string;
+      } & ServiceAbout)
+    | ({
+        _key: string;
+      } & ServiceTestimonials)
+    | ({
+        _key: string;
+      } & IconCardSection)
+    | ({
+        _key: string;
+      } & ServiceFaq)
+    | ({
+        _key: string;
+      } & FinalCta)
+    | ({
+        _key: string;
+      } & CityCommunities)
+  >;
   seoTitle?: string;
   seoDescription?: string;
 };
@@ -1623,6 +1656,7 @@ export type Geopoint = {
 export type AllSanitySchemaTypes =
   | SanityImageAssetReference
   | Photo
+  | CityCommunities
   | CareersCta
   | HiringProcess
   | CareerTraits
@@ -2043,7 +2077,24 @@ export type SERVICE_BY_SLUG_QUERY_RESULT = {
           slug?: string;
           href?: string;
           linkLabel?: string;
-          icon?: "building" | "heart-handshake" | "hotel" | "stethoscope";
+          icon?:
+            | "award"
+            | "building-2"
+            | "building"
+            | "calendar-check"
+            | "clock"
+            | "cog"
+            | "droplets"
+            | "flame"
+            | "gauge"
+            | "heart-handshake"
+            | "hotel"
+            | "map-pin"
+            | "shield-check"
+            | "siren"
+            | "stethoscope"
+            | "waves"
+            | "wrench";
           photo?: Photo;
           photoSubject?: string;
           _type: "card";
@@ -2456,7 +2507,24 @@ export type INDUSTRY_BY_SLUG_QUERY_RESULT = {
           slug?: string;
           href?: string;
           linkLabel?: string;
-          icon?: "building" | "heart-handshake" | "hotel" | "stethoscope";
+          icon?:
+            | "award"
+            | "building-2"
+            | "building"
+            | "calendar-check"
+            | "clock"
+            | "cog"
+            | "droplets"
+            | "flame"
+            | "gauge"
+            | "heart-handshake"
+            | "hotel"
+            | "map-pin"
+            | "shield-check"
+            | "siren"
+            | "stethoscope"
+            | "waves"
+            | "wrench";
           photo?: Photo;
           photoSubject?: string;
           _type: "card";
@@ -3605,52 +3673,225 @@ export type CONTACT_PAGE_QUERY_RESULT = {
 
 // Source: sanity/queries.ts
 // Variable: CITY_PAGE_QUERY
-// Query: *[_type == "cityPage" && slug.current == $slug][0]{    city,    "slug": slug.current,    heroHeading,    heroIntro,    servicesHeading,    serviceCards[]{ _key, title, description, href, icon },    whyChooseHeading,    whyChooseBody,    reviewsHeading,    heritageHeading,    heritageParagraphs,    heritagePhoto{ asset, hotspot, crop, alt, frameRatio },    heritagePhotoSubject,    communitiesHeading,    communitiesBody,    communities,    showLogoStrip,    seoTitle,    seoDescription  }
+// Query: *[_type == "cityPage" && slug.current == $slug][0]{    city,    "slug": slug.current,    sections[]{      ...,      photo{ asset, hotspot, crop, alt, frameRatio },      photoPrimary{ asset, hotspot, crop, alt, frameRatio },      photoSecondary{ asset, hotspot, crop, alt }    },    seoTitle,    seoDescription  }
 export type CITY_PAGE_QUERY_RESULT = {
   city: string | null;
   slug: string | null;
-  heroHeading: string | null;
-  heroIntro: string | null;
-  servicesHeading: string | null;
-  serviceCards: Array<{
-    _key: string;
-    title: string | null;
-    description: string | null;
-    href: string | null;
-    icon:
-      | "building-2"
-      | "calendar-check"
-      | "cog"
-      | "shield-check"
-      | "siren"
-      | "waves"
-      | "wrench"
-      | null;
-  }> | null;
-  whyChooseHeading: string | null;
-  whyChooseBody: string | null;
-  reviewsHeading: string | null;
-  heritageHeading: string | null;
-  heritageParagraphs: Array<string> | null;
-  heritagePhoto: {
-    asset: SanityImageAssetReference | null;
-    hotspot: SanityImageHotspot | null;
-    crop: SanityImageCrop | null;
-    alt: string | null;
-    frameRatio:
-      | "default"
-      | "landscape"
-      | "original"
-      | "portrait"
-      | "square"
-      | "wide"
-      | null;
-  } | null;
-  heritagePhotoSubject: string | null;
-  communitiesHeading: string | null;
-  communitiesBody: string | null;
-  communities: Array<string> | null;
-  showLogoStrip: boolean | null;
+  sections: Array<
+    | {
+        _key: string;
+        _type: "cityCommunities";
+        heading?: string;
+        body?: string;
+        communities?: Array<string>;
+        photoPrimary: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+          frameRatio: null;
+        } | null;
+        photoSubjectPrimary?: string;
+        photoSecondary: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+        } | null;
+        photoSubjectSecondary?: string;
+        ctaLabel?: string;
+        ctaHref?: string;
+        hidden?: boolean;
+        photo: null;
+      }
+    | {
+        _key: string;
+        _type: "finalCta";
+        heading?: string;
+        body?: string;
+        secondaryCtaLabel?: string;
+        secondaryCtaHref?: string;
+        phoneCtaLabel?: string;
+        showAvailabilityDot?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+      }
+    | {
+        _key: string;
+        _type: "iconCardSection";
+        eyebrow?: string;
+        heading?: string;
+        background?: "dark" | "default";
+        photo: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+          frameRatio: null;
+        } | null;
+        defaultCardColor?: "navy" | "offwhite" | "red" | "white";
+        cards?: Array<{
+          icon?:
+            | "award"
+            | "building-2"
+            | "calendar-check"
+            | "clock"
+            | "cog"
+            | "droplets"
+            | "flame"
+            | "gauge"
+            | "map-pin"
+            | "shield-check"
+            | "siren"
+            | "waves"
+            | "wrench";
+          title?: string;
+          description?: string;
+          ctaLabel?: string;
+          ctaHref?: string;
+          cardColor?: "navy" | "offwhite" | "red" | "white";
+          _type: "card";
+          _key: string;
+        }>;
+        photoPrimary: null;
+        photoSecondary: null;
+      }
+    | {
+        _key: string;
+        _type: "propertyTypes";
+        heading?: string;
+        cards?: Array<{
+          title?: string;
+          blurb?: string;
+          slug?: string;
+          href?: string;
+          linkLabel?: string;
+          icon?:
+            | "award"
+            | "building-2"
+            | "building"
+            | "calendar-check"
+            | "clock"
+            | "cog"
+            | "droplets"
+            | "flame"
+            | "gauge"
+            | "heart-handshake"
+            | "hotel"
+            | "map-pin"
+            | "shield-check"
+            | "siren"
+            | "stethoscope"
+            | "waves"
+            | "wrench";
+          photo?: Photo;
+          photoSubject?: string;
+          _type: "card";
+          _key: string;
+        }>;
+        background?: "dark" | "offwhite" | "white";
+        ctaLabel?: string;
+        ctaHref?: string;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+      }
+    | {
+        _key: string;
+        _type: "serviceAbout";
+        heading?: string;
+        paragraphs?: Array<string>;
+        ctaLabel?: string;
+        ctaHref?: string;
+        photoPrimary: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+          frameRatio:
+            | "default"
+            | "landscape"
+            | "original"
+            | "portrait"
+            | "square"
+            | "wide"
+            | null;
+        } | null;
+        photoSubjectPrimary?: string;
+        background?: "dark" | "white";
+        photo: null;
+        photoSecondary: null;
+      }
+    | {
+        _key: string;
+        _type: "serviceFaq";
+        heading?: string;
+        faqs?: Array<{
+          question?: string;
+          answer?: string;
+          href?: string;
+          linkLabel?: string;
+          _type: "faq";
+          _key: string;
+        }>;
+        background?: "offwhite" | "white";
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+      }
+    | {
+        _key: string;
+        _type: "serviceHero";
+        heading?: string;
+        subheading?: string;
+        secondaryCtaLabel?: string;
+        secondaryCtaHref?: string;
+        credentials?: Array<{
+          icon?:
+            | "award"
+            | "building-2"
+            | "calendar-check"
+            | "clock"
+            | "cog"
+            | "droplets"
+            | "flame"
+            | "gauge"
+            | "map-pin"
+            | "shield-check"
+            | "siren"
+            | "waves"
+            | "wrench";
+          label?: string;
+          _type: "credential";
+          _key: string;
+        }>;
+        eyebrow?: string;
+        phoneCtaLabel?: string;
+        showAvailabilityDot?: boolean;
+        photo: {
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+          frameRatio: null;
+        } | null;
+        darkOverlay?: boolean;
+        photoSubject?: string;
+        photoPrimary: null;
+        photoSecondary: null;
+      }
+    | {
+        _key: string;
+        _type: "serviceTestimonials";
+        heading?: string;
+        filterTags?: Array<string>;
+        limit?: number;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+      }
+  > | null;
   seoTitle: string | null;
   seoDescription: string | null;
 } | null;
@@ -3696,7 +3937,7 @@ declare module "@sanity/client" {
     '*[_type == "partnersPage" && _id == "partnersPage"][0]{\n    sections[]{\n      ...,\n      photo{ asset, hotspot, crop, alt, frameRatio }\n    }\n  }': PARTNERS_PAGE_QUERY_RESULT;
     '*[_type == "careersPage" && _id == "careersPage"][0]{\n    sections[]{\n      ...,\n      photo{ asset, hotspot, crop, alt, frameRatio }\n    }\n  }': CAREERS_PAGE_QUERY_RESULT;
     '*[_type == "contactPage" && _id == "contactPage"][0]{\n    heroEyebrow,\n    heroHeading,\n    heroIntro,\n    responsePromise,\n    hours[]{ days, hours },\n    emergencyHeading,\n    emergencyBody,\n    faqs[]{ question, answer }\n  }': CONTACT_PAGE_QUERY_RESULT;
-    '*[_type == "cityPage" && slug.current == $slug][0]{\n    city,\n    "slug": slug.current,\n    heroHeading,\n    heroIntro,\n    servicesHeading,\n    serviceCards[]{ _key, title, description, href, icon },\n    whyChooseHeading,\n    whyChooseBody,\n    reviewsHeading,\n    heritageHeading,\n    heritageParagraphs,\n    heritagePhoto{ asset, hotspot, crop, alt, frameRatio },\n    heritagePhotoSubject,\n    communitiesHeading,\n    communitiesBody,\n    communities,\n    showLogoStrip,\n    seoTitle,\n    seoDescription\n  }': CITY_PAGE_QUERY_RESULT;
+    '*[_type == "cityPage" && slug.current == $slug][0]{\n    city,\n    "slug": slug.current,\n    sections[]{\n      ...,\n      photo{ asset, hotspot, crop, alt, frameRatio },\n      photoPrimary{ asset, hotspot, crop, alt, frameRatio },\n      photoSecondary{ asset, hotspot, crop, alt }\n    },\n    seoTitle,\n    seoDescription\n  }': CITY_PAGE_QUERY_RESULT;
     '*[_type == "navigation" && _id == "navigation"][0]{\n    footerColumns[]{\n      _key,\n      heading,\n      links[]{ _key, label, href }\n    },\n    legalLinks[]{ _key, label, href }\n  }': FOOTER_NAVIGATION_QUERY_RESULT;
   }
 }

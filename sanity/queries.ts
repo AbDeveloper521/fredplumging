@@ -228,21 +228,12 @@ export const CITY_PAGE_QUERY = defineQuery(
   `*[_type == "cityPage" && slug.current == $slug][0]{
     city,
     "slug": slug.current,
-    heroHeading,
-    heroIntro,
-    servicesHeading,
-    serviceCards[]{ _key, title, description, href, icon },
-    whyChooseHeading,
-    whyChooseBody,
-    reviewsHeading,
-    heritageHeading,
-    heritageParagraphs,
-    heritagePhoto{ asset, hotspot, crop, alt, frameRatio },
-    heritagePhotoSubject,
-    communitiesHeading,
-    communitiesBody,
-    communities,
-    showLogoStrip,
+    sections[]{
+      ...,
+      photo{ asset, hotspot, crop, alt, frameRatio },
+      photoPrimary{ asset, hotspot, crop, alt, frameRatio },
+      photoSecondary{ asset, hotspot, crop, alt }
+    },
     seoTitle,
     seoDescription
   }`,

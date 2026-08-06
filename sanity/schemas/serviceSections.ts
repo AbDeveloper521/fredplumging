@@ -686,7 +686,8 @@ export const propertyTypes = defineType({
     defineField({
       name: "cards",
       title: "Property cards",
-      description: "One card per property type. Four fill the row on desktop.",
+      description:
+        "One card per property type. At most 4 sit in one row on desktop, and rows keep themselves balanced — five cards show as 3 + 2, never 4 + 1.",
       type: "array",
       of: [
         defineArrayMember({
@@ -729,7 +730,12 @@ export const propertyTypes = defineType({
                 "The words of the card's link, e.g. “Get Started”. Leave empty for “See how we help”. Only used when the card links somewhere.",
               type: "string",
             }),
-            iconField({ description: "Small symbol on the card — hidden when the card has a photo.", choices: PROPERTY_ICONS }),
+            iconField({
+              description: "Small symbol on the card — hidden when the card has a photo.",
+              // Sub-service cards (service and city pages) use the general
+              // icons; the property-type icons stay for the multifamily grid.
+              choices: [...GENERAL_ICONS, ...PROPERTY_ICONS],
+            }),
             imageWithAlt({
               name: "photo",
               title: "Card photo (optional)",

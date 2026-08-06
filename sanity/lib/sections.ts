@@ -149,7 +149,13 @@ export function toIconCardSection(raw: Raw, index: number): IconCardSection | nu
   };
 }
 
-function toSection(raw: Raw, index: number): ServiceSection | null {
+/**
+ * Maps ONE raw library section; null when it fails its type's render gate.
+ * Exported for the page stacks that mix library types with their own
+ * (`sanity/lib/citySections.ts`) — the array entry points below stay the
+ * logging seam.
+ */
+export function toServiceSection(raw: Raw, index: number): ServiceSection | null {
   const _key = key(raw, index);
 
   // Two types render without a heading, so they sit ahead of the blanket
@@ -441,7 +447,7 @@ function toSection(raw: Raw, index: number): ServiceSection | null {
 
 /**
  * The load-bearing fields per section type — the render gates in
- * `toSection()` above, expressed as data so drops can be EXPLAINED, not just
+ * `toServiceSection()` above, expressed as data so drops can be EXPLAINED, not just
  * detected. `title` is the field's Studio title (what the owner sees on
  * screen); keep both in sync with `sanity/schemas/serviceSections.ts`.
  * The reconciliation table in SERVICE-SECTIONS-AUDIT.md is generated from
@@ -527,8 +533,8 @@ export interface DroppedSection {
   studioFields: string[];
 }
 
-/** Names the fields that made `toSection()` return null for this item. */
-function explainDrop(raw: Raw, index: number): DroppedSection {
+/** Names the fields that made `toServiceSection()` return null for this item. */
+export function explainServiceSectionDrop(raw: Raw, index: number): DroppedSection {
   const _type = String(raw._type ?? "unknown");
   const _key = str(raw._key) ?? `(no _key, index ${index})`;
   const requirements = SECTION_REQUIREMENTS[_type];
@@ -588,9 +594,9 @@ export function toSectionsWithReport(
       });
       return;
     }
-    const section = toSection(raw as Raw, i);
+    const section = toServiceSection(raw as Raw, i);
     if (section) sections.push(section);
-    else dropped.push(explainDrop(raw as Raw, i));
+    else dropped.push(explainServiceSectionDrop(raw as Raw, i));
   });
   return { sections: sections.length > 0 ? sections : undefined, dropped };
 }

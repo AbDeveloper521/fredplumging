@@ -4,42 +4,32 @@ import {
   PUBLISHED_FETCH_OPTIONS,
   type DynamicFetchOptions,
 } from "@/sanity/lib/live";
-import { resolvePhoto } from "@/sanity/lib/image";
 import { logEmpty, logFallback } from "@/sanity/lib/fallbackLog";
+import { toCitySections } from "@/sanity/lib/citySections";
 import { CITY_PAGE_QUERY } from "@/sanity/queries";
 import type { CITY_PAGE_QUERY_RESULT } from "@/sanity.types";
-import { NAV_ICON_NAMES, type NavIconName } from "@/data/navigation";
-import {
-  cities,
-  cityHref,
-  type CityPageContent,
-  type CityServiceCard,
-} from "@/data/cities";
+import { cities, cityHref, type CityPageContent } from "@/data/cities";
 
 /** Cache tag: the document `_type`, matching how /api/revalidate resolves. */
 export const CITY_PAGE_TAG = "cityPage";
 
-function toIcon(value: string | null | undefined): NavIconName {
-  return value && (NAV_ICON_NAMES as readonly string[]).includes(value)
-    ? (value as NavIconName)
-    : "wrench";
-}
-
-function strings(value: string[] | null | undefined): string[] | undefined {
-  const list = value?.filter((entry) => entry.trim() !== "");
-  return list?.length ? list : undefined;
-}
-
 /**
- * One city page by slug — same seam pattern as `getContactPage()`, extended
- * to a slug-keyed collection:
+ * One city page's section stack by slug — the slug-keyed analog of the
+ * singleton stack fetchers (`getCareersPage` etc.):
  *
  * - Thrown fetch → the static entry from `data/cities.ts` (loud).
  * - Successful fetch, document not published yet → the static entry with a
- *   quieter note (nothing to resurrect — the fallback IS the shipped copy
- *   until the document exists). A slug with no document AND no static entry
- *   → null, and the route 404s.
- * - Published document → its values win field-by-field.
+ *   quieter note. A slug with no document AND no static entry → null, and
+ *   the route 404s.
+ * - Document without a `sections` array → the static stack, with a pointer
+ *   at the migration script (old-shape document, or a fresh empty one).
+ * - Published stack → mapped by `toCitySections`; when every item is hidden
+ *   that is a deliberate owner choice and the page renders no bands rather
+ *   than resurrecting the default stack over their intent.
+ *
+ * No per-field default fill across cities: an emptied field degrades or
+ * drops its band — the fallback stack only ever serves whole (doorway-page
+ * rule: never another city's words).
  */
 export async function getCityPage(
   slug: string,
@@ -59,7 +49,7 @@ export async function getCityPage(
     logFallback({
       fetcher: `getCityPage(${slug})`,
       fallbackFile: "data/cities.ts",
-      affects: `${cityHref(slug)} copy, cards, and photo`,
+      affects: `${cityHref(slug)} section order, copy and photos`,
       error,
     });
     return fb ?? null;
@@ -77,53 +67,47 @@ export async function getCityPage(
     return null;
   }
 
-  const serviceCards: CityServiceCard[] =
-    result.serviceCards
-      ?.filter(
-        (card) =>
-          Boolean(card.title) &&
-          Boolean(card.description) &&
-          Boolean(card.href?.startsWith("/")),
-      )
-      .map((card) => ({
-        _key: card._key,
-        title: card.title as string,
-        description: card.description as string,
-        href: card.href as string,
-        icon: toIcon(card.icon),
-      })) ??
-    fb?.serviceCards ??
-    [];
-
-  return {
+  const base = {
     city: result.city ?? fb?.city ?? slug,
     slug,
-    heroHeading: result.heroHeading ?? fb?.heroHeading ?? "",
-    heroIntro: result.heroIntro ?? fb?.heroIntro ?? "",
-    servicesHeading: result.servicesHeading ?? fb?.servicesHeading,
-    serviceCards,
-    whyChooseHeading: result.whyChooseHeading ?? fb?.whyChooseHeading,
-    whyChooseBody: result.whyChooseBody ?? fb?.whyChooseBody,
-    reviewsHeading:
-      result.reviewsHeading ?? fb?.reviewsHeading ?? "What Our Clients Say",
-    heritageHeading: result.heritageHeading ?? fb?.heritageHeading,
-    heritageParagraphs:
-      strings(result.heritageParagraphs) ?? fb?.heritageParagraphs ?? [],
-    // Renders through ServiceAboutSection's square frame — same design
-    // ratio as the serviceAbout main photo.
-    heritagePhoto: resolvePhoto(
-      result.heritagePhoto,
-      1600,
-      `cityPage "${slug}" → "Heritage photo"`,
-      1,
-    ),
-    heritagePhotoSubject:
-      result.heritagePhotoSubject ?? fb?.heritagePhotoSubject,
-    communitiesHeading: result.communitiesHeading ?? fb?.communitiesHeading,
-    communitiesBody: result.communitiesBody ?? fb?.communitiesBody,
-    communities: strings(result.communities) ?? fb?.communities ?? [],
-    showLogoStrip: result.showLogoStrip ?? fb?.showLogoStrip ?? true,
     seoTitle: result.seoTitle ?? fb?.seoTitle,
     seoDescription: result.seoDescription ?? fb?.seoDescription,
   };
+
+  if (!result.sections) {
+    if (fb) {
+      console.warn(
+        `[sanity] cityPage "${slug}" has no \`sections\` array — ${cityHref(slug)} ` +
+          "renders the default stack from data/cities.ts. Run " +
+          "scripts/migrate-city-sections.ts to move the document onto the " +
+          "section stack.",
+      );
+      return { ...base, sections: fb.sections };
+    }
+    logEmpty(
+      `getCityPage(${slug})`,
+      `${cityHref(slug)} has a document but no sections and no fallback — it 404s.`,
+    );
+    return null;
+  }
+
+  const sections = toCitySections(result.sections, `cityPage "${slug}"`);
+  if (!sections) {
+    const allHidden =
+      result.sections.length > 0 &&
+      result.sections.every(
+        (item) => (item as { hidden?: boolean }).hidden === true,
+      );
+    if (allHidden) return { ...base, sections: [] };
+    if (fb) {
+      console.warn(
+        `[sanity] cityPage "${slug}" sections are published but none survived ` +
+          `validation — ${cityHref(slug)} renders the default stack from data/cities.ts.`,
+      );
+      return { ...base, sections: fb.sections };
+    }
+    return { ...base, sections: [] };
+  }
+
+  return { ...base, sections };
 }
