@@ -10,9 +10,11 @@ interface ServiceCardProps {
   service: Service;
   featured?: boolean;
   className?: string;
+  /** Image `sizes` override for grids whose card width varies by row count. */
+  sizes?: string;
 }
 
-export function ServiceCard({ service, featured = false, className }: ServiceCardProps) {
+export function ServiceCard({ service, featured = false, className, sizes }: ServiceCardProps) {
   const Icon = navIcons[service.icon];
 
   return (
@@ -31,7 +33,12 @@ export function ServiceCard({ service, featured = false, className }: ServiceCar
             src={service.photo.url}
             alt={service.photo.alt}
             fill
-            sizes={featured ? "(min-width: 768px) 50vw, 100vw" : "(min-width: 1280px) 25vw, (min-width: 640px) 50vw, 100vw"}
+            sizes={
+              sizes ??
+              (featured
+                ? "(min-width: 768px) 50vw, 100vw"
+                : "(min-width: 1280px) 25vw, (min-width: 640px) 50vw, 100vw")
+            }
             className="object-cover"
           />
         ) : (
