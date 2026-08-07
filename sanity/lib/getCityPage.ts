@@ -6,12 +6,55 @@ import {
 } from "@/sanity/lib/live";
 import { logEmpty, logFallback } from "@/sanity/lib/fallbackLog";
 import { toLibrarySections } from "@/sanity/lib/sectionLibrary";
-import { CITY_PAGE_QUERY } from "@/sanity/queries";
-import type { CITY_PAGE_QUERY_RESULT } from "@/sanity.types";
-import { cities, cityHref, type CityPageContent } from "@/data/cities";
+import { CITIES_QUERY, CITY_PAGE_QUERY } from "@/sanity/queries";
+import type {
+  CITIES_QUERY_RESULT,
+  CITY_PAGE_QUERY_RESULT,
+} from "@/sanity.types";
+import {
+  cities,
+  cityHref,
+  cityLinks,
+  type CityLink,
+  type CityPageContent,
+} from "@/data/cities";
 
 /** Cache tag: the document `_type`, matching how /api/revalidate resolves. */
 export const CITY_PAGE_TAG = "cityPage";
+
+/**
+ * Every city that has a page, link-shaped — the list the coverage band
+ * (`serviceArea`) turns into "Plumbing in {city}" links, so publishing a
+ * third `cityPage` document is the whole job.
+ *
+ * FAILED fetch → the static list (loud). Successful EMPTY result → an empty
+ * array: same rule as the other collections, a deleted city must not
+ * resurrect from the static file. The band simply drops its link row.
+ */
+export async function getCities(
+  options: DynamicFetchOptions = PUBLISHED_FETCH_OPTIONS,
+): Promise<CityLink[]> {
+  let result: CITIES_QUERY_RESULT;
+  try {
+    result = await fetchSanityCached(CITIES_QUERY, {}, CITY_PAGE_TAG, options);
+  } catch (error) {
+    logFallback({
+      fetcher: "getCities",
+      fallbackFile: "data/cities.ts",
+      affects: "the city links in every coverage band",
+      error,
+    });
+    return cityLinks;
+  }
+
+  const links = result.flatMap((item) =>
+    item.city && item.slug ? [{ city: item.city, slug: item.slug }] : [],
+  );
+  if (links.length === 0) {
+    logEmpty("getCities", "coverage bands render no city links.");
+  }
+  return links;
+}
 
 /**
  * One city page's section stack by slug — the slug-keyed analog of the

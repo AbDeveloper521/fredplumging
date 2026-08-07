@@ -7,6 +7,8 @@ import { getReviewSettings } from "@/sanity/lib/getReviewSettings";
 import { getTrustLogos } from "@/sanity/lib/getTrustLogos";
 import { getFaqs } from "@/sanity/lib/getFaqs";
 import { getJobPostings } from "@/sanity/lib/getJobs";
+import { getCities } from "@/sanity/lib/getCityPage";
+import type { CityLink } from "@/data/cities";
 import type { SiteContent } from "@/data/site";
 import type { Service } from "@/data/services";
 import type { Industry } from "@/data/industries";
@@ -32,19 +34,41 @@ export interface SectionData {
   trustLogos: TrustLogo[];
   faqs: Faq[];
   jobs: JobPosting[];
+  /** Cities with a page — the coverage band's link list. */
+  cities: CityLink[];
 }
 
 export async function getSectionData(): Promise<SectionData> {
-  const [site, services, industries, testimonials, profile, trustLogos, faqs, jobs] =
-    await Promise.all([
-      getSite(),
-      getServices(),
-      getIndustries(),
-      getTestimonials(),
-      getReviewSettings(),
-      getTrustLogos(),
-      getFaqs(),
-      getJobPostings(),
-    ]);
-  return { site, services, industries, testimonials, profile, trustLogos, faqs, jobs };
+  const [
+    site,
+    services,
+    industries,
+    testimonials,
+    profile,
+    trustLogos,
+    faqs,
+    jobs,
+    cities,
+  ] = await Promise.all([
+    getSite(),
+    getServices(),
+    getIndustries(),
+    getTestimonials(),
+    getReviewSettings(),
+    getTrustLogos(),
+    getFaqs(),
+    getJobPostings(),
+    getCities(),
+  ]);
+  return {
+    site,
+    services,
+    industries,
+    testimonials,
+    profile,
+    trustLogos,
+    faqs,
+    jobs,
+    cities,
+  };
 }

@@ -60,6 +60,17 @@ export const structure: StructureResolver = (S) =>
             .schemaType("servicesIndexPage")
             .documentId("servicesIndexPage"),
         ),
+      // "Areas We Serve Index Page" (the /areas-we-serve landing page) vs
+      // "City Pages" (Dallas, Fort Worth) — same deliberate split as the
+      // services pair above.
+      S.listItem()
+        .title("Areas We Serve Index Page")
+        .id("areasIndexPage")
+        .child(
+          S.document()
+            .schemaType("areasIndexPage")
+            .documentId("areasIndexPage"),
+        ),
       S.listItem()
         .title("Contact Page")
         .id("contactPage")

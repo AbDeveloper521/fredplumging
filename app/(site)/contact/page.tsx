@@ -12,6 +12,7 @@ import { getServices } from "@/sanity/lib/getServices";
 import { getContactPage } from "@/sanity/lib/getContactPage";
 import { getTestimonials } from "@/sanity/lib/getTestimonials";
 import { getReviewSettings } from "@/sanity/lib/getReviewSettings";
+import { getCities } from "@/sanity/lib/getCityPage";
 import type { SiteContent } from "@/data/site";
 import type {
   ServiceAreaSection as ServiceAreaSectionData,
@@ -135,13 +136,15 @@ function DetailsColumn({
 }
 
 export default async function ContactPage() {
-  const [site, services, content, testimonials, profile] = await Promise.all([
-    getSite(),
-    getServices(),
-    getContactPage(),
-    getTestimonials(),
-    getReviewSettings(),
-  ]);
+  const [site, services, content, testimonials, profile, cities] =
+    await Promise.all([
+      getSite(),
+      getServices(),
+      getContactPage(),
+      getTestimonials(),
+      getReviewSettings(),
+      getCities(),
+    ]);
 
   const serviceOptions = [...services.map((service) => service.title), "Other"];
 
@@ -307,7 +310,12 @@ export default async function ContactPage() {
         </Container>
       </section>
 
-      <ServiceAreaCmsSection section={areaSection} site={site} id="contact-area" />
+      <ServiceAreaCmsSection
+        section={areaSection}
+        site={site}
+        cities={cities}
+        id="contact-area"
+      />
 
       <TestimonialsSection
         testimonials={testimonials}

@@ -85,6 +85,16 @@ export function cityHref(slug: string): string {
   return `/areas-we-serve/${slug}`;
 }
 
+/**
+ * The minimum a city needs to be linkable. The coverage band lists these
+ * rather than a hardcoded pair, so publishing a third `cityPage` document is
+ * the whole job — no component or page edit.
+ */
+export interface CityLink {
+  city: string;
+  slug: string;
+}
+
 /** The hero intro paragraph — the metadata description fallback. */
 export function cityHeroIntro(content: CityPageContent): string | undefined {
   const hero = content.sections.find(
@@ -365,3 +375,9 @@ export const cities: CityPageContent[] = [
       "Multi-family and commercial plumbing in Fort Worth, TX — 24/7 emergency repairs, drain and sewer service, preventive maintenance, and specialty systems from Fred's Plumbing.",
   },
 ];
+
+/** FALLBACK for `getCities()` — the static entries, link-shaped. */
+export const cityLinks: CityLink[] = cities.map(({ city, slug }) => ({
+  city,
+  slug,
+}));

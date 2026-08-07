@@ -6,25 +6,36 @@ import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { ImagePlaceholder } from "@/components/ui/ImagePlaceholder";
+import { cityHref, type CityLink } from "@/data/cities";
 import type { ServiceAreaSection as AreaData } from "@/data/serviceSections";
 import type { SiteContent } from "@/data/site";
 
 interface ServiceAreaCmsSectionProps {
   section: AreaData;
   site: SiteContent;
+  /** Cities with a page — one link each, in the order they are published. */
+  cities: CityLink[];
   id: string;
 }
-
-const AREA_LINKS = [
-  { label: "Plumbing in Dallas", href: "/areas-we-serve/dallas" },
-  { label: "Plumbing in Fort Worth", href: "/areas-we-serve/fort-worth" },
-];
 
 /**
  * Coverage section: copy + the city list from siteSettings (never hardcoded)
  * with map-pin chips, links into the area pages, one image slot right.
+ *
+ * The links come from the `cityPage` documents, not a constant — publishing a
+ * third city page adds its link everywhere this band appears, with no edit
+ * here and none to the pages carrying it.
  */
-export function ServiceAreaCmsSection({ section, site, id }: ServiceAreaCmsSectionProps) {
+export function ServiceAreaCmsSection({
+  section,
+  site,
+  cities,
+  id,
+}: ServiceAreaCmsSectionProps) {
+  const areaLinks = cities.map((entry) => ({
+    label: `Plumbing in ${entry.city}`,
+    href: cityHref(entry.slug),
+  }));
   return (
     <section id={id} aria-labelledby={`${id}-heading`} className="bg-white py-16 sm:py-24 lg:py-28">
       <Container className="grid grid-cols-1 items-center gap-14 lg:grid-cols-2 lg:gap-20">
@@ -50,24 +61,26 @@ export function ServiceAreaCmsSection({ section, site, id }: ServiceAreaCmsSecti
             </ul>
           </Reveal>
 
-          <Reveal delay={0.16}>
-            <ul className="mt-8 flex flex-wrap gap-x-8 gap-y-3">
-              {AREA_LINKS.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="group inline-flex items-center gap-1.5 text-[15px] font-bold text-navy-900 underline decoration-red-600/50 underline-offset-4 transition-colors hover:text-red-600"
-                  >
-                    {link.label}
-                    <ArrowUpRight
-                      aria-hidden="true"
-                      className="size-4 text-red-600 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-                    />
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </Reveal>
+          {areaLinks.length > 0 && (
+            <Reveal delay={0.16}>
+              <ul className="mt-8 flex flex-wrap gap-x-8 gap-y-3">
+                {areaLinks.map((link) => (
+                  <li key={link.href}>
+                    <Link
+                      href={link.href}
+                      className="group inline-flex items-center gap-1.5 text-[15px] font-bold text-navy-900 underline decoration-red-600/50 underline-offset-4 transition-colors hover:text-red-600"
+                    >
+                      {link.label}
+                      <ArrowUpRight
+                        aria-hidden="true"
+                        className="size-4 text-red-600 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                      />
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </Reveal>
+          )}
 
           {section.ctaLabel && section.ctaHref && (
             <Reveal delay={0.2}>

@@ -142,8 +142,17 @@ export function SectionRenderer({
   breadcrumbs = [],
   currentSlug,
 }: SectionRendererProps) {
-  const { site, services, industries, testimonials, profile, trustLogos, faqs, jobs } =
-    data;
+  const {
+    site,
+    services,
+    industries,
+    testimonials,
+    profile,
+    trustLogos,
+    faqs,
+    jobs,
+    cities,
+  } = data;
   // The blurb is the switch: strip-only trust logos stay off platform cards.
   const partners = trustLogos.filter((logo) => Boolean(logo.blurb));
   const seen = new Map<string, number>();
@@ -214,6 +223,7 @@ export function SectionRenderer({
                 key={section._key}
                 section={section}
                 site={site}
+                cities={cities}
                 id={id}
               />
             );

@@ -209,6 +209,12 @@ export const SERVICES_INDEX_PAGE_QUERY = defineQuery(
   }`,
 );
 
+export const AREAS_INDEX_PAGE_QUERY = defineQuery(
+  `*[_type == "areasIndexPage" && _id == "areasIndexPage"][0]{
+    ${SECTIONS_PROJECTION}
+  }`,
+);
+
 export const CONTACT_PAGE_QUERY = defineQuery(
   `*[_type == "contactPage" && _id == "contactPage"][0]{
     heroEyebrow,
@@ -219,6 +225,18 @@ export const CONTACT_PAGE_QUERY = defineQuery(
     emergencyHeading,
     emergencyBody,
     faqs[]{ question, answer }
+  }`,
+);
+
+/**
+ * Every city that has a page, link-shaped — what the coverage band lists so
+ * a third city needs a `cityPage` document and nothing else. Ordered by name
+ * (the same `order(city asc)` the drift check and Studio list use).
+ */
+export const CITIES_QUERY = defineQuery(
+  `*[_type == "cityPage" && defined(slug.current)]|order(city asc){
+    city,
+    "slug": slug.current
   }`,
 );
 

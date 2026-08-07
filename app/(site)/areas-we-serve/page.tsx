@@ -1,5 +1,9 @@
 import type { Metadata } from "next";
-import { PagePlaceholder } from "@/components/layout/PagePlaceholder";
+import { getAreasIndexPage } from "@/sanity/lib/getAreasIndexPage";
+import { getSectionData } from "@/sanity/lib/getSectionData";
+import type { ServiceFaqSection } from "@/data/serviceSections";
+import { SectionRenderer } from "@/components/sections/SectionRenderer";
+import { BreadcrumbJsonLd, FaqJsonLd } from "@/components/seo/JsonLd";
 
 export const metadata: Metadata = {
   title: "Areas We Serve | Fred's Plumbing",
@@ -7,12 +11,33 @@ export const metadata: Metadata = {
   alternates: { canonical: "/areas-we-serve" },
 };
 
-export default function AreasWeServePage() {
+export default async function AreasWeServePage() {
+  const [sections, data] = await Promise.all([
+    getAreasIndexPage(),
+    getSectionData(),
+  ]);
+
+  // FAQPage schema uses the exact strings a Q&A section renders — relevant
+  // only if the owner adds one in Studio.
+  const faqSection = sections.find(
+    (section): section is ServiceFaqSection => section._type === "serviceFaq",
+  );
+
+  const breadcrumbs = [
+    { label: "Home", href: "/" },
+    { label: "Areas We Serve", href: "/areas-we-serve" },
+  ];
+
   return (
-    <PagePlaceholder
-      eyebrow="Areas We Serve"
-      title="Serving the Dallas–Fort Worth Metroplex"
-      description="Crews staged across DFW so response times stay short no matter where your property sits."
-    />
+    <>
+      <BreadcrumbJsonLd items={breadcrumbs} />
+      {faqSection && <FaqJsonLd faqs={faqSection.faqs} />}
+      <SectionRenderer
+        sections={sections}
+        data={data}
+        idPrefix="areas"
+        breadcrumbs={breadcrumbs}
+      />
+    </>
   );
 }
