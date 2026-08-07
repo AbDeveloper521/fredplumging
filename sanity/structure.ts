@@ -71,6 +71,16 @@ export const structure: StructureResolver = (S) =>
             .schemaType("areasIndexPage")
             .documentId("areasIndexPage"),
         ),
+      // "Multifamily Index Page" (the /multifamily landing page) vs "Property
+      // Types" (the documents whose cards it lists) — same deliberate split.
+      S.listItem()
+        .title("Multifamily Index Page")
+        .id("multifamilyIndexPage")
+        .child(
+          S.document()
+            .schemaType("multifamilyIndexPage")
+            .documentId("multifamilyIndexPage"),
+        ),
       S.listItem()
         .title("Contact Page")
         .id("contactPage")

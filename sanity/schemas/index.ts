@@ -6,6 +6,7 @@ import { partnersPage, partnersSectionTypes } from "./partnersPage";
 import { careersPage, careersSectionTypes } from "./careersPage";
 import { servicesIndexPage } from "./servicesIndexPage";
 import { areasIndexPage } from "./areasIndexPage";
+import { multifamilyIndexPage } from "./multifamilyIndexPage";
 import { contactPage } from "./contactPage";
 import { cityPage, citySectionTypes } from "./cityPage";
 import { reviewSettings } from "./reviewSettings";
@@ -26,6 +27,7 @@ export const schemaTypes: SchemaTypeDefinition[] = [
   careersPage,
   servicesIndexPage,
   areasIndexPage,
+  multifamilyIndexPage,
   contactPage,
   cityPage,
   reviewSettings,

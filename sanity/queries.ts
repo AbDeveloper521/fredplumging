@@ -215,6 +215,12 @@ export const AREAS_INDEX_PAGE_QUERY = defineQuery(
   }`,
 );
 
+export const MULTIFAMILY_INDEX_PAGE_QUERY = defineQuery(
+  `*[_type == "multifamilyIndexPage" && _id == "multifamilyIndexPage"][0]{
+    ${SECTIONS_PROJECTION}
+  }`,
+);
+
 export const CONTACT_PAGE_QUERY = defineQuery(
   `*[_type == "contactPage" && _id == "contactPage"][0]{
     heroEyebrow,
