@@ -7,6 +7,9 @@ interface SectionHeadingProps {
   align?: "left" | "center";
   theme?: "light" | "dark";
   className?: string;
+  /** Narrow the paragraph on its own — e.g. a readable measure under a
+      full-width heading. */
+  descriptionClassName?: string;
   /** Heading level — defaults to h2. */
   as?: "h1" | "h2" | "h3";
   /** id applied to the heading element, for section aria-labelledby. */
@@ -20,6 +23,7 @@ export function SectionHeading({
   align = "left",
   theme = "light",
   className,
+  descriptionClassName,
   as: Heading = "h2",
   titleId,
 }: SectionHeadingProps) {
@@ -62,6 +66,7 @@ export function SectionHeading({
           className={cn(
             "mt-5 text-[17px] leading-relaxed",
             dark ? "text-grey-300" : "text-grey-500",
+            descriptionClassName,
           )}
         >
           {description}

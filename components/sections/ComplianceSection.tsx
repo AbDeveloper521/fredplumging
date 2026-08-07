@@ -43,8 +43,8 @@ export function ComplianceSection({
 
       <Container className="relative">
         <Reveal>
-          {/* max-w-3xl keeps the paragraph near a 70-character measure
-              instead of running the full container width as one line. */}
+          {/* The heading block takes the full container; the paragraph is
+              held to ~70 characters so it doesn't run edge to edge. */}
           <SectionHeading
             titleId={titleId}
             eyebrow={content.eyebrow}
@@ -52,7 +52,8 @@ export function ComplianceSection({
             description={content.description}
             align="center"
             theme="dark"
-            className="max-w-3xl"
+            className="max-w-4xl"
+            descriptionClassName="mx-auto max-w-[38rem]"
           />
         </Reveal>
 

@@ -105,7 +105,7 @@ export async function Footer() {
             <li className="flex items-start gap-3">
               <Clock aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-red-500" />
               <span>
-                Mon–Fri: 7:00 AM – 6:00 PM
+                Monday - Sunday | Open 24/7!
                 <br />
                 <span className="font-semibold text-white">
                   24/7 emergency availability
