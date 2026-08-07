@@ -6,9 +6,9 @@ import type { AboutStoryContent } from "@/data/aboutPage";
 import type { SiteContent } from "@/data/site";
 
 /**
- * The /about story band: copy left, the shared two-photo collage right. The
- * badge's "Since {year}" title derives from Site Settings — only the line
- * under it is stored copy.
+ * The /about story band: copy left, the shared photo collage right (the small
+ * overlapping photo only when one is uploaded). The badge's "Since {year}"
+ * title derives from Site Settings — only the line under it is stored copy.
  */
 export function AboutStorySection({
   site,
@@ -46,7 +46,6 @@ export function AboutStorySection({
             primaryPhoto={content.photoPrimary}
             primaryLabel={content.photoSubjectPrimary}
             secondaryPhoto={content.photoSecondary}
-            secondaryLabel={content.photoSubjectSecondary}
             frameClass="border-white"
           />
         </Reveal>

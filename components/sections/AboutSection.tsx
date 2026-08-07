@@ -12,10 +12,10 @@ import type { CmsPhoto } from "@/data/services";
 import type { SiteContent } from "@/data/site";
 
 /**
- * The brand photo collage: large photo, overlapping small photo, red badge,
- * accent line. Extracted so the /about story section can reuse the exact
- * composition; the homepage section below renders it with its original
- * defaults, pixel-for-pixel unchanged.
+ * The brand photo collage: large photo, red badge, accent line, and — only
+ * when one is uploaded — the small overlapping photo. Extracted so the
+ * /about story section can reuse the exact composition; the homepage section
+ * below renders it with its original defaults, pixel-for-pixel unchanged.
  */
 export function AboutCollage({
   badgeTitle,
@@ -23,7 +23,6 @@ export function AboutCollage({
   primaryPhoto,
   primaryLabel,
   secondaryPhoto,
-  secondaryLabel,
   /** Matches the section background so the overlap frame blends in. */
   frameClass = "border-offwhite",
 }: {
@@ -32,7 +31,6 @@ export function AboutCollage({
   primaryPhoto?: CmsPhoto;
   primaryLabel: string;
   secondaryPhoto?: CmsPhoto;
-  secondaryLabel: string;
   frameClass?: string;
 }) {
   return (
@@ -56,12 +54,17 @@ export function AboutCollage({
           <ImagePlaceholder label={primaryLabel} icon={Users} />
         )}
       </div>
-      {/* Overlapping secondary image */}
-      <div
-        className={`absolute -bottom-8 -right-3 hidden w-[46%] overflow-hidden rounded-2xl border-4 shadow-(--shadow-card-lg) sm:block lg:-right-8 ${frameClass}`}
-      >
-        <div className="relative aspect-[4/3]">
-          {secondaryPhoto ? (
+      {/* Overlapping secondary image — the whole frame (border, shadow and
+          the overhang below the large photo) exists only when a photo is
+          actually uploaded. No placeholder here on purpose: this slot is
+          decorative, so an empty one must read as a deliberate single-photo
+          composition, not as a missing image. An upload with no alt text
+          resolves to undefined too (the resolver logs it) — same case. */}
+      {secondaryPhoto && (
+        <div
+          className={`absolute -bottom-8 -right-3 hidden w-[46%] overflow-hidden rounded-2xl border-4 shadow-(--shadow-card-lg) sm:block lg:-right-8 ${frameClass}`}
+        >
+          <div className="relative aspect-[4/3]">
             <Image
               src={secondaryPhoto.url}
               alt={secondaryPhoto.alt}
@@ -69,11 +72,9 @@ export function AboutCollage({
               sizes="(min-width: 1024px) 23vw, 46vw"
               className="object-cover"
             />
-          ) : (
-            <ImagePlaceholder label={secondaryLabel} tone="steel" showCaption={false} />
-          )}
+          </div>
         </div>
-      </div>
+      )}
       {/* Experience badge */}
       <div className="absolute -top-5 -left-3 rounded-xl bg-red-600 px-5 py-3.5 text-white shadow-[0_12px_28px_rgb(211_33_39/0.4)] lg:-left-6">
         <p className="font-heading text-2xl leading-none font-extrabold">
@@ -126,7 +127,6 @@ export function AboutSection({
               primaryPhoto={content.primaryPhoto}
               primaryLabel={content.primaryPhotoSubject}
               secondaryPhoto={content.secondaryPhoto}
-              secondaryLabel={content.secondaryPhotoSubject}
             />
           </Reveal>
 
