@@ -1,6 +1,6 @@
 import { defineArrayMember, defineField, defineType } from "sanity";
 import type { NavIconName } from "@/data/navigation";
-import { imageWithAlt } from "./fields";
+import { ctaPairFields, imageWithAlt } from "./fields";
 
 /**
  * The constrained section library for service pages.
@@ -48,10 +48,6 @@ const PROPERTY_ICONS: Array<{ title: string; value: NavIconName }> = [
   { title: "Stethoscope (nursing homes)", value: "stethoscope" },
 ];
 
-/** True when the value is a real string with visible characters. */
-const filled = (value: unknown): value is string =>
-  typeof value === "string" && value.trim() !== "";
-
 /**
  * `rule.required()` alone accepts a string of spaces or a lone newline —
  * which then fails the renderer's trim gate and drops content at render
@@ -95,62 +91,6 @@ function optionalText(name: string, title: string, description: string, rows = 3
     validation: (rule) =>
       rule.custom(notJustSpaces("Write real text or clear the field — spaces alone don't count.")),
   });
-}
-
-/**
- * An optional CTA button: the page renders it only when BOTH text and link
- * exist, so the Studio enforces both-or-none — a half-filled pair would
- * publish cleanly and then silently not render.
- */
-function ctaPairFields(options: {
-  labelName: string;
-  labelTitle: string;
-  labelDescription: string;
-  hrefName: string;
-  hrefTitle: string;
-  hrefDescription: string;
-  /** Also accept full https:// addresses, not just /pages on this site. */
-  allowExternal?: boolean;
-}) {
-  const { labelName, hrefName, allowExternal } = options;
-  return [
-    defineField({
-      name: labelName,
-      title: options.labelTitle,
-      description: options.labelDescription,
-      type: "string",
-      validation: (rule) =>
-        rule.custom((value: string | undefined, context) => {
-          const parent = context.parent as Record<string, unknown> | undefined;
-          if (typeof value === "string" && value.trim() === "")
-            return "Write real text or clear the field — spaces alone don't count.";
-          if (!filled(value) && filled(parent?.[hrefName]))
-            return "The button has a link but no text — fill this in or clear the link.";
-          return true;
-        }),
-    }),
-    defineField({
-      name: hrefName,
-      title: options.hrefTitle,
-      description: options.hrefDescription,
-      type: "string",
-      validation: (rule) =>
-        rule.custom((value: string | undefined, context) => {
-          const parent = context.parent as Record<string, unknown> | undefined;
-          if (
-            filled(value) &&
-            !value.startsWith("/") &&
-            !(allowExternal && value.startsWith("https://"))
-          )
-            return allowExternal
-              ? "Start with a slash for pages on this site (/contact) or https:// for other websites."
-              : "Use a page on this site, starting with a slash — e.g. /contact.";
-          if (!filled(value) && filled(parent?.[labelName]))
-            return "The button has text but nowhere to go — add the link (usually /contact) or clear the text.";
-          return true;
-        }),
-    }),
-  ];
 }
 
 export const serviceHero = defineType({

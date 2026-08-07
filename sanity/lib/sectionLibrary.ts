@@ -41,11 +41,16 @@ import type { LibrarySection } from "@/data/sectionLibrary";
 
 type Raw = Record<string, unknown>;
 
-function toIcon(value: unknown): NavIconName {
+/** A picked icon, or the caller's own fallback for that slot. */
+function iconOr(value: unknown, fallback: NavIconName): NavIconName {
   return typeof value === "string" &&
     (NAV_ICON_NAMES as readonly string[]).includes(value)
     ? (value as NavIconName)
-    : "wrench";
+    : fallback;
+}
+
+function toIcon(value: unknown): NavIconName {
+  return iconOr(value, "wrench");
 }
 
 function str(value: unknown): string | undefined {
@@ -148,18 +153,25 @@ function iconItem(child: Raw, i: number) {
   };
 }
 
-/** { icon, label } rows with default fill (hero trust strip, emergency benefits). */
-function iconLabelsOr<T extends { icon: NavIconName; label: string }>(
+/** The valid { icon, label } rows of an array field, in order. */
+function iconLabels<T extends { icon: NavIconName; label: string }>(
   value: unknown,
-  fallback: T[],
 ): T[] {
-  const list = Array.isArray(value)
+  return Array.isArray(value)
     ? value.flatMap((item) => {
         if (!item || typeof item !== "object") return [];
         const label = str((item as Raw).label);
         return label ? [{ icon: toIcon((item as Raw).icon), label } as T] : [];
       })
     : [];
+}
+
+/** { icon, label } rows with default fill (emergency benefits). */
+function iconLabelsOr<T extends { icon: NavIconName; label: string }>(
+  value: unknown,
+  fallback: T[],
+): T[] {
+  const list = iconLabels<T>(value);
   return list.length ? list : fallback;
 }
 
@@ -551,6 +563,8 @@ export function toLibrarySection(
     case "homeHero": {
       const fb = homePageDefaults.hero;
       const headingBefore = str(raw.headingBefore);
+      const primaryCta =
+        ctaPair(raw.ctaLabel, raw.ctaHref) ?? ctaPair(fb.ctaLabel, fb.ctaHref);
       return {
         _type: "homeHero",
         _key,
@@ -564,12 +578,31 @@ export function toLibrarySection(
           : fb.headingHighlight,
         headingAfter: headingBefore ? str(raw.headingAfter) : fb.headingAfter,
         subcopy: str(raw.subcopy) ?? fb.subcopy,
-        trustIndicators: iconLabelsOr(raw.trustIndicators, fb.trustIndicators),
+        // The button's text and link travel as a unit (the Studio refuses a
+        // half-filled pair), so the pair default-fills as a unit too —
+        // banners published before these fields existed keep their button.
+        // Removal is the toggle below, never a cleared field.
+        ctaLabel: primaryCta?.label,
+        ctaHref: primaryCta?.href,
+        showPrimaryButton: raw.showPrimaryButton !== false,
+        phoneCtaLabel: str(raw.phoneCtaLabel) ?? fb.phoneCtaLabel,
+        showPhoneButton: raw.showPhoneButton !== false,
+        // Absent (never edited) → the reference chips, so banners published
+        // before this band was touched are unchanged. A list the owner has
+        // actually emptied is honoured as empty — default-fill must not
+        // resurrect chips they deleted.
+        trustIndicators: Array.isArray(raw.trustIndicators)
+          ? iconLabels(raw.trustIndicators)
+          : fb.trustIndicators,
         experienceBadgeLabel:
           str(raw.experienceBadgeLabel) ?? fb.experienceBadgeLabel,
+        experienceBadgeIcon: iconOr(raw.experienceBadgeIcon, fb.experienceBadgeIcon),
         // Missing/absent → true: every banner published before the toggle
         // existed keeps its badge.
         showExperienceBadge: raw.showExperienceBadge !== false,
+        formHeading: str(raw.formHeading) ?? fb.formHeading,
+        formIntro: str(raw.formIntro) ?? fb.formIntro,
+        formSubmitLabel: str(raw.formSubmitLabel) ?? fb.formSubmitLabel,
         // Full-width banner background — same hotspot-aware wide crop as the
         // service/careers heroes; the frame here is load-bearing.
         photo: photoOf(raw, "photo", 16 / 9, {

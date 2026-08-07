@@ -11,6 +11,7 @@ import {
 } from "@/lib/validations";
 import { Button } from "@/components/ui/Button";
 import type { SiteContent } from "@/data/site";
+import { homePageDefaults } from "@/data/homePage";
 import { cn } from "@/lib/utils";
 
 const serviceOptions = [
@@ -37,7 +38,23 @@ function FieldError({ id, message }: { id: string; message?: string }) {
   );
 }
 
-export function EmergencyContactForm({ site }: { site: SiteContent }) {
+/**
+ * Copy defaults live in `data/homePage.ts` (the hero's fallback) and reach
+ * this form as props — the field labels, validation messages and success
+ * state stay in code, because they are bound to the zod schema and the
+ * screen-reader wiring rather than to marketing copy.
+ */
+export function EmergencyContactForm({
+  site,
+  heading = homePageDefaults.hero.formHeading,
+  intro = homePageDefaults.hero.formIntro,
+  submitLabel = homePageDefaults.hero.formSubmitLabel,
+}: {
+  site: SiteContent;
+  heading?: string;
+  intro?: string;
+  submitLabel?: string;
+}) {
   // Unique per mounted instance — the hero section (and this form with it)
   // can be duplicated in the Studio, and duplicate DOM ids break label
   // association for screen readers.
@@ -99,11 +116,11 @@ export function EmergencyContactForm({ site }: { site: SiteContent }) {
   return (
     <div className="rounded-2xl bg-white p-6 shadow-(--shadow-card-lg) sm:p-8">
       <h2 className="text-[22px] font-extrabold tracking-tight text-navy-900">
-        Emergency? Contact Us 24/7
+        {heading}
       </h2>
-      <p className="mt-1.5 text-sm leading-relaxed text-grey-500">
-        Tell us what is happening and our team will contact you shortly.
-      </p>
+      {intro && (
+        <p className="mt-1.5 text-sm leading-relaxed text-grey-500">{intro}</p>
+      )}
 
       <form
         onSubmit={handleSubmit(onSubmit)}
@@ -242,7 +259,7 @@ export function EmergencyContactForm({ site }: { site: SiteContent }) {
             className="w-full"
             withArrow
           >
-            {isSubmitting ? "Sending…" : "Request a Call Back"}
+            {isSubmitting ? "Sending…" : submitLabel}
           </Button>
           <p className="mt-3.5 flex items-center justify-center gap-1.5 text-center text-[13px] font-medium text-grey-500">
             <Phone aria-hidden="true" className="size-3.5 text-red-600" />

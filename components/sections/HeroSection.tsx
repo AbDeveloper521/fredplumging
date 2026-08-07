@@ -1,5 +1,4 @@
 import Image from "next/image";
-import { Award } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
 import { EmergencyContactForm } from "@/components/forms/EmergencyContactForm";
@@ -47,6 +46,18 @@ export function HeroSection({
   const darkOverlay = content.darkOverlay !== false;
   // Same rule for the "{years} Years" badge: absent means on.
   const showExperienceBadge = content.showExperienceBadge !== false;
+  const BadgeIcon = navIcons[content.experienceBadgeIcon];
+  // Each button renders only when its toggle is on AND it has the copy it
+  // needs — the primary needs both a label and a link, the phone button its
+  // label (the number itself always comes from Site Settings).
+  const primaryCta =
+    content.showPrimaryButton !== false && content.ctaLabel && content.ctaHref
+      ? { label: content.ctaLabel, href: content.ctaHref }
+      : undefined;
+  const phoneCtaLabel =
+    content.showPhoneButton !== false && content.phoneCtaLabel
+      ? content.phoneCtaLabel.replace("{phone}", site.phone)
+      : undefined;
 
   return (
     <section
@@ -135,21 +146,34 @@ export function HeroSection({
             </p>
           </Rise>
 
-          <Rise delay={0.24}>
-            <div className="mt-9 flex flex-col gap-4 sm:flex-row">
-              <Button href="/services" size="lg" withArrow className="sm:min-w-[220px]">
-                Our Services
-              </Button>
-              <Button
-                href={site.phoneHref}
-                variant="phone"
-                size="lg"
-                withPhoneIcon
-              >
-                Call {site.phone}
-              </Button>
-            </div>
-          </Rise>
+          {/* Both buttons off in Studio → the row and its top margin go with
+              them, so the intro runs straight into the trust strip. */}
+          {(primaryCta ?? phoneCtaLabel) && (
+            <Rise delay={0.24}>
+              <div className="mt-9 flex flex-col gap-4 sm:flex-row">
+                {primaryCta && (
+                  <Button
+                    href={primaryCta.href}
+                    size="lg"
+                    withArrow
+                    className="sm:min-w-[220px]"
+                  >
+                    {primaryCta.label}
+                  </Button>
+                )}
+                {phoneCtaLabel && (
+                  <Button
+                    href={site.phoneHref}
+                    variant="phone"
+                    size="lg"
+                    withPhoneIcon
+                  >
+                    {phoneCtaLabel}
+                  </Button>
+                )}
+              </div>
+            </Rise>
+          )}
 
           {/* Emptied in Studio → the divider rule and its spacing go with it,
               so the badge (or the buttons) simply ends the column. */}
@@ -173,7 +197,7 @@ export function HeroSection({
             <Rise delay={0.4}>
               <div className="mt-8 inline-flex items-center gap-4 rounded-2xl border border-white/12 bg-white/5 px-6 py-4 backdrop-blur-sm">
                 <span className="flex size-12 items-center justify-center rounded-xl bg-red-600">
-                  <Award aria-hidden="true" className="size-6 text-white" />
+                  <BadgeIcon aria-hidden="true" className="size-6 text-white" />
                 </span>
                 <div>
                   <p className="font-heading text-[26px] leading-none font-extrabold text-white">
@@ -190,7 +214,12 @@ export function HeroSection({
 
         {/* Conversion card */}
         <Rise delay={0.2} className="lg:w-full lg:max-w-[520px] lg:justify-self-end">
-          <EmergencyContactForm site={site} />
+          <EmergencyContactForm
+            site={site}
+            heading={content.formHeading}
+            intro={content.formIntro}
+            submitLabel={content.formSubmitLabel}
+          />
         </Rise>
       </Container>
 

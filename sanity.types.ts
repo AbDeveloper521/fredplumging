@@ -592,6 +592,11 @@ export type HomeHero = {
   headingAfter?: string;
   subcopy?: string;
   eyebrow?: string;
+  ctaLabel?: string;
+  ctaHref?: string;
+  showPrimaryButton?: boolean;
+  phoneCtaLabel?: string;
+  showPhoneButton?: boolean;
   trustIndicators?: Array<{
     icon?:
       | "clock"
@@ -618,7 +623,30 @@ export type HomeHero = {
     _key: string;
   }>;
   experienceBadgeLabel?: string;
+  experienceBadgeIcon?:
+    | "clock"
+    | "shield-check"
+    | "map-pin"
+    | "truck"
+    | "message-square"
+    | "wrench"
+    | "building-2"
+    | "clipboard-check"
+    | "calendar-check"
+    | "phone-call"
+    | "search-check"
+    | "file-check-2"
+    | "alert-triangle"
+    | "lightbulb"
+    | "trending-up"
+    | "award"
+    | "siren"
+    | "droplets"
+    | "waves";
   showExperienceBadge?: boolean;
+  formHeading?: string;
+  formIntro?: string;
+  formSubmitLabel?: string;
   photo?: {
     asset?: SanityImageAssetReference;
     media?: unknown;
@@ -3218,6 +3246,11 @@ export type SERVICE_BY_SLUG_QUERY_RESULT = {
         headingAfter?: string;
         subcopy?: string;
         eyebrow?: string;
+        ctaLabel?: string;
+        ctaHref?: string;
+        showPrimaryButton?: boolean;
+        phoneCtaLabel?: string;
+        showPhoneButton?: boolean;
         trustIndicators?: Array<{
           icon?:
             | "alert-triangle"
@@ -3244,7 +3277,30 @@ export type SERVICE_BY_SLUG_QUERY_RESULT = {
           _key: string;
         }>;
         experienceBadgeLabel?: string;
+        experienceBadgeIcon?:
+          | "alert-triangle"
+          | "award"
+          | "building-2"
+          | "calendar-check"
+          | "clipboard-check"
+          | "clock"
+          | "droplets"
+          | "file-check-2"
+          | "lightbulb"
+          | "map-pin"
+          | "message-square"
+          | "phone-call"
+          | "search-check"
+          | "shield-check"
+          | "siren"
+          | "trending-up"
+          | "truck"
+          | "waves"
+          | "wrench";
         showExperienceBadge?: boolean;
+        formHeading?: string;
+        formIntro?: string;
+        formSubmitLabel?: string;
         photo: {
           asset: SanityImageAssetReference | null;
           hotspot: SanityImageHotspot | null;
@@ -4465,6 +4521,11 @@ export type INDUSTRY_BY_SLUG_QUERY_RESULT = {
         headingAfter?: string;
         subcopy?: string;
         eyebrow?: string;
+        ctaLabel?: string;
+        ctaHref?: string;
+        showPrimaryButton?: boolean;
+        phoneCtaLabel?: string;
+        showPhoneButton?: boolean;
         trustIndicators?: Array<{
           icon?:
             | "alert-triangle"
@@ -4491,7 +4552,30 @@ export type INDUSTRY_BY_SLUG_QUERY_RESULT = {
           _key: string;
         }>;
         experienceBadgeLabel?: string;
+        experienceBadgeIcon?:
+          | "alert-triangle"
+          | "award"
+          | "building-2"
+          | "calendar-check"
+          | "clipboard-check"
+          | "clock"
+          | "droplets"
+          | "file-check-2"
+          | "lightbulb"
+          | "map-pin"
+          | "message-square"
+          | "phone-call"
+          | "search-check"
+          | "shield-check"
+          | "siren"
+          | "trending-up"
+          | "truck"
+          | "waves"
+          | "wrench";
         showExperienceBadge?: boolean;
+        formHeading?: string;
+        formIntro?: string;
+        formSubmitLabel?: string;
         photo: {
           asset: SanityImageAssetReference | null;
           hotspot: SanityImageHotspot | null;
@@ -5653,6 +5737,11 @@ export type HOME_PAGE_QUERY_RESULT = {
         headingAfter?: string;
         subcopy?: string;
         eyebrow?: string;
+        ctaLabel?: string;
+        ctaHref?: string;
+        showPrimaryButton?: boolean;
+        phoneCtaLabel?: string;
+        showPhoneButton?: boolean;
         trustIndicators?: Array<{
           icon?:
             | "alert-triangle"
@@ -5679,7 +5768,30 @@ export type HOME_PAGE_QUERY_RESULT = {
           _key: string;
         }>;
         experienceBadgeLabel?: string;
+        experienceBadgeIcon?:
+          | "alert-triangle"
+          | "award"
+          | "building-2"
+          | "calendar-check"
+          | "clipboard-check"
+          | "clock"
+          | "droplets"
+          | "file-check-2"
+          | "lightbulb"
+          | "map-pin"
+          | "message-square"
+          | "phone-call"
+          | "search-check"
+          | "shield-check"
+          | "siren"
+          | "trending-up"
+          | "truck"
+          | "waves"
+          | "wrench";
         showExperienceBadge?: boolean;
+        formHeading?: string;
+        formIntro?: string;
+        formSubmitLabel?: string;
         photo: {
           asset: SanityImageAssetReference | null;
           hotspot: SanityImageHotspot | null;
@@ -6816,6 +6928,11 @@ export type ABOUT_PAGE_QUERY_RESULT = {
         headingAfter?: string;
         subcopy?: string;
         eyebrow?: string;
+        ctaLabel?: string;
+        ctaHref?: string;
+        showPrimaryButton?: boolean;
+        phoneCtaLabel?: string;
+        showPhoneButton?: boolean;
         trustIndicators?: Array<{
           icon?:
             | "alert-triangle"
@@ -6842,7 +6959,30 @@ export type ABOUT_PAGE_QUERY_RESULT = {
           _key: string;
         }>;
         experienceBadgeLabel?: string;
+        experienceBadgeIcon?:
+          | "alert-triangle"
+          | "award"
+          | "building-2"
+          | "calendar-check"
+          | "clipboard-check"
+          | "clock"
+          | "droplets"
+          | "file-check-2"
+          | "lightbulb"
+          | "map-pin"
+          | "message-square"
+          | "phone-call"
+          | "search-check"
+          | "shield-check"
+          | "siren"
+          | "trending-up"
+          | "truck"
+          | "waves"
+          | "wrench";
         showExperienceBadge?: boolean;
+        formHeading?: string;
+        formIntro?: string;
+        formSubmitLabel?: string;
         photo: {
           asset: SanityImageAssetReference | null;
           hotspot: SanityImageHotspot | null;
@@ -7979,6 +8119,11 @@ export type PARTNERS_PAGE_QUERY_RESULT = {
         headingAfter?: string;
         subcopy?: string;
         eyebrow?: string;
+        ctaLabel?: string;
+        ctaHref?: string;
+        showPrimaryButton?: boolean;
+        phoneCtaLabel?: string;
+        showPhoneButton?: boolean;
         trustIndicators?: Array<{
           icon?:
             | "alert-triangle"
@@ -8005,7 +8150,30 @@ export type PARTNERS_PAGE_QUERY_RESULT = {
           _key: string;
         }>;
         experienceBadgeLabel?: string;
+        experienceBadgeIcon?:
+          | "alert-triangle"
+          | "award"
+          | "building-2"
+          | "calendar-check"
+          | "clipboard-check"
+          | "clock"
+          | "droplets"
+          | "file-check-2"
+          | "lightbulb"
+          | "map-pin"
+          | "message-square"
+          | "phone-call"
+          | "search-check"
+          | "shield-check"
+          | "siren"
+          | "trending-up"
+          | "truck"
+          | "waves"
+          | "wrench";
         showExperienceBadge?: boolean;
+        formHeading?: string;
+        formIntro?: string;
+        formSubmitLabel?: string;
         photo: {
           asset: SanityImageAssetReference | null;
           hotspot: SanityImageHotspot | null;
@@ -9142,6 +9310,11 @@ export type CAREERS_PAGE_QUERY_RESULT = {
         headingAfter?: string;
         subcopy?: string;
         eyebrow?: string;
+        ctaLabel?: string;
+        ctaHref?: string;
+        showPrimaryButton?: boolean;
+        phoneCtaLabel?: string;
+        showPhoneButton?: boolean;
         trustIndicators?: Array<{
           icon?:
             | "alert-triangle"
@@ -9168,7 +9341,30 @@ export type CAREERS_PAGE_QUERY_RESULT = {
           _key: string;
         }>;
         experienceBadgeLabel?: string;
+        experienceBadgeIcon?:
+          | "alert-triangle"
+          | "award"
+          | "building-2"
+          | "calendar-check"
+          | "clipboard-check"
+          | "clock"
+          | "droplets"
+          | "file-check-2"
+          | "lightbulb"
+          | "map-pin"
+          | "message-square"
+          | "phone-call"
+          | "search-check"
+          | "shield-check"
+          | "siren"
+          | "trending-up"
+          | "truck"
+          | "waves"
+          | "wrench";
         showExperienceBadge?: boolean;
+        formHeading?: string;
+        formIntro?: string;
+        formSubmitLabel?: string;
         photo: {
           asset: SanityImageAssetReference | null;
           hotspot: SanityImageHotspot | null;
@@ -10327,6 +10523,11 @@ export type CITY_PAGE_QUERY_RESULT = {
         headingAfter?: string;
         subcopy?: string;
         eyebrow?: string;
+        ctaLabel?: string;
+        ctaHref?: string;
+        showPrimaryButton?: boolean;
+        phoneCtaLabel?: string;
+        showPhoneButton?: boolean;
         trustIndicators?: Array<{
           icon?:
             | "alert-triangle"
@@ -10353,7 +10554,30 @@ export type CITY_PAGE_QUERY_RESULT = {
           _key: string;
         }>;
         experienceBadgeLabel?: string;
+        experienceBadgeIcon?:
+          | "alert-triangle"
+          | "award"
+          | "building-2"
+          | "calendar-check"
+          | "clipboard-check"
+          | "clock"
+          | "droplets"
+          | "file-check-2"
+          | "lightbulb"
+          | "map-pin"
+          | "message-square"
+          | "phone-call"
+          | "search-check"
+          | "shield-check"
+          | "siren"
+          | "trending-up"
+          | "truck"
+          | "waves"
+          | "wrench";
         showExperienceBadge?: boolean;
+        formHeading?: string;
+        formIntro?: string;
+        formSubmitLabel?: string;
         photo: {
           asset: SanityImageAssetReference | null;
           hotspot: SanityImageHotspot | null;

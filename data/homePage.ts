@@ -41,16 +41,31 @@ export interface HomeHeroContent {
   headingHighlight?: string;
   headingAfter?: string;
   subcopy: string;
+  /** Primary button — both parts or neither; a half pair never renders. */
+  ctaLabel?: string;
+  ctaHref?: string;
+  /** Absent means true — only an explicit Studio opt-out removes the button. */
+  showPrimaryButton?: boolean;
+  /** The {phone} token becomes the number from Site Settings. */
+  phoneCtaLabel: string;
+  /** Absent means true — only an explicit Studio opt-out removes the button. */
+  showPhoneButton?: boolean;
   /** Labels may use the {foundedYear} token. */
   trustIndicators: HomeIconLabel[];
   /** Line under the derived "{years} Years" figure in the hero badge. */
   experienceBadgeLabel: string;
+  /** Symbol in the red square of the badge. */
+  experienceBadgeIcon: NavIconName;
   /**
    * The boxed "{years} Years" badge. Absent means true — only an explicit
    * Studio opt-out hides it, so banners published before the toggle existed
    * keep it.
    */
   showExperienceBadge?: boolean;
+  /** Copy on the white request-form card in the banner. */
+  formHeading: string;
+  formIntro: string;
+  formSubmitLabel: string;
   /** Editable background photo behind the banner; navy wash when unset. */
   photo?: CmsPhoto;
   /**
@@ -215,12 +230,19 @@ export const homePageDefaults: HomePageDefaults = {
     headingAfter: "Metroplex",
     subcopy:
       "Fred's Plumbing provides 24/7 plumbing and specialty services for multi-family and commercial buildings throughout the Dallas–Fort Worth Metroplex. From emergency repairs to large-scale installations, our licensed team delivers fast, efficient, and long-lasting results for apartments, condos, assisted living facilities, and more.",
+    ctaLabel: "Our Services",
+    ctaHref: "/services",
+    phoneCtaLabel: "Call {phone}",
     trustIndicators: [
       { icon: "clock", label: "24/7 Emergency Response" },
       { icon: "shield-check", label: "Licensed & Insured" },
       { icon: "map-pin", label: "Serving DFW Since {foundedYear}" },
     ],
     experienceBadgeLabel: "Serving DFW property teams",
+    experienceBadgeIcon: "award",
+    formHeading: "Emergency? Contact Us 24/7",
+    formIntro: "Tell us what is happening and our team will contact you shortly.",
+    formSubmitLabel: "Request a Call Back",
   },
   trustBar: {
     tagline: "Trusted by property managers and commercial facilities across DFW",

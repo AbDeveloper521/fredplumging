@@ -1,7 +1,7 @@
 import { defineArrayMember, defineField, defineType } from "sanity";
 import type { NavIconName } from "@/data/navigation";
 import { defaultHomeSections } from "@/data/homePage";
-import { imageWithAlt } from "./fields";
+import { ctaPairFields, imageWithAlt } from "./fields";
 import { sectionsField } from "./sectionLibrary";
 
 /**
@@ -81,13 +81,17 @@ function optionalText(name: string, title: string, description: string, rows = 3
   });
 }
 
-function iconField(description: string) {
+function iconField(
+  description: string,
+  options?: { name?: string; title?: string; fallbackIcon?: NavIconName },
+) {
+  const fallbackIcon = options?.fallbackIcon ?? "wrench";
   return defineField({
-    name: "icon",
-    title: "Icon",
-    // Optional by design: the site falls back to the wrench icon, so an
-    // empty pick can never block a publish or drop the row.
-    description: `${description} Leave empty to use the wrench icon.`,
+    name: options?.name ?? "icon",
+    title: options?.title ?? "Icon",
+    // Optional by design: the site falls back to a known icon, so an empty
+    // pick can never block a publish or drop the row.
+    description: `${description} Leave empty to use the ${fallbackIcon.replace(/-/g, " ")} icon.`,
     type: "string",
     options: { list: HOME_ICONS },
   });
@@ -201,7 +205,7 @@ export const homeHero = defineType({
   title: "Homepage banner (split headline)",
   type: "object",
   description:
-    "The dark banner at the top: headline, intro, trust strip. Buttons, phone number, and the years figure come from Site Settings.",
+    "The dark banner at the top: headline, intro, buttons, trust strip, experience badge and the request form. Only the phone number and the years figure come from Site Settings — everything else on the banner is editable here.",
   fields: [
     requiredString(
       "headingBefore",
@@ -230,6 +234,42 @@ export const homeHero = defineType({
       "Small label above the headline",
       "Tiny uppercase label, e.g. “Commercial & Multi-Family Plumbing Experts”.",
     ),
+    ...ctaPairFields({
+      labelName: "ctaLabel",
+      labelTitle: "First button text",
+      labelDescription:
+        "The red button under the intro, e.g. “Our Services”. Keep every button label on the page different. Leave both button fields empty to fall back to the built-in “Our Services” button, or turn the button off below.",
+      hrefName: "ctaHref",
+      hrefTitle: "First button link",
+      hrefDescription:
+        "Where the first button goes — usually /services or /contact.",
+      allowExternal: true,
+    }),
+    defineField({
+      name: "showPrimaryButton",
+      title: "Show the first button",
+      description:
+        "Untick to remove the red button entirely. The row closes up — if the call button is off too, the banner goes straight from the intro to the trust strip.",
+      type: "boolean",
+      initialValue: true,
+    }),
+    defineField({
+      name: "phoneCtaLabel",
+      title: "Call-button text",
+      description:
+        "Text on the second button. Write {phone} where the number goes — it's filled in from Site Settings, so the number itself is never typed here, e.g. “Call {phone}”.",
+      type: "string",
+      validation: (rule) =>
+        rule.custom(notJustSpaces("Write real text or clear the field — spaces alone don't count.")),
+    }),
+    defineField({
+      name: "showPhoneButton",
+      title: "Show the call button",
+      description:
+        "Untick to remove the call button from the banner. The phone number stays reachable from the header and the sticky mobile bar.",
+      type: "boolean",
+      initialValue: true,
+    }),
     iconLabelArray(
       "trustIndicators",
       "Trust strip",
@@ -240,6 +280,11 @@ export const homeHero = defineType({
       "Experience badge — line under the years",
       "The small line inside the badge, e.g. “Serving DFW property teams”. The “30+ Years” figure above it comes from Site Settings automatically.",
     ),
+    iconField("Symbol in the red square inside the experience badge.", {
+      name: "experienceBadgeIcon",
+      title: "Experience badge — icon",
+      fallbackIcon: "award",
+    }),
     defineField({
       name: "showExperienceBadge",
       title: "Show experience badge",
@@ -248,6 +293,21 @@ export const homeHero = defineType({
       type: "boolean",
       initialValue: true,
     }),
+    optionalString(
+      "formHeading",
+      "Request form — heading",
+      "The bold line at the top of the white form card, e.g. “Emergency? Contact Us 24/7”.",
+    ),
+    optionalString(
+      "formIntro",
+      "Request form — line under the heading",
+      "One sentence under the form heading, e.g. “Tell us what is happening and our team will contact you shortly.”.",
+    ),
+    optionalString(
+      "formSubmitLabel",
+      "Request form — button text",
+      "Text on the form's submit button, e.g. “Request a Call Back”.",
+    ),
     imageWithAlt({
       name: "photo",
       title: "Background photo",

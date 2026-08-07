@@ -1,5 +1,65 @@
 import { defineArrayMember, defineField } from "sanity";
 
+/** True when the value is a real string with visible characters. */
+export const filled = (value: unknown): value is string =>
+  typeof value === "string" && value.trim() !== "";
+
+/**
+ * An optional CTA button: the page renders it only when BOTH text and link
+ * exist, so the Studio enforces both-or-none — a half-filled pair would
+ * publish cleanly and then silently not render.
+ */
+export function ctaPairFields(options: {
+  labelName: string;
+  labelTitle: string;
+  labelDescription: string;
+  hrefName: string;
+  hrefTitle: string;
+  hrefDescription: string;
+  /** Also accept full https:// addresses, not just /pages on this site. */
+  allowExternal?: boolean;
+}) {
+  const { labelName, hrefName, allowExternal } = options;
+  return [
+    defineField({
+      name: labelName,
+      title: options.labelTitle,
+      description: options.labelDescription,
+      type: "string",
+      validation: (rule) =>
+        rule.custom((value: string | undefined, context) => {
+          const parent = context.parent as Record<string, unknown> | undefined;
+          if (typeof value === "string" && value.trim() === "")
+            return "Write real text or clear the field — spaces alone don't count.";
+          if (!filled(value) && filled(parent?.[hrefName]))
+            return "The button has a link but no text — fill this in or clear the link.";
+          return true;
+        }),
+    }),
+    defineField({
+      name: hrefName,
+      title: options.hrefTitle,
+      description: options.hrefDescription,
+      type: "string",
+      validation: (rule) =>
+        rule.custom((value: string | undefined, context) => {
+          const parent = context.parent as Record<string, unknown> | undefined;
+          if (
+            filled(value) &&
+            !value.startsWith("/") &&
+            !(allowExternal && value.startsWith("https://"))
+          )
+            return allowExternal
+              ? "Start with a slash for pages on this site (/contact) or https:// for other websites."
+              : "Use a page on this site, starting with a slash — e.g. /contact.";
+          if (!filled(value) && filled(parent?.[labelName]))
+            return "The button has text but nowhere to go — add the link (usually /contact) or clear the text.";
+          return true;
+        }),
+    }),
+  ];
+}
+
 /**
  * Values the optional per-image "Frame shape" override can take. Interpreted
  * by `resolvePhoto` in sanity/lib/image.ts — keep the two in sync.
