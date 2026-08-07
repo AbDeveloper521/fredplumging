@@ -89,8 +89,8 @@ export const aboutPageDefaults: AboutPageDefaults = {
     eyebrow: "Fred's Plumbing",
     heading: "About Fred's Plumbing",
     paragraphs: [
-      "Fred’s Plumbing is a trusted leader in multi-family and commercial emergency plumbing services across the DFW area. Family and employee owned for nearly 30 years, we operate 24/7, 365 days a year to keep properties running safely and efficiently. We are a one-stop shop offering a comprehensive suite of services, including traditional plumbing, drain and sewer solutions, hydrojetting, boilers, backflow prevention, and natural gas systems.",
-      "Our licensed, credentialed team is experienced with all major vendor portals and property management requirements. Known for our professionalism, integrity, reliability, and strong safety culture, Fred’s Plumbing is highly reviewed and trusted by property owners and managers throughout DFW.",
+      "Fred's Plumbing is a trusted leader in multi-family and commercial emergency plumbing services across the DFW area. Family and employee owned for nearly 30 years, we operate 24/7, 365 days a year to keep properties running safely and efficiently. We are a one-stop shop offering a comprehensive suite of services, including traditional plumbing, drain and sewer solutions, hydrojetting, boilers, backflow prevention, and natural gas systems.",
+      "Our licensed, credentialed team is experienced with all major vendor portals and property management requirements. Known for our professionalism, integrity, reliability, and strong safety culture, Fred's Plumbing is highly reviewed and trusted by property owners and managers throughout DFW.",
     ],
     showCredentials: true,
   },
@@ -98,7 +98,7 @@ export const aboutPageDefaults: AboutPageDefaults = {
     eyebrow: "Our Story",
     heading: "Committed to Quality and Service Since 1996",
     paragraphs: [
-      "Fred’s Plumbing was founded in 1996 by Fredrick Lee Press, a master plumber who built his reputation on integrity, reliable craftsmanship, and doing the job right the first time. Fred passed away in 2023, but the values he instilled — hard work, honest service, and a genuine commitment to his customers — continue to guide everything we do. Over the years, our company has grown through those same principles, earning the trust of property managers and owners across the DFW Metroplex.",
+      "Fred's Plumbing was founded in 1996 by Fredrick Lee Press, a master plumber who built his reputation on integrity, reliable craftsmanship, and doing the job right the first time. Fred passed away in 2023, but the values he instilled — hard work, honest service, and a genuine commitment to his customers — continue to guide everything we do. Over the years, our company has grown through those same principles, earning the trust of property managers and owners across the DFW Metroplex.",
     ],
     badgeSubtitle: "Family and employee owned",
     photoSubjectPrimary:
@@ -112,7 +112,7 @@ export const aboutPageDefaults: AboutPageDefaults = {
     paragraphs: [
       // "Over time," is a reconstruction — the opening words were obscured by
       // an overlay in the source page. The owner must confirm the wording.
-      "Over time, Fred’s Plumbing became known for providing dependable solutions to multi-family and commercial properties throughout the Dallas–Fort Worth Metroplex. We developed expertise in complex plumbing systems, expanded our service offerings, and built long-lasting partnerships with property managers, facility owners, and residential communities.",
+      "Over time, Fred's Plumbing became known for providing dependable solutions to multi-family and commercial properties throughout the Dallas–Fort Worth Metroplex. We developed expertise in complex plumbing systems, expanded our service offerings, and built long-lasting partnerships with property managers, facility owners, and residential communities.",
       "Today, our company continues to move forward with the same dedication that shaped our beginning. We embrace new technology, train our team to the highest standards, and work tirelessly to maintain the level of service that has defined us for nearly three decades. Our history reflects resilience, growth, and a commitment to excellence that guides everything we do.",
     ],
     photoSubject: "Commercial boiler and pipework at a multi-family property",

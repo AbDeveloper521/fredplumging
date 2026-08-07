@@ -6,6 +6,7 @@ import {
 } from "@/sanity/lib/live";
 import { cacheLife } from "next/cache";
 import { logFallback } from "@/sanity/lib/fallbackLog";
+import { SITE_URL } from "@/lib/siteUrl";
 import { SITE_SETTINGS_QUERY } from "@/sanity/queries";
 import type { SITE_SETTINGS_QUERY_RESULT } from "@/sanity.types";
 import {
@@ -94,7 +95,10 @@ export async function getSite(
     yearsInBusiness:
       result.yearsInBusiness ??
       (await derivedYears(result.foundedYear ?? FALLBACK.foundedYear)),
-    url: result.url ?? FALLBACK.url,
+    // NOT from Sanity: the public origin is a deployment fact (see
+    // lib/siteUrl.ts). A stale CMS value here would silently publish
+    // canonicals and sitemap entries pointing at the wrong host.
+    url: SITE_URL,
     licenseNumber: result.licenseNumber ?? FALLBACK.licenseNumber,
     streetAddress: result.streetAddress ?? FALLBACK.streetAddress,
     addressLocality: result.addressLocality ?? FALLBACK.addressLocality,

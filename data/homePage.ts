@@ -252,13 +252,13 @@ export const homePageDefaults: HomePageDefaults = {
     tagline: "Trusted by property managers and commercial facilities across DFW",
   },
   about: {
-    eyebrow: "Fred’s Plumbing",
+    eyebrow: "Fred's Plumbing",
     heading: "Trusted Commercial Plumbers Serving the DFW Metroplex Since 1996",
     // Blank-line breaks render as separate paragraphs (the reference band
     // carries two). The reference shows no checkmark list and no metrics
     // row, so both default empty — Studio can still add them back.
     description:
-      "Founded in 1996, Fred’s Plumbing has proudly served the Dallas–Fort Worth Metroplex (DFW) with a long-standing reputation for professionalism, reliability, and high-quality workmanship. Our team specializes in providing commercial and multi-family plumbing services for property management companies, facility owners, and real estate investors across Dallas, Fort Worth, and surrounding North Texas communities.\n\nFrom large-scale installations to ongoing maintenance and emergency repairs, we deliver efficient, safety-focused solutions that minimize downtime and protect your investment. Every project we complete reflects our dedication to precision, code compliance, and lasting performance, making Fred’s Plumbing one of the most trusted names in DFW commercial plumbing for nearly three decades.",
+      "Founded in 1996, Fred's Plumbing has proudly served the Dallas–Fort Worth Metroplex (DFW) with a long-standing reputation for professionalism, reliability, and high-quality workmanship. Our team specializes in providing commercial and multi-family plumbing services for property management companies, facility owners, and real estate investors across Dallas, Fort Worth, and surrounding North Texas communities.\n\nFrom large-scale installations to ongoing maintenance and emergency repairs, we deliver efficient, safety-focused solutions that minimize downtime and protect your investment. Every project we complete reflects our dedication to precision, code compliance, and lasting performance, making Fred's Plumbing one of the most trusted names in DFW commercial plumbing for nearly three decades.",
     highlights: [],
     badgeSubtitle: "Family-owned & operated",
     metrics: [],

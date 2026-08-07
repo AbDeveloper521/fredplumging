@@ -88,10 +88,19 @@ site looks complete today.) Seed first; flip credentials second.
 - **The hiring-process section copy is unconfirmed** — the four steps in
   `components/sections/HiringProcessSection.tsx` are placeholders to be
   verified with the client.
-- **Production domain and inbox unconfirmed** — `data/site.ts` still carries
-  the placeholder `fredsplumbingdfw.com`, but the Google listing points at
-  `fredsplumbingservices.com`; confirm the domain and whether
-  `service@fredsplumbingdfw.com` is the real inbox before launch.
+- **Production domain and inbox — CONFIRMED by the owner:**
+  `https://fredsplumbing.com` and `contact@fredsplumbing.com`. The domain is
+  no longer a constant in `data/site.ts`: set `NEXT_PUBLIC_SITE_URL` on the
+  host (see `lib/siteUrl.ts` and `.env.example`). **Until DNS actually
+  resolves at fredsplumbing.com, set that variable to the Vercel origin** —
+  canonicals pointing at a domain that does not resolve hurt indexing.
+- **Site Settings in Sanity still holds wrong identity values** and Sanity
+  wins over `data/site.ts` at runtime: `email`/`emailHref` are still
+  `service@fredsplumbing.com`, and `foundedYear` is `1993` (every other source
+  says 1996). Run `scripts/fix-site-settings-identity.ts` (dry run first) or
+  fix them in Studio before launch.
+- **Founding year unresolved** — 1996 everywhere except that one Sanity field.
+  Confirm with the client.
 
 ## After go-live
 

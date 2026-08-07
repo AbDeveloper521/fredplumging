@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Fraunces, Inter } from "next/font/google";
 import { getSite } from "@/sanity/lib/getSite";
+import { SITE_URL } from "@/lib/siteUrl";
 import "./globals.css";
 
 const inter = Inter({
@@ -25,11 +26,12 @@ export async function generateMetadata(): Promise<Metadata> {
   const description = `${site.name} provides 24/7 commercial, multi-family, drain, sewer, maintenance, and emergency plumbing services across the ${site.serviceArea}.`;
 
   return {
-    metadataBase: new URL(site.url),
+    // The one origin every canonical and Open Graph URL resolves against —
+    // environment-driven (lib/siteUrl.ts), never from the CMS.
+    metadataBase: new URL(SITE_URL),
     title,
     description,
     alternates: {
-      // Canonical placeholder — confirm the production domain before launch.
       canonical: "/",
     },
     openGraph: {

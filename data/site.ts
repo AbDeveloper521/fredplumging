@@ -1,3 +1,5 @@
+import { SITE_URL } from "@/lib/siteUrl";
+
 /**
  * Business facts. As of Sanity phase 1 these constants are the FALLBACK:
  * server components should read via `getSite()` in `sanity/lib/getSite.ts`,
@@ -21,6 +23,11 @@ export interface Site {
    * hardcoded "27+" did.
    */
   yearsInBusiness?: string;
+  /**
+   * The public origin, from `SITE_URL` (lib/siteUrl.ts) — environment-driven
+   * and NOT sourced from Sanity: which domain serves the site is a deployment
+   * fact, not editorial copy.
+   */
   url: string;
   /** State plumbing licence as shown on the client's own site footer. */
   licenseNumber: string;
@@ -63,8 +70,7 @@ export const site: Site = {
   serviceArea: "Dallas–Fort Worth Metroplex",
   foundedYear: 1996,
   // yearsInBusiness deliberately unset — derived from foundedYear.
-  /** Placeholder — replace with the production domain before launch. */
-  url: "https://www.fredsplumbingdfw.com",
+  url: SITE_URL,
   licenseNumber: "RMP 44890",
   mapHeading: "Serving the Dallas–Fort Worth Metroplex",
   mapDescription:

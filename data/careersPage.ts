@@ -89,9 +89,9 @@ export const careersPageDefaults: CareersPageDefaults = {
     eyebrow: "Fred's Plumbing",
     heading: "Careers at Fred's Plumbing",
     paragraphs: [
-      "Fred’s is always looking to opportunistically grow our team. We treat our employees the way we want to be treated. They are paid well, supported, and respected. We keep them busy with work and provide the tools and training for them to be successful.",
-      "Hiring priorities & ideal candidate traits: We value character and intangibles over certifications and tenure. We can teach the right guys how to be great multifamily plumbers. Intangibles generally can’t be taught. We want to hire employees that will be plumbers and team members with us for life.",
-      "Some core traits: Problem solvers that thrive under pressure, quiet confidence with no ego, strong situational awareness, ownership mindset, and respect for the trade. They take pride in doing the job right, have the curiosity to solve complex plumbing problems, and have integrity when no one is watching. We want team players that are also coachable, we love reliability and consistency, and we value emotional maturity and good judgment. Respect and communication are essential at Fred’s.",
+      "Fred's is always looking to opportunistically grow our team. We treat our employees the way we want to be treated. They are paid well, supported, and respected. We keep them busy with work and provide the tools and training for them to be successful.",
+      "Hiring priorities & ideal candidate traits: We value character and intangibles over certifications and tenure. We can teach the right guys how to be great multifamily plumbers. Intangibles generally can't be taught. We want to hire employees that will be plumbers and team members with us for life.",
+      "Some core traits: Problem solvers that thrive under pressure, quiet confidence with no ego, strong situational awareness, ownership mindset, and respect for the trade. They take pride in doing the job right, have the curiosity to solve complex plumbing problems, and have integrity when no one is watching. We want team players that are also coachable, we love reliability and consistency, and we value emotional maturity and good judgment. Respect and communication are essential at Fred's.",
     ],
     // Explicit (not just "absent = on") so the Studio toggle reads true.
     darkOverlay: true,

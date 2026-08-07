@@ -289,10 +289,13 @@ export const STATIC_FOOTER_NAVIGATION: FooterNavigation = {
       ],
     },
   ],
+  // The "Accessibility" link was removed at the owner's request — it pointed
+  // at /accessibility, a route that never existed. Its twin in the published
+  // `navigation` document must go too, or Sanity puts it straight back:
+  // scripts/remove-accessibility-link.ts.
   legal: [
     { _key: "f-privacy", label: "Privacy Policy", href: "/privacy-policy" },
     { _key: "f-terms", label: "Terms of Service", href: "/terms-of-service" },
-    { _key: "f-accessibility", label: "Accessibility", href: "/accessibility" },
   ],
 };
 

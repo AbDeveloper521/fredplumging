@@ -94,9 +94,11 @@ export const siteSettings = defineType({
     }),
     defineField({
       name: "url",
-      title: "Production URL",
+      title: "Production URL (no longer used)",
+      description:
+        "⚠️ This field is ignored by the website. Which domain serves the site is a deployment setting, not content — it is set on the hosting platform (NEXT_PUBLIC_SITE_URL) so that search-engine canonical links can never point at a domain that is not live yet. Ask your developer to change the domain; nothing you type here has any effect.",
       type: "url",
-      validation: (rule) => rule.required(),
+      readOnly: true,
     }),
     defineField({
       name: "streetAddress",

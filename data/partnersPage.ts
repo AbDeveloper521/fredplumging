@@ -72,7 +72,7 @@ export const partnersPageDefaults: PartnersPageDefaults = {
     eyebrow: "About Us",
     heading: "Fully Compliant and Approved Across Leading Vendor Systems",
     paragraphs: [
-      "Fred’s Plumbing is registered and in good standing on the vendor-compliance platforms property management companies rely on — VendorCafe, Compliance Depot, Vendor Nexus, NetVendor, and RealPage. Insurance, licensing, and documentation stay current in every system, so onboarding us is a lookup, not a paperwork chase.",
+      "Fred's Plumbing is registered and in good standing on the vendor-compliance platforms property management companies rely on — VendorCafe, Compliance Depot, Vendor Nexus, NetVendor, and RealPage. Insurance, licensing, and documentation stay current in every system, so onboarding us is a lookup, not a paperwork chase.",
     ],
     showCredentials: true,
   },

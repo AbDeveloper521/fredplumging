@@ -157,11 +157,24 @@ the way you'd treat contract text:
   The words hidden behind the widget are approximately "can be guaranteed". Use my reading,
   but **flag it prominently in your report** as needing the owner's confirmation against the
   live page before this goes to production. Do not quietly assume it's right.
-- The contact blocks say `Website: fredsplumbingservices.com`. Note that `data/site.ts`
-  currently carries a different domain (`fredsplumbingdfw.com`) and the footer shows
-  `contact@fredsplumbing.com`. **Render the legal pages' text exactly as written** — do not
-  "harmonise" it with site config — but flag the three-way domain inconsistency in your
-  report. It's a pre-existing issue and the owner decides.
+- **One deliberate correction, confirmed by the owner.** The client's WordPress contact
+  blocks say `Website: fredsplumbingservices.com`. That domain is **wrong**. The correct
+  values, confirmed by the business owner, are:
+  - Website: `https://fredsplumbing.com`
+  - Email: `contact@fredsplumbing.com`
+
+  So in both contact blocks, render `fredsplumbing.com` — **not** the domain shown in the
+  screenshots. This is the *only* place you deviate from the source text; everything else
+  stays verbatim. Note it explicitly in your report.
+
+  Do not add an email line to the contact blocks — neither source page has one there, and
+  the owner asked for nothing extra.
+
+  Pull the domain and phone from `data/site.ts` rather than typing them inline, so a future
+  change lands in one place. (A companion task, `BUSINESS-IDENTITY-AUDIT-PROMPT.md`,
+  corrects `data/site.ts` itself and sweeps the rest of the site — if it has already run,
+  the config is right; if it hasn't, set the correct values here and that task will confirm
+  them.)
 - Phone renders as `(972) 564 9081` in the source. Keep that display format on these pages
   even though the rest of the site uses `972-564-9081`; make the `tel:` href
   `tel:+19725649081` regardless.
@@ -299,7 +312,10 @@ If you have questions regarding these Terms of Service, please contact:
 
 **Fred's Plumbing Service**
 Phone: (972) 564 9081
-Website: fredsplumbingservices.com
+Website: fredsplumbing.com
+
+> The source screenshot reads `fredsplumbingservices.com` here. That domain is wrong — the
+> owner has confirmed the site is `https://fredsplumbing.com`. Render `fredsplumbing.com`.
 
 ---
 
@@ -420,4 +436,7 @@ contact us:
 
 **Fred's Plumbing Service**
 Phone: (972) 564 9081
-Website: fredsplumbingservices.com
+Website: fredsplumbing.com
+
+> The source screenshot reads `fredsplumbingservices.com` here. That domain is wrong — the
+> owner has confirmed the site is `https://fredsplumbing.com`. Render `fredsplumbing.com`.

@@ -116,7 +116,10 @@ const pLinked = (
 const CONTACT_CARD: LegalContactCard = {
   name: "Fred's Plumbing Service",
   phoneDisplay: "(972) 564 9081",
-  website: "fredsplumbingservices.com",
+  // The source screenshot reads "fredsplumbingservices.com"; the owner has
+  // confirmed that domain is wrong and the site is https://fredsplumbing.com.
+  // The one place these documents deliberately depart from the screenshot.
+  website: "fredsplumbing.com",
 };
 
 const TERMS_OF_SERVICE: LegalPageContent = {
