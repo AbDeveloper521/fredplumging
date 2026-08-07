@@ -554,11 +554,21 @@ export const homeCompliance = defineType({
     requiredString("heading", "Heading", "e.g. “Approved Across Leading Property Management Systems”.", "The section needs a heading."),
     optionalString("eyebrow", "Small label above the heading", "e.g. “Vendor-Ready and Fully Compliant”."),
     optionalText("description", "Paragraph", "The copy under the heading.", 4),
-    stringArray(
-      "items",
-      "Checkmark list",
-      "Short compliance items, e.g. “Insurance verification”. Six fill the grid (2 × 3).",
-    ),
+    // Kept, not deleted: the published homepage still carries six items and
+    // removing the field would both destroy that copy and raise "unknown
+    // fields" in Studio. The band no longer draws a checklist, so the field
+    // is marked deprecated rather than left looking editable.
+    {
+      ...stringArray(
+        "items",
+        "Checkmark list (no longer shown)",
+        "This list is not displayed on the site any more — the band now shows the heading, the paragraph and the vendor logos only. Your text is kept here in case the checklist ever comes back.",
+      ),
+      deprecated: {
+        reason:
+          "The compliance band no longer draws a checklist. Nothing typed here appears on the site.",
+      },
+    },
     hiddenField(),
   ],
   preview: sectionPreview("Vendor compliance band"),

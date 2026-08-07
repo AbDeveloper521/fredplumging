@@ -1,13 +1,21 @@
-import { CheckCircle2 } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
-import { ComplianceDashboardPanel } from "@/components/ui/ComplianceDashboardPanel";
 import { TrustLogoStrip } from "@/components/ui/TrustLogoStrip";
 import { vendorPlatformLogos, type TrustLogo } from "@/data/navigation";
 import { homePageDefaults, type HomeComplianceContent } from "@/data/homePage";
 
+/**
+ * Statement band: a centred heading block over the vendor-platform logo
+ * strip. Centred rather than left-aligned because the band is now a single
+ * full-width column above a centred strip — the same shape as the process,
+ * FAQ and trust bands. Left alignment belongs to bands with something
+ * sitting beside the heading (services, property types).
+ *
+ * `content.items` is deliberately not rendered: the checklist, its CTA and
+ * the mock status panel were removed from the design. The field survives in
+ * the schema so the copy the owner already published isn't destroyed.
+ */
 export function ComplianceSection({
   logos,
   content = homePageDefaults.compliance,
@@ -21,9 +29,11 @@ export function ComplianceSection({
   // Vendor platforms only — badges belong to the service-page strip.
   const vendors = vendorPlatformLogos(logos);
   return (
+    // Padding is tighter than the tall content bands: this one is now a
+    // heading block and a logo strip, so the old py-28 left it looking empty.
     <section
       aria-labelledby={titleId}
-      className="relative isolate overflow-hidden bg-navy-950 py-16 sm:py-24 lg:py-28"
+      className="relative isolate overflow-hidden bg-navy-950 py-14 sm:py-18 lg:py-20"
     >
       <div aria-hidden="true" className="bg-grid-dark absolute inset-0" />
       <div
@@ -32,46 +42,19 @@ export function ComplianceSection({
       />
 
       <Container className="relative">
-        <div className="grid grid-cols-1 items-center gap-14 lg:grid-cols-2 lg:gap-20">
-          <div>
-            <Reveal>
-              <SectionHeading
-                titleId={titleId}
-                eyebrow={content.eyebrow}
-                title={content.heading}
-                description={content.description}
-                theme="dark"
-              />
-            </Reveal>
-
-            <Reveal delay={0.1}>
-              <ul className="mt-8 grid grid-cols-1 gap-x-6 gap-y-3.5 sm:grid-cols-2">
-                {content.items.map((item) => (
-                  <li
-                    key={item}
-                    className="flex items-center gap-3 text-[15px] font-semibold text-white/90"
-                  >
-                    <CheckCircle2 aria-hidden="true" className="size-[18px] shrink-0 text-red-500" />
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </Reveal>
-
-            <Reveal delay={0.18}>
-              <div className="mt-10">
-                <Button href="/contact" withArrow>
-                  Discuss Vendor Requirements
-                </Button>
-              </div>
-            </Reveal>
-          </div>
-
-          {/* Compliance dashboard-style visual */}
-          <Reveal delay={0.15}>
-            <ComplianceDashboardPanel />
-          </Reveal>
-        </div>
+        <Reveal>
+          {/* max-w-3xl keeps the paragraph near a 70-character measure
+              instead of running the full container width as one line. */}
+          <SectionHeading
+            titleId={titleId}
+            eyebrow={content.eyebrow}
+            title={content.heading}
+            description={content.description}
+            align="center"
+            theme="dark"
+            className="max-w-3xl"
+          />
+        </Reveal>
 
         {/*
           Vendor-system logos — the same white-tile strip as the light
@@ -82,7 +65,7 @@ export function ComplianceSection({
         */}
         {vendors.length > 0 && (
           <Reveal delay={0.1}>
-            <div className="mt-16 border-t border-white/8 pt-10 lg:mt-20">
+            <div className="mt-12 border-t border-white/8 pt-9 lg:mt-14">
               <p className="mb-7 flex items-center justify-center gap-3 text-center text-[13px] font-bold tracking-[0.14em] text-white/70 uppercase">
                 <span aria-hidden="true" className="h-px w-8 bg-white/25" />
                 Trusted by Property Management Networks:

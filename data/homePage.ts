@@ -155,6 +155,10 @@ export interface HomeComplianceContent {
   eyebrow: string;
   heading: string;
   description: string;
+  /**
+   * No longer rendered — the band is heading + paragraph + vendor logos.
+   * Carried through so the checklist already published in Sanity survives.
+   */
   items: string[];
 }
 
@@ -374,14 +378,9 @@ export const homePageDefaults: HomePageDefaults = {
     heading: "Fully Compliant and Approved Across Leading Vendor Systems",
     description:
       "Property managers throughout the Dallas–Fort Worth Metroplex trust Fred's Plumbing because we are verified and active within the platforms they use every day. Our team maintains complete vendor compliance with background checks, insurance verification, safety certifications, and documentation updates so you can schedule and manage service with confidence.",
-    items: [
-      "Licensing documentation",
-      "Insurance verification",
-      "Background requirements",
-      "Vendor portal compliance",
-      "Service documentation",
-      "Property-specific coordination",
-    ],
+    // The band renders the heading, the paragraph and the vendor logos only
+    // — no checklist. The field stays for the copy already published.
+    items: [],
   },
   testimonials: {
     heading: "Trusted by Property Managers Across DFW",
