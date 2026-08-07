@@ -618,6 +618,7 @@ export type HomeHero = {
     _key: string;
   }>;
   experienceBadgeLabel?: string;
+  showExperienceBadge?: boolean;
   photo?: {
     asset?: SanityImageAssetReference;
     media?: unknown;
@@ -3243,6 +3244,7 @@ export type SERVICE_BY_SLUG_QUERY_RESULT = {
           _key: string;
         }>;
         experienceBadgeLabel?: string;
+        showExperienceBadge?: boolean;
         photo: {
           asset: SanityImageAssetReference | null;
           hotspot: SanityImageHotspot | null;
@@ -4489,6 +4491,7 @@ export type INDUSTRY_BY_SLUG_QUERY_RESULT = {
           _key: string;
         }>;
         experienceBadgeLabel?: string;
+        showExperienceBadge?: boolean;
         photo: {
           asset: SanityImageAssetReference | null;
           hotspot: SanityImageHotspot | null;
@@ -5676,6 +5679,7 @@ export type HOME_PAGE_QUERY_RESULT = {
           _key: string;
         }>;
         experienceBadgeLabel?: string;
+        showExperienceBadge?: boolean;
         photo: {
           asset: SanityImageAssetReference | null;
           hotspot: SanityImageHotspot | null;
@@ -6838,6 +6842,7 @@ export type ABOUT_PAGE_QUERY_RESULT = {
           _key: string;
         }>;
         experienceBadgeLabel?: string;
+        showExperienceBadge?: boolean;
         photo: {
           asset: SanityImageAssetReference | null;
           hotspot: SanityImageHotspot | null;
@@ -8000,6 +8005,7 @@ export type PARTNERS_PAGE_QUERY_RESULT = {
           _key: string;
         }>;
         experienceBadgeLabel?: string;
+        showExperienceBadge?: boolean;
         photo: {
           asset: SanityImageAssetReference | null;
           hotspot: SanityImageHotspot | null;
@@ -9162,6 +9168,7 @@ export type CAREERS_PAGE_QUERY_RESULT = {
           _key: string;
         }>;
         experienceBadgeLabel?: string;
+        showExperienceBadge?: boolean;
         photo: {
           asset: SanityImageAssetReference | null;
           hotspot: SanityImageHotspot | null;
@@ -10346,6 +10353,7 @@ export type CITY_PAGE_QUERY_RESULT = {
           _key: string;
         }>;
         experienceBadgeLabel?: string;
+        showExperienceBadge?: boolean;
         photo: {
           asset: SanityImageAssetReference | null;
           hotspot: SanityImageHotspot | null;

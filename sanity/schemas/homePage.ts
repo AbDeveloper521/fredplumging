@@ -240,6 +240,14 @@ export const homeHero = defineType({
       "Experience badge — line under the years",
       "The small line inside the badge, e.g. “Serving DFW property teams”. The “30+ Years” figure above it comes from Site Settings automatically.",
     ),
+    defineField({
+      name: "showExperienceBadge",
+      title: "Show experience badge",
+      description:
+        "The boxed “30+ Years” badge under the trust strip. Turn it off to end the banner on the trust strip (or on the buttons, if that's empty too) — the space closes up.",
+      type: "boolean",
+      initialValue: true,
+    }),
     imageWithAlt({
       name: "photo",
       title: "Background photo",

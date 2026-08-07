@@ -45,6 +45,8 @@ export function HeroSection({
   // Absent means on — only an explicit Studio opt-out (photo already dark or
   // carrying its own baked-in overlay) turns the gradient off.
   const darkOverlay = content.darkOverlay !== false;
+  // Same rule for the "{years} Years" badge: absent means on.
+  const showExperienceBadge = content.showExperienceBadge !== false;
 
   return (
     <section
@@ -149,35 +151,41 @@ export function HeroSection({
             </div>
           </Rise>
 
-          <Rise delay={0.32}>
-            <ul className="mt-10 flex flex-col gap-4 border-t border-white/10 pt-7 sm:flex-row sm:flex-wrap sm:gap-x-8">
-              {trustIndicators.map(({ icon: Icon, label }) => (
-                <li
-                  key={label}
-                  className="flex items-center gap-2.5 text-[14px] font-semibold text-white/90"
-                >
-                  <Icon aria-hidden="true" className="size-[18px] text-red-500" />
-                  {label}
-                </li>
-              ))}
-            </ul>
-          </Rise>
+          {/* Emptied in Studio → the divider rule and its spacing go with it,
+              so the badge (or the buttons) simply ends the column. */}
+          {trustIndicators.length > 0 && (
+            <Rise delay={0.32}>
+              <ul className="mt-10 flex flex-col gap-4 border-t border-white/10 pt-7 sm:flex-row sm:flex-wrap sm:gap-x-8">
+                {trustIndicators.map(({ icon: Icon, label }) => (
+                  <li
+                    key={label}
+                    className="flex items-center gap-2.5 text-[14px] font-semibold text-white/90"
+                  >
+                    <Icon aria-hidden="true" className="size-[18px] text-red-500" />
+                    {label}
+                  </li>
+                ))}
+              </ul>
+            </Rise>
+          )}
 
-          <Rise delay={0.4}>
-            <div className="mt-8 inline-flex items-center gap-4 rounded-2xl border border-white/12 bg-white/5 px-6 py-4 backdrop-blur-sm">
-              <span className="flex size-12 items-center justify-center rounded-xl bg-red-600">
-                <Award aria-hidden="true" className="size-6 text-white" />
-              </span>
-              <div>
-                <p className="font-heading text-[26px] leading-none font-extrabold text-white">
-                  {site.yearsInBusiness} Years
-                </p>
-                <p className="mt-1 text-[13px] font-medium text-grey-300">
-                  {content.experienceBadgeLabel}
-                </p>
+          {showExperienceBadge && (
+            <Rise delay={0.4}>
+              <div className="mt-8 inline-flex items-center gap-4 rounded-2xl border border-white/12 bg-white/5 px-6 py-4 backdrop-blur-sm">
+                <span className="flex size-12 items-center justify-center rounded-xl bg-red-600">
+                  <Award aria-hidden="true" className="size-6 text-white" />
+                </span>
+                <div>
+                  <p className="font-heading text-[26px] leading-none font-extrabold text-white">
+                    {site.yearsInBusiness} Years
+                  </p>
+                  <p className="mt-1 text-[13px] font-medium text-grey-300">
+                    {content.experienceBadgeLabel}
+                  </p>
+                </div>
               </div>
-            </div>
-          </Rise>
+            </Rise>
+          )}
         </div>
 
         {/* Conversion card */}

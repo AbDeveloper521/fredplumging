@@ -567,6 +567,9 @@ export function toLibrarySection(
         trustIndicators: iconLabelsOr(raw.trustIndicators, fb.trustIndicators),
         experienceBadgeLabel:
           str(raw.experienceBadgeLabel) ?? fb.experienceBadgeLabel,
+        // Missing/absent → true: every banner published before the toggle
+        // existed keeps its badge.
+        showExperienceBadge: raw.showExperienceBadge !== false,
         // Full-width banner background — same hotspot-aware wide crop as the
         // service/careers heroes; the frame here is load-bearing.
         photo: photoOf(raw, "photo", 16 / 9, {

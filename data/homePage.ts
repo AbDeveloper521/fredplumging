@@ -45,6 +45,12 @@ export interface HomeHeroContent {
   trustIndicators: HomeIconLabel[];
   /** Line under the derived "{years} Years" figure in the hero badge. */
   experienceBadgeLabel: string;
+  /**
+   * The boxed "{years} Years" badge. Absent means true — only an explicit
+   * Studio opt-out hides it, so banners published before the toggle existed
+   * keep it.
+   */
+  showExperienceBadge?: boolean;
   /** Editable background photo behind the banner; navy wash when unset. */
   photo?: CmsPhoto;
   /**
