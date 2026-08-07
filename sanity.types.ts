@@ -1697,6 +1697,53 @@ export type CityPage = {
   seoDescription?: string;
 };
 
+export type LegalPage = {
+  _id: string;
+  _type: "legalPage";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  slug?: "privacy-policy" | "terms-of-service";
+  title?: string;
+  eyebrow?: string;
+  intro?: Array<string>;
+  body?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal" | "h2";
+    listItem?: "bullet";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
+  contact?: {
+    name?: string;
+    phoneDisplay?: string;
+    website?: string;
+  };
+  lastUpdated?: string;
+  bannerPhoto?: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  };
+  darkOverlay?: boolean;
+  seoTitle?: string;
+  seoDescription?: string;
+};
+
 export type ContactPage = {
   _id: string;
   _type: "contactPage";
@@ -2967,6 +3014,7 @@ export type AllSanitySchemaTypes =
   | Navigation
   | ReviewSettings
   | CityPage
+  | LegalPage
   | ContactPage
   | MultifamilyIndexPage
   | AreasIndexPage
@@ -14084,6 +14132,49 @@ export type CONTACT_PAGE_QUERY_RESULT = {
 } | null;
 
 // Source: sanity/queries.ts
+// Variable: LEGAL_PAGE_QUERY
+// Query: *[_type == "legalPage" && slug == $slug][0]{    slug,    title,    eyebrow,    intro,    body,    contact{ name, phoneDisplay, website },    bannerPhoto{ asset, hotspot, crop, alt },    darkOverlay,    lastUpdated,    seoTitle,    seoDescription  }
+export type LEGAL_PAGE_QUERY_RESULT = {
+  slug: "privacy-policy" | "terms-of-service" | null;
+  title: string | null;
+  eyebrow: string | null;
+  intro: Array<string> | null;
+  body: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "h2" | "normal";
+    listItem?: "bullet";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }> | null;
+  contact: {
+    name: string | null;
+    phoneDisplay: string | null;
+    website: string | null;
+  } | null;
+  bannerPhoto: {
+    asset: SanityImageAssetReference | null;
+    hotspot: SanityImageHotspot | null;
+    crop: SanityImageCrop | null;
+    alt: string | null;
+  } | null;
+  darkOverlay: boolean | null;
+  lastUpdated: string | null;
+  seoTitle: string | null;
+  seoDescription: string | null;
+} | null;
+
+// Source: sanity/queries.ts
 // Variable: CITIES_QUERY
 // Query: *[_type == "cityPage" && defined(slug.current)]|order(city asc){    city,    "slug": slug.current  }
 export type CITIES_QUERY_RESULT = Array<{
@@ -15330,6 +15421,7 @@ declare module "@sanity/client" {
     '*[_type == "areasIndexPage" && _id == "areasIndexPage"][0]{\n    sections[]{\n    ...,\n    photo{ asset, hotspot, crop, alt, frameRatio },\n    photoPrimary{ asset, hotspot, crop, alt, frameRatio },\n    photoSecondary{ asset, hotspot, crop, alt },\n    primaryPhoto{ asset, hotspot, crop, alt, frameRatio },\n    secondaryPhoto{ asset, hotspot, crop, alt }\n  }\n  }': AREAS_INDEX_PAGE_QUERY_RESULT;
     '*[_type == "multifamilyIndexPage" && _id == "multifamilyIndexPage"][0]{\n    sections[]{\n    ...,\n    photo{ asset, hotspot, crop, alt, frameRatio },\n    photoPrimary{ asset, hotspot, crop, alt, frameRatio },\n    photoSecondary{ asset, hotspot, crop, alt },\n    primaryPhoto{ asset, hotspot, crop, alt, frameRatio },\n    secondaryPhoto{ asset, hotspot, crop, alt }\n  }\n  }': MULTIFAMILY_INDEX_PAGE_QUERY_RESULT;
     '*[_type == "contactPage" && _id == "contactPage"][0]{\n    heroEyebrow,\n    heroHeading,\n    heroIntro,\n    responsePromise,\n    hours[]{ days, hours },\n    emergencyHeading,\n    emergencyBody,\n    faqs[]{ question, answer }\n  }': CONTACT_PAGE_QUERY_RESULT;
+    '*[_type == "legalPage" && slug == $slug][0]{\n    slug,\n    title,\n    eyebrow,\n    intro,\n    body,\n    contact{ name, phoneDisplay, website },\n    bannerPhoto{ asset, hotspot, crop, alt },\n    darkOverlay,\n    lastUpdated,\n    seoTitle,\n    seoDescription\n  }': LEGAL_PAGE_QUERY_RESULT;
     '*[_type == "cityPage" && defined(slug.current)]|order(city asc){\n    city,\n    "slug": slug.current\n  }': CITIES_QUERY_RESULT;
     '*[_type == "cityPage" && slug.current == $slug][0]{\n    city,\n    "slug": slug.current,\n    sections[]{\n    ...,\n    photo{ asset, hotspot, crop, alt, frameRatio },\n    photoPrimary{ asset, hotspot, crop, alt, frameRatio },\n    photoSecondary{ asset, hotspot, crop, alt },\n    primaryPhoto{ asset, hotspot, crop, alt, frameRatio },\n    secondaryPhoto{ asset, hotspot, crop, alt }\n  },\n    seoTitle,\n    seoDescription\n  }': CITY_PAGE_QUERY_RESULT;
     '*[_type == "navigation" && _id == "navigation"][0]{\n    footerColumns[]{\n      _key,\n      heading,\n      links[]{ _key, label, href }\n    },\n    legalLinks[]{ _key, label, href }\n  }': FOOTER_NAVIGATION_QUERY_RESULT;

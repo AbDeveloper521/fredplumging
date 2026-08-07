@@ -20,6 +20,13 @@ interface ServiceHeroSectionProps {
    * empty on pages without a breadcrumb trail — the nav row is skipped. */
   breadcrumbs: Breadcrumb[];
   id: string;
+  /**
+   * Multi-paragraph intro, for callers whose copy is an array rather than the
+   * single `subheading` a CMS section carries (the legal pages: the Privacy
+   * Policy opens with two paragraphs). Replaces `section.subheading` when
+   * given; section-stack callers never pass it, so their banner is unchanged.
+   */
+  subheadings?: string[];
 }
 
 /** CSS-only entrance — the hero must never wait on JS hydration. */
@@ -54,6 +61,7 @@ export function ServiceHeroSection({
   site,
   breadcrumbs,
   id,
+  subheadings,
 }: ServiceHeroSectionProps) {
   const phoneCtaLabel = section.phoneCtaLabel?.replace("{phone}", site.phone);
   const secondaryCta =
@@ -172,12 +180,27 @@ export function ServiceHeroSection({
           </h1>
         </Rise>
 
-        {section.subheading && (
+        {subheadings ? (
           <Rise delay={0.18}>
-            <p className="mx-auto mt-6 max-w-[65ch] text-[17px] leading-relaxed text-grey-300">
-              {section.subheading}
-            </p>
+            <div className="mx-auto mt-6 max-w-[65ch] space-y-4">
+              {subheadings.map((paragraph, i) => (
+                <p
+                  key={i}
+                  className="text-[17px] leading-relaxed text-grey-300"
+                >
+                  {paragraph}
+                </p>
+              ))}
+            </div>
           </Rise>
+        ) : (
+          section.subheading && (
+            <Rise delay={0.18}>
+              <p className="mx-auto mt-6 max-w-[65ch] text-[17px] leading-relaxed text-grey-300">
+                {section.subheading}
+              </p>
+            </Rise>
+          )
         )}
 
         {hasCtas && (

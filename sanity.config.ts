@@ -5,8 +5,13 @@ import { dataset, projectId } from "./sanity/env";
 import { schemaTypes } from "./sanity/schemas";
 import { structure } from "./sanity/structure";
 
-/** Document types managed as singletons — no create/delete/duplicate. */
-const SINGLETONS = new Set(["siteSettings", "navigation"]);
+/**
+ * Document types with a FIXED set of documents — no create/delete/duplicate.
+ * `legalPage` is here for the same reason as the true singletons: the site has
+ * exactly two legal documents, both pinned by id in the structure, so a third
+ * one created from the global menu would be an orphan with no route.
+ */
+const SINGLETONS = new Set(["siteSettings", "navigation", "legalPage"]);
 
 export default defineConfig({
   name: "default",

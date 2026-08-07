@@ -175,4 +175,34 @@ export const structure: StructureResolver = (S) =>
             .title("Testimonials")
             .defaultOrdering([{ field: "order", direction: "asc" }]),
         ),
+      S.divider(),
+      // Exactly two documents, pinned by id — not a list, so there is no "+"
+      // to create a third legal page from.
+      S.listItem()
+        .title("Legal Pages")
+        .id("legalPages")
+        .child(
+          S.list()
+            .title("Legal Pages")
+            .items([
+              S.listItem()
+                .title("Privacy Policy")
+                .id("privacyPolicy")
+                .child(
+                  S.document()
+                    .schemaType("legalPage")
+                    .documentId("legal-privacy-policy")
+                    .title("Privacy Policy"),
+                ),
+              S.listItem()
+                .title("Terms of Service")
+                .id("termsOfService")
+                .child(
+                  S.document()
+                    .schemaType("legalPage")
+                    .documentId("legal-terms-of-service")
+                    .title("Terms of Service"),
+                ),
+            ]),
+        ),
     ]);

@@ -235,6 +235,26 @@ export const CONTACT_PAGE_QUERY = defineQuery(
 );
 
 /**
+ * One legal document by slug. Not a section stack — a legal page is one prose
+ * run, so the body is Portable Text and the banner has its own fields.
+ */
+export const LEGAL_PAGE_QUERY = defineQuery(
+  `*[_type == "legalPage" && slug == $slug][0]{
+    slug,
+    title,
+    eyebrow,
+    intro,
+    body,
+    contact{ name, phoneDisplay, website },
+    bannerPhoto{ asset, hotspot, crop, alt },
+    darkOverlay,
+    lastUpdated,
+    seoTitle,
+    seoDescription
+  }`,
+);
+
+/**
  * Every city that has a page, link-shaped — what the coverage band lists so
  * a third city needs a `cityPage` document and nothing else. Ordered by name
  * (the same `order(city asc)` the drift check and Studio list use).

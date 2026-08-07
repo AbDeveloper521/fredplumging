@@ -21,6 +21,12 @@ const STATIC_PATHS = [
 ];
 
 /**
+ * Indexable but not competing for attention — listed so the legal pages are
+ * discoverable, at a priority that says "boilerplate, not a landing page".
+ */
+const LEGAL_PATHS = ["/privacy-policy", "/terms-of-service"];
+
+/**
  * Sitemap sourced from the same fetchers the pages render from, so every
  * published CMS slug (services + property types) is always listed — a page
  * not in the sitemap is not finished.
@@ -50,5 +56,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.7,
   }));
 
-  return [...staticEntries, ...serviceEntries, ...industryEntries];
+  const legalEntries = LEGAL_PATHS.map((path) => ({
+    url: `${site.url}${path}`,
+    changeFrequency: "yearly" as const,
+    priority: 0.2,
+  }));
+
+  return [
+    ...staticEntries,
+    ...serviceEntries,
+    ...industryEntries,
+    ...legalEntries,
+  ];
 }

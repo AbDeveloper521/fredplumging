@@ -8,6 +8,7 @@ import { servicesIndexPage } from "./servicesIndexPage";
 import { areasIndexPage } from "./areasIndexPage";
 import { multifamilyIndexPage } from "./multifamilyIndexPage";
 import { contactPage } from "./contactPage";
+import { legalPage } from "./legalPage";
 import { cityPage, citySectionTypes } from "./cityPage";
 import { reviewSettings } from "./reviewSettings";
 import { navigation } from "./navigation";
@@ -29,6 +30,7 @@ export const schemaTypes: SchemaTypeDefinition[] = [
   areasIndexPage,
   multifamilyIndexPage,
   contactPage,
+  legalPage,
   cityPage,
   reviewSettings,
   navigation,
