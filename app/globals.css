@@ -20,8 +20,8 @@
 
   /* Typography */
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-  --font-heading: var(--font-manrope), var(--font-inter), ui-sans-serif,
-    system-ui, sans-serif;
+  --font-heading: var(--font-fraunces), ui-serif, Georgia, "Times New Roman",
+    serif;
 
   /* Shadows tuned for a corporate, soft look */
   --shadow-card: 0 1px 2px rgb(7 17 31 / 0.04), 0 8px 24px rgb(7 17 31 / 0.07);

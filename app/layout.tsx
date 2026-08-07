@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Manrope } from "next/font/google";
+import { Fraunces, Inter } from "next/font/google";
 import { getSite } from "@/sanity/lib/getSite";
 import "./globals.css";
 
@@ -9,8 +9,12 @@ const inter = Inter({
   display: "swap",
 });
 
-const manrope = Manrope({
-  variable: "--font-manrope",
+// Headings only. Weight is omitted on purpose: Fraunces ships a variable
+// `wght` font, so the one file covers the 700 (font-bold) and 800
+// (font-extrabold) the headings actually use. The SOFT/WONK/opsz axes are
+// left out — they are opt-in and would only add bytes.
+const fraunces = Fraunces({
+  variable: "--font-fraunces",
   subsets: ["latin"],
   display: "swap",
 });
@@ -54,7 +58,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${manrope.variable} h-full antialiased`}>
+    <html lang="en" className={`${inter.variable} ${fraunces.variable} h-full antialiased`}>
       <body className="flex min-h-full flex-col">{children}</body>
     </html>
   );

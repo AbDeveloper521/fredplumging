@@ -11,7 +11,7 @@ interface PortableBodyProps {
 
 /**
  * Renders the constrained rich body from Sanity in the site's design system:
- * Manrope headings (global h2–h4 rule), Inter body copy at the existing
+ * Fraunces headings (global h2–h4 rule), Inter body copy at the existing
  * scale, brand-red accents. Server component — @portabletext/react ships an
  * RSC build, so no client boundary is introduced.
  */
