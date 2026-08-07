@@ -49,6 +49,17 @@ export const structure: StructureResolver = (S) =>
         .child(
           S.document().schemaType("careersPage").documentId("careersPage"),
         ),
+      // "Services Index Page" (the /services landing page) vs "Service
+      // Pages" (the individual services) — deliberately distinct wording so
+      // the Careers Page / Careers mix-up can't repeat here.
+      S.listItem()
+        .title("Services Index Page")
+        .id("servicesIndexPage")
+        .child(
+          S.document()
+            .schemaType("servicesIndexPage")
+            .documentId("servicesIndexPage"),
+        ),
       S.listItem()
         .title("Contact Page")
         .id("contactPage")
@@ -63,11 +74,11 @@ export const structure: StructureResolver = (S) =>
         ),
       S.divider(),
       S.listItem()
-        .title("Services")
+        .title("Service Pages")
         .id("services")
         .child(
           S.documentTypeList("service")
-            .title("Services")
+            .title("Service Pages")
             .defaultOrdering([{ field: "order", direction: "asc" }]),
         ),
       S.listItem()

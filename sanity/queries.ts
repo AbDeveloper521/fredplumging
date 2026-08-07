@@ -203,6 +203,12 @@ export const CAREERS_PAGE_QUERY = defineQuery(
   }`,
 );
 
+export const SERVICES_INDEX_PAGE_QUERY = defineQuery(
+  `*[_type == "servicesIndexPage" && _id == "servicesIndexPage"][0]{
+    ${SECTIONS_PROJECTION}
+  }`,
+);
+
 export const CONTACT_PAGE_QUERY = defineQuery(
   `*[_type == "contactPage" && _id == "contactPage"][0]{
     heroEyebrow,
