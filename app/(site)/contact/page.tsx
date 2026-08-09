@@ -201,7 +201,7 @@ export default async function ContactPage() {
         />
 
         <Container className="relative pt-[120px] pb-16 lg:pt-[190px] lg:pb-24">
-          <p className="flex items-center gap-3 text-[13px] font-bold tracking-[0.14em] text-red-500 uppercase">
+          <p className="flex items-center gap-3 eyebrow text-red-500">
             <span aria-hidden="true" className="h-px w-8 bg-red-500" />
             {content.heroEyebrow}
           </p>
@@ -211,7 +211,7 @@ export default async function ContactPage() {
           >
             {content.heroHeading}
           </h1>
-          <p className="mt-6 max-w-2xl text-[17px] leading-relaxed text-grey-300">
+          <p className="mt-6 max-w-2xl text-[18px] leading-relaxed text-grey-300">
             {content.heroIntro}
           </p>
           <ul className="mt-8 flex flex-wrap items-center gap-x-8 gap-y-3">
@@ -245,7 +245,7 @@ export default async function ContactPage() {
         <Container className="grid grid-cols-1 gap-6 lg:grid-cols-2">
           <div className="relative overflow-hidden rounded-2xl bg-navy-950 p-8 sm:p-10">
             <div aria-hidden="true" className="absolute inset-x-0 top-0 h-1 bg-red-600" />
-            <p className="flex items-center gap-3 text-[13px] font-bold tracking-[0.14em] text-red-500 uppercase">
+            <p className="flex items-center gap-3 eyebrow text-red-500">
               <span
                 aria-hidden="true"
                 className="availability-dot size-1.5 rounded-full bg-red-500"
@@ -257,7 +257,7 @@ export default async function ContactPage() {
             </p>
             <a
               href={site.phoneHref}
-              className="mt-6 inline-flex items-center gap-3 text-[30px] font-extrabold tracking-tight text-white transition-colors hover:text-red-500 sm:text-[38px]"
+              className="mt-6 inline-flex items-center gap-3 text-[30px] font-extrabold text-white transition-colors hover:text-red-500 sm:text-[38px]"
             >
               <Phone aria-hidden="true" className="size-8 text-red-500" />
               {site.phone}
@@ -269,7 +269,7 @@ export default async function ContactPage() {
 
           <div className="flex flex-col justify-between rounded-2xl border border-grey-100 bg-offwhite p-8 shadow-(--shadow-card) sm:p-10">
             <div>
-              <p className="text-[13px] font-bold tracking-[0.14em] text-red-600 uppercase">
+              <p className="eyebrow text-red-600">
                 Request a quote
               </p>
               <p className="mt-4 max-w-md text-[15px] leading-relaxed text-grey-700">

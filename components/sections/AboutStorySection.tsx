@@ -33,7 +33,7 @@ export function AboutStorySection({
           </Reveal>
           {content.paragraphs.map((paragraph, i) => (
             <Reveal key={i} delay={0.08 + i * 0.06}>
-              <p className="mt-6 text-[17px] leading-relaxed text-grey-700">
+              <p className="mt-6 text-[18px] leading-relaxed text-grey-700">
                 {paragraph}
               </p>
             </Reveal>

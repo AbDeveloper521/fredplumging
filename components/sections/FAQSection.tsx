@@ -58,7 +58,7 @@ export function FAQSection({
                       onClick={() => setOpenIndex(isOpen ? null : index)}
                       className="flex min-h-14 w-full items-center justify-between gap-4 px-6 py-4.5 text-left"
                     >
-                      <span className="text-[16px] font-bold tracking-tight text-navy-900 sm:text-[17px]">
+                      <span className="text-[16px] font-bold text-navy-900 sm:text-[17px]">
                         {faq.question}
                       </span>
                       <span

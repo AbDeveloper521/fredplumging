@@ -157,7 +157,7 @@ export function IconCardSection({ section, id }: IconCardSectionProps) {
               // Eyebrow with no heading — SectionHeading's eyebrow row alone.
               <p
                 className={cn(
-                  "flex items-center justify-center gap-3 text-center text-[13px] font-bold tracking-[0.14em] uppercase",
+                  "flex items-center justify-center gap-3 text-center eyebrow",
                   dark ? "text-red-500" : "text-red-600",
                 )}
               >

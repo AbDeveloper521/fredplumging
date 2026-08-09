@@ -52,7 +52,7 @@ export async function CmsDetailPage({
         />
 
         <Container className="relative pt-[120px] pb-16 lg:pt-[190px] lg:pb-24">
-          <p className="flex items-center gap-3 text-[13px] font-bold tracking-[0.14em] text-red-500 uppercase">
+          <p className="flex items-center gap-3 eyebrow text-red-500">
             <span aria-hidden="true" className="h-px w-8 bg-red-500" />
             {eyebrow}
           </p>
@@ -62,7 +62,7 @@ export async function CmsDetailPage({
           >
             {title}
           </h1>
-          <p className="mt-6 max-w-2xl text-[17px] leading-relaxed text-grey-300">
+          <p className="mt-6 max-w-2xl text-[18px] leading-relaxed text-grey-300">
             {intro}
           </p>
         </Container>
@@ -87,7 +87,7 @@ export async function CmsDetailPage({
               {body ? (
                 <PortableBody value={body} site={site} />
               ) : (
-                <p className="max-w-2xl text-[17px] leading-relaxed text-grey-700">
+                <p className="max-w-2xl text-[18px] leading-relaxed text-grey-700">
                   {`Our team is ready to help with ${title.toLowerCase()} for your property. Call ${site.phone} or request service and we'll follow up with the specifics for your property.`}
                 </p>
               )}

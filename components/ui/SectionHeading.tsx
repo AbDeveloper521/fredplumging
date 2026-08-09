@@ -40,7 +40,7 @@ export function SectionHeading({
       {eyebrow && (
         <p
           className={cn(
-            "mb-4 flex items-center gap-3 text-[13px] font-bold tracking-[0.14em] uppercase",
+            "mb-4 flex items-center gap-3 eyebrow",
             align === "center" && "justify-center",
             dark ? "text-red-500" : "text-red-600",
           )}
@@ -64,7 +64,7 @@ export function SectionHeading({
       {description && (
         <p
           className={cn(
-            "mt-5 text-[17px] leading-relaxed",
+            "mt-5 text-[18px] leading-relaxed",
             dark ? "text-grey-300" : "text-grey-500",
             descriptionClassName,
           )}

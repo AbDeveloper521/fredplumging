@@ -144,7 +144,7 @@ export function AboutSection({
                 {paragraphs.map((paragraph) => (
                   <p
                     key={paragraph.slice(0, 40)}
-                    className="text-[17px] leading-relaxed text-grey-500"
+                    className="text-[18px] leading-relaxed text-grey-500"
                   >
                     {paragraph}
                   </p>

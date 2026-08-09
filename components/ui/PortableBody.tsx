@@ -19,7 +19,7 @@ export function PortableBody({ value, site }: PortableBodyProps) {
   const components: PortableTextComponents = {
     block: {
       normal: ({ children }) => (
-        <p className="mt-5 max-w-2xl text-[17px] leading-relaxed text-grey-700 first:mt-0">
+        <p className="mt-5 max-w-2xl text-[18px] leading-relaxed text-grey-700 first:mt-0">
           {children}
         </p>
       ),
@@ -70,7 +70,7 @@ export function PortableBody({ value, site }: PortableBodyProps) {
     types: {
       callout: ({ value: callout }) => (
         <aside className="mt-8 max-w-2xl rounded-xl border-l-4 border-red-600 bg-offwhite p-6">
-          <p className="text-lg font-extrabold tracking-tight text-navy-900">
+          <p className="text-lg font-extrabold text-navy-900">
             {typeof callout.heading === "string" ? callout.heading : ""}
           </p>
           <p className="mt-2 text-[15px] leading-relaxed text-grey-700">

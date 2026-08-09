@@ -115,7 +115,7 @@ export function LegalToc({ headings }: { headings: LegalHeading[] }) {
         data-print-hide
         className="group mb-10 rounded-xl border border-grey-300/70 bg-offwhite p-4 lg:hidden"
       >
-        <summary className="flex cursor-pointer items-center justify-between gap-3 text-[14px] font-bold tracking-tight text-navy-900 marker:content-none [&::-webkit-details-marker]:hidden">
+        <summary className="flex cursor-pointer items-center justify-between gap-3 text-[14px] font-bold text-navy-900 marker:content-none [&::-webkit-details-marker]:hidden">
           On this page
           <ChevronDown
             aria-hidden="true"

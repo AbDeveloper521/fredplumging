@@ -163,7 +163,7 @@ export function ServiceHeroSection({
 
         {section.eyebrow && (
           <Rise delay={0.06}>
-            <p className="mt-8 flex items-center justify-center gap-3 text-[13px] font-bold tracking-[0.14em] text-red-500 uppercase">
+            <p className="mt-8 flex items-center justify-center gap-3 eyebrow text-red-500">
               <span aria-hidden="true" className="h-px w-8 bg-red-500" />
               {section.eyebrow}
               <span aria-hidden="true" className="h-px w-8 bg-red-500" />
@@ -186,7 +186,7 @@ export function ServiceHeroSection({
               {subheadings.map((paragraph, i) => (
                 <p
                   key={i}
-                  className="text-[17px] leading-relaxed text-grey-300"
+                  className="text-[18px] leading-relaxed text-grey-300"
                 >
                   {paragraph}
                 </p>
@@ -196,7 +196,7 @@ export function ServiceHeroSection({
         ) : (
           section.subheading && (
             <Rise delay={0.18}>
-              <p className="mx-auto mt-6 max-w-[65ch] text-[17px] leading-relaxed text-grey-300">
+              <p className="mx-auto mt-6 max-w-[65ch] text-[18px] leading-relaxed text-grey-300">
                 {section.subheading}
               </p>
             </Rise>

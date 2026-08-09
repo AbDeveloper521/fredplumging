@@ -39,7 +39,7 @@ export async function PagePlaceholder({
         />
 
         <Container className="relative pt-[120px] pb-16 lg:pt-[190px] lg:pb-24">
-          <p className="flex items-center gap-3 text-[13px] font-bold tracking-[0.14em] text-red-500 uppercase">
+          <p className="flex items-center gap-3 eyebrow text-red-500">
             <span aria-hidden="true" className="h-px w-8 bg-red-500" />
             {eyebrow}
           </p>
@@ -49,7 +49,7 @@ export async function PagePlaceholder({
           >
             {title}
           </h1>
-          <p className="mt-6 max-w-2xl text-[17px] leading-relaxed text-grey-300">
+          <p className="mt-6 max-w-2xl text-[18px] leading-relaxed text-grey-300">
             {description}
           </p>
         </Container>
@@ -70,7 +70,7 @@ export async function PagePlaceholder({
       <section className="bg-white py-16 lg:py-24">
         <Container>
           <div className="max-w-2xl">
-            <p className="text-[17px] leading-relaxed text-grey-500">
+            <p className="text-[18px] leading-relaxed text-grey-500">
               Detailed content for this page is on the way. In the meantime, our
               team is ready to help — call{" "}
               <a

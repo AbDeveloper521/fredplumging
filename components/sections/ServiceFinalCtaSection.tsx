@@ -43,7 +43,7 @@ export function ServiceFinalCtaSection({ section, site, id }: ServiceFinalCtaSec
         </Reveal>
         {section.body && (
           <Reveal delay={0.08}>
-            <p className="mx-auto mt-5 max-w-2xl text-[17px] leading-relaxed text-grey-300">
+            <p className="mx-auto mt-5 max-w-2xl text-[18px] leading-relaxed text-grey-300">
               {section.body}
             </p>
           </Reveal>

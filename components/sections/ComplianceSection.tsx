@@ -67,7 +67,7 @@ export function ComplianceSection({
         {vendors.length > 0 && (
           <Reveal delay={0.1}>
             <div className="mt-12 border-t border-white/8 pt-9 lg:mt-14">
-              <p className="mb-7 flex items-center justify-center gap-3 text-center text-[13px] font-bold tracking-[0.14em] text-white/70 uppercase">
+              <p className="mb-7 flex items-center justify-center gap-3 text-center eyebrow text-white/70">
                 <span aria-hidden="true" className="h-px w-8 bg-white/25" />
                 Trusted by Property Management Networks:
                 <span aria-hidden="true" className="h-px w-8 bg-white/25" />

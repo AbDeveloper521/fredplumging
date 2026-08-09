@@ -20,10 +20,10 @@ import { cn } from "@/lib/utils";
 const inputClasses =
   "h-12 w-full rounded-lg border border-grey-300 bg-white px-3.5 text-[15px] text-ink placeholder:text-grey-500/70 transition-colors focus:border-navy-800 focus:outline-2 focus:outline-offset-1 focus:outline-red-500/70 aria-[invalid=true]:border-red-600";
 
-const labelClasses = "mb-1.5 block text-[13px] font-semibold text-grey-700";
+const labelClasses = "mb-1.5 block text-[14px] font-semibold text-grey-700";
 
 const legendClasses =
-  "mb-1 text-lg font-extrabold tracking-tight text-navy-900";
+  "mb-1 text-lg font-extrabold text-navy-900";
 
 function Optional() {
   return <span className="font-normal text-grey-500">(optional)</span>;
@@ -32,7 +32,7 @@ function Optional() {
 function FieldError({ id, message }: { id: string; message?: string }) {
   if (!message) return null;
   return (
-    <p id={id} role="alert" className="mt-1.5 text-[13px] font-medium text-red-600">
+    <p id={id} role="alert" className="mt-1.5 text-[14px] font-medium text-red-600">
       {message}
     </p>
   );
@@ -383,7 +383,7 @@ export function ContactQuoteForm({ site, serviceOptions }: ContactQuoteFormProps
         <Button type="submit" size="lg" loading={isSubmitting} className="w-full" withArrow>
           {isSubmitting ? "Sending…" : "Request a Quote"}
         </Button>
-        <p className="mt-3 text-center text-[13px] font-medium text-grey-500">
+        <p className="mt-3 text-center text-[14px] font-medium text-grey-500">
           We typically respond within one business hour during business hours.
         </p>
       </div>

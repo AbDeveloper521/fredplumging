@@ -41,7 +41,7 @@ export function AboutHeroSection({
       />
 
       <Container className="relative flex flex-col items-center pt-[120px] pb-16 text-center lg:pt-[190px] lg:pb-24">
-        <p className="flex items-center gap-3 text-[13px] font-bold tracking-[0.14em] text-red-500 uppercase">
+        <p className="flex items-center gap-3 eyebrow text-red-500">
           <span aria-hidden="true" className="h-px w-8 bg-red-500" />
           {content.eyebrow}
           <span aria-hidden="true" className="h-px w-8 bg-red-500" />
@@ -55,7 +55,7 @@ export function AboutHeroSection({
         {content.paragraphs.map((paragraph, i) => (
           <p
             key={i}
-            className="mt-6 max-w-2xl text-[17px] leading-relaxed text-grey-300"
+            className="mt-6 max-w-2xl text-[18px] leading-relaxed text-grey-300"
           >
             {paragraph}
           </p>

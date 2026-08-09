@@ -193,7 +193,7 @@ export default async function JobPage({
             )}
 
             <Reveal>
-              <p className="text-[17px] leading-relaxed text-grey-700">
+              <p className="text-[18px] leading-relaxed text-grey-700">
                 {job.summary}
               </p>
             </Reveal>
@@ -277,7 +277,7 @@ export default async function JobPage({
                       className="group flex h-full items-center justify-between gap-4 rounded-2xl border border-grey-100 bg-white p-6 shadow-(--shadow-card) transition-colors hover:border-red-600/40"
                     >
                       <span>
-                        <span className="block text-[16px] font-extrabold tracking-tight text-navy-900 group-hover:text-red-600">
+                        <span className="block text-[16px] font-extrabold text-navy-900 group-hover:text-red-600">
                           {other.title}
                         </span>
                         <span className="mt-1 block text-[13px] font-semibold text-grey-500">

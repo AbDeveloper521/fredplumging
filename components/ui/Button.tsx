@@ -67,7 +67,7 @@ export function Button(props: ButtonProps) {
   } = props;
 
   const classes = cn(
-    "group/btn inline-flex items-center justify-center gap-2.5 rounded-xl font-semibold tracking-tight transition-all duration-200",
+    "group/btn inline-flex items-center justify-center gap-2.5 rounded-xl font-semibold transition-all duration-200",
     "hover:-translate-y-px active:translate-y-0",
     "disabled:pointer-events-none disabled:opacity-60",
     "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-500",

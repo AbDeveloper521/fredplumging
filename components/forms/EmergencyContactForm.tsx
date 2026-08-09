@@ -27,12 +27,12 @@ const serviceOptions = [
 const inputClasses =
   "h-12 w-full rounded-lg border border-grey-300 bg-white px-3.5 text-[15px] text-ink placeholder:text-grey-500/70 transition-colors focus:border-navy-800 focus:outline-2 focus:outline-offset-1 focus:outline-red-500/70 aria-[invalid=true]:border-red-600";
 
-const labelClasses = "mb-1.5 block text-[13px] font-semibold text-grey-700";
+const labelClasses = "mb-1.5 block text-[14px] font-semibold text-grey-700";
 
 function FieldError({ id, message }: { id: string; message?: string }) {
   if (!message) return null;
   return (
-    <p id={id} role="alert" className="mt-1.5 text-[13px] font-medium text-red-600">
+    <p id={id} role="alert" className="mt-1.5 text-[14px] font-medium text-red-600">
       {message}
     </p>
   );
@@ -261,7 +261,7 @@ export function EmergencyContactForm({
           >
             {isSubmitting ? "Sending…" : submitLabel}
           </Button>
-          <p className="mt-3.5 flex items-center justify-center gap-1.5 text-center text-[13px] font-medium text-grey-500">
+          <p className="mt-3.5 flex items-center justify-center gap-1.5 text-center text-[14px] font-medium text-grey-500">
             <Phone aria-hidden="true" className="size-3.5 text-red-600" />
             For urgent service, call{" "}
             <a href={site.phoneHref} className="font-bold text-navy-900 hover:text-red-600">

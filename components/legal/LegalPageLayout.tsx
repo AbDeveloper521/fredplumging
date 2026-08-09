@@ -60,14 +60,14 @@ export function LegalPageLayout({
         </h2>
       ),
       normal: ({ children }) => (
-        <p className="mt-5 text-[17px] leading-[1.75] text-grey-700">
+        <p className="mt-5 text-[18px] leading-[1.75] text-grey-700">
           {children}
         </p>
       ),
     },
     list: {
       bullet: ({ children }) => (
-        <ul className="mt-5 space-y-2.5 text-[17px] leading-[1.75] text-grey-700">
+        <ul className="mt-5 space-y-2.5 text-[18px] leading-[1.75] text-grey-700">
           {children}
         </ul>
       ),
@@ -129,7 +129,7 @@ export function LegalPageLayout({
 
             <div className="min-w-0 max-w-[70ch]">
               {/* Repeated above the document text, as the reference pages do. */}
-              <p className="flex items-center gap-3 pt-12 text-[13px] font-bold tracking-[0.14em] text-red-500 uppercase lg:pt-14">
+              <p className="flex items-center gap-3 pt-12 eyebrow text-red-500 lg:pt-14">
                 <span aria-hidden="true" className="h-px w-8 bg-red-500" />
                 {content.eyebrow}
               </p>
@@ -158,7 +158,7 @@ export function LegalPageLayout({
               {content.contact && (
                 <div className="mt-8 rounded-2xl border border-grey-300/70 bg-offwhite p-6 sm:p-7">
                   {content.contact.name && (
-                    <p className="text-[17px] font-bold tracking-tight text-navy-900">
+                    <p className="text-[17px] font-bold text-navy-900">
                       {content.contact.name}
                     </p>
                   )}

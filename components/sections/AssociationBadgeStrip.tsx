@@ -52,7 +52,7 @@ export function AssociationBadgeStrip({
         <Reveal>
           <h2
             id={titleId}
-            className="flex items-center justify-center gap-3 text-center text-[13px] font-bold tracking-[0.14em] text-grey-500 uppercase"
+            className="flex items-center justify-center gap-3 text-center eyebrow text-grey-500"
           >
             <span aria-hidden="true" className="h-px w-8 bg-grey-300" />
             {heading}

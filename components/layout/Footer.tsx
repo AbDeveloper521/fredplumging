@@ -118,7 +118,7 @@ export async function Footer() {
 
       {/* Bottom bar */}
       <div className="border-t border-white/8">
-        <Container className="flex flex-col items-center justify-between gap-4 py-6 text-[13px] sm:flex-row">
+        <Container className="flex flex-col items-center justify-between gap-4 py-6 text-[14px] sm:flex-row">
           <p>
             ©{" "}
             <Suspense fallback={null}>

@@ -116,7 +116,7 @@ export function ServiceAboutSection({ section, id }: ServiceAboutSectionProps) {
                   <p
                     key={i}
                     className={cn(
-                      "text-[17px] leading-relaxed",
+                      "text-[18px] leading-relaxed",
                       dark ? "text-grey-300" : "text-grey-700",
                     )}
                   >

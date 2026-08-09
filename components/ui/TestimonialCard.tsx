@@ -55,7 +55,7 @@ export function TestimonialCard({
         className={cn(
           "mt-5 leading-relaxed text-grey-700",
           featured
-            ? "text-xl font-medium tracking-tight text-navy-900 sm:text-2xl"
+            ? "text-xl font-medium text-navy-900 sm:text-2xl"
             : "text-[15px]",
         )}
       >

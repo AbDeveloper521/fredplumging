@@ -18,10 +18,27 @@
   --color-grey-700: #354052;
   --color-ink: #111318;
 
-  /* Typography */
-  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-  --font-heading: var(--font-fraunces), ui-serif, Georgia, "Times New Roman",
-    serif;
+  /* Typography — the two semantic tokens the whole site resolves through.
+     Neither names a typeface: they point at the role-named face variables
+     that `app/layout.tsx` assigns via next/font. That file is the single
+     place a font is named, so swapping one is an edit there and nowhere
+     else. The trailing families are a generic safety net only — the real
+     fallback is next/font's metric-matched one, which sits inside each
+     `--font-*-face` value ahead of these. */
+  --font-sans: var(--font-body-face), ui-sans-serif, system-ui, sans-serif;
+  --font-heading: var(--font-heading-face), ui-sans-serif, system-ui, sans-serif;
+
+  /* Montserrat is a wide geometric sans; at display sizes its default fit
+     reads loose, so the site-wide "tight" step is a touch softer than
+     Tailwind's -0.025em default. Large headings pull tighter than this
+     locally (see the h1 rule below); small headings sit at 0. */
+  --tracking-tight: -0.02em;
+
+  /* Roboto Condensed sets materially narrower than a normal-width face, so a
+     paragraph fits more characters per line at the same measure. Body copy
+     gets a little more leading to keep the return sweep easy — this token
+     carries every `leading-relaxed` paragraph on the site. */
+  --leading-relaxed: 1.7;
 
   /* Shadows tuned for a corporate, soft look */
   --shadow-card: 0 1px 2px rgb(7 17 31 / 0.04), 0 8px 24px rgb(7 17 31 / 0.07);
@@ -31,18 +48,72 @@
     0 8px 24px rgb(7 17 31 / 0.35);
 }
 
-body {
-  font-family: var(--font-sans);
-  color: var(--color-ink);
-  background: var(--color-white);
-  -webkit-font-smoothing: antialiased;
+/* Element-level typography lives in `base` on purpose. Tailwind emits its
+   utilities into `@layer utilities`, and an UNLAYERED rule beats every
+   layered one no matter how specific — so these defaults have to be layered
+   or a plain `h1 { letter-spacing }` here would silently outrank a
+   `tracking-tight` in the markup. In `base` they behave the way you expect:
+   a floor that any utility overrides. */
+@layer base {
+  body {
+    font-family: var(--font-sans);
+    color: var(--color-ink);
+    background: var(--color-white);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-heading);
+    /* Montserrat's large x-height makes the browser's `normal` (≈1.22) read
+       cramped on any heading that runs to two lines. 1.25 is the floor;
+       headings that set their own `leading-*` utility still win, and the
+       display sizes pull tighter than that. */
+    line-height: 1.25;
+  }
+
+  /* Optical tracking by size. Montserrat wants the negative step at display
+     sizes and none at all by the time a heading is card-title sized — one
+     `tracking-tight` at every size would crowd the small ones. */
+  h1 {
+    letter-spacing: -0.022em;
+  }
+
+  h2 {
+    letter-spacing: -0.018em;
+  }
+
+  h3 {
+    letter-spacing: -0.01em;
+  }
+
+  h4,
+  h5,
+  h6 {
+    letter-spacing: 0;
+  }
 }
 
-h1,
-h2,
-h3,
-h4 {
-  font-family: var(--font-heading);
+/* The red uppercase kicker above section headings. Centralised because it
+   appears on nearly every band and, until now, resolved to the heading font
+   or the body font purely by whether the element happened to be a <p> or an
+   <h2> — the same label in two different families. It is a display label, so
+   it takes the heading face, with the generous tracking uppercase Montserrat
+   needs to stop reading as one solid block.
+   In `components` so a utility in the markup can still override any of it. */
+@layer components {
+  .eyebrow {
+    font-family: var(--font-heading);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    line-height: 1.3;
+    text-transform: uppercase;
+  }
 }
 
 /* Visible, consistent keyboard focus */

@@ -42,7 +42,7 @@ export function EmergencySection({
       <Container className="relative grid grid-cols-1 items-center gap-14 lg:grid-cols-[1.1fr_0.9fr] lg:gap-20">
         <div>
           <Reveal>
-            <p className="flex items-center gap-3 text-[13px] font-bold tracking-[0.14em] text-white uppercase">
+            <p className="flex items-center gap-3 eyebrow text-white">
               <span
                 aria-hidden="true"
                 className="size-2 rounded-full bg-white"
@@ -61,7 +61,7 @@ export function EmergencySection({
           </Reveal>
 
           <Reveal delay={0.14}>
-            <p className="mt-5 max-w-xl text-[17px] leading-relaxed text-white/85">
+            <p className="mt-5 max-w-xl text-[18px] leading-relaxed text-white/85">
               {content.body}
             </p>
           </Reveal>

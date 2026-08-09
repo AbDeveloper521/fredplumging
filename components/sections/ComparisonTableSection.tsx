@@ -84,7 +84,7 @@ export function ComparisonTableSection({ section, id }: ComparisonTableSectionPr
                   >
                     <th
                       scope="row"
-                      className="px-6 py-5 align-top text-[15px] font-bold tracking-tight text-navy-900"
+                      className="px-6 py-5 align-top text-[15px] font-bold text-navy-900"
                     >
                       {row.situation}
                     </th>

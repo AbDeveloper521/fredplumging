@@ -118,7 +118,7 @@ export function HeroSection({
         {/* Message */}
         <div>
           <Rise>
-            <p className="flex items-center gap-3 text-[13px] font-bold tracking-[0.14em] text-red-500 uppercase">
+            <p className="flex items-center gap-3 eyebrow text-red-500">
               <span aria-hidden="true" className="h-px w-8 bg-red-500" />
               {content.eyebrow}
             </p>
@@ -141,7 +141,7 @@ export function HeroSection({
           </Rise>
 
           <Rise delay={0.16}>
-            <p className="mt-6 max-w-xl text-[17px] leading-relaxed text-grey-300 sm:text-lg">
+            <p className="mt-6 max-w-xl text-[18px] leading-relaxed text-grey-300 sm:text-[19px]">
               {content.subcopy}
             </p>
           </Rise>
