@@ -62,16 +62,31 @@ export type NavLink = {
   icon?: NavIconName;
 };
 
+/**
+ * One item in the header bar, in one of two shapes:
+ *   - `children` empty → a plain top-level link straight to `href`
+ *   - `children` non-empty → a dropdown; `href` optional (a clickable parent
+ *     that also opens its panel, which every section on this site is)
+ * An item with neither is dropped by `getNavigation()`, so consumers can rely
+ * on at least one of the two being present. Use `hasDropdown()` to branch.
+ */
 export type NavGroup = {
   _key: string;
   label: string;
-  href: string;
+  /** Absent only on a dropdown whose name opens the panel instead of navigating. */
+  href?: string;
   /** Panel shape: `mega` renders two columns, `list` a single column. */
   layout: "mega" | "list";
   /** When true, the panel also lists `serviceAreaCities` from `data/site.ts`. */
   showServiceAreaCities?: boolean;
+  /** Empty for a plain link — never undefined, so consumers can map it freely. */
   children: NavLink[];
 };
+
+/** The plain-link / dropdown switch, in one place so every consumer agrees. */
+export function hasDropdown(group: NavGroup): boolean {
+  return group.children.length > 0;
+}
 
 export type Navigation = {
   items: NavGroup[];

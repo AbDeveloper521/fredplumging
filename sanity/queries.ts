@@ -221,6 +221,12 @@ export const MULTIFAMILY_INDEX_PAGE_QUERY = defineQuery(
   }`,
 );
 
+export const COMMERCIAL_PAGE_QUERY = defineQuery(
+  `*[_type == "commercialPage" && _id == "commercialPage"][0]{
+    ${SECTIONS_PROJECTION}
+  }`,
+);
+
 export const CONTACT_PAGE_QUERY = defineQuery(
   `*[_type == "contactPage" && _id == "contactPage"][0]{
     heroEyebrow,

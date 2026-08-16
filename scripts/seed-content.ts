@@ -2909,7 +2909,9 @@ async function main() {
       _type: "navGroup",
       _key: group._key,
       label: group.label,
-      href: group.href,
+      // Optional since a dropdown may open its panel instead of navigating —
+      // omitted rather than written as null (every static item has one).
+      ...(group.href ? { href: group.href } : {}),
       layout: group.layout,
       showServiceAreaCities: group.showServiceAreaCities ?? false,
       children: group.children.map((child) => ({

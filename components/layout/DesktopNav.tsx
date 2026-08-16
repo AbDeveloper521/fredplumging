@@ -5,9 +5,9 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { ChevronDown } from "lucide-react";
-import type { NavGroup, Navigation } from "@/data/navigation";
+import { hasDropdown, type NavGroup, type Navigation } from "@/data/navigation";
 import type { SiteContent } from "@/data/site";
-import { isSectionActive } from "@/components/layout/navActive";
+import { isGroupActive } from "@/components/layout/navActive";
 import { MegaPanel } from "@/components/layout/MegaPanel";
 import { NavListPanel } from "@/components/layout/NavListPanel";
 import { cn } from "@/lib/utils";
@@ -145,14 +145,55 @@ export function DesktopNav({ navigation, site }: DesktopNavProps) {
   return (
     <ul ref={navRef} className="relative hidden items-center gap-1 lg:flex">
       {navigation.items.map((group) => {
-        const open = openKey === group._key;
+        const dropdown = hasDropdown(group);
+        const open = dropdown && openKey === group._key;
         const isMega = group.layout === "mega";
-        const sectionActive = isSectionActive(pathname, group.href);
+        const sectionActive = isGroupActive(pathname, group);
+
+        // A menu item with no dropdown links is nothing but a link: no
+        // chevron, no trigger button for a screen reader to announce as a
+        // menu, no hover timer that would open an empty panel.
+        if (!dropdown) {
+          // getNavigation() drops an item with neither href nor children, so
+          // this only ever guards the type.
+          if (!group.href) return null;
+          return (
+            <li key={group._key}>
+              <Link
+                href={group.href}
+                aria-current={sectionActive ? "page" : undefined}
+                className={cn(
+                  "flex h-11 items-center rounded-lg px-3 text-[15px] font-semibold whitespace-nowrap transition-colors hover:text-white",
+                  sectionActive ? "bg-white/8 text-white" : "text-white/85",
+                )}
+              >
+                {group.label}
+              </Link>
+            </li>
+          );
+        }
+
         const panelId = `nav-panel-${group._key}`;
         const triggerId = `nav-trigger-${group._key}`;
         // Mega panels center under the whole nav (anchored to the ul) so they
         // never clip the viewport edge; list panels hang off their trigger.
         const panelX = isMega ? "-50%" : 0;
+        const toggle = () => {
+          clearTimer();
+          setOpenKey(open ? null : group._key);
+        };
+        const triggerRef = (node: HTMLButtonElement | null) => {
+          triggerRefs.current.set(group._key, node);
+        };
+        const chevron = (
+          <ChevronDown
+            aria-hidden="true"
+            className={cn(
+              "size-4 text-grey-300 transition-transform duration-200",
+              open && "rotate-180",
+            )}
+          />
+        );
 
         return (
           <li
@@ -172,41 +213,54 @@ export function DesktopNav({ navigation, site }: DesktopNavProps) {
                 (open || sectionActive) && "bg-white/8",
               )}
             >
-              <Link
-                href={group.href}
-                aria-current={sectionActive ? "page" : undefined}
-                onClick={closeNow}
-                className={cn(
-                  "flex h-11 items-center rounded-l-lg pl-3 text-[15px] font-semibold whitespace-nowrap transition-colors hover:text-white",
-                  sectionActive ? "text-white" : "text-white/85",
-                )}
-              >
-                {group.label}
-              </Link>
-              <button
-                type="button"
-                id={triggerId}
-                ref={(node) => {
-                  triggerRefs.current.set(group._key, node);
-                }}
-                aria-expanded={open}
-                aria-controls={panelId}
-                aria-label={`${open ? "Hide" : "Show"} ${group.label} submenu`}
-                onClick={() => {
-                  clearTimer();
-                  setOpenKey(open ? null : group._key);
-                }}
-                onKeyDown={(e) => onTriggerKeyDown(e, group)}
-                className="flex h-11 items-center rounded-r-lg pr-3 pl-1.5 text-white/85 transition-colors hover:text-white"
-              >
-                <ChevronDown
-                  aria-hidden="true"
+              {group.href ? (
+                // Clickable parent: the name navigates to the section's own
+                // index page, the chevron beside it opens the panel.
+                <>
+                  <Link
+                    href={group.href}
+                    aria-current={sectionActive ? "page" : undefined}
+                    onClick={closeNow}
+                    className={cn(
+                      "flex h-11 items-center rounded-l-lg pl-3 text-[15px] font-semibold whitespace-nowrap transition-colors hover:text-white",
+                      sectionActive ? "text-white" : "text-white/85",
+                    )}
+                  >
+                    {group.label}
+                  </Link>
+                  <button
+                    type="button"
+                    id={triggerId}
+                    ref={triggerRef}
+                    aria-expanded={open}
+                    aria-controls={panelId}
+                    aria-label={`${open ? "Hide" : "Show"} ${group.label} submenu`}
+                    onClick={toggle}
+                    onKeyDown={(e) => onTriggerKeyDown(e, group)}
+                    className="flex h-11 items-center rounded-r-lg pr-3 pl-1.5 text-white/85 transition-colors hover:text-white"
+                  >
+                    {chevron}
+                  </button>
+                </>
+              ) : (
+                // Dropdown with no page of its own: the name IS the trigger.
+                <button
+                  type="button"
+                  id={triggerId}
+                  ref={triggerRef}
+                  aria-expanded={open}
+                  aria-controls={panelId}
+                  onClick={toggle}
+                  onKeyDown={(e) => onTriggerKeyDown(e, group)}
                   className={cn(
-                    "size-4 text-grey-300 transition-transform duration-200",
-                    open && "rotate-180",
+                    "flex h-11 items-center gap-1.5 rounded-lg px-3 text-[15px] font-semibold whitespace-nowrap transition-colors hover:text-white",
+                    sectionActive ? "text-white" : "text-white/85",
                   )}
-                />
-              </button>
+                >
+                  {group.label}
+                  {chevron}
+                </button>
+              )}
             </div>
 
             <AnimatePresence>

@@ -5,9 +5,13 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { ChevronDown, X } from "lucide-react";
-import type { Navigation } from "@/data/navigation";
+import { hasDropdown, type Navigation } from "@/data/navigation";
 import type { SiteContent } from "@/data/site";
-import { isExactActive, isSectionActive } from "@/components/layout/navActive";
+import {
+  isExactActive,
+  isGroupActive,
+  isGroupExactActive,
+} from "@/components/layout/navActive";
 import { navIcons } from "@/components/layout/navIcons";
 import { NavFeaturedCard } from "@/components/layout/NavFeaturedCard";
 import { Logo } from "@/components/ui/Logo";
@@ -27,8 +31,9 @@ export function MobileMenu({ open, onClose, navigation, site }: MobileMenuProps)
 
   /** Section the visitor is currently inside — expanded by default. */
   const activeKey =
-    navigation.items.find((group) => isSectionActive(pathname, group.href))
-      ?._key ?? null;
+    navigation.items.find(
+      (group) => hasDropdown(group) && isGroupActive(pathname, group),
+    )?._key ?? null;
 
   const [expanded, setExpanded] = useState<string | null>(activeKey);
 
@@ -104,51 +109,86 @@ export function MobileMenu({ open, onClose, navigation, site }: MobileMenuProps)
 
               <ul className="space-y-1">
                 {navigation.items.map((group) => {
-                  const isExpanded = expanded === group._key;
-                  const sectionActive = isSectionActive(pathname, group.href);
+                  const dropdown = hasDropdown(group);
+                  const isExpanded = dropdown && expanded === group._key;
+                  const sectionActive = isGroupActive(pathname, group);
+                  // Filled pill only where no child row can also claim it —
+                  // i.e. a plain link. Dropdown parents keep the bar alone.
+                  const exactActive = isGroupExactActive(pathname, group);
                   const panelId = `mobile-panel-${group._key}`;
+                  const toggle = () =>
+                    setExpanded(isExpanded ? null : group._key);
+                  /* Section marker: the filled pill is reserved for the exact
+                     current page (a plain link, or a child row below). */
+                  const sectionBar = sectionActive && !exactActive && (
+                    <span
+                      aria-hidden="true"
+                      className="absolute top-1/2 left-0 h-6 w-0.5 -translate-y-1/2 rounded-full bg-red-500"
+                    />
+                  );
 
                   return (
                     <li key={group._key}>
-                      {/* Label and chevron are separate tap targets: the label
-                          navigates to the section landing page, the chevron
-                          only expands the children. */}
+                      {/* With a page of its own, label and chevron are separate
+                          tap targets: the label navigates to the section
+                          landing page, the chevron only expands the children.
+                          A menu item with no children has no chevron at all —
+                          it is a plain link, and nothing to expand. */}
                       <div className="flex items-center gap-1">
-                        <Link
-                          href={group.href}
-                          onClick={onClose}
-                          aria-current={sectionActive ? "page" : undefined}
-                          className="relative flex min-h-12 flex-1 items-center rounded-xl px-4 py-3 text-[17px] font-semibold text-white transition-colors hover:bg-white/6"
-                        >
-                          {/* Section marker: the filled pill is reserved for
-                              the exact current page (child rows below). */}
-                          {sectionActive && (
-                            <span
-                              aria-hidden="true"
-                              className="absolute top-1/2 left-0 h-6 w-0.5 -translate-y-1/2 rounded-full bg-red-500"
-                            />
-                          )}
-                          {group.label}
-                        </Link>
-                        <button
-                          type="button"
-                          aria-expanded={isExpanded}
-                          aria-controls={panelId}
-                          aria-label={`${isExpanded ? "Collapse" : "Expand"} ${group.label} submenu`}
-                          onClick={() =>
-                            setExpanded(isExpanded ? null : group._key)
-                          }
-                          className="flex size-12 shrink-0 items-center justify-center rounded-xl text-grey-300 transition-colors hover:bg-white/6 hover:text-white"
-                        >
-                          <ChevronDown
-                            aria-hidden="true"
+                        {group.href ? (
+                          <Link
+                            href={group.href}
+                            onClick={onClose}
+                            aria-current={sectionActive ? "page" : undefined}
                             className={cn(
-                              "size-5 transition-transform duration-200",
-                              isExpanded && "rotate-180",
+                              "relative flex min-h-12 flex-1 items-center rounded-xl px-4 py-3 text-[17px] font-semibold text-white transition-colors hover:bg-white/6",
+                              exactActive && "bg-white/8",
                             )}
-                          />
-                        </button>
+                          >
+                            {sectionBar}
+                            {group.label}
+                          </Link>
+                        ) : (
+                          // Dropdown with no page of its own: the whole row
+                          // toggles the panel.
+                          <button
+                            type="button"
+                            aria-expanded={isExpanded}
+                            aria-controls={panelId}
+                            onClick={toggle}
+                            className="relative flex min-h-12 flex-1 items-center justify-between gap-3 rounded-xl px-4 py-3 text-[17px] font-semibold text-white transition-colors hover:bg-white/6"
+                          >
+                            {sectionBar}
+                            {group.label}
+                            <ChevronDown
+                              aria-hidden="true"
+                              className={cn(
+                                "size-5 shrink-0 text-grey-300 transition-transform duration-200",
+                                isExpanded && "rotate-180",
+                              )}
+                            />
+                          </button>
+                        )}
+                        {dropdown && group.href && (
+                          <button
+                            type="button"
+                            aria-expanded={isExpanded}
+                            aria-controls={panelId}
+                            aria-label={`${isExpanded ? "Collapse" : "Expand"} ${group.label} submenu`}
+                            onClick={toggle}
+                            className="flex size-12 shrink-0 items-center justify-center rounded-xl text-grey-300 transition-colors hover:bg-white/6 hover:text-white"
+                          >
+                            <ChevronDown
+                              aria-hidden="true"
+                              className={cn(
+                                "size-5 transition-transform duration-200",
+                                isExpanded && "rotate-180",
+                              )}
+                            />
+                          </button>
+                        )}
                       </div>
+                      {dropdown && (
                       <div
                         id={panelId}
                         className={cn(
@@ -227,6 +267,7 @@ export function MobileMenu({ open, onClose, navigation, site }: MobileMenuProps)
                           </ul>
                         </div>
                       </div>
+                      )}
                     </li>
                   );
                 })}

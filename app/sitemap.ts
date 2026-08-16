@@ -15,6 +15,7 @@ const STATIC_PATHS = [
   "/areas-we-serve",
   "/areas-we-serve/dallas",
   "/areas-we-serve/fort-worth",
+  "/commercial",
   "/contact",
   "/multifamily",
   "/services",

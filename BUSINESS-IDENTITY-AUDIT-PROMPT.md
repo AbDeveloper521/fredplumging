@@ -59,7 +59,7 @@ straight apostrophe may be safer — say what you decided.
 `+19725649081`, and every `tel:` href.
 
 **Founding year** — there is a known live inconsistency: a hero chip renders
-"Serving DFW Since 1993" while the About page and heritage copy say the business was founded
+"Serving DFW Since 1996" while the About page and heritage copy say the business was founded
 in **1996**, and `data/site.ts` carries `foundedYear: 1996` with a stale
 `yearsInBusiness: "27+"` (which would now be 30). Find every place a year or a
 years-in-business figure is rendered and report them all.

@@ -44,11 +44,7 @@ const navLink = defineArrayMember({
         rule
           .required()
           .error("A link with no address goes nowhere and breaks the menu.")
-          .custom((value) =>
-            value?.startsWith("/")
-              ? true
-              : "Must start with a slash, e.g. /services/plumbing.",
-          ),
+          .custom((value) => slashPathOrEmpty(value, "/services/plumbing")),
     }),
     defineField({
       name: "description",
@@ -75,9 +71,28 @@ const navLink = defineArrayMember({
   },
 });
 
+/**
+ * True when a menu item actually carries dropdown links. A menu item is one of
+ * two shapes, and this is the switch between them:
+ *   - no children → a plain top-level link straight to `href`
+ *   - one or more children → a dropdown, each child with its own `href`
+ * Both the conditional validation and the dropdown-only fields read it, so the
+ * Studio form and the rendered nav agree on which shape an item is in.
+ */
+function hasDropdownItems(parent: unknown): boolean {
+  const children = (parent as { children?: unknown } | undefined)?.children;
+  return Array.isArray(children) && children.length > 0;
+}
+
+/** Shared slash check — empty passes, because `href` is only sometimes required. */
+function slashPathOrEmpty(value: string | undefined, example: string) {
+  if (!value) return true;
+  return value.startsWith("/") ? true : `Must start with a slash, e.g. ${example}.`;
+}
+
 const navGroup = defineArrayMember({
   name: "navGroup",
-  title: "Menu section",
+  title: "Menu item",
   type: "object",
   groups: [{ name: "advanced", title: "Advanced" }],
   fields: [
@@ -88,36 +103,24 @@ const navGroup = defineArrayMember({
         "The word in the top navigation bar, e.g. “Services”. Keep it to one or two words so the bar fits on screen.",
       type: "string",
       validation: (rule) =>
-        rule.required().error("A menu section with no name can't be shown."),
+        rule.required().error("A menu item with no name can't be shown."),
     }),
     defineField({
       name: "href",
       title: "Page address",
       description:
-        "The page that opens when someone clicks the menu name itself (the dropdown opens on hover), e.g. /services.",
+        "The page that opens when someone clicks the menu name, starting with a slash — e.g. /commercial. Required for a plain link. If this menu has dropdown links you may still fill it in (the name stays clickable and the dropdown still opens), or leave it empty to make the name open the dropdown only.",
       type: "string",
       validation: (rule) =>
-        rule
-          .required()
-          .error("The menu name is also a link — it needs a page address.")
-          .custom((value) =>
-            value?.startsWith("/")
-              ? true
-              : "Must start with a slash, e.g. /services.",
-          ),
+        rule.custom((value) => slashPathOrEmpty(value, "/commercial")),
     }),
     defineField({
       name: "children",
       title: "Links in this menu",
       description:
-        "The links inside the dropdown. Drag to reorder — the order here is the order on the site.",
+        "The links inside the dropdown. Drag to reorder — the order here is the order on the site. Leave this empty for a plain top-level link that goes straight to the page address above.",
       type: "array",
       of: [navLink],
-      validation: (rule) =>
-        rule
-          .required()
-          .min(1)
-          .error("A dropdown with no links would open an empty panel."),
     }),
     defineField({
       name: "layout",
@@ -133,8 +136,15 @@ const navGroup = defineArrayMember({
         layout: "radio",
       },
       initialValue: "list",
+      // Meaningless without a dropdown — and hidden fields must never be
+      // required, or publish blocks on something the owner can't even see.
+      hidden: ({ parent }) => !hasDropdownItems(parent),
       validation: (rule) =>
-        rule.required().error("Pick a dropdown style so the menu knows how to draw itself."),
+        rule.custom((value, context) =>
+          !hasDropdownItems(context.parent) || value
+            ? true
+            : "Pick a dropdown style so the menu knows how to draw itself.",
+        ),
     }),
     defineField({
       name: "showServiceAreaCities",
@@ -144,16 +154,43 @@ const navGroup = defineArrayMember({
       type: "boolean",
       initialValue: false,
       group: "advanced",
+      hidden: ({ parent }) => !hasDropdownItems(parent),
     }),
   ],
-  preview: {
-    select: { title: "label", children: "children" },
-    prepare: ({ title, children }) => ({
-      title: title ?? "Untitled section",
-      subtitle: Array.isArray(children)
-        ? `${children.length} link${children.length === 1 ? "" : "s"}`
-        : "No links yet",
+  /**
+   * The either/or rule, checked on the whole item because it reads two sibling
+   * fields: a menu item is valid with an address and no dropdown links (plain
+   * link), or with dropdown links and an optional address (dropdown). Only the
+   * item with neither is rejected — it would have nowhere to go.
+   */
+  validation: (rule) =>
+    rule.custom((value) => {
+      const href = typeof (value as { href?: unknown })?.href === "string"
+        ? ((value as { href: string }).href).trim()
+        : "";
+      if (href || hasDropdownItems(value)) return true;
+      return {
+        message:
+          "This menu item has nowhere to go. Either fill in “Page address” to make it a " +
+          "plain link, or add at least one link under “Links in this menu” to make it a dropdown.",
+        paths: [["href"]],
+      };
     }),
+  preview: {
+    select: { title: "label", href: "href", children: "children" },
+    prepare: ({ title, href, children }) => {
+      const count = Array.isArray(children) ? children.length : 0;
+      return {
+        title: title ?? "Untitled menu item",
+        // The two states, told apart at a glance in the collapsed list.
+        subtitle:
+          count > 0
+            ? `Dropdown · ${count} item${count === 1 ? "" : "s"}${href ? ` → ${href}` : ""}`
+            : href
+              ? `Plain link → ${href}`
+              : "⚠ No page address and no dropdown items",
+      };
+    },
   },
 });
 
@@ -204,9 +241,9 @@ export const navigation = defineType({
   fields: [
     defineField({
       name: "items",
-      title: "Menu sections",
+      title: "Menu items",
       description:
-        "The dropdown menus in the site header, left to right. Drag to reorder. Each section holds the links shown in its dropdown.",
+        "The items in the site header, left to right. Drag to reorder. An item with links inside it opens a dropdown; an item with no links is a plain link straight to its page address.",
       type: "array",
       group: "header",
       of: [navGroup],
@@ -214,9 +251,9 @@ export const navigation = defineType({
         rule
           .required()
           .min(1)
-          .error("The site header needs at least one menu section.")
+          .error("The site header needs at least one menu item.")
           .max(6)
-          .error("More than 6 sections won't fit in the header bar."),
+          .error("More than 6 items won't fit in the header bar."),
     }),
     defineField({
       name: "cta",

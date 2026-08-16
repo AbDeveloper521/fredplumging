@@ -81,6 +81,18 @@ export const structure: StructureResolver = (S) =>
             .schemaType("multifamilyIndexPage")
             .documentId("multifamilyIndexPage"),
         ),
+      // "Commercial Page" is the standalone /commercial page. The
+      // "Commercial Plumbing" document under Service Pages is the
+      // /services/commercial-plumbing service — same word, different page,
+      // so the two titles are kept deliberately distinct.
+      S.listItem()
+        .title("Commercial Page")
+        .id("commercialPage")
+        .child(
+          S.document()
+            .schemaType("commercialPage")
+            .documentId("commercialPage"),
+        ),
       S.listItem()
         .title("Contact Page")
         .id("contactPage")
