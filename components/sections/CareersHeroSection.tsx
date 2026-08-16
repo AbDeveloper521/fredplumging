@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 import { careersPageDefaults, type CareersHeroContent } from "@/data/careersPage";
 
 /**
- * The /about/careers dark hero, per the owner's reference: centred eyebrow,
+ * The /about/careers dark hero: left-aligned eyebrow,
  * H1, and the hiring-voice paragraphs at a readable measure over an
  * optional Studio-uploaded background photo (service-hero treatment: wide
  * hotspot-aware crop, dark overlay defaulting on; no photo → the standard
@@ -63,7 +63,7 @@ export function CareersHeroSection({
 
       <Container
         className={cn(
-          "relative flex flex-col items-center pt-[120px] pb-16 text-center lg:pt-[190px] lg:pb-24",
+          "relative flex flex-col pt-[120px] pb-16 lg:pt-[190px] lg:pb-24",
           // Readability floor with the overlay off — same as the service
           // hero: a soft navy text-shadow keeps white text legible over an
           // unknown photo, near-invisible over a dark one.
@@ -72,10 +72,11 @@ export function CareersHeroSection({
             "[text-shadow:0_1px_2px_rgb(7_17_31/0.6),0_2px_18px_rgb(7_17_31/0.45)]",
         )}
       >
+        {/* One leading rule, acting as a bullet — the trailing rule only
+            belongs on a symmetric, centred eyebrow. */}
         <p className="flex items-center gap-3 eyebrow text-red-500">
           <span aria-hidden="true" className="h-px w-8 bg-red-500" />
           {content.eyebrow}
-          <span aria-hidden="true" className="h-px w-8 bg-red-500" />
         </p>
         <h1
           id={titleId}

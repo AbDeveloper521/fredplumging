@@ -52,9 +52,15 @@ function Rise({
 /**
  * Service-page hero — one style everywhere: a shallow full-width banner over
  * the section's photo (dark navy wash when no photo is set), darkened with a
- * navy gradient so the centred content passes contrast: breadcrumbs, the
- * red-rule eyebrow, H1, subheading at a readable measure, and — only where
- * the data sets them — centred CTA buttons and the credentials strip.
+ * navy gradient so the content passes contrast: breadcrumbs, the red-rule
+ * eyebrow, H1, subheading at a readable measure, and — only where the data
+ * sets them — CTA buttons and the credentials strip.
+ *
+ * Everything is LEFT-aligned against the shared `Container`, so the H1 sits on
+ * the same left edge as every section below it. That is the site convention:
+ * the Partners/Careers-adjacent heroes, the legacy detail hero, the legal
+ * layout, and `SectionHeading align="left"` all read this way, including the
+ * eyebrow's single leading rule.
  */
 export function ServiceHeroSection({
   section,
@@ -118,7 +124,10 @@ export function ServiceHeroSection({
       {/* Shallow banner: height comes from the content + padding, never 100vh. */}
       <Container
         className={cn(
-          "relative flex flex-col items-center pt-[110px] pb-14 text-center lg:pt-[160px] lg:pb-20",
+          // No `items-center`: children stretch to the container and constrain
+          // themselves with their own max-widths, which keeps the H1's wrap
+          // points independent of how long the line happens to be.
+          "relative flex flex-col pt-[110px] pb-14 lg:pt-[160px] lg:pb-20",
           // Readability floor with the overlay off: a soft navy text-shadow
           // (inherited by every line in the banner) keeps white text legible
           // over an unknown photo, and is near-invisible over a dark one.
@@ -130,7 +139,7 @@ export function ServiceHeroSection({
         {breadcrumbs.length > 0 && (
         <Rise>
           <nav aria-label="Breadcrumb">
-            <ol className="flex flex-wrap items-center justify-center gap-1.5 text-[13px] font-semibold text-grey-300">
+            <ol className="flex flex-wrap items-center gap-1.5 text-[13px] font-semibold text-grey-300">
               {breadcrumbs.map((crumb, i) => {
                 const isLast = i === breadcrumbs.length - 1;
                 return (
@@ -163,10 +172,11 @@ export function ServiceHeroSection({
 
         {section.eyebrow && (
           <Rise delay={0.06}>
-            <p className="mt-8 flex items-center justify-center gap-3 eyebrow text-red-500">
+            {/* One leading rule, acting as a bullet — the trailing rule only
+                belongs on a symmetric, centred eyebrow. */}
+            <p className="mt-8 flex items-center gap-3 eyebrow text-red-500">
               <span aria-hidden="true" className="h-px w-8 bg-red-500" />
               {section.eyebrow}
-              <span aria-hidden="true" className="h-px w-8 bg-red-500" />
             </p>
           </Rise>
         )}
@@ -174,7 +184,11 @@ export function ServiceHeroSection({
         <Rise delay={0.12}>
           <h1
             id={`${id}-heading`}
-            className="mt-5 max-w-4xl text-[34px] leading-[1.08] font-extrabold tracking-tight text-balance text-white sm:text-[44px] lg:text-[50px]"
+            // max-w-3xl, not 4xl: the wider measure was there to keep a
+            // centred headline balanced on both sides. Left-aligned it just
+            // leaves a long first line and a stub second one — 3xl is what
+            // every other left-aligned banner on the site uses.
+            className="mt-5 max-w-3xl text-[34px] leading-[1.08] font-extrabold tracking-tight text-balance text-white sm:text-[44px] lg:text-[50px]"
           >
             {section.heading}
           </h1>
@@ -182,7 +196,7 @@ export function ServiceHeroSection({
 
         {subheadings ? (
           <Rise delay={0.18}>
-            <div className="mx-auto mt-6 max-w-[65ch] space-y-4">
+            <div className="mt-6 max-w-[65ch] space-y-4">
               {subheadings.map((paragraph, i) => (
                 <p
                   key={i}
@@ -196,7 +210,7 @@ export function ServiceHeroSection({
         ) : (
           section.subheading && (
             <Rise delay={0.18}>
-              <p className="mx-auto mt-6 max-w-[65ch] text-[18px] leading-relaxed text-grey-300">
+              <p className="mt-6 max-w-[65ch] text-[18px] leading-relaxed text-grey-300">
                 {section.subheading}
               </p>
             </Rise>
@@ -205,7 +219,7 @@ export function ServiceHeroSection({
 
         {hasCtas && (
           <Rise delay={0.24}>
-            <div className="mt-9 flex flex-col items-center justify-center gap-4 sm:flex-row">
+            <div className="mt-9 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
               {phoneCtaLabel && (
                 <Button href={site.phoneHref} size="lg" withPhoneIcon>
                   {phoneCtaLabel}
@@ -227,7 +241,7 @@ export function ServiceHeroSection({
 
         {section.credentials.length > 0 && (
           <Rise delay={0.32}>
-            <ul className="mt-10 flex flex-col items-center gap-4 border-t border-white/10 pt-7 sm:flex-row sm:flex-wrap sm:justify-center sm:gap-x-8">
+            <ul className="mt-10 flex flex-col items-start gap-4 border-t border-white/10 pt-7 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-8">
               {section.credentials.map((credential, i) => {
                 const Icon = navIcons[credential.icon];
                 return (

@@ -40,11 +40,12 @@ export function AboutHeroSection({
         className="absolute inset-0 bg-[radial-gradient(ellipse_50%_45%_at_85%_80%,rgb(211_33_39/0.16),transparent_65%)]"
       />
 
-      <Container className="relative flex flex-col items-center pt-[120px] pb-16 text-center lg:pt-[190px] lg:pb-24">
+      <Container className="relative flex flex-col pt-[120px] pb-16 lg:pt-[190px] lg:pb-24">
+        {/* One leading rule, acting as a bullet — the trailing rule only
+            belongs on a symmetric, centred eyebrow. */}
         <p className="flex items-center gap-3 eyebrow text-red-500">
           <span aria-hidden="true" className="h-px w-8 bg-red-500" />
           {content.eyebrow}
-          <span aria-hidden="true" className="h-px w-8 bg-red-500" />
         </p>
         <h1
           id={titleId}
@@ -61,7 +62,7 @@ export function AboutHeroSection({
           </p>
         ))}
         {content.showCredentials && (
-          <ul className="mt-9 flex flex-wrap items-center justify-center gap-x-8 gap-y-3">
+          <ul className="mt-9 flex flex-wrap items-center gap-x-8 gap-y-3">
             {credentials.map(({ icon: Icon, label }) => (
               <li
                 key={label}
