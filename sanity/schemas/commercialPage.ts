@@ -1,5 +1,5 @@
 import { defineType } from "sanity";
-import { defaultCommercialSections } from "@/data/commercialPage";
+import { commercialSectionsForSanity } from "@/data/commercialPage";
 import { sectionsField } from "./sectionLibrary";
 
 /**
@@ -25,12 +25,15 @@ export const commercialPage = defineType({
     sectionsField({
       title: "Commercial-page sections",
       description:
-        "The /commercial page, top to bottom — the same section library every page uses. This page ships with a placeholder banner only; build it up by adding sections here. Drag to reorder. The ⋮ menu on each section offers Duplicate and Remove; open a section and tick “Hide this section” to keep its content without showing it.",
+        "The /commercial page, top to bottom — the same section library every page uses. Drag to reorder. The ⋮ menu on each section offers Duplicate and Remove; open a section and tick “Hide this section” to keep its content without showing it.",
     }),
   ],
-  // The Studio document starts prefilled with the shipped one-band stack.
-  // JSON round-trip strips the `undefined`s (empty photo slots).
-  initialValue: JSON.parse(JSON.stringify({ sections: defaultCommercialSections })),
+  // Prefilled with the shipped stack in Sanity shape — nested card/benefit
+  // rows keyed, and the Q&A band as a reference to the shared set. The
+  // seeder writes the identical thing, so a document created either way
+  // matches. (Publishing this prefill before the set exists leaves that one
+  // band pointing at a missing document; the seeder creates the set for you.)
+  initialValue: { sections: commercialSectionsForSanity() },
   preview: {
     prepare: () => ({ title: "Commercial Page" }),
   },

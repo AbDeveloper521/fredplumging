@@ -52,6 +52,10 @@ export const DEFAULT_FAQ_HEADING = "Frequently Asked Questions";
 /** Stable id of the shared multi-family set, in Sanity and in the seeder. */
 export const MULTIFAMILY_FAQ_SET_ID = "faqSet-multifamily";
 
+/** Stable id of the commercial set — a SEPARATE set, never merged into the
+    multi-family one: the two pages answer different audiences. */
+export const COMMERCIAL_FAQ_SET_ID = "faqSet-commercial";
+
 /**
  * The six multi-family questions, verbatim as approved.
  *
@@ -136,6 +140,82 @@ export const UNQUANTIFIED_ANSWERS: ReadonlyArray<{
 ];
 
 /**
+ * The five commercial questions, verbatim as approved.
+ *
+ * Kept apart from the multi-family set on purpose: these answer a building
+ * owner or facilities manager, those answer a property-management company.
+ * Q5 states the licence number, which matches `site.licenseNumber` and Site
+ * Settings exactly — never retype it from memory.
+ */
+export const COMMERCIAL_FAQ_SET: FaqSet = {
+  title: "Commercial FAQs",
+  heading: DEFAULT_FAQ_HEADING,
+  items: [
+    {
+      _key: "property-types",
+      question: "What types of commercial properties do you service?",
+      answer:
+        "We serve commercial and institutional properties across DFW, including retail and shopping centers, office buildings, restaurants and food service, senior care and assisted living facilities, and mixed-use developments. If you manage or own a commercial building in the Metroplex, we can help.",
+    },
+    {
+      _key: "downtime",
+      question: "Can you minimize downtime and disruption to our business?",
+      answer:
+        "Yes. We schedule around your operating hours where possible, including after-hours and weekend work, and we come equipped to diagnose and resolve issues in as few visits as possible. Camera inspection, leak detection, and hydro jetting let us find the actual problem the first time rather than guessing, which limits both cost and downtime.",
+    },
+    {
+      // Backflow certification and gas line work are licence-gated in Texas;
+      // this answer repeats what the multi-family set already states. Flagged
+      // for the owner to confirm with the client — see UNCONFIRMED_CLAIMS.
+      _key: "compliance",
+      question:
+        "Do you handle backflow testing, grease traps, and code-compliance work?",
+      answer:
+        "Yes. We handle backflow prevention installation, testing, and certification, grease trap and interceptor service, gas line work, and the compliance documentation these require. Staying current on backflow and grease trap requirements keeps you compliant with local authorities and avoids fines or shut-offs.",
+    },
+    {
+      _key: "emergency-and-projects",
+      question:
+        "Can you take on both emergency repairs and larger scheduled projects?",
+      answer:
+        "Both. We respond 24/7 to commercial plumbing emergencies — leaks, stoppages, water heater failures — and we also handle planned work like re-pipes, fixture replacements, PRV and water heater installations, and tenant build-outs. For larger projects we provide a clear scope and estimate up front.",
+    },
+    {
+      _key: "licensed-insured",
+      question: "Are you licensed and insured for commercial work?",
+      answer:
+        "Yes. Fred's Plumbing is licensed by the State of Texas (RMP 44890) and fully insured, with certificates of insurance available on request. All work meets applicable state and municipal plumbing codes.",
+    },
+  ],
+};
+
+/**
+ * Service lines that are licence-gated in Texas and appear in published copy.
+ * Not a defect — the same claims already ship in the multi-family set — but
+ * recorded so they are confirmed with the client deliberately rather than
+ * passing unnoticed each time they are repeated.
+ */
+export const UNCONFIRMED_CLAIMS: ReadonlyArray<{
+  claim: string;
+  where: string;
+  confirmWithClient: string;
+}> = [
+  {
+    claim: "backflow testing and certification",
+    where:
+      "Commercial FAQs → “Do you handle backflow testing…”; the /commercial services grid; Multi-Family FAQs",
+    confirmWithClient:
+      "Texas requires a licensed Backflow Prevention Assembly Tester to CERTIFY an assembly. Confirm the business holds a current BPAT licence, or soften “testing and certification” to installation and service only.",
+  },
+  {
+    claim: "gas line installation, repair and pressure testing",
+    where: "Commercial FAQs → same answer; the /commercial services grid",
+    confirmWithClient:
+      "Gas work requires the appropriate state endorsement on the licence. Confirm the endorsement is current, or drop the gas line card and the phrase from the FAQ answer.",
+  },
+];
+
+/**
  * The multi-family FAQ band as a resolved section, for the fallback path —
  * what renders when Sanity is unreachable or a page has no published stack.
  * `key` differs per page only so duplicated DOM ids can't collide.
@@ -147,5 +227,16 @@ export function multifamilyFaqBand(key = "faq"): FaqBandSection {
     heading: MULTIFAMILY_FAQ_SET.heading ?? DEFAULT_FAQ_HEADING,
     intro: MULTIFAMILY_FAQ_SET.intro,
     items: MULTIFAMILY_FAQ_SET.items,
+  };
+}
+
+/** The commercial FAQ band as a resolved section, for the fallback path. */
+export function commercialFaqBand(key = "faq"): FaqBandSection {
+  return {
+    _type: "faqBand",
+    _key: key,
+    heading: COMMERCIAL_FAQ_SET.heading ?? DEFAULT_FAQ_HEADING,
+    intro: COMMERCIAL_FAQ_SET.intro,
+    items: COMMERCIAL_FAQ_SET.items,
   };
 }

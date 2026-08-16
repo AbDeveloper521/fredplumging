@@ -45,7 +45,7 @@ export async function getCommercialPage(
   if (!result) {
     // Expected until the singleton is first published — not an error.
     console.warn(
-      "[sanity] commercialPage document not published yet — /commercial renders the placeholder banner from data/commercialPage.ts.",
+      "[sanity] commercialPage document not published yet — /commercial renders the default stack from data/commercialPage.ts.",
     );
     return defaultCommercialSections;
   }
@@ -53,7 +53,7 @@ export async function getCommercialPage(
   if (!result.sections) {
     console.warn(
       "[sanity] commercialPage document has no `sections` array — /commercial " +
-        "renders the placeholder banner from data/commercialPage.ts. Run " +
+        "renders the default stack from data/commercialPage.ts. Run " +
         "scripts/seed-commercial-sections.ts, or open Commercial Page in " +
         "/studio and publish the sections list.",
     );
@@ -73,7 +73,7 @@ export async function getCommercialPage(
     if (allHidden) return [];
     console.warn(
       "[sanity] commercialPage sections are published but none survived validation — " +
-        "/commercial renders the placeholder banner from data/commercialPage.ts.",
+        "/commercial renders the default stack from data/commercialPage.ts.",
     );
     return defaultCommercialSections;
   }

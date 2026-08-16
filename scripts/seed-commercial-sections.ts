@@ -1,7 +1,7 @@
 /**
- * Seeds the `commercialPage` document's `sections[]` with the default
- * /commercial stack from data/commercialPage.ts, VERBATIM — one placeholder
- * banner, nothing else, because the owner builds this page himself in Studio.
+ * Seeds the `commercialPage` document's `sections[]` with the /commercial
+ * stack from data/commercialPage.ts, VERBATIM, and creates the "Commercial
+ * FAQs" set the Q&A band references.
  * Dry run:
  *   sanity exec scripts/seed-commercial-sections.ts
  * write pass (owner runs this after reading the plan):
@@ -23,10 +23,14 @@
  *    needs unsetting, it is content-checked first (no image asset._ref, no
  *    non-empty text) — content is never silently discarded.
  *
- * Refuses to run when a target document already has a non-empty `sections`
- * array (e.g. the Studio's initialValue prefill — in that case just press
- * Publish). The navigation document is NEVER touched: the Commercial menu
- * link is the owner's to add in Studio.
+ * ONE overwrite is permitted, and only one: a document carrying nothing but
+ * the placeholder banner this repo itself shipped (matched on its exact
+ * subheading) is replaced by the full stack — there is no content there to
+ * lose. Any OTHER non-empty `sections` array belongs to whoever built it and
+ * stops the script with instructions instead. The "Commercial FAQs" set is
+ * created if missing; one that already has questions is left alone. The
+ * navigation document is NEVER touched: the Commercial menu link is the
+ * owner's to add in Studio.
  *
  * THIS SCRIPT MUST NEVER DELETE ANYTHING — no document deletes, no asset
  * operations, no other document types, under any flag.
@@ -34,37 +38,47 @@
  * Auth: needs SANITY_API_WRITE_TOKEN (Editor scope) for --confirm.
  */
 import { getCliClient } from "sanity/cli";
-import { defaultCommercialSections } from "../data/commercialPage";
+import { commercialSectionsForSanity } from "../data/commercialPage";
+import { COMMERCIAL_FAQ_SET, COMMERCIAL_FAQ_SET_ID, UNCONFIRMED_CLAIMS } from "../data/faqSets";
 
 type Raw = Record<string, unknown>;
 
 /** Old fields this script may unset — none exist for this page. */
 const LEFTOVER_FIELDS: string[] = [];
 
-/** Array fields inside sections whose object members need _type + _key. */
-const CHILD_TYPE: Record<string, string> = {
-  credentials: "item",
-};
+/**
+ * The exact placeholder banner this repo shipped as the first default stack.
+ * Matching it is how the script knows a one-band document is the placeholder
+ * and not the owner's work — see `planFor`.
+ */
+const PLACEHOLDER_SUBHEADING =
+  "Placeholder banner — the sections for this page have not been added yet.";
 
 /**
- * The default stack as Sanity array items: JSON round-trip strips any
- * `undefined`s (empty photo slots); nested object-array members get
- * deterministic _key/_type so Studio lists render and diffs stay stable.
+ * The stack in Sanity shape. Shared with the Studio prefill
+ * (`initialValue` in sanity/schemas/commercialPage.ts) so a document created
+ * either way is identical: nested card/benefit rows keyed, and the Q&A band
+ * written as a REFERENCE to the shared set rather than a copy of its
+ * questions — the fallback in data/ carries them inline because there is
+ * nothing to dereference when Sanity is unreachable.
  */
-function preparedSections(): Raw[] {
-  const stack = JSON.parse(JSON.stringify(defaultCommercialSections)) as Raw[];
-  return stack.map((section) => {
-    for (const [field, childType] of Object.entries(CHILD_TYPE)) {
-      const value = section[field];
-      if (!Array.isArray(value)) continue;
-      section[field] = value.map((entry, i) =>
-        entry && typeof entry === "object" && !Array.isArray(entry)
-          ? { _type: childType, _key: `${section._key}-${field}-${i}`, ...(entry as Raw) }
-          : entry,
-      );
-    }
-    return section;
-  });
+const preparedSections = (): Raw[] => commercialSectionsForSanity();
+
+/** The FAQ set document, with _type/_key on every question. */
+function faqSetDocument(): Raw {
+  return {
+    _id: COMMERCIAL_FAQ_SET_ID,
+    _type: "faqSet",
+    title: COMMERCIAL_FAQ_SET.title,
+    ...(COMMERCIAL_FAQ_SET.heading ? { heading: COMMERCIAL_FAQ_SET.heading } : {}),
+    ...(COMMERCIAL_FAQ_SET.intro ? { intro: COMMERCIAL_FAQ_SET.intro } : {}),
+    items: COMMERCIAL_FAQ_SET.items.map((item) => ({
+      _type: "faqItem",
+      _key: item._key,
+      question: item.question,
+      answer: item.answer,
+    })),
+  };
 }
 
 /**
@@ -101,15 +115,43 @@ interface Plan {
   create: boolean;
 }
 
+/**
+ * True only for the exact one-band placeholder this repo shipped: a single
+ * serviceHero carrying the placeholder subheading. Deliberately narrow — the
+ * script may overwrite content it wrote itself, and nothing else.
+ */
+function isShippedPlaceholder(sections: unknown): boolean {
+  if (!Array.isArray(sections) || sections.length !== 1) return false;
+  const only = sections[0] as Raw | null;
+  return Boolean(
+    only &&
+      typeof only === "object" &&
+      only._type === "serviceHero" &&
+      only.subheading === PLACEHOLDER_SUBHEADING,
+  );
+}
+
 /** Validates one existing document and returns its plan, or null to stop. */
 function planFor(id: string, doc: Raw): Plan | null {
   const sections = doc.sections;
   if (Array.isArray(sections) && sections.length > 0) {
+    // The one overwrite this script permits: the placeholder banner it shipped
+    // itself, which exists only to keep the route from rendering blank. Any
+    // other non-empty stack is the owner's and is never touched.
+    if (isShippedPlaceholder(sections)) {
+      console.log(
+        `${id}: carries ONLY the shipped placeholder banner — it will be ` +
+          "REPLACED by the full stack. (No other content exists to lose.)",
+      );
+      return { id, unset: [], create: false };
+    }
     console.error(
       `STOP: ${id} already has a non-empty sections array ` +
-        `(${sections.length} item(s)). If that is the Studio's prefill, just ` +
-        "press Publish — this script never merges into or overwrites " +
-        "existing sections. Nothing was changed.",
+        `(${sections.length} item(s)) that is not the shipped placeholder — ` +
+        "so it is content someone built, and this script will not overwrite " +
+        "it. To add the commercial bands to that page, add them in /studio " +
+        "(Commercial Page), or empty the sections list there first and re-run " +
+        "this. Nothing was changed.",
     );
     return null;
   }
@@ -184,7 +226,8 @@ async function main() {
       "No commercialPage document exists (published or draft) — the published " +
         "document will be CREATED and seeded. (Alternative without this " +
         "script: open Commercial Page in /studio — it prefills with the same " +
-        "stack — and press Publish.)",
+        "stack, but you must also create the “Commercial FAQs” set under FAQ " +
+        "Sets yourself, or the Q&A band points at nothing — and press Publish.)",
     );
     plans.push({ id: "commercialPage", unset: [], create: true });
   } else {
@@ -199,19 +242,61 @@ async function main() {
     }
   }
 
+  // The FAQ set the Q&A band points at. An existing set WITH questions is
+  // the owner's and is left completely alone.
+  const [faqDoc, faqDraft] = await Promise.all([
+    client.fetch<Raw | null>(`*[_id == $id][0]`, { id: COMMERCIAL_FAQ_SET_ID }),
+    client.fetch<Raw | null>(`*[_id == $id][0]`, {
+      id: `drafts.${COMMERCIAL_FAQ_SET_ID}`,
+    }),
+  ]);
+  const itemCount = (d: Raw | null) => (d && Array.isArray(d.items) ? d.items.length : 0);
+  const faqSetHasContent = itemCount(faqDoc) > 0 || itemCount(faqDraft) > 0;
+
+  console.log("\nFAQ set:");
+  if (faqSetHasContent) {
+    console.log(
+      `  • ${COMMERCIAL_FAQ_SET_ID} already exists with ` +
+        `${Math.max(itemCount(faqDoc), itemCount(faqDraft))} question(s) — LEFT ` +
+        "UNTOUCHED. The Q&A band will show whatever is published there; edit " +
+        "it in /studio under FAQ Sets.",
+    );
+  } else {
+    console.log(
+      `  • ${COMMERCIAL_FAQ_SET_ID} ${faqDoc || faqDraft ? "exists but has no questions" : "does not exist"} — ` +
+        `the ${COMMERCIAL_FAQ_SET.items.length} “${COMMERCIAL_FAQ_SET.title}” questions will be written:`,
+    );
+    COMMERCIAL_FAQ_SET.items.forEach((item, i) =>
+      console.log(`      ${i + 1}. ${item.question}`),
+    );
+  }
+  console.log(
+    "  • The Multi-Family set is a SEPARATE document and is not touched.",
+  );
+
   const sections = preparedSections();
   console.log(`\nSections to seed, in order (banner photo slot stays empty):`);
   sections.forEach((section, i) => {
     const fields = Object.keys(section).filter((key) => !key.startsWith("_"));
-    console.log(
-      `  ${i + 1}. ${section._type} (_key: ${section._key}) — ${fields.join(", ")}`,
-    );
+    const detail =
+      section._type === "faqBand"
+        ? ` — references ${COMMERCIAL_FAQ_SET_ID} (not a copy of the questions)`
+        : ` — ${fields.join(", ")}`;
+    console.log(`  ${i + 1}. ${section._type} (_key: ${section._key})${detail}`);
   });
   console.log(
     `\nTargets: ${plans
       .map((plan) => `${plan.id}${plan.create ? " (will be created)" : ""}`)
       .join(", ")}`,
   );
+
+  console.log(
+    "\nLicence-gated claims in this content — confirm with the client before " +
+      "this page goes live:",
+  );
+  for (const claim of UNCONFIRMED_CLAIMS) {
+    console.log(`  • ${claim.claim} — ${claim.confirmWithClient}`);
+  }
 
   if (!confirm) {
     console.log(
@@ -226,6 +311,25 @@ async function main() {
   // the only writes in the script, and they target only the commercialPage
   // ids.
   let transaction = client.transaction();
+
+  if (!faqSetHasContent) {
+    // createIfNotExists then patch, so an existing-but-empty set is filled
+    // rather than replaced.
+    const set = faqSetDocument();
+    transaction = transaction.createIfNotExists({
+      _id: COMMERCIAL_FAQ_SET_ID,
+      _type: "faqSet",
+    });
+    transaction = transaction.patch(COMMERCIAL_FAQ_SET_ID, (patch) =>
+      patch.set({
+        title: set.title,
+        ...(set.heading ? { heading: set.heading } : {}),
+        ...(set.intro ? { intro: set.intro } : {}),
+        items: set.items,
+      }),
+    );
+  }
+
   for (const plan of plans) {
     if (plan.create) {
       transaction = transaction.createIfNotExists({
@@ -242,10 +346,13 @@ async function main() {
 
   console.log(
     `\nDone. ${plans.map((plan) => plan.id).join(" and ")} now carr${plans.length === 1 ? "ies" : "y"} ` +
-      "the placeholder /commercial stack. Hard-reload /studio (Commercial Page " +
-      "shows the one-section list, no 'Unknown fields found') and reload " +
-      "/commercial — the placeholder banner must be unchanged. Then build the " +
-      "page by adding sections in Studio.",
+      `the ${sections.length}-band /commercial stack` +
+      (faqSetHasContent ? "" : `, and “${COMMERCIAL_FAQ_SET.title}” exists under FAQ Sets`) +
+      ". Hard-reload /studio (Commercial Page shows the section list, no " +
+      "'Unknown fields found') and reload /commercial — every band should " +
+      "render, with the Q&A band reading from the shared set. Then add the " +
+      "banner and intro photos in Studio, and the nav link: title " +
+      "“Commercial”, address “/commercial”, no dropdown items.",
   );
 }
 
