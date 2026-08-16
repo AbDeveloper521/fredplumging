@@ -91,7 +91,14 @@ export default function RootLayout({
       lang="en"
       className={`${bodyFont.variable} ${headingFont.variable} h-full antialiased`}
     >
-      <body className="flex min-h-full flex-col">{children}</body>
+      {/* Browser extensions (ColorZilla's `cz-shortcut-listen`, Grammarly,
+          password managers) add attributes to <body> before React hydrates,
+          which reads as a hydration mismatch. This suppresses the diff on
+          this element's own attributes only — mismatches in the tree below
+          still report normally. */}
+      <body className="flex min-h-full flex-col" suppressHydrationWarning>
+        {children}
+      </body>
     </html>
   );
 }
