@@ -111,8 +111,28 @@ const navGroup = defineArrayMember({
       description:
         "The page that opens when someone clicks the menu name, starting with a slash — e.g. /commercial. Required for a plain link. If this menu has dropdown links you may still fill it in (the name stays clickable and the dropdown still opens), or leave it empty to make the name open the dropdown only.",
       type: "string",
+      /**
+       * The either/or rule. It lives here, on the field the owner has to fix,
+       * and reads its sibling `children` through `context.parent`: an address
+       * is required when there are no dropdown links (plain link) and optional
+       * when there are (dropdown). Only an item with neither is rejected — it
+       * would have nowhere to go.
+       *
+       * NOTE: this must be a FIELD rule. An equivalent `validation` on the
+       * navGroup array member itself is accepted by the schema and then never
+       * runs — verified with `sanity documents validate`, where a
+       * deliberately always-failing object-level rule produced no marker.
+       */
       validation: (rule) =>
-        rule.custom((value) => slashPathOrEmpty(value, "/commercial")),
+        rule.custom((value, context) => {
+          const href = typeof value === "string" ? value.trim() : "";
+          if (href) return slashPathOrEmpty(href, "/commercial");
+          return hasDropdownItems(context.parent)
+            ? true
+            : "This menu item has nowhere to go. Either fill in this page address to " +
+                "make it a plain link, or add at least one link under “Links in this " +
+                "menu” to make it a dropdown.";
+        }),
     }),
     defineField({
       name: "children",
@@ -157,25 +177,6 @@ const navGroup = defineArrayMember({
       hidden: ({ parent }) => !hasDropdownItems(parent),
     }),
   ],
-  /**
-   * The either/or rule, checked on the whole item because it reads two sibling
-   * fields: a menu item is valid with an address and no dropdown links (plain
-   * link), or with dropdown links and an optional address (dropdown). Only the
-   * item with neither is rejected — it would have nowhere to go.
-   */
-  validation: (rule) =>
-    rule.custom((value) => {
-      const href = typeof (value as { href?: unknown })?.href === "string"
-        ? ((value as { href: string }).href).trim()
-        : "";
-      if (href || hasDropdownItems(value)) return true;
-      return {
-        message:
-          "This menu item has nowhere to go. Either fill in “Page address” to make it a " +
-          "plain link, or add at least one link under “Links in this menu” to make it a dropdown.",
-        paths: [["href"]],
-      };
-    }),
   preview: {
     select: { title: "label", href: "href", children: "children" },
     prepare: ({ title, href, children }) => {
