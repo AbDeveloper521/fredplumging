@@ -179,6 +179,17 @@ export const structure: StructureResolver = (S) =>
             .title("FAQs")
             .defaultOrdering([{ field: "order", direction: "asc" }]),
         ),
+      // "FAQ Sets" (reusable groups of questions a page's Q&A band points
+      // at) vs "FAQs" above (the individual questions the homepage list is
+      // built from) — two different things, deliberately distinct titles.
+      S.listItem()
+        .title("FAQ Sets")
+        .id("faqSets")
+        .child(
+          S.documentTypeList("faqSet")
+            .title("FAQ Sets")
+            .defaultOrdering([{ field: "title", direction: "asc" }]),
+        ),
       S.listItem()
         .title("Testimonials")
         .id("testimonials")

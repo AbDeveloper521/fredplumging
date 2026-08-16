@@ -5,7 +5,7 @@ import {
   type DynamicFetchOptions,
 } from "@/sanity/lib/live";
 import { logFallback } from "@/sanity/lib/fallbackLog";
-import { toLibrarySections } from "@/sanity/lib/sectionLibrary";
+import { FAQ_SET_TAG, toLibrarySections } from "@/sanity/lib/sectionLibrary";
 import { AREAS_INDEX_PAGE_QUERY } from "@/sanity/queries";
 import type { AREAS_INDEX_PAGE_QUERY_RESULT } from "@/sanity.types";
 import { defaultAreasIndexSections } from "@/data/areasIndexPage";
@@ -29,7 +29,7 @@ export async function getAreasIndexPage(
     result = await fetchSanityCached(
       AREAS_INDEX_PAGE_QUERY,
       {},
-      AREAS_INDEX_PAGE_TAG,
+      [AREAS_INDEX_PAGE_TAG, FAQ_SET_TAG],
       options,
     );
   } catch (error) {

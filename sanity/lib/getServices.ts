@@ -5,7 +5,7 @@ import {
   type DynamicFetchOptions,
 } from "@/sanity/lib/live";
 import { resolvePhoto } from "@/sanity/lib/image";
-import { toLibrarySections } from "@/sanity/lib/sectionLibrary";
+import { FAQ_SET_TAG, toLibrarySections } from "@/sanity/lib/sectionLibrary";
 import { logEmpty, logFallback } from "@/sanity/lib/fallbackLog";
 import { SERVICES_QUERY, SERVICE_BY_SLUG_QUERY } from "@/sanity/queries";
 import type {
@@ -93,7 +93,7 @@ export async function getServiceBySlug(
     const result = await fetchSanityCached(
       SERVICE_BY_SLUG_QUERY,
       { slug },
-      SERVICE_TAG,
+      [SERVICE_TAG, FAQ_SET_TAG],
       options,
     );
     return result ? toService(result) : null;

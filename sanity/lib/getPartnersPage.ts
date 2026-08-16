@@ -5,7 +5,7 @@ import {
   type DynamicFetchOptions,
 } from "@/sanity/lib/live";
 import { logFallback } from "@/sanity/lib/fallbackLog";
-import { toLibrarySections } from "@/sanity/lib/sectionLibrary";
+import { FAQ_SET_TAG, toLibrarySections } from "@/sanity/lib/sectionLibrary";
 import { PARTNERS_PAGE_QUERY } from "@/sanity/queries";
 import type { PARTNERS_PAGE_QUERY_RESULT } from "@/sanity.types";
 import { defaultPartnersSections } from "@/data/partnersPage";
@@ -29,7 +29,7 @@ export async function getPartnersPage(
     result = await fetchSanityCached(
       PARTNERS_PAGE_QUERY,
       {},
-      PARTNERS_PAGE_TAG,
+      [PARTNERS_PAGE_TAG, FAQ_SET_TAG],
       options,
     );
   } catch (error) {

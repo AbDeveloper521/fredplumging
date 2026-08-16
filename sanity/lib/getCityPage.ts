@@ -5,7 +5,7 @@ import {
   type DynamicFetchOptions,
 } from "@/sanity/lib/live";
 import { logEmpty, logFallback } from "@/sanity/lib/fallbackLog";
-import { toLibrarySections } from "@/sanity/lib/sectionLibrary";
+import { FAQ_SET_TAG, toLibrarySections } from "@/sanity/lib/sectionLibrary";
 import { CITIES_QUERY, CITY_PAGE_QUERY } from "@/sanity/queries";
 import type {
   CITIES_QUERY_RESULT,
@@ -85,7 +85,7 @@ export async function getCityPage(
     result = await fetchSanityCached(
       CITY_PAGE_QUERY,
       { slug },
-      CITY_PAGE_TAG,
+      [CITY_PAGE_TAG, FAQ_SET_TAG],
       options,
     );
   } catch (error) {

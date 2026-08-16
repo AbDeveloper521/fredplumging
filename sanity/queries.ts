@@ -6,6 +6,10 @@ import { defineQuery } from "next-sanity";
  * library type carries (fields a section doesn't have project as null and
  * the mapper ignores them). Secondary photos carry no "Frame shape"
  * override (their frames are fixed compositions), so no frameRatio there.
+ *
+ * `faqSet->` dereferences the shared Q&A set INSIDE the page query, so a
+ * `faqBand` section arrives with its questions already attached — one round
+ * trip, no second fetch. Pages that carry no such band project it as null.
  */
 const SECTIONS_PROJECTION = `sections[]{
     ...,
@@ -13,7 +17,8 @@ const SECTIONS_PROJECTION = `sections[]{
     photoPrimary{ asset, hotspot, crop, alt, frameRatio },
     photoSecondary{ asset, hotspot, crop, alt },
     primaryPhoto{ asset, hotspot, crop, alt, frameRatio },
-    secondaryPhoto{ asset, hotspot, crop, alt }
+    secondaryPhoto{ asset, hotspot, crop, alt },
+    faqSet->{ heading, intro, items[]{ _key, question, answer } }
   }`;
 
 export const SITE_SETTINGS_QUERY = defineQuery(

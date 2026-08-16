@@ -9,8 +9,10 @@ import { getSectionData } from "@/sanity/lib/getSectionData";
 import { industryHref } from "@/data/industries";
 import { DEFAULT_PAGE_REVIEW_TAGS } from "@/data/googleReviews";
 import type { ServiceFaqSection } from "@/data/serviceSections";
+import { multifamilyFaqBand } from "@/data/faqSets";
 import { CmsDetailPage } from "@/components/layout/CmsDetailPage";
 import { SectionRenderer } from "@/components/sections/SectionRenderer";
+import { FaqBandSection } from "@/components/sections/FaqBandSection";
 import { TestimonialsSection } from "@/components/sections/TestimonialsSection";
 import { AssociationBadgeStrip } from "@/components/sections/AssociationBadgeStrip";
 import {
@@ -123,6 +125,12 @@ export default async function IndustryPage({
           titleId="client-reviews-heading"
           filterTags={DEFAULT_PAGE_REVIEW_TAGS[industry.slug]}
         />
+        {/* The shared multi-family Q&A band, from data/faqSets.ts. It rides
+            here rather than in the `data/industries.ts` fallback because
+            giving those entries a `sections` array would switch this whole
+            branch to the section stack and lose the body/bullets layout. A
+            document that DOES have a stack gets the band from the stack. */}
+        <FaqBandSection section={multifamilyFaqBand()} id="questions" />
         {/* Association/certification badges close the content, matching the
             service pages. */}
         <AssociationBadgeStrip logos={trustLogos} />

@@ -1,4 +1,5 @@
 import { homePageDefaults } from "./homePage";
+import { multifamilyFaqBand } from "./faqSets";
 import type { LibrarySection } from "./sectionLibrary";
 
 /**
@@ -34,4 +35,7 @@ export const defaultMultifamilyIndexSections: LibrarySection[] = [
     _key: "propertyTypes",
     ...homePageDefaults.industries,
   },
+  // The shared multi-family questions close the page — the same set every
+  // /multifamily/[slug] page shows, so it is edited in one place.
+  multifamilyFaqBand(),
 ];

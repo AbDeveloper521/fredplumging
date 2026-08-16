@@ -5,7 +5,7 @@ import {
   type DynamicFetchOptions,
 } from "@/sanity/lib/live";
 import { logFallback } from "@/sanity/lib/fallbackLog";
-import { toLibrarySections } from "@/sanity/lib/sectionLibrary";
+import { FAQ_SET_TAG, toLibrarySections } from "@/sanity/lib/sectionLibrary";
 import { CAREERS_PAGE_QUERY } from "@/sanity/queries";
 import type { CAREERS_PAGE_QUERY_RESULT } from "@/sanity.types";
 import { defaultCareersSections } from "@/data/careersPage";
@@ -29,7 +29,7 @@ export async function getCareersPage(
     result = await fetchSanityCached(
       CAREERS_PAGE_QUERY,
       {},
-      CAREERS_PAGE_TAG,
+      [CAREERS_PAGE_TAG, FAQ_SET_TAG],
       options,
     );
   } catch (error) {

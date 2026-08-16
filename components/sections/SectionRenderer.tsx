@@ -26,6 +26,7 @@ import { ComplianceSection } from "./ComplianceSection";
 import { CaseStudySection } from "./CaseStudySection";
 import { ServiceAreaSection } from "./ServiceAreaSection";
 import { FAQSection } from "./FAQSection";
+import { FaqBandSection } from "./FaqBandSection";
 import { LocationMapSection } from "./LocationMapSection";
 import { FinalCTASection } from "./FinalCTASection";
 import { AboutHeroSection } from "./AboutHeroSection";
@@ -87,6 +88,8 @@ const SECTION_IDS: Record<LibrarySection["_type"], string> = {
   homeCaseStudy: "case-study",
   homeServiceArea: "service-area-map",
   homeFaq: "faq",
+  // Distinct from homeFaq's "faq": the two Q&A bands can sit on one page.
+  faqBand: "questions",
   // Not "location-map": the template-rendered map band on service pages
   // defaults its own titleId to "location-map-heading" — a stack copy of
   // the band must not collide with it.
@@ -346,6 +349,8 @@ export function SectionRenderer({
             return faqs.length > 0 ? (
               <FAQSection key={section._key} faqs={faqs} content={section} titleId={titleId} />
             ) : null;
+          case "faqBand":
+            return <FaqBandSection key={section._key} section={section} id={id} />;
           case "homeLocationMap":
             return (
               <LocationMapSection

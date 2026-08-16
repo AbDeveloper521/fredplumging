@@ -1179,6 +1179,9 @@ export type Industry = {
       } & HomeFaq)
     | ({
         _key: string;
+      } & FaqBand)
+    | ({
+        _key: string;
       } & JobOpenings)
     | ({
         _key: string;
@@ -1362,6 +1365,9 @@ export type Service = {
       } & HomeFaq)
     | ({
         _key: string;
+      } & FaqBand)
+    | ({
+        _key: string;
       } & JobOpenings)
     | ({
         _key: string;
@@ -1457,6 +1463,46 @@ export type Testimonial = {
   verified?: boolean;
   featured?: boolean;
   order?: number;
+};
+
+export type FaqSetReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "faqSet";
+};
+
+export type FaqBand = {
+  _type: "faqBand";
+  source?: "set" | "inline";
+  faqSet?: FaqSetReference;
+  headingOverride?: string;
+  heading?: string;
+  intro?: string;
+  items?: Array<{
+    question?: string;
+    answer?: string;
+    _type: "faqItem";
+    _key: string;
+  }>;
+  hidden?: boolean;
+};
+
+export type FaqSet = {
+  _id: string;
+  _type: "faqSet";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  heading?: string;
+  intro?: string;
+  items?: Array<{
+    question?: string;
+    answer?: string;
+    _type: "faqItem";
+    _key: string;
+  }>;
 };
 
 export type Faq = {
@@ -1668,6 +1714,9 @@ export type CityPage = {
     | ({
         _key: string;
       } & HomeFaq)
+    | ({
+        _key: string;
+      } & FaqBand)
     | ({
         _key: string;
       } & JobOpenings)
@@ -1896,6 +1945,9 @@ export type CommercialPage = {
       } & HomeFaq)
     | ({
         _key: string;
+      } & FaqBand)
+    | ({
+        _key: string;
       } & JobOpenings)
     | ({
         _key: string;
@@ -2045,6 +2097,9 @@ export type MultifamilyIndexPage = {
     | ({
         _key: string;
       } & HomeFaq)
+    | ({
+        _key: string;
+      } & FaqBand)
     | ({
         _key: string;
       } & JobOpenings)
@@ -2198,6 +2253,9 @@ export type AreasIndexPage = {
       } & HomeFaq)
     | ({
         _key: string;
+      } & FaqBand)
+    | ({
+        _key: string;
       } & JobOpenings)
     | ({
         _key: string;
@@ -2347,6 +2405,9 @@ export type ServicesIndexPage = {
     | ({
         _key: string;
       } & HomeFaq)
+    | ({
+        _key: string;
+      } & FaqBand)
     | ({
         _key: string;
       } & JobOpenings)
@@ -2500,6 +2561,9 @@ export type CareersPage = {
       } & HomeFaq)
     | ({
         _key: string;
+      } & FaqBand)
+    | ({
+        _key: string;
       } & JobOpenings)
     | ({
         _key: string;
@@ -2649,6 +2713,9 @@ export type PartnersPage = {
     | ({
         _key: string;
       } & HomeFaq)
+    | ({
+        _key: string;
+      } & FaqBand)
     | ({
         _key: string;
       } & JobOpenings)
@@ -2802,6 +2869,9 @@ export type AboutPage = {
       } & HomeFaq)
     | ({
         _key: string;
+      } & FaqBand)
+    | ({
+        _key: string;
       } & JobOpenings)
     | ({
         _key: string;
@@ -2951,6 +3021,9 @@ export type HomePage = {
     | ({
         _key: string;
       } & HomeFaq)
+    | ({
+        _key: string;
+      } & FaqBand)
     | ({
         _key: string;
       } & JobOpenings)
@@ -3161,6 +3234,9 @@ export type AllSanitySchemaTypes =
   | Industry
   | Service
   | Testimonial
+  | FaqSetReference
+  | FaqBand
+  | FaqSet
   | Faq
   | Navigation
   | ReviewSettings
@@ -3389,7 +3465,7 @@ export type SERVICES_QUERY_RESULT = Array<{
 
 // Source: sanity/queries.ts
 // Variable: SERVICE_BY_SLUG_QUERY
-// Query: *[_type == "service" && slug.current == $slug][0]{    title,    "slug": slug.current,    shortDescription,    icon,    featured,    photo{ asset, hotspot, crop, alt },    body,    sections[]{    ...,    photo{ asset, hotspot, crop, alt, frameRatio },    photoPrimary{ asset, hotspot, crop, alt, frameRatio },    photoSecondary{ asset, hotspot, crop, alt },    primaryPhoto{ asset, hotspot, crop, alt, frameRatio },    secondaryPhoto{ asset, hotspot, crop, alt }  },    seoTitle,    seoDescription  }
+// Query: *[_type == "service" && slug.current == $slug][0]{    title,    "slug": slug.current,    shortDescription,    icon,    featured,    photo{ asset, hotspot, crop, alt },    body,    sections[]{    ...,    photo{ asset, hotspot, crop, alt, frameRatio },    photoPrimary{ asset, hotspot, crop, alt, frameRatio },    photoSecondary{ asset, hotspot, crop, alt },    primaryPhoto{ asset, hotspot, crop, alt, frameRatio },    secondaryPhoto{ asset, hotspot, crop, alt },    faqSet->{ heading, intro, items[]{ _key, question, answer } }  },    seoTitle,    seoDescription  }
 export type SERVICE_BY_SLUG_QUERY_RESULT = {
   title: string | null;
   slug: string | null;
@@ -3466,6 +3542,7 @@ export type SERVICE_BY_SLUG_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -3480,6 +3557,7 @@ export type SERVICE_BY_SLUG_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -3514,6 +3592,7 @@ export type SERVICE_BY_SLUG_QUERY_RESULT = {
         photo: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -3525,6 +3604,7 @@ export type SERVICE_BY_SLUG_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -3538,6 +3618,7 @@ export type SERVICE_BY_SLUG_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -3558,6 +3639,7 @@ export type SERVICE_BY_SLUG_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -3578,6 +3660,7 @@ export type SERVICE_BY_SLUG_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -3603,6 +3686,7 @@ export type SERVICE_BY_SLUG_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -3631,6 +3715,7 @@ export type SERVICE_BY_SLUG_QUERY_RESULT = {
         photo: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -3652,6 +3737,36 @@ export type SERVICE_BY_SLUG_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
+      }
+    | {
+        _key: string;
+        _type: "faqBand";
+        source?: "inline" | "set";
+        faqSet: {
+          heading: string | null;
+          intro: string | null;
+          items: Array<{
+            _key: string;
+            question: string | null;
+            answer: string | null;
+          }> | null;
+        } | null;
+        headingOverride?: string;
+        heading?: string;
+        intro?: string;
+        items?: Array<{
+          question?: string;
+          answer?: string;
+          _type: "faqItem";
+          _key: string;
+        }>;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
       }
     | {
         _key: string;
@@ -3667,6 +3782,7 @@ export type SERVICE_BY_SLUG_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -3684,6 +3800,7 @@ export type SERVICE_BY_SLUG_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -3745,6 +3862,7 @@ export type SERVICE_BY_SLUG_QUERY_RESULT = {
         photo: null;
         photoPrimary: null;
         photoSecondary: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -3800,6 +3918,7 @@ export type SERVICE_BY_SLUG_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -3814,6 +3933,7 @@ export type SERVICE_BY_SLUG_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -3867,6 +3987,7 @@ export type SERVICE_BY_SLUG_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -3879,6 +4000,7 @@ export type SERVICE_BY_SLUG_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -3893,6 +4015,7 @@ export type SERVICE_BY_SLUG_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -3970,6 +4093,7 @@ export type SERVICE_BY_SLUG_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -3997,6 +4121,7 @@ export type SERVICE_BY_SLUG_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -4007,6 +4132,7 @@ export type SERVICE_BY_SLUG_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -4045,6 +4171,7 @@ export type SERVICE_BY_SLUG_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -4059,6 +4186,7 @@ export type SERVICE_BY_SLUG_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -4072,6 +4200,7 @@ export type SERVICE_BY_SLUG_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -4083,6 +4212,7 @@ export type SERVICE_BY_SLUG_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -4094,6 +4224,7 @@ export type SERVICE_BY_SLUG_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -4148,6 +4279,7 @@ export type SERVICE_BY_SLUG_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -4190,6 +4322,7 @@ export type SERVICE_BY_SLUG_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -4202,6 +4335,7 @@ export type SERVICE_BY_SLUG_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -4221,6 +4355,7 @@ export type SERVICE_BY_SLUG_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -4236,6 +4371,7 @@ export type SERVICE_BY_SLUG_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -4249,6 +4385,7 @@ export type SERVICE_BY_SLUG_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -4263,6 +4400,7 @@ export type SERVICE_BY_SLUG_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -4280,6 +4418,7 @@ export type SERVICE_BY_SLUG_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -4322,6 +4461,7 @@ export type SERVICE_BY_SLUG_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -4333,6 +4473,7 @@ export type SERVICE_BY_SLUG_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -4361,6 +4502,7 @@ export type SERVICE_BY_SLUG_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -4388,6 +4530,7 @@ export type SERVICE_BY_SLUG_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -4407,6 +4550,7 @@ export type SERVICE_BY_SLUG_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -4450,6 +4594,7 @@ export type SERVICE_BY_SLUG_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -4462,6 +4607,7 @@ export type SERVICE_BY_SLUG_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -4493,6 +4639,7 @@ export type SERVICE_BY_SLUG_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -4526,6 +4673,7 @@ export type SERVICE_BY_SLUG_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -4536,6 +4684,7 @@ export type SERVICE_BY_SLUG_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -4562,6 +4711,7 @@ export type SERVICE_BY_SLUG_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -4590,6 +4740,7 @@ export type SERVICE_BY_SLUG_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -4622,6 +4773,7 @@ export type SERVICE_BY_SLUG_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
   > | null;
   seoTitle: string | null;
@@ -4675,7 +4827,7 @@ export type INDUSTRIES_QUERY_RESULT = Array<{
 
 // Source: sanity/queries.ts
 // Variable: INDUSTRY_BY_SLUG_QUERY
-// Query: *[_type == "industry" && slug.current == $slug][0]{    title,    "slug": slug.current,    description,    bulletPoints,    photo{ asset, hotspot, crop, alt },    body,    sections[]{    ...,    photo{ asset, hotspot, crop, alt, frameRatio },    photoPrimary{ asset, hotspot, crop, alt, frameRatio },    photoSecondary{ asset, hotspot, crop, alt },    primaryPhoto{ asset, hotspot, crop, alt, frameRatio },    secondaryPhoto{ asset, hotspot, crop, alt }  },    seoTitle,    seoDescription  }
+// Query: *[_type == "industry" && slug.current == $slug][0]{    title,    "slug": slug.current,    description,    bulletPoints,    photo{ asset, hotspot, crop, alt },    body,    sections[]{    ...,    photo{ asset, hotspot, crop, alt, frameRatio },    photoPrimary{ asset, hotspot, crop, alt, frameRatio },    photoSecondary{ asset, hotspot, crop, alt },    primaryPhoto{ asset, hotspot, crop, alt, frameRatio },    secondaryPhoto{ asset, hotspot, crop, alt },    faqSet->{ heading, intro, items[]{ _key, question, answer } }  },    seoTitle,    seoDescription  }
 export type INDUSTRY_BY_SLUG_QUERY_RESULT = {
   title: string | null;
   slug: string | null;
@@ -4741,6 +4893,7 @@ export type INDUSTRY_BY_SLUG_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -4755,6 +4908,7 @@ export type INDUSTRY_BY_SLUG_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -4789,6 +4943,7 @@ export type INDUSTRY_BY_SLUG_QUERY_RESULT = {
         photo: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -4800,6 +4955,7 @@ export type INDUSTRY_BY_SLUG_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -4813,6 +4969,7 @@ export type INDUSTRY_BY_SLUG_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -4833,6 +4990,7 @@ export type INDUSTRY_BY_SLUG_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -4853,6 +5011,7 @@ export type INDUSTRY_BY_SLUG_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -4878,6 +5037,7 @@ export type INDUSTRY_BY_SLUG_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -4906,6 +5066,7 @@ export type INDUSTRY_BY_SLUG_QUERY_RESULT = {
         photo: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -4927,6 +5088,36 @@ export type INDUSTRY_BY_SLUG_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
+      }
+    | {
+        _key: string;
+        _type: "faqBand";
+        source?: "inline" | "set";
+        faqSet: {
+          heading: string | null;
+          intro: string | null;
+          items: Array<{
+            _key: string;
+            question: string | null;
+            answer: string | null;
+          }> | null;
+        } | null;
+        headingOverride?: string;
+        heading?: string;
+        intro?: string;
+        items?: Array<{
+          question?: string;
+          answer?: string;
+          _type: "faqItem";
+          _key: string;
+        }>;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
       }
     | {
         _key: string;
@@ -4942,6 +5133,7 @@ export type INDUSTRY_BY_SLUG_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -4959,6 +5151,7 @@ export type INDUSTRY_BY_SLUG_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -5020,6 +5213,7 @@ export type INDUSTRY_BY_SLUG_QUERY_RESULT = {
         photo: null;
         photoPrimary: null;
         photoSecondary: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -5075,6 +5269,7 @@ export type INDUSTRY_BY_SLUG_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -5089,6 +5284,7 @@ export type INDUSTRY_BY_SLUG_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -5142,6 +5338,7 @@ export type INDUSTRY_BY_SLUG_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -5154,6 +5351,7 @@ export type INDUSTRY_BY_SLUG_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -5168,6 +5366,7 @@ export type INDUSTRY_BY_SLUG_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -5245,6 +5444,7 @@ export type INDUSTRY_BY_SLUG_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -5272,6 +5472,7 @@ export type INDUSTRY_BY_SLUG_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -5282,6 +5483,7 @@ export type INDUSTRY_BY_SLUG_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -5320,6 +5522,7 @@ export type INDUSTRY_BY_SLUG_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -5334,6 +5537,7 @@ export type INDUSTRY_BY_SLUG_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -5347,6 +5551,7 @@ export type INDUSTRY_BY_SLUG_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -5358,6 +5563,7 @@ export type INDUSTRY_BY_SLUG_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -5369,6 +5575,7 @@ export type INDUSTRY_BY_SLUG_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -5423,6 +5630,7 @@ export type INDUSTRY_BY_SLUG_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -5465,6 +5673,7 @@ export type INDUSTRY_BY_SLUG_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -5477,6 +5686,7 @@ export type INDUSTRY_BY_SLUG_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -5496,6 +5706,7 @@ export type INDUSTRY_BY_SLUG_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -5511,6 +5722,7 @@ export type INDUSTRY_BY_SLUG_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -5524,6 +5736,7 @@ export type INDUSTRY_BY_SLUG_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -5538,6 +5751,7 @@ export type INDUSTRY_BY_SLUG_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -5555,6 +5769,7 @@ export type INDUSTRY_BY_SLUG_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -5597,6 +5812,7 @@ export type INDUSTRY_BY_SLUG_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -5608,6 +5824,7 @@ export type INDUSTRY_BY_SLUG_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -5636,6 +5853,7 @@ export type INDUSTRY_BY_SLUG_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -5663,6 +5881,7 @@ export type INDUSTRY_BY_SLUG_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -5682,6 +5901,7 @@ export type INDUSTRY_BY_SLUG_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -5725,6 +5945,7 @@ export type INDUSTRY_BY_SLUG_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -5737,6 +5958,7 @@ export type INDUSTRY_BY_SLUG_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -5768,6 +5990,7 @@ export type INDUSTRY_BY_SLUG_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -5801,6 +6024,7 @@ export type INDUSTRY_BY_SLUG_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -5811,6 +6035,7 @@ export type INDUSTRY_BY_SLUG_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -5837,6 +6062,7 @@ export type INDUSTRY_BY_SLUG_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -5865,6 +6091,7 @@ export type INDUSTRY_BY_SLUG_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -5897,6 +6124,7 @@ export type INDUSTRY_BY_SLUG_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
   > | null;
   seoTitle: string | null;
@@ -5928,7 +6156,7 @@ export type TRUST_LOGOS_QUERY_RESULT = Array<{
 
 // Source: sanity/queries.ts
 // Variable: HOME_PAGE_QUERY
-// Query: *[_type == "homePage" && _id == "homePage"][0]{    sections[]{    ...,    photo{ asset, hotspot, crop, alt, frameRatio },    photoPrimary{ asset, hotspot, crop, alt, frameRatio },    photoSecondary{ asset, hotspot, crop, alt },    primaryPhoto{ asset, hotspot, crop, alt, frameRatio },    secondaryPhoto{ asset, hotspot, crop, alt }  }  }
+// Query: *[_type == "homePage" && _id == "homePage"][0]{    sections[]{    ...,    photo{ asset, hotspot, crop, alt, frameRatio },    photoPrimary{ asset, hotspot, crop, alt, frameRatio },    photoSecondary{ asset, hotspot, crop, alt },    primaryPhoto{ asset, hotspot, crop, alt, frameRatio },    secondaryPhoto{ asset, hotspot, crop, alt },    faqSet->{ heading, intro, items[]{ _key, question, answer } }  }  }
 export type HOME_PAGE_QUERY_RESULT = {
   sections: Array<
     | {
@@ -5957,6 +6185,7 @@ export type HOME_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -5971,6 +6200,7 @@ export type HOME_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -6005,6 +6235,7 @@ export type HOME_PAGE_QUERY_RESULT = {
         photo: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -6016,6 +6247,7 @@ export type HOME_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -6029,6 +6261,7 @@ export type HOME_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -6049,6 +6282,7 @@ export type HOME_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -6069,6 +6303,7 @@ export type HOME_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -6094,6 +6329,7 @@ export type HOME_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -6122,6 +6358,7 @@ export type HOME_PAGE_QUERY_RESULT = {
         photo: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -6143,6 +6380,36 @@ export type HOME_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
+      }
+    | {
+        _key: string;
+        _type: "faqBand";
+        source?: "inline" | "set";
+        faqSet: {
+          heading: string | null;
+          intro: string | null;
+          items: Array<{
+            _key: string;
+            question: string | null;
+            answer: string | null;
+          }> | null;
+        } | null;
+        headingOverride?: string;
+        heading?: string;
+        intro?: string;
+        items?: Array<{
+          question?: string;
+          answer?: string;
+          _type: "faqItem";
+          _key: string;
+        }>;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
       }
     | {
         _key: string;
@@ -6158,6 +6425,7 @@ export type HOME_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -6175,6 +6443,7 @@ export type HOME_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -6236,6 +6505,7 @@ export type HOME_PAGE_QUERY_RESULT = {
         photo: null;
         photoPrimary: null;
         photoSecondary: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -6291,6 +6561,7 @@ export type HOME_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -6305,6 +6576,7 @@ export type HOME_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -6358,6 +6630,7 @@ export type HOME_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -6370,6 +6643,7 @@ export type HOME_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -6384,6 +6658,7 @@ export type HOME_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -6461,6 +6736,7 @@ export type HOME_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -6488,6 +6764,7 @@ export type HOME_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -6498,6 +6775,7 @@ export type HOME_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -6536,6 +6814,7 @@ export type HOME_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -6550,6 +6829,7 @@ export type HOME_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -6563,6 +6843,7 @@ export type HOME_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -6574,6 +6855,7 @@ export type HOME_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -6585,6 +6867,7 @@ export type HOME_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -6639,6 +6922,7 @@ export type HOME_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -6681,6 +6965,7 @@ export type HOME_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -6693,6 +6978,7 @@ export type HOME_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -6712,6 +6998,7 @@ export type HOME_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -6727,6 +7014,7 @@ export type HOME_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -6740,6 +7028,7 @@ export type HOME_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -6754,6 +7043,7 @@ export type HOME_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -6771,6 +7061,7 @@ export type HOME_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -6813,6 +7104,7 @@ export type HOME_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -6824,6 +7116,7 @@ export type HOME_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -6852,6 +7145,7 @@ export type HOME_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -6879,6 +7173,7 @@ export type HOME_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -6898,6 +7193,7 @@ export type HOME_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -6941,6 +7237,7 @@ export type HOME_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -6953,6 +7250,7 @@ export type HOME_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -6984,6 +7282,7 @@ export type HOME_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -7017,6 +7316,7 @@ export type HOME_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -7027,6 +7327,7 @@ export type HOME_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -7053,6 +7354,7 @@ export type HOME_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -7081,6 +7383,7 @@ export type HOME_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -7113,13 +7416,14 @@ export type HOME_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
   > | null;
 } | null;
 
 // Source: sanity/queries.ts
 // Variable: ABOUT_PAGE_QUERY
-// Query: *[_type == "aboutPage" && _id == "aboutPage"][0]{    sections[]{    ...,    photo{ asset, hotspot, crop, alt, frameRatio },    photoPrimary{ asset, hotspot, crop, alt, frameRatio },    photoSecondary{ asset, hotspot, crop, alt },    primaryPhoto{ asset, hotspot, crop, alt, frameRatio },    secondaryPhoto{ asset, hotspot, crop, alt }  }  }
+// Query: *[_type == "aboutPage" && _id == "aboutPage"][0]{    sections[]{    ...,    photo{ asset, hotspot, crop, alt, frameRatio },    photoPrimary{ asset, hotspot, crop, alt, frameRatio },    photoSecondary{ asset, hotspot, crop, alt },    primaryPhoto{ asset, hotspot, crop, alt, frameRatio },    secondaryPhoto{ asset, hotspot, crop, alt },    faqSet->{ heading, intro, items[]{ _key, question, answer } }  }  }
 export type ABOUT_PAGE_QUERY_RESULT = {
   sections: Array<
     | {
@@ -7148,6 +7452,7 @@ export type ABOUT_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -7162,6 +7467,7 @@ export type ABOUT_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -7196,6 +7502,7 @@ export type ABOUT_PAGE_QUERY_RESULT = {
         photo: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -7207,6 +7514,7 @@ export type ABOUT_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -7220,6 +7528,7 @@ export type ABOUT_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -7240,6 +7549,7 @@ export type ABOUT_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -7260,6 +7570,7 @@ export type ABOUT_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -7285,6 +7596,7 @@ export type ABOUT_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -7313,6 +7625,7 @@ export type ABOUT_PAGE_QUERY_RESULT = {
         photo: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -7334,6 +7647,36 @@ export type ABOUT_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
+      }
+    | {
+        _key: string;
+        _type: "faqBand";
+        source?: "inline" | "set";
+        faqSet: {
+          heading: string | null;
+          intro: string | null;
+          items: Array<{
+            _key: string;
+            question: string | null;
+            answer: string | null;
+          }> | null;
+        } | null;
+        headingOverride?: string;
+        heading?: string;
+        intro?: string;
+        items?: Array<{
+          question?: string;
+          answer?: string;
+          _type: "faqItem";
+          _key: string;
+        }>;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
       }
     | {
         _key: string;
@@ -7349,6 +7692,7 @@ export type ABOUT_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -7366,6 +7710,7 @@ export type ABOUT_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -7427,6 +7772,7 @@ export type ABOUT_PAGE_QUERY_RESULT = {
         photo: null;
         photoPrimary: null;
         photoSecondary: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -7482,6 +7828,7 @@ export type ABOUT_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -7496,6 +7843,7 @@ export type ABOUT_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -7549,6 +7897,7 @@ export type ABOUT_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -7561,6 +7910,7 @@ export type ABOUT_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -7575,6 +7925,7 @@ export type ABOUT_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -7652,6 +8003,7 @@ export type ABOUT_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -7679,6 +8031,7 @@ export type ABOUT_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -7689,6 +8042,7 @@ export type ABOUT_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -7727,6 +8081,7 @@ export type ABOUT_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -7741,6 +8096,7 @@ export type ABOUT_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -7754,6 +8110,7 @@ export type ABOUT_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -7765,6 +8122,7 @@ export type ABOUT_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -7776,6 +8134,7 @@ export type ABOUT_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -7830,6 +8189,7 @@ export type ABOUT_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -7872,6 +8232,7 @@ export type ABOUT_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -7884,6 +8245,7 @@ export type ABOUT_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -7903,6 +8265,7 @@ export type ABOUT_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -7918,6 +8281,7 @@ export type ABOUT_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -7931,6 +8295,7 @@ export type ABOUT_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -7945,6 +8310,7 @@ export type ABOUT_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -7962,6 +8328,7 @@ export type ABOUT_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -8004,6 +8371,7 @@ export type ABOUT_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -8015,6 +8383,7 @@ export type ABOUT_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -8043,6 +8412,7 @@ export type ABOUT_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -8070,6 +8440,7 @@ export type ABOUT_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -8089,6 +8460,7 @@ export type ABOUT_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -8132,6 +8504,7 @@ export type ABOUT_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -8144,6 +8517,7 @@ export type ABOUT_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -8175,6 +8549,7 @@ export type ABOUT_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -8208,6 +8583,7 @@ export type ABOUT_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -8218,6 +8594,7 @@ export type ABOUT_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -8244,6 +8621,7 @@ export type ABOUT_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -8272,6 +8650,7 @@ export type ABOUT_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -8304,13 +8683,14 @@ export type ABOUT_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
   > | null;
 } | null;
 
 // Source: sanity/queries.ts
 // Variable: PARTNERS_PAGE_QUERY
-// Query: *[_type == "partnersPage" && _id == "partnersPage"][0]{    sections[]{    ...,    photo{ asset, hotspot, crop, alt, frameRatio },    photoPrimary{ asset, hotspot, crop, alt, frameRatio },    photoSecondary{ asset, hotspot, crop, alt },    primaryPhoto{ asset, hotspot, crop, alt, frameRatio },    secondaryPhoto{ asset, hotspot, crop, alt }  }  }
+// Query: *[_type == "partnersPage" && _id == "partnersPage"][0]{    sections[]{    ...,    photo{ asset, hotspot, crop, alt, frameRatio },    photoPrimary{ asset, hotspot, crop, alt, frameRatio },    photoSecondary{ asset, hotspot, crop, alt },    primaryPhoto{ asset, hotspot, crop, alt, frameRatio },    secondaryPhoto{ asset, hotspot, crop, alt },    faqSet->{ heading, intro, items[]{ _key, question, answer } }  }  }
 export type PARTNERS_PAGE_QUERY_RESULT = {
   sections: Array<
     | {
@@ -8339,6 +8719,7 @@ export type PARTNERS_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -8353,6 +8734,7 @@ export type PARTNERS_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -8387,6 +8769,7 @@ export type PARTNERS_PAGE_QUERY_RESULT = {
         photo: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -8398,6 +8781,7 @@ export type PARTNERS_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -8411,6 +8795,7 @@ export type PARTNERS_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -8431,6 +8816,7 @@ export type PARTNERS_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -8451,6 +8837,7 @@ export type PARTNERS_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -8476,6 +8863,7 @@ export type PARTNERS_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -8504,6 +8892,7 @@ export type PARTNERS_PAGE_QUERY_RESULT = {
         photo: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -8525,6 +8914,36 @@ export type PARTNERS_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
+      }
+    | {
+        _key: string;
+        _type: "faqBand";
+        source?: "inline" | "set";
+        faqSet: {
+          heading: string | null;
+          intro: string | null;
+          items: Array<{
+            _key: string;
+            question: string | null;
+            answer: string | null;
+          }> | null;
+        } | null;
+        headingOverride?: string;
+        heading?: string;
+        intro?: string;
+        items?: Array<{
+          question?: string;
+          answer?: string;
+          _type: "faqItem";
+          _key: string;
+        }>;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
       }
     | {
         _key: string;
@@ -8540,6 +8959,7 @@ export type PARTNERS_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -8557,6 +8977,7 @@ export type PARTNERS_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -8618,6 +9039,7 @@ export type PARTNERS_PAGE_QUERY_RESULT = {
         photo: null;
         photoPrimary: null;
         photoSecondary: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -8673,6 +9095,7 @@ export type PARTNERS_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -8687,6 +9110,7 @@ export type PARTNERS_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -8740,6 +9164,7 @@ export type PARTNERS_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -8752,6 +9177,7 @@ export type PARTNERS_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -8766,6 +9192,7 @@ export type PARTNERS_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -8843,6 +9270,7 @@ export type PARTNERS_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -8870,6 +9298,7 @@ export type PARTNERS_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -8880,6 +9309,7 @@ export type PARTNERS_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -8918,6 +9348,7 @@ export type PARTNERS_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -8932,6 +9363,7 @@ export type PARTNERS_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -8945,6 +9377,7 @@ export type PARTNERS_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -8956,6 +9389,7 @@ export type PARTNERS_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -8967,6 +9401,7 @@ export type PARTNERS_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -9021,6 +9456,7 @@ export type PARTNERS_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -9063,6 +9499,7 @@ export type PARTNERS_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -9075,6 +9512,7 @@ export type PARTNERS_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -9094,6 +9532,7 @@ export type PARTNERS_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -9109,6 +9548,7 @@ export type PARTNERS_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -9122,6 +9562,7 @@ export type PARTNERS_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -9136,6 +9577,7 @@ export type PARTNERS_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -9153,6 +9595,7 @@ export type PARTNERS_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -9195,6 +9638,7 @@ export type PARTNERS_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -9206,6 +9650,7 @@ export type PARTNERS_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -9234,6 +9679,7 @@ export type PARTNERS_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -9261,6 +9707,7 @@ export type PARTNERS_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -9280,6 +9727,7 @@ export type PARTNERS_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -9323,6 +9771,7 @@ export type PARTNERS_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -9335,6 +9784,7 @@ export type PARTNERS_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -9366,6 +9816,7 @@ export type PARTNERS_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -9399,6 +9850,7 @@ export type PARTNERS_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -9409,6 +9861,7 @@ export type PARTNERS_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -9435,6 +9888,7 @@ export type PARTNERS_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -9463,6 +9917,7 @@ export type PARTNERS_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -9495,13 +9950,14 @@ export type PARTNERS_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
   > | null;
 } | null;
 
 // Source: sanity/queries.ts
 // Variable: CAREERS_PAGE_QUERY
-// Query: *[_type == "careersPage" && _id == "careersPage"][0]{    sections[]{    ...,    photo{ asset, hotspot, crop, alt, frameRatio },    photoPrimary{ asset, hotspot, crop, alt, frameRatio },    photoSecondary{ asset, hotspot, crop, alt },    primaryPhoto{ asset, hotspot, crop, alt, frameRatio },    secondaryPhoto{ asset, hotspot, crop, alt }  }  }
+// Query: *[_type == "careersPage" && _id == "careersPage"][0]{    sections[]{    ...,    photo{ asset, hotspot, crop, alt, frameRatio },    photoPrimary{ asset, hotspot, crop, alt, frameRatio },    photoSecondary{ asset, hotspot, crop, alt },    primaryPhoto{ asset, hotspot, crop, alt, frameRatio },    secondaryPhoto{ asset, hotspot, crop, alt },    faqSet->{ heading, intro, items[]{ _key, question, answer } }  }  }
 export type CAREERS_PAGE_QUERY_RESULT = {
   sections: Array<
     | {
@@ -9530,6 +9986,7 @@ export type CAREERS_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -9544,6 +10001,7 @@ export type CAREERS_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -9578,6 +10036,7 @@ export type CAREERS_PAGE_QUERY_RESULT = {
         photo: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -9589,6 +10048,7 @@ export type CAREERS_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -9602,6 +10062,7 @@ export type CAREERS_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -9622,6 +10083,7 @@ export type CAREERS_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -9642,6 +10104,7 @@ export type CAREERS_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -9667,6 +10130,7 @@ export type CAREERS_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -9695,6 +10159,7 @@ export type CAREERS_PAGE_QUERY_RESULT = {
         photo: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -9716,6 +10181,36 @@ export type CAREERS_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
+      }
+    | {
+        _key: string;
+        _type: "faqBand";
+        source?: "inline" | "set";
+        faqSet: {
+          heading: string | null;
+          intro: string | null;
+          items: Array<{
+            _key: string;
+            question: string | null;
+            answer: string | null;
+          }> | null;
+        } | null;
+        headingOverride?: string;
+        heading?: string;
+        intro?: string;
+        items?: Array<{
+          question?: string;
+          answer?: string;
+          _type: "faqItem";
+          _key: string;
+        }>;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
       }
     | {
         _key: string;
@@ -9731,6 +10226,7 @@ export type CAREERS_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -9748,6 +10244,7 @@ export type CAREERS_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -9809,6 +10306,7 @@ export type CAREERS_PAGE_QUERY_RESULT = {
         photo: null;
         photoPrimary: null;
         photoSecondary: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -9864,6 +10362,7 @@ export type CAREERS_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -9878,6 +10377,7 @@ export type CAREERS_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -9931,6 +10431,7 @@ export type CAREERS_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -9943,6 +10444,7 @@ export type CAREERS_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -9957,6 +10459,7 @@ export type CAREERS_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -10034,6 +10537,7 @@ export type CAREERS_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -10061,6 +10565,7 @@ export type CAREERS_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -10071,6 +10576,7 @@ export type CAREERS_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -10109,6 +10615,7 @@ export type CAREERS_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -10123,6 +10630,7 @@ export type CAREERS_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -10136,6 +10644,7 @@ export type CAREERS_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -10147,6 +10656,7 @@ export type CAREERS_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -10158,6 +10668,7 @@ export type CAREERS_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -10212,6 +10723,7 @@ export type CAREERS_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -10254,6 +10766,7 @@ export type CAREERS_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -10266,6 +10779,7 @@ export type CAREERS_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -10285,6 +10799,7 @@ export type CAREERS_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -10300,6 +10815,7 @@ export type CAREERS_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -10313,6 +10829,7 @@ export type CAREERS_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -10327,6 +10844,7 @@ export type CAREERS_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -10344,6 +10862,7 @@ export type CAREERS_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -10386,6 +10905,7 @@ export type CAREERS_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -10397,6 +10917,7 @@ export type CAREERS_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -10425,6 +10946,7 @@ export type CAREERS_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -10452,6 +10974,7 @@ export type CAREERS_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -10471,6 +10994,7 @@ export type CAREERS_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -10514,6 +11038,7 @@ export type CAREERS_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -10526,6 +11051,7 @@ export type CAREERS_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -10557,6 +11083,7 @@ export type CAREERS_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -10590,6 +11117,7 @@ export type CAREERS_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -10600,6 +11128,7 @@ export type CAREERS_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -10626,6 +11155,7 @@ export type CAREERS_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -10654,6 +11184,7 @@ export type CAREERS_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -10686,13 +11217,14 @@ export type CAREERS_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
   > | null;
 } | null;
 
 // Source: sanity/queries.ts
 // Variable: SERVICES_INDEX_PAGE_QUERY
-// Query: *[_type == "servicesIndexPage" && _id == "servicesIndexPage"][0]{    sections[]{    ...,    photo{ asset, hotspot, crop, alt, frameRatio },    photoPrimary{ asset, hotspot, crop, alt, frameRatio },    photoSecondary{ asset, hotspot, crop, alt },    primaryPhoto{ asset, hotspot, crop, alt, frameRatio },    secondaryPhoto{ asset, hotspot, crop, alt }  }  }
+// Query: *[_type == "servicesIndexPage" && _id == "servicesIndexPage"][0]{    sections[]{    ...,    photo{ asset, hotspot, crop, alt, frameRatio },    photoPrimary{ asset, hotspot, crop, alt, frameRatio },    photoSecondary{ asset, hotspot, crop, alt },    primaryPhoto{ asset, hotspot, crop, alt, frameRatio },    secondaryPhoto{ asset, hotspot, crop, alt },    faqSet->{ heading, intro, items[]{ _key, question, answer } }  }  }
 export type SERVICES_INDEX_PAGE_QUERY_RESULT = {
   sections: Array<
     | {
@@ -10721,6 +11253,7 @@ export type SERVICES_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -10735,6 +11268,7 @@ export type SERVICES_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -10769,6 +11303,7 @@ export type SERVICES_INDEX_PAGE_QUERY_RESULT = {
         photo: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -10780,6 +11315,7 @@ export type SERVICES_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -10793,6 +11329,7 @@ export type SERVICES_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -10813,6 +11350,7 @@ export type SERVICES_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -10833,6 +11371,7 @@ export type SERVICES_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -10858,6 +11397,7 @@ export type SERVICES_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -10886,6 +11426,7 @@ export type SERVICES_INDEX_PAGE_QUERY_RESULT = {
         photo: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -10907,6 +11448,36 @@ export type SERVICES_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
+      }
+    | {
+        _key: string;
+        _type: "faqBand";
+        source?: "inline" | "set";
+        faqSet: {
+          heading: string | null;
+          intro: string | null;
+          items: Array<{
+            _key: string;
+            question: string | null;
+            answer: string | null;
+          }> | null;
+        } | null;
+        headingOverride?: string;
+        heading?: string;
+        intro?: string;
+        items?: Array<{
+          question?: string;
+          answer?: string;
+          _type: "faqItem";
+          _key: string;
+        }>;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
       }
     | {
         _key: string;
@@ -10922,6 +11493,7 @@ export type SERVICES_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -10939,6 +11511,7 @@ export type SERVICES_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -11000,6 +11573,7 @@ export type SERVICES_INDEX_PAGE_QUERY_RESULT = {
         photo: null;
         photoPrimary: null;
         photoSecondary: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -11055,6 +11629,7 @@ export type SERVICES_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -11069,6 +11644,7 @@ export type SERVICES_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -11122,6 +11698,7 @@ export type SERVICES_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -11134,6 +11711,7 @@ export type SERVICES_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -11148,6 +11726,7 @@ export type SERVICES_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -11225,6 +11804,7 @@ export type SERVICES_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -11252,6 +11832,7 @@ export type SERVICES_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -11262,6 +11843,7 @@ export type SERVICES_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -11300,6 +11882,7 @@ export type SERVICES_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -11314,6 +11897,7 @@ export type SERVICES_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -11327,6 +11911,7 @@ export type SERVICES_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -11338,6 +11923,7 @@ export type SERVICES_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -11349,6 +11935,7 @@ export type SERVICES_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -11403,6 +11990,7 @@ export type SERVICES_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -11445,6 +12033,7 @@ export type SERVICES_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -11457,6 +12046,7 @@ export type SERVICES_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -11476,6 +12066,7 @@ export type SERVICES_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -11491,6 +12082,7 @@ export type SERVICES_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -11504,6 +12096,7 @@ export type SERVICES_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -11518,6 +12111,7 @@ export type SERVICES_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -11535,6 +12129,7 @@ export type SERVICES_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -11577,6 +12172,7 @@ export type SERVICES_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -11588,6 +12184,7 @@ export type SERVICES_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -11616,6 +12213,7 @@ export type SERVICES_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -11643,6 +12241,7 @@ export type SERVICES_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -11662,6 +12261,7 @@ export type SERVICES_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -11705,6 +12305,7 @@ export type SERVICES_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -11717,6 +12318,7 @@ export type SERVICES_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -11748,6 +12350,7 @@ export type SERVICES_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -11781,6 +12384,7 @@ export type SERVICES_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -11791,6 +12395,7 @@ export type SERVICES_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -11817,6 +12422,7 @@ export type SERVICES_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -11845,6 +12451,7 @@ export type SERVICES_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -11877,13 +12484,14 @@ export type SERVICES_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
   > | null;
 } | null;
 
 // Source: sanity/queries.ts
 // Variable: AREAS_INDEX_PAGE_QUERY
-// Query: *[_type == "areasIndexPage" && _id == "areasIndexPage"][0]{    sections[]{    ...,    photo{ asset, hotspot, crop, alt, frameRatio },    photoPrimary{ asset, hotspot, crop, alt, frameRatio },    photoSecondary{ asset, hotspot, crop, alt },    primaryPhoto{ asset, hotspot, crop, alt, frameRatio },    secondaryPhoto{ asset, hotspot, crop, alt }  }  }
+// Query: *[_type == "areasIndexPage" && _id == "areasIndexPage"][0]{    sections[]{    ...,    photo{ asset, hotspot, crop, alt, frameRatio },    photoPrimary{ asset, hotspot, crop, alt, frameRatio },    photoSecondary{ asset, hotspot, crop, alt },    primaryPhoto{ asset, hotspot, crop, alt, frameRatio },    secondaryPhoto{ asset, hotspot, crop, alt },    faqSet->{ heading, intro, items[]{ _key, question, answer } }  }  }
 export type AREAS_INDEX_PAGE_QUERY_RESULT = {
   sections: Array<
     | {
@@ -11912,6 +12520,7 @@ export type AREAS_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -11926,6 +12535,7 @@ export type AREAS_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -11960,6 +12570,7 @@ export type AREAS_INDEX_PAGE_QUERY_RESULT = {
         photo: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -11971,6 +12582,7 @@ export type AREAS_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -11984,6 +12596,7 @@ export type AREAS_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -12004,6 +12617,7 @@ export type AREAS_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -12024,6 +12638,7 @@ export type AREAS_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -12049,6 +12664,7 @@ export type AREAS_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -12077,6 +12693,7 @@ export type AREAS_INDEX_PAGE_QUERY_RESULT = {
         photo: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -12098,6 +12715,36 @@ export type AREAS_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
+      }
+    | {
+        _key: string;
+        _type: "faqBand";
+        source?: "inline" | "set";
+        faqSet: {
+          heading: string | null;
+          intro: string | null;
+          items: Array<{
+            _key: string;
+            question: string | null;
+            answer: string | null;
+          }> | null;
+        } | null;
+        headingOverride?: string;
+        heading?: string;
+        intro?: string;
+        items?: Array<{
+          question?: string;
+          answer?: string;
+          _type: "faqItem";
+          _key: string;
+        }>;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
       }
     | {
         _key: string;
@@ -12113,6 +12760,7 @@ export type AREAS_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -12130,6 +12778,7 @@ export type AREAS_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -12191,6 +12840,7 @@ export type AREAS_INDEX_PAGE_QUERY_RESULT = {
         photo: null;
         photoPrimary: null;
         photoSecondary: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -12246,6 +12896,7 @@ export type AREAS_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -12260,6 +12911,7 @@ export type AREAS_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -12313,6 +12965,7 @@ export type AREAS_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -12325,6 +12978,7 @@ export type AREAS_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -12339,6 +12993,7 @@ export type AREAS_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -12416,6 +13071,7 @@ export type AREAS_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -12443,6 +13099,7 @@ export type AREAS_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -12453,6 +13110,7 @@ export type AREAS_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -12491,6 +13149,7 @@ export type AREAS_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -12505,6 +13164,7 @@ export type AREAS_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -12518,6 +13178,7 @@ export type AREAS_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -12529,6 +13190,7 @@ export type AREAS_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -12540,6 +13202,7 @@ export type AREAS_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -12594,6 +13257,7 @@ export type AREAS_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -12636,6 +13300,7 @@ export type AREAS_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -12648,6 +13313,7 @@ export type AREAS_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -12667,6 +13333,7 @@ export type AREAS_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -12682,6 +13349,7 @@ export type AREAS_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -12695,6 +13363,7 @@ export type AREAS_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -12709,6 +13378,7 @@ export type AREAS_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -12726,6 +13396,7 @@ export type AREAS_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -12768,6 +13439,7 @@ export type AREAS_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -12779,6 +13451,7 @@ export type AREAS_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -12807,6 +13480,7 @@ export type AREAS_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -12834,6 +13508,7 @@ export type AREAS_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -12853,6 +13528,7 @@ export type AREAS_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -12896,6 +13572,7 @@ export type AREAS_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -12908,6 +13585,7 @@ export type AREAS_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -12939,6 +13617,7 @@ export type AREAS_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -12972,6 +13651,7 @@ export type AREAS_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -12982,6 +13662,7 @@ export type AREAS_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -13008,6 +13689,7 @@ export type AREAS_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -13036,6 +13718,7 @@ export type AREAS_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -13068,13 +13751,14 @@ export type AREAS_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
   > | null;
 } | null;
 
 // Source: sanity/queries.ts
 // Variable: MULTIFAMILY_INDEX_PAGE_QUERY
-// Query: *[_type == "multifamilyIndexPage" && _id == "multifamilyIndexPage"][0]{    sections[]{    ...,    photo{ asset, hotspot, crop, alt, frameRatio },    photoPrimary{ asset, hotspot, crop, alt, frameRatio },    photoSecondary{ asset, hotspot, crop, alt },    primaryPhoto{ asset, hotspot, crop, alt, frameRatio },    secondaryPhoto{ asset, hotspot, crop, alt }  }  }
+// Query: *[_type == "multifamilyIndexPage" && _id == "multifamilyIndexPage"][0]{    sections[]{    ...,    photo{ asset, hotspot, crop, alt, frameRatio },    photoPrimary{ asset, hotspot, crop, alt, frameRatio },    photoSecondary{ asset, hotspot, crop, alt },    primaryPhoto{ asset, hotspot, crop, alt, frameRatio },    secondaryPhoto{ asset, hotspot, crop, alt },    faqSet->{ heading, intro, items[]{ _key, question, answer } }  }  }
 export type MULTIFAMILY_INDEX_PAGE_QUERY_RESULT = {
   sections: Array<
     | {
@@ -13103,6 +13787,7 @@ export type MULTIFAMILY_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -13117,6 +13802,7 @@ export type MULTIFAMILY_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -13151,6 +13837,7 @@ export type MULTIFAMILY_INDEX_PAGE_QUERY_RESULT = {
         photo: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -13162,6 +13849,7 @@ export type MULTIFAMILY_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -13175,6 +13863,7 @@ export type MULTIFAMILY_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -13195,6 +13884,7 @@ export type MULTIFAMILY_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -13215,6 +13905,7 @@ export type MULTIFAMILY_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -13240,6 +13931,7 @@ export type MULTIFAMILY_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -13268,6 +13960,7 @@ export type MULTIFAMILY_INDEX_PAGE_QUERY_RESULT = {
         photo: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -13289,6 +13982,36 @@ export type MULTIFAMILY_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
+      }
+    | {
+        _key: string;
+        _type: "faqBand";
+        source?: "inline" | "set";
+        faqSet: {
+          heading: string | null;
+          intro: string | null;
+          items: Array<{
+            _key: string;
+            question: string | null;
+            answer: string | null;
+          }> | null;
+        } | null;
+        headingOverride?: string;
+        heading?: string;
+        intro?: string;
+        items?: Array<{
+          question?: string;
+          answer?: string;
+          _type: "faqItem";
+          _key: string;
+        }>;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
       }
     | {
         _key: string;
@@ -13304,6 +14027,7 @@ export type MULTIFAMILY_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -13321,6 +14045,7 @@ export type MULTIFAMILY_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -13382,6 +14107,7 @@ export type MULTIFAMILY_INDEX_PAGE_QUERY_RESULT = {
         photo: null;
         photoPrimary: null;
         photoSecondary: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -13437,6 +14163,7 @@ export type MULTIFAMILY_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -13451,6 +14178,7 @@ export type MULTIFAMILY_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -13504,6 +14232,7 @@ export type MULTIFAMILY_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -13516,6 +14245,7 @@ export type MULTIFAMILY_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -13530,6 +14260,7 @@ export type MULTIFAMILY_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -13607,6 +14338,7 @@ export type MULTIFAMILY_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -13634,6 +14366,7 @@ export type MULTIFAMILY_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -13644,6 +14377,7 @@ export type MULTIFAMILY_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -13682,6 +14416,7 @@ export type MULTIFAMILY_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -13696,6 +14431,7 @@ export type MULTIFAMILY_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -13709,6 +14445,7 @@ export type MULTIFAMILY_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -13720,6 +14457,7 @@ export type MULTIFAMILY_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -13731,6 +14469,7 @@ export type MULTIFAMILY_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -13785,6 +14524,7 @@ export type MULTIFAMILY_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -13827,6 +14567,7 @@ export type MULTIFAMILY_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -13839,6 +14580,7 @@ export type MULTIFAMILY_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -13858,6 +14600,7 @@ export type MULTIFAMILY_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -13873,6 +14616,7 @@ export type MULTIFAMILY_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -13886,6 +14630,7 @@ export type MULTIFAMILY_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -13900,6 +14645,7 @@ export type MULTIFAMILY_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -13917,6 +14663,7 @@ export type MULTIFAMILY_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -13959,6 +14706,7 @@ export type MULTIFAMILY_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -13970,6 +14718,7 @@ export type MULTIFAMILY_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -13998,6 +14747,7 @@ export type MULTIFAMILY_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -14025,6 +14775,7 @@ export type MULTIFAMILY_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -14044,6 +14795,7 @@ export type MULTIFAMILY_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -14087,6 +14839,7 @@ export type MULTIFAMILY_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -14099,6 +14852,7 @@ export type MULTIFAMILY_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -14130,6 +14884,7 @@ export type MULTIFAMILY_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -14163,6 +14918,7 @@ export type MULTIFAMILY_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -14173,6 +14929,7 @@ export type MULTIFAMILY_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -14199,6 +14956,7 @@ export type MULTIFAMILY_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -14227,6 +14985,7 @@ export type MULTIFAMILY_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -14259,13 +15018,14 @@ export type MULTIFAMILY_INDEX_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
   > | null;
 } | null;
 
 // Source: sanity/queries.ts
 // Variable: COMMERCIAL_PAGE_QUERY
-// Query: *[_type == "commercialPage" && _id == "commercialPage"][0]{    sections[]{    ...,    photo{ asset, hotspot, crop, alt, frameRatio },    photoPrimary{ asset, hotspot, crop, alt, frameRatio },    photoSecondary{ asset, hotspot, crop, alt },    primaryPhoto{ asset, hotspot, crop, alt, frameRatio },    secondaryPhoto{ asset, hotspot, crop, alt }  }  }
+// Query: *[_type == "commercialPage" && _id == "commercialPage"][0]{    sections[]{    ...,    photo{ asset, hotspot, crop, alt, frameRatio },    photoPrimary{ asset, hotspot, crop, alt, frameRatio },    photoSecondary{ asset, hotspot, crop, alt },    primaryPhoto{ asset, hotspot, crop, alt, frameRatio },    secondaryPhoto{ asset, hotspot, crop, alt },    faqSet->{ heading, intro, items[]{ _key, question, answer } }  }  }
 export type COMMERCIAL_PAGE_QUERY_RESULT = {
   sections: Array<
     | {
@@ -14294,6 +15054,7 @@ export type COMMERCIAL_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -14308,6 +15069,7 @@ export type COMMERCIAL_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -14342,6 +15104,7 @@ export type COMMERCIAL_PAGE_QUERY_RESULT = {
         photo: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -14353,6 +15116,7 @@ export type COMMERCIAL_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -14366,6 +15130,7 @@ export type COMMERCIAL_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -14386,6 +15151,7 @@ export type COMMERCIAL_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -14406,6 +15172,7 @@ export type COMMERCIAL_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -14431,6 +15198,7 @@ export type COMMERCIAL_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -14459,6 +15227,7 @@ export type COMMERCIAL_PAGE_QUERY_RESULT = {
         photo: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -14480,6 +15249,36 @@ export type COMMERCIAL_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
+      }
+    | {
+        _key: string;
+        _type: "faqBand";
+        source?: "inline" | "set";
+        faqSet: {
+          heading: string | null;
+          intro: string | null;
+          items: Array<{
+            _key: string;
+            question: string | null;
+            answer: string | null;
+          }> | null;
+        } | null;
+        headingOverride?: string;
+        heading?: string;
+        intro?: string;
+        items?: Array<{
+          question?: string;
+          answer?: string;
+          _type: "faqItem";
+          _key: string;
+        }>;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
       }
     | {
         _key: string;
@@ -14495,6 +15294,7 @@ export type COMMERCIAL_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -14512,6 +15312,7 @@ export type COMMERCIAL_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -14573,6 +15374,7 @@ export type COMMERCIAL_PAGE_QUERY_RESULT = {
         photo: null;
         photoPrimary: null;
         photoSecondary: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -14628,6 +15430,7 @@ export type COMMERCIAL_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -14642,6 +15445,7 @@ export type COMMERCIAL_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -14695,6 +15499,7 @@ export type COMMERCIAL_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -14707,6 +15512,7 @@ export type COMMERCIAL_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -14721,6 +15527,7 @@ export type COMMERCIAL_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -14798,6 +15605,7 @@ export type COMMERCIAL_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -14825,6 +15633,7 @@ export type COMMERCIAL_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -14835,6 +15644,7 @@ export type COMMERCIAL_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -14873,6 +15683,7 @@ export type COMMERCIAL_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -14887,6 +15698,7 @@ export type COMMERCIAL_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -14900,6 +15712,7 @@ export type COMMERCIAL_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -14911,6 +15724,7 @@ export type COMMERCIAL_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -14922,6 +15736,7 @@ export type COMMERCIAL_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -14976,6 +15791,7 @@ export type COMMERCIAL_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -15018,6 +15834,7 @@ export type COMMERCIAL_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -15030,6 +15847,7 @@ export type COMMERCIAL_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -15049,6 +15867,7 @@ export type COMMERCIAL_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -15064,6 +15883,7 @@ export type COMMERCIAL_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -15077,6 +15897,7 @@ export type COMMERCIAL_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -15091,6 +15912,7 @@ export type COMMERCIAL_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -15108,6 +15930,7 @@ export type COMMERCIAL_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -15150,6 +15973,7 @@ export type COMMERCIAL_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -15161,6 +15985,7 @@ export type COMMERCIAL_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -15189,6 +16014,7 @@ export type COMMERCIAL_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -15216,6 +16042,7 @@ export type COMMERCIAL_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -15235,6 +16062,7 @@ export type COMMERCIAL_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -15278,6 +16106,7 @@ export type COMMERCIAL_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -15290,6 +16119,7 @@ export type COMMERCIAL_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -15321,6 +16151,7 @@ export type COMMERCIAL_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -15354,6 +16185,7 @@ export type COMMERCIAL_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -15364,6 +16196,7 @@ export type COMMERCIAL_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -15390,6 +16223,7 @@ export type COMMERCIAL_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -15418,6 +16252,7 @@ export type COMMERCIAL_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -15450,6 +16285,7 @@ export type COMMERCIAL_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
   > | null;
 } | null;
@@ -15527,7 +16363,7 @@ export type CITIES_QUERY_RESULT = Array<{
 
 // Source: sanity/queries.ts
 // Variable: CITY_PAGE_QUERY
-// Query: *[_type == "cityPage" && slug.current == $slug][0]{    city,    "slug": slug.current,    sections[]{    ...,    photo{ asset, hotspot, crop, alt, frameRatio },    photoPrimary{ asset, hotspot, crop, alt, frameRatio },    photoSecondary{ asset, hotspot, crop, alt },    primaryPhoto{ asset, hotspot, crop, alt, frameRatio },    secondaryPhoto{ asset, hotspot, crop, alt }  },    seoTitle,    seoDescription  }
+// Query: *[_type == "cityPage" && slug.current == $slug][0]{    city,    "slug": slug.current,    sections[]{    ...,    photo{ asset, hotspot, crop, alt, frameRatio },    photoPrimary{ asset, hotspot, crop, alt, frameRatio },    photoSecondary{ asset, hotspot, crop, alt },    primaryPhoto{ asset, hotspot, crop, alt, frameRatio },    secondaryPhoto{ asset, hotspot, crop, alt },    faqSet->{ heading, intro, items[]{ _key, question, answer } }  },    seoTitle,    seoDescription  }
 export type CITY_PAGE_QUERY_RESULT = {
   city: string | null;
   slug: string | null;
@@ -15558,6 +16394,7 @@ export type CITY_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -15572,6 +16409,7 @@ export type CITY_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -15606,6 +16444,7 @@ export type CITY_PAGE_QUERY_RESULT = {
         photo: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -15617,6 +16456,7 @@ export type CITY_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -15630,6 +16470,7 @@ export type CITY_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -15650,6 +16491,7 @@ export type CITY_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -15670,6 +16512,7 @@ export type CITY_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -15695,6 +16538,7 @@ export type CITY_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -15723,6 +16567,7 @@ export type CITY_PAGE_QUERY_RESULT = {
         photo: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -15744,6 +16589,36 @@ export type CITY_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
+      }
+    | {
+        _key: string;
+        _type: "faqBand";
+        source?: "inline" | "set";
+        faqSet: {
+          heading: string | null;
+          intro: string | null;
+          items: Array<{
+            _key: string;
+            question: string | null;
+            answer: string | null;
+          }> | null;
+        } | null;
+        headingOverride?: string;
+        heading?: string;
+        intro?: string;
+        items?: Array<{
+          question?: string;
+          answer?: string;
+          _type: "faqItem";
+          _key: string;
+        }>;
+        hidden?: boolean;
+        photo: null;
+        photoPrimary: null;
+        photoSecondary: null;
+        primaryPhoto: null;
+        secondaryPhoto: null;
       }
     | {
         _key: string;
@@ -15759,6 +16634,7 @@ export type CITY_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -15776,6 +16652,7 @@ export type CITY_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -15837,6 +16714,7 @@ export type CITY_PAGE_QUERY_RESULT = {
         photo: null;
         photoPrimary: null;
         photoSecondary: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -15892,6 +16770,7 @@ export type CITY_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -15906,6 +16785,7 @@ export type CITY_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -15959,6 +16839,7 @@ export type CITY_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -15971,6 +16852,7 @@ export type CITY_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -15985,6 +16867,7 @@ export type CITY_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -16062,6 +16945,7 @@ export type CITY_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -16089,6 +16973,7 @@ export type CITY_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -16099,6 +16984,7 @@ export type CITY_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -16137,6 +17023,7 @@ export type CITY_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -16151,6 +17038,7 @@ export type CITY_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -16164,6 +17052,7 @@ export type CITY_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -16175,6 +17064,7 @@ export type CITY_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -16186,6 +17076,7 @@ export type CITY_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -16240,6 +17131,7 @@ export type CITY_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -16282,6 +17174,7 @@ export type CITY_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -16294,6 +17187,7 @@ export type CITY_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -16313,6 +17207,7 @@ export type CITY_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -16328,6 +17223,7 @@ export type CITY_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -16341,6 +17237,7 @@ export type CITY_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -16355,6 +17252,7 @@ export type CITY_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -16372,6 +17270,7 @@ export type CITY_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -16414,6 +17313,7 @@ export type CITY_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -16425,6 +17325,7 @@ export type CITY_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -16453,6 +17354,7 @@ export type CITY_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -16480,6 +17382,7 @@ export type CITY_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -16499,6 +17402,7 @@ export type CITY_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -16542,6 +17446,7 @@ export type CITY_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -16554,6 +17459,7 @@ export type CITY_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -16585,6 +17491,7 @@ export type CITY_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -16618,6 +17525,7 @@ export type CITY_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -16628,6 +17536,7 @@ export type CITY_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -16654,6 +17563,7 @@ export type CITY_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -16682,6 +17592,7 @@ export type CITY_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
     | {
         _key: string;
@@ -16714,6 +17625,7 @@ export type CITY_PAGE_QUERY_RESULT = {
         photoSecondary: null;
         primaryPhoto: null;
         secondaryPhoto: null;
+        faqSet: null;
       }
   > | null;
   seoTitle: string | null;
@@ -16752,22 +17664,22 @@ declare module "@sanity/client" {
     '*[_type == "testimonial"] | order(order asc){\n    "id": _id, name, role, rating, quote, date, featured,\n    source, reviewerMeta, sourceUrl, serviceTags, verified,\n    ownerReply, ownerReplyDate\n  }': TESTIMONIALS_QUERY_RESULT;
     '*[_type == "reviewSettings" && _id == "reviewSettings"][0]{\n    rating,\n    reviewCount,\n    verifiedOn,\n    reviewsUrl,\n    writeReviewUrl,\n    headline\n  }': REVIEW_SETTINGS_QUERY_RESULT;
     '*[_type == "service"] | order(order asc){\n    title,\n    "slug": slug.current,\n    shortDescription,\n    icon,\n    featured,\n    photo{ asset, hotspot, crop, alt },\n    body,\n    seoTitle,\n    seoDescription\n  }': SERVICES_QUERY_RESULT;
-    '*[_type == "service" && slug.current == $slug][0]{\n    title,\n    "slug": slug.current,\n    shortDescription,\n    icon,\n    featured,\n    photo{ asset, hotspot, crop, alt },\n    body,\n    sections[]{\n    ...,\n    photo{ asset, hotspot, crop, alt, frameRatio },\n    photoPrimary{ asset, hotspot, crop, alt, frameRatio },\n    photoSecondary{ asset, hotspot, crop, alt },\n    primaryPhoto{ asset, hotspot, crop, alt, frameRatio },\n    secondaryPhoto{ asset, hotspot, crop, alt }\n  },\n    seoTitle,\n    seoDescription\n  }': SERVICE_BY_SLUG_QUERY_RESULT;
+    '*[_type == "service" && slug.current == $slug][0]{\n    title,\n    "slug": slug.current,\n    shortDescription,\n    icon,\n    featured,\n    photo{ asset, hotspot, crop, alt },\n    body,\n    sections[]{\n    ...,\n    photo{ asset, hotspot, crop, alt, frameRatio },\n    photoPrimary{ asset, hotspot, crop, alt, frameRatio },\n    photoSecondary{ asset, hotspot, crop, alt },\n    primaryPhoto{ asset, hotspot, crop, alt, frameRatio },\n    secondaryPhoto{ asset, hotspot, crop, alt },\n    faqSet->{ heading, intro, items[]{ _key, question, answer } }\n  },\n    seoTitle,\n    seoDescription\n  }': SERVICE_BY_SLUG_QUERY_RESULT;
     '*[_type == "industry"] | order(order asc){\n    title,\n    "slug": slug.current,\n    description,\n    bulletPoints,\n    photo{ asset, hotspot, crop, alt },\n    body,\n    seoTitle,\n    seoDescription\n  }': INDUSTRIES_QUERY_RESULT;
-    '*[_type == "industry" && slug.current == $slug][0]{\n    title,\n    "slug": slug.current,\n    description,\n    bulletPoints,\n    photo{ asset, hotspot, crop, alt },\n    body,\n    sections[]{\n    ...,\n    photo{ asset, hotspot, crop, alt, frameRatio },\n    photoPrimary{ asset, hotspot, crop, alt, frameRatio },\n    photoSecondary{ asset, hotspot, crop, alt },\n    primaryPhoto{ asset, hotspot, crop, alt, frameRatio },\n    secondaryPhoto{ asset, hotspot, crop, alt }\n  },\n    seoTitle,\n    seoDescription\n  }': INDUSTRY_BY_SLUG_QUERY_RESULT;
+    '*[_type == "industry" && slug.current == $slug][0]{\n    title,\n    "slug": slug.current,\n    description,\n    bulletPoints,\n    photo{ asset, hotspot, crop, alt },\n    body,\n    sections[]{\n    ...,\n    photo{ asset, hotspot, crop, alt, frameRatio },\n    photoPrimary{ asset, hotspot, crop, alt, frameRatio },\n    photoSecondary{ asset, hotspot, crop, alt },\n    primaryPhoto{ asset, hotspot, crop, alt, frameRatio },\n    secondaryPhoto{ asset, hotspot, crop, alt },\n    faqSet->{ heading, intro, items[]{ _key, question, answer } }\n  },\n    seoTitle,\n    seoDescription\n  }': INDUSTRY_BY_SLUG_QUERY_RESULT;
     '*[_type == "trustLogo"] | order(order asc){\n    name,\n    logo{ asset, hotspot, crop, alt },\n    headline,\n    blurb,\n    category,\n    url,\n    verified\n  }': TRUST_LOGOS_QUERY_RESULT;
-    '*[_type == "homePage" && _id == "homePage"][0]{\n    sections[]{\n    ...,\n    photo{ asset, hotspot, crop, alt, frameRatio },\n    photoPrimary{ asset, hotspot, crop, alt, frameRatio },\n    photoSecondary{ asset, hotspot, crop, alt },\n    primaryPhoto{ asset, hotspot, crop, alt, frameRatio },\n    secondaryPhoto{ asset, hotspot, crop, alt }\n  }\n  }': HOME_PAGE_QUERY_RESULT;
-    '*[_type == "aboutPage" && _id == "aboutPage"][0]{\n    sections[]{\n    ...,\n    photo{ asset, hotspot, crop, alt, frameRatio },\n    photoPrimary{ asset, hotspot, crop, alt, frameRatio },\n    photoSecondary{ asset, hotspot, crop, alt },\n    primaryPhoto{ asset, hotspot, crop, alt, frameRatio },\n    secondaryPhoto{ asset, hotspot, crop, alt }\n  }\n  }': ABOUT_PAGE_QUERY_RESULT;
-    '*[_type == "partnersPage" && _id == "partnersPage"][0]{\n    sections[]{\n    ...,\n    photo{ asset, hotspot, crop, alt, frameRatio },\n    photoPrimary{ asset, hotspot, crop, alt, frameRatio },\n    photoSecondary{ asset, hotspot, crop, alt },\n    primaryPhoto{ asset, hotspot, crop, alt, frameRatio },\n    secondaryPhoto{ asset, hotspot, crop, alt }\n  }\n  }': PARTNERS_PAGE_QUERY_RESULT;
-    '*[_type == "careersPage" && _id == "careersPage"][0]{\n    sections[]{\n    ...,\n    photo{ asset, hotspot, crop, alt, frameRatio },\n    photoPrimary{ asset, hotspot, crop, alt, frameRatio },\n    photoSecondary{ asset, hotspot, crop, alt },\n    primaryPhoto{ asset, hotspot, crop, alt, frameRatio },\n    secondaryPhoto{ asset, hotspot, crop, alt }\n  }\n  }': CAREERS_PAGE_QUERY_RESULT;
-    '*[_type == "servicesIndexPage" && _id == "servicesIndexPage"][0]{\n    sections[]{\n    ...,\n    photo{ asset, hotspot, crop, alt, frameRatio },\n    photoPrimary{ asset, hotspot, crop, alt, frameRatio },\n    photoSecondary{ asset, hotspot, crop, alt },\n    primaryPhoto{ asset, hotspot, crop, alt, frameRatio },\n    secondaryPhoto{ asset, hotspot, crop, alt }\n  }\n  }': SERVICES_INDEX_PAGE_QUERY_RESULT;
-    '*[_type == "areasIndexPage" && _id == "areasIndexPage"][0]{\n    sections[]{\n    ...,\n    photo{ asset, hotspot, crop, alt, frameRatio },\n    photoPrimary{ asset, hotspot, crop, alt, frameRatio },\n    photoSecondary{ asset, hotspot, crop, alt },\n    primaryPhoto{ asset, hotspot, crop, alt, frameRatio },\n    secondaryPhoto{ asset, hotspot, crop, alt }\n  }\n  }': AREAS_INDEX_PAGE_QUERY_RESULT;
-    '*[_type == "multifamilyIndexPage" && _id == "multifamilyIndexPage"][0]{\n    sections[]{\n    ...,\n    photo{ asset, hotspot, crop, alt, frameRatio },\n    photoPrimary{ asset, hotspot, crop, alt, frameRatio },\n    photoSecondary{ asset, hotspot, crop, alt },\n    primaryPhoto{ asset, hotspot, crop, alt, frameRatio },\n    secondaryPhoto{ asset, hotspot, crop, alt }\n  }\n  }': MULTIFAMILY_INDEX_PAGE_QUERY_RESULT;
-    '*[_type == "commercialPage" && _id == "commercialPage"][0]{\n    sections[]{\n    ...,\n    photo{ asset, hotspot, crop, alt, frameRatio },\n    photoPrimary{ asset, hotspot, crop, alt, frameRatio },\n    photoSecondary{ asset, hotspot, crop, alt },\n    primaryPhoto{ asset, hotspot, crop, alt, frameRatio },\n    secondaryPhoto{ asset, hotspot, crop, alt }\n  }\n  }': COMMERCIAL_PAGE_QUERY_RESULT;
+    '*[_type == "homePage" && _id == "homePage"][0]{\n    sections[]{\n    ...,\n    photo{ asset, hotspot, crop, alt, frameRatio },\n    photoPrimary{ asset, hotspot, crop, alt, frameRatio },\n    photoSecondary{ asset, hotspot, crop, alt },\n    primaryPhoto{ asset, hotspot, crop, alt, frameRatio },\n    secondaryPhoto{ asset, hotspot, crop, alt },\n    faqSet->{ heading, intro, items[]{ _key, question, answer } }\n  }\n  }': HOME_PAGE_QUERY_RESULT;
+    '*[_type == "aboutPage" && _id == "aboutPage"][0]{\n    sections[]{\n    ...,\n    photo{ asset, hotspot, crop, alt, frameRatio },\n    photoPrimary{ asset, hotspot, crop, alt, frameRatio },\n    photoSecondary{ asset, hotspot, crop, alt },\n    primaryPhoto{ asset, hotspot, crop, alt, frameRatio },\n    secondaryPhoto{ asset, hotspot, crop, alt },\n    faqSet->{ heading, intro, items[]{ _key, question, answer } }\n  }\n  }': ABOUT_PAGE_QUERY_RESULT;
+    '*[_type == "partnersPage" && _id == "partnersPage"][0]{\n    sections[]{\n    ...,\n    photo{ asset, hotspot, crop, alt, frameRatio },\n    photoPrimary{ asset, hotspot, crop, alt, frameRatio },\n    photoSecondary{ asset, hotspot, crop, alt },\n    primaryPhoto{ asset, hotspot, crop, alt, frameRatio },\n    secondaryPhoto{ asset, hotspot, crop, alt },\n    faqSet->{ heading, intro, items[]{ _key, question, answer } }\n  }\n  }': PARTNERS_PAGE_QUERY_RESULT;
+    '*[_type == "careersPage" && _id == "careersPage"][0]{\n    sections[]{\n    ...,\n    photo{ asset, hotspot, crop, alt, frameRatio },\n    photoPrimary{ asset, hotspot, crop, alt, frameRatio },\n    photoSecondary{ asset, hotspot, crop, alt },\n    primaryPhoto{ asset, hotspot, crop, alt, frameRatio },\n    secondaryPhoto{ asset, hotspot, crop, alt },\n    faqSet->{ heading, intro, items[]{ _key, question, answer } }\n  }\n  }': CAREERS_PAGE_QUERY_RESULT;
+    '*[_type == "servicesIndexPage" && _id == "servicesIndexPage"][0]{\n    sections[]{\n    ...,\n    photo{ asset, hotspot, crop, alt, frameRatio },\n    photoPrimary{ asset, hotspot, crop, alt, frameRatio },\n    photoSecondary{ asset, hotspot, crop, alt },\n    primaryPhoto{ asset, hotspot, crop, alt, frameRatio },\n    secondaryPhoto{ asset, hotspot, crop, alt },\n    faqSet->{ heading, intro, items[]{ _key, question, answer } }\n  }\n  }': SERVICES_INDEX_PAGE_QUERY_RESULT;
+    '*[_type == "areasIndexPage" && _id == "areasIndexPage"][0]{\n    sections[]{\n    ...,\n    photo{ asset, hotspot, crop, alt, frameRatio },\n    photoPrimary{ asset, hotspot, crop, alt, frameRatio },\n    photoSecondary{ asset, hotspot, crop, alt },\n    primaryPhoto{ asset, hotspot, crop, alt, frameRatio },\n    secondaryPhoto{ asset, hotspot, crop, alt },\n    faqSet->{ heading, intro, items[]{ _key, question, answer } }\n  }\n  }': AREAS_INDEX_PAGE_QUERY_RESULT;
+    '*[_type == "multifamilyIndexPage" && _id == "multifamilyIndexPage"][0]{\n    sections[]{\n    ...,\n    photo{ asset, hotspot, crop, alt, frameRatio },\n    photoPrimary{ asset, hotspot, crop, alt, frameRatio },\n    photoSecondary{ asset, hotspot, crop, alt },\n    primaryPhoto{ asset, hotspot, crop, alt, frameRatio },\n    secondaryPhoto{ asset, hotspot, crop, alt },\n    faqSet->{ heading, intro, items[]{ _key, question, answer } }\n  }\n  }': MULTIFAMILY_INDEX_PAGE_QUERY_RESULT;
+    '*[_type == "commercialPage" && _id == "commercialPage"][0]{\n    sections[]{\n    ...,\n    photo{ asset, hotspot, crop, alt, frameRatio },\n    photoPrimary{ asset, hotspot, crop, alt, frameRatio },\n    photoSecondary{ asset, hotspot, crop, alt },\n    primaryPhoto{ asset, hotspot, crop, alt, frameRatio },\n    secondaryPhoto{ asset, hotspot, crop, alt },\n    faqSet->{ heading, intro, items[]{ _key, question, answer } }\n  }\n  }': COMMERCIAL_PAGE_QUERY_RESULT;
     '*[_type == "contactPage" && _id == "contactPage"][0]{\n    heroEyebrow,\n    heroHeading,\n    heroIntro,\n    responsePromise,\n    hours[]{ days, hours },\n    emergencyHeading,\n    emergencyBody,\n    faqs[]{ question, answer }\n  }': CONTACT_PAGE_QUERY_RESULT;
     '*[_type == "legalPage" && slug == $slug][0]{\n    slug,\n    title,\n    eyebrow,\n    intro,\n    body,\n    contact{ name, phoneDisplay, website },\n    bannerPhoto{ asset, hotspot, crop, alt },\n    darkOverlay,\n    lastUpdated,\n    seoTitle,\n    seoDescription\n  }': LEGAL_PAGE_QUERY_RESULT;
     '*[_type == "cityPage" && defined(slug.current)]|order(city asc){\n    city,\n    "slug": slug.current\n  }': CITIES_QUERY_RESULT;
-    '*[_type == "cityPage" && slug.current == $slug][0]{\n    city,\n    "slug": slug.current,\n    sections[]{\n    ...,\n    photo{ asset, hotspot, crop, alt, frameRatio },\n    photoPrimary{ asset, hotspot, crop, alt, frameRatio },\n    photoSecondary{ asset, hotspot, crop, alt },\n    primaryPhoto{ asset, hotspot, crop, alt, frameRatio },\n    secondaryPhoto{ asset, hotspot, crop, alt }\n  },\n    seoTitle,\n    seoDescription\n  }': CITY_PAGE_QUERY_RESULT;
+    '*[_type == "cityPage" && slug.current == $slug][0]{\n    city,\n    "slug": slug.current,\n    sections[]{\n    ...,\n    photo{ asset, hotspot, crop, alt, frameRatio },\n    photoPrimary{ asset, hotspot, crop, alt, frameRatio },\n    photoSecondary{ asset, hotspot, crop, alt },\n    primaryPhoto{ asset, hotspot, crop, alt, frameRatio },\n    secondaryPhoto{ asset, hotspot, crop, alt },\n    faqSet->{ heading, intro, items[]{ _key, question, answer } }\n  },\n    seoTitle,\n    seoDescription\n  }': CITY_PAGE_QUERY_RESULT;
     '*[_type == "navigation" && _id == "navigation"][0]{\n    footerColumns[]{\n      _key,\n      heading,\n      links[]{ _key, label, href }\n    },\n    legalLinks[]{ _key, label, href }\n  }': FOOTER_NAVIGATION_QUERY_RESULT;
   }
 }

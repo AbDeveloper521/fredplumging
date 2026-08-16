@@ -5,7 +5,7 @@ import {
   type DynamicFetchOptions,
 } from "@/sanity/lib/live";
 import { logFallback } from "@/sanity/lib/fallbackLog";
-import { toLibrarySections } from "@/sanity/lib/sectionLibrary";
+import { FAQ_SET_TAG, toLibrarySections } from "@/sanity/lib/sectionLibrary";
 import { ABOUT_PAGE_QUERY } from "@/sanity/queries";
 import type { ABOUT_PAGE_QUERY_RESULT } from "@/sanity.types";
 import { defaultAboutSections } from "@/data/aboutPage";
@@ -32,7 +32,7 @@ export async function getAboutPage(
     result = await fetchSanityCached(
       ABOUT_PAGE_QUERY,
       {},
-      ABOUT_PAGE_TAG,
+      [ABOUT_PAGE_TAG, FAQ_SET_TAG],
       options,
     );
   } catch (error) {

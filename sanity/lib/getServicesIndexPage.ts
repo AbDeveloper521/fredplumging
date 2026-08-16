@@ -5,7 +5,7 @@ import {
   type DynamicFetchOptions,
 } from "@/sanity/lib/live";
 import { logFallback } from "@/sanity/lib/fallbackLog";
-import { toLibrarySections } from "@/sanity/lib/sectionLibrary";
+import { FAQ_SET_TAG, toLibrarySections } from "@/sanity/lib/sectionLibrary";
 import { SERVICES_INDEX_PAGE_QUERY } from "@/sanity/queries";
 import type { SERVICES_INDEX_PAGE_QUERY_RESULT } from "@/sanity.types";
 import { defaultServicesIndexSections } from "@/data/servicesIndexPage";
@@ -29,7 +29,7 @@ export async function getServicesIndexPage(
     result = await fetchSanityCached(
       SERVICES_INDEX_PAGE_QUERY,
       {},
-      SERVICES_INDEX_PAGE_TAG,
+      [SERVICES_INDEX_PAGE_TAG, FAQ_SET_TAG],
       options,
     );
   } catch (error) {

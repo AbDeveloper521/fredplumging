@@ -14,6 +14,7 @@ import { cityPage, citySectionTypes } from "./cityPage";
 import { reviewSettings } from "./reviewSettings";
 import { navigation } from "./navigation";
 import { faq } from "./faq";
+import { faqSet, faqBand } from "./faqSet";
 import { testimonial } from "./testimonial";
 import { service } from "./service";
 import { industry } from "./industry";
@@ -37,6 +38,8 @@ export const schemaTypes: SchemaTypeDefinition[] = [
   reviewSettings,
   navigation,
   faq,
+  faqSet,
+  faqBand,
   testimonial,
   service,
   industry,

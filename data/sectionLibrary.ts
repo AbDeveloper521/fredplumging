@@ -4,6 +4,7 @@ import type { AboutSection } from "./aboutPage";
 import type { PartnersSection } from "./partnersPage";
 import type { CareersSection } from "./careersPage";
 import type { CitySection } from "./cities";
+import type { FaqBandSection } from "./faqSets";
 
 /**
  * THE shared section library: every section type any page stack can carry.
@@ -24,6 +25,8 @@ export type LibrarySection =
   | AboutSection
   | PartnersSection
   | CareersSection
-  | CitySection;
+  | CitySection
+  // Owned by no page: the shared Q&A band, which any stack may carry.
+  | FaqBandSection;
 
 export type LibrarySectionType = LibrarySection["_type"];

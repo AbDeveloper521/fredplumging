@@ -12,7 +12,22 @@ import { homePageDefaults } from "@/data/homePage";
 import { aboutPageDefaults } from "@/data/aboutPage";
 import { partnersPageDefaults } from "@/data/partnersPage";
 import { careersPageDefaults } from "@/data/careersPage";
+import { DEFAULT_FAQ_HEADING } from "@/data/faqSets";
 import type { LibrarySection } from "@/data/sectionLibrary";
+
+/**
+ * Cache tag for the shared `faqSet` documents.
+ *
+ * It lives here, not in a fetcher, because no page fetches a set on its own:
+ * `SECTIONS_PROJECTION` dereferences it inside the page query. That means the
+ * page's cache entry contains content from a document whose `_type` is NOT the
+ * page's — so every fetcher that maps a section stack passes this tag
+ * alongside its own, and `revalidateTag("faqSet")` from /api/revalidate
+ * reaches the pages that show the set rather than only the set itself.
+ * (Sanity Live's syncTags already cover dereferenced documents; this is the
+ * webhook path, which does not.)
+ */
+export const FAQ_SET_TAG = "faqSet";
 
 /**
  * THE shared section-library mapper: validates a raw `sections` array from
@@ -784,6 +799,41 @@ export function toLibrarySection(
         heading: str(raw.heading) ?? fb.heading,
       };
     }
+    case "faqBand": {
+      // Two modes collapse to one rendered shape here, so the component and
+      // the fallback never have to know which was used.
+      //
+      // Minimum to render: at least one complete Q&A, from the referenced set
+      // or from this section's own list. The heading has a default fill, so a
+      // band never drops for wanting a title — but an empty or deleted set is
+      // a drop, not a blank band.
+      const inline = raw.source === "inline";
+      // Already dereferenced by SECTIONS_PROJECTION (`faqSet->`); a deleted
+      // or unpublished target arrives as null.
+      const set =
+        !inline && raw.faqSet && typeof raw.faqSet === "object"
+          ? (raw.faqSet as Raw)
+          : undefined;
+      const items = children(inline ? raw.items : set?.items, (c, i) => {
+        const question = str(c.question);
+        const answer = str(c.answer);
+        return question && answer
+          ? { _key: key(c, i), question, answer }
+          : null;
+      });
+      if (items.length === 0) return null;
+      return {
+        _type: "faqBand",
+        _key,
+        heading: inline
+          ? (str(raw.heading) ?? DEFAULT_FAQ_HEADING)
+          : (str(raw.headingOverride) ??
+            str(set?.heading) ??
+            DEFAULT_FAQ_HEADING),
+        intro: inline ? str(raw.intro) : str(set?.intro),
+        items,
+      };
+    }
     case "homeLocationMap":
       return { _type: "homeLocationMap", _key };
     case "homeFinalCta": {
@@ -1064,6 +1114,12 @@ export const SECTION_REQUIREMENTS: Record<
     strings: Array<{ field: string; title: string }>;
     /** Arrays that need ≥1 entry passing `valid` for the section to render. */
     arrays: Array<{ field: string; title: string; valid: (entry: unknown) => boolean }>;
+    /**
+     * For types whose gate depends on the section's own settings (a mode
+     * switch, a reference), where a fixed field list would name the wrong
+     * thing. Returns the Studio field titles to report.
+     */
+    explain?: (raw: Raw) => string[];
   }
 > = {
   serviceHero: { strings: [{ field: "heading", title: "Big heading" }], arrays: [] },
@@ -1109,6 +1165,25 @@ export const SECTION_REQUIREMENTS: Record<
     strings: [{ field: "heading", title: "Heading" }],
     arrays: [{ field: "faqs", title: "Questions", valid: childWith("question", "answer") }],
   },
+  faqBand: {
+    // Which field is at fault depends on the mode, so `explain` decides.
+    strings: [],
+    arrays: [],
+    explain: (raw) => {
+      if (raw.source === "inline") {
+        return ["Questions (none complete — each needs a question AND an answer)"];
+      }
+      const set = raw.faqSet;
+      if (!set || typeof set !== "object") {
+        return [
+          "Which FAQ set (none chosen, or the chosen set was deleted/unpublished)",
+        ];
+      }
+      return [
+        "the chosen FAQ set has no complete question (each needs a question AND an answer)",
+      ];
+    },
+  },
   serviceArea: { strings: [{ field: "heading", title: "Heading" }], arrays: [] },
   // Never drops — retired type kept mapped so existing stacks stay warning-free.
   trustLogoStrip: { strings: [], arrays: [] },
@@ -1151,6 +1226,10 @@ export function explainDrop(raw: Raw, index: number): DroppedSection {
       emptyFields: ["_type"],
       studioFields: [`unknown section type "${_type}"`],
     };
+  }
+  if (requirements.explain) {
+    const studioFields = requirements.explain(raw);
+    return { _type, _key, index, emptyFields: studioFields, studioFields };
   }
   const emptyFields: string[] = [];
   const studioFields: string[] = [];

@@ -5,7 +5,7 @@ import {
   type DynamicFetchOptions,
 } from "@/sanity/lib/live";
 import { logFallback } from "@/sanity/lib/fallbackLog";
-import { toLibrarySections } from "@/sanity/lib/sectionLibrary";
+import { FAQ_SET_TAG, toLibrarySections } from "@/sanity/lib/sectionLibrary";
 import { MULTIFAMILY_INDEX_PAGE_QUERY } from "@/sanity/queries";
 import type { MULTIFAMILY_INDEX_PAGE_QUERY_RESULT } from "@/sanity.types";
 import { defaultMultifamilyIndexSections } from "@/data/multifamilyIndexPage";
@@ -29,7 +29,7 @@ export async function getMultifamilyIndexPage(
     result = await fetchSanityCached(
       MULTIFAMILY_INDEX_PAGE_QUERY,
       {},
-      MULTIFAMILY_INDEX_PAGE_TAG,
+      [MULTIFAMILY_INDEX_PAGE_TAG, FAQ_SET_TAG],
       options,
     );
   } catch (error) {

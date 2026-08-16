@@ -5,7 +5,7 @@ import {
   type DynamicFetchOptions,
 } from "@/sanity/lib/live";
 import { logFallback } from "@/sanity/lib/fallbackLog";
-import { toLibrarySections } from "@/sanity/lib/sectionLibrary";
+import { FAQ_SET_TAG, toLibrarySections } from "@/sanity/lib/sectionLibrary";
 import { COMMERCIAL_PAGE_QUERY } from "@/sanity/queries";
 import type { COMMERCIAL_PAGE_QUERY_RESULT } from "@/sanity.types";
 import { defaultCommercialSections } from "@/data/commercialPage";
@@ -29,7 +29,7 @@ export async function getCommercialPage(
     result = await fetchSanityCached(
       COMMERCIAL_PAGE_QUERY,
       {},
-      COMMERCIAL_PAGE_TAG,
+      [COMMERCIAL_PAGE_TAG, FAQ_SET_TAG],
       options,
     );
   } catch (error) {

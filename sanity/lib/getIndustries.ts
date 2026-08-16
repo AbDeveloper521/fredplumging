@@ -6,7 +6,7 @@ import {
 } from "@/sanity/lib/live";
 import { resolvePhoto } from "@/sanity/lib/image";
 import { logEmpty, logFallback } from "@/sanity/lib/fallbackLog";
-import { toLibrarySections } from "@/sanity/lib/sectionLibrary";
+import { FAQ_SET_TAG, toLibrarySections } from "@/sanity/lib/sectionLibrary";
 import { INDUSTRIES_QUERY, INDUSTRY_BY_SLUG_QUERY } from "@/sanity/queries";
 import type {
   INDUSTRIES_QUERY_RESULT,
@@ -89,7 +89,7 @@ export async function getIndustryBySlug(
     const result = await fetchSanityCached(
       INDUSTRY_BY_SLUG_QUERY,
       { slug },
-      INDUSTRY_TAG,
+      [INDUSTRY_TAG, FAQ_SET_TAG],
       options,
     );
     return result ? toIndustry(result) : null;

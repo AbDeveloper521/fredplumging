@@ -5,7 +5,7 @@ import {
   type DynamicFetchOptions,
 } from "@/sanity/lib/live";
 import { logFallback } from "@/sanity/lib/fallbackLog";
-import { toLibrarySections } from "@/sanity/lib/sectionLibrary";
+import { FAQ_SET_TAG, toLibrarySections } from "@/sanity/lib/sectionLibrary";
 import { HOME_PAGE_QUERY } from "@/sanity/queries";
 import type { HOME_PAGE_QUERY_RESULT } from "@/sanity.types";
 import { defaultHomeSections } from "@/data/homePage";
@@ -28,7 +28,7 @@ export async function getHomePage(
 ): Promise<LibrarySection[]> {
   let result: HOME_PAGE_QUERY_RESULT;
   try {
-    result = await fetchSanityCached(HOME_PAGE_QUERY, {}, HOME_PAGE_TAG, options);
+    result = await fetchSanityCached(HOME_PAGE_QUERY, {}, [HOME_PAGE_TAG, FAQ_SET_TAG], options);
   } catch (error) {
     logFallback({
       fetcher: "getHomePage",

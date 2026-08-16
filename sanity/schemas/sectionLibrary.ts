@@ -74,6 +74,9 @@ export const SECTION_LIBRARY_GROUPS = [
       "homeServices",
       "homeIndustries",
       "homeFaq",
+      // Named faqBand, not faq — the `faq` type name is the per-question FAQ
+      // document (the homepage list), and Sanity's type registry is flat.
+      "faqBand",
       "jobOpenings",
       "partnerPlatforms",
       "badgeStrip",
