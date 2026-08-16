@@ -159,7 +159,7 @@ export function lockedSlug(options: { source: string; prefix: string }) {
     name: "slug",
     title: "Web address",
     description:
-      `⚠️ Check this carefully BEFORE saving. This becomes the page's web address (${options.prefix}/…) and is set permanently the FIRST TIME this document is saved — it cannot be changed afterwards, even before publishing. Changing an address later breaks links from Google and anywhere the page has been shared. If it's wrong, stop and contact your developer instead of saving.`,
+      `⚠️ Check this carefully BEFORE saving. This becomes the page's web address (${options.prefix}/…) and locks the FIRST TIME this document is saved, so it can't be edited here afterwards — not even before publishing. Getting it right now is much cheaper than changing it later, because an address that has been shared or indexed needs a redirect from the old one or those links break. It is NOT permanent, though: your developer can change it with a script and add that redirect. If it's wrong, stop and ask them rather than working around it.`,
     type: "slug",
     options: {
       source: options.source,
