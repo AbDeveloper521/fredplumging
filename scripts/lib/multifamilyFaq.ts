@@ -32,7 +32,9 @@ export function bandSection(key: string = BAND_KEY): Raw {
     _type: "faqBand",
     _key: key,
     source: "set",
-    faqSet: { _type: "reference", _ref: MULTIFAMILY_FAQ_SET_ID },
+    // `_weak` matches the schema's weak reference field (see faqSet.ts), so a
+    // page can be written before its set exists rather than being rejected.
+    faqSet: { _type: "reference", _ref: MULTIFAMILY_FAQ_SET_ID, _weak: true },
     hidden: false,
   };
 }

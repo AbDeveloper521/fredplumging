@@ -156,6 +156,22 @@ export const faqBand = defineType({
       description: "The set of questions this band shows. Manage them under FAQ Sets.",
       type: "reference",
       to: [{ type: "faqSet" }],
+      /**
+       * WEAK on purpose. A strong reference makes Sanity reject any mutation
+       * that would point at a document which does not exist yet — which is
+       * exactly what happens when a page's Studio prefill carries a band
+       * pointing at a set the owner hasn't created:
+       *
+       *   Mutation failed: Document "drafts.commercialPage" references
+       *   non-existent document "faqSet-commercial"
+       *
+       * and the page cannot be saved at all. Weak lets the document save; the
+       * band then drops with an explicit log until the set exists (see the
+       * `faqBand` case in sanity/lib/sectionLibrary.ts), and Studio shows the
+       * reference as unresolved in the form. Deleting a set is likewise a
+       * degraded band rather than a blocked delete.
+       */
+      weak: true,
       hidden: ({ parent }) => !usesSharedSet(parent),
       // Conditional on its sibling, so it must be a FIELD rule: a `validation`
       // on the parent object is accepted by the schema and never runs.

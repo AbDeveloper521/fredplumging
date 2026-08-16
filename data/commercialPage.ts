@@ -233,7 +233,9 @@ export function commercialSectionsForSanity(): Record<string, unknown>[] {
         _type: "faqBand",
         _key: section._key,
         source: "set",
-        faqSet: { _type: "reference", _ref: COMMERCIAL_FAQ_SET_ID },
+        // `_weak` matches the schema's weak reference field, so a document
+        // written before the set exists saves instead of being rejected.
+        faqSet: { _type: "reference", _ref: COMMERCIAL_FAQ_SET_ID, _weak: true },
         hidden: false,
       };
     }

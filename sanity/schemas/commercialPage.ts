@@ -29,10 +29,13 @@ export const commercialPage = defineType({
     }),
   ],
   // Prefilled with the shipped stack in Sanity shape — nested card/benefit
-  // rows keyed, and the Q&A band as a reference to the shared set. The
+  // rows keyed, and the Q&A band as a WEAK reference to the shared set. The
   // seeder writes the identical thing, so a document created either way
-  // matches. (Publishing this prefill before the set exists leaves that one
-  // band pointing at a missing document; the seeder creates the set for you.)
+  // matches. Weak matters here: this prefill points at "Commercial FAQs",
+  // which does not exist until the seeder runs (or the owner creates it), and
+  // a strong reference would make Studio refuse to save the document at all.
+  // Until the set exists that one band simply doesn't render, and says so in
+  // the server log.
   initialValue: { sections: commercialSectionsForSanity() },
   preview: {
     prepare: () => ({ title: "Commercial Page" }),
