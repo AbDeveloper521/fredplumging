@@ -56,6 +56,11 @@ export const MULTIFAMILY_FAQ_SET_ID = "faqSet-multifamily";
     multi-family one: the two pages answer different audiences. */
 export const COMMERCIAL_FAQ_SET_ID = "faqSet-commercial";
 
+/** Stable id of the hydro jetting set — again its own set, not an addition to
+    the commercial one: these five questions are about a single service and
+    belong only to the page that answers for it. */
+export const HYDRO_JETTING_FAQ_SET_ID = "faqSet-hydro-jetting";
+
 /**
  * The six multi-family questions, verbatim as approved.
  *
@@ -190,6 +195,90 @@ export const COMMERCIAL_FAQ_SET: FaqSet = {
 };
 
 /**
+ * The five hydro jetting questions, verbatim as approved.
+ *
+ * Its own set, referenced only by /commercial/hydro-jetting — deliberately not
+ * appended to the Commercial or Multi-Family sets, which answer for the whole
+ * business rather than for one service.
+ *
+ * CLAIMS: no PSI, GPM, hose length or nozzle type appears in any answer —
+ * nobody has confirmed what the rig actually is (see `UNSPECIFIED_EQUIPMENT`).
+ * No price, no response time, no warranty or maintenance-plan terms. The
+ * cost answer describes what the price depends on and stops there.
+ */
+export const HYDRO_JETTING_FAQ_SET: FaqSet = {
+  title: "Hydro Jetting FAQs",
+  heading: DEFAULT_FAQ_HEADING,
+  items: [
+    {
+      _key: "cost",
+      question: "How much does hydro jetting cost?",
+      answer:
+        "Cost depends on the length and diameter of the line, how accessible the cleanout is, what's blocking it, and whether the work runs during business hours or after-hours. We camera the line first and give you a firm price before any work starts.",
+    },
+    {
+      _key: "how-often",
+      question: "How often should commercial lines be jetted?",
+      answer:
+        "It depends on the line. Restaurant kitchen lines often need it quarterly or twice a year, because grease accumulates fast. A building main in an office or retail property may go years between cleanings. If a line has backed up more than once in twelve months, that's usually a sign it needs jetting rather than another cabling.",
+    },
+    {
+      _key: "older-pipes",
+      question: "Is hydro jetting safe for older pipes?",
+      answer:
+        "Usually — but not always, which is exactly why we camera the line first. Sound cast iron, clay, PVC and ductile lines handle jetting well at the right pressure. A pipe that's already cracked, badly corroded, or has collapsed sections needs a different approach, and we'd far rather find that on camera than with a jetter. If your line isn't a candidate, we'll tell you and explain what is.",
+    },
+    {
+      _key: "pipe-damage",
+      question: "Will jetting damage my pipes?",
+      answer:
+        "Not when it's done properly. Pressure and nozzle are matched to the pipe's size and material, which is what the camera inspection is for. The risk with jetting isn't the tool — it's using it blind on a line that was already failing.",
+    },
+    {
+      _key: "vs-snaking",
+      question: "What's the difference between hydro jetting and snaking?",
+      answer:
+        "A cable bores a channel through a blockage so the line drains again. Hydro jetting scours the full diameter of the pipe, removing the grease and buildup that caused the blockage in the first place. Snaking is faster and cheaper for a simple obstruction; jetting is what you want when a line keeps backing up or has years of grease in it.",
+    },
+  ],
+};
+
+/**
+ * Equipment figures deliberately left off the hydro jetting page. Not a gap in
+ * the copy — a refusal to publish a specification nobody has confirmed. Kept
+ * as data, like `UNQUANTIFIED_ANSWERS`, so it stays greppable rather than
+ * remembered.
+ */
+export const UNSPECIFIED_EQUIPMENT: ReadonlyArray<{
+  spec: string;
+  askTheClient: string;
+}> = [
+  {
+    spec: "jetter pressure (PSI) and flow (GPM), hose length, nozzle types",
+    askTheClient:
+      "What is the actual rig, and which figures does the business want published? Once confirmed, they can be added to the “What hydro jetting actually does” band or the FAQ answers in Studio — never estimated from what a typical jetter does.",
+  },
+];
+
+/**
+ * Service commitments in published copy that the client has to confirm before
+ * the page ships — a promise the business is then held to, not a description.
+ */
+export const UNCONFIRMED_COMMITMENTS: ReadonlyArray<{
+  commitment: string;
+  where: string;
+  confirmWithClient: string;
+}> = [
+  {
+    commitment: "recurring / scheduled jetting on a regular cycle",
+    where:
+      "/commercial/hydro-jetting → “How we approach a jetting job” → “Scheduled service where it makes sense”",
+    confirmWithClient:
+      "Does Fred's actually offer scheduled, recurring jetting (e.g. kitchen lines quarterly) as a standing arrangement? If not, drop that card in Studio before the page goes live. The FAQ answer about how often lines need jetting is descriptive and can stay either way.",
+  },
+];
+
+/**
  * Service lines that are licence-gated in Texas and appear in published copy.
  * Not a defect — the same claims already ship in the multi-family set — but
  * recorded so they are confirmed with the client deliberately rather than
@@ -238,5 +327,16 @@ export function commercialFaqBand(key = "faq"): FaqBandSection {
     heading: COMMERCIAL_FAQ_SET.heading ?? DEFAULT_FAQ_HEADING,
     intro: COMMERCIAL_FAQ_SET.intro,
     items: COMMERCIAL_FAQ_SET.items,
+  };
+}
+
+/** The hydro jetting FAQ band as a resolved section, for the fallback path. */
+export function hydroJettingFaqBand(key = "faq"): FaqBandSection {
+  return {
+    _type: "faqBand",
+    _key: key,
+    heading: HYDRO_JETTING_FAQ_SET.heading ?? DEFAULT_FAQ_HEADING,
+    intro: HYDRO_JETTING_FAQ_SET.intro,
+    items: HYDRO_JETTING_FAQ_SET.items,
   };
 }

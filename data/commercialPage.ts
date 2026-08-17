@@ -1,6 +1,6 @@
 import { homePageDefaults } from "./homePage";
 import { commercialFaqBand, COMMERCIAL_FAQ_SET_ID } from "./faqSets";
-import type { LibrarySection } from "./sectionLibrary";
+import { sectionsForSanity, type LibrarySection } from "./sectionLibrary";
 
 /**
  * Commercial page (`/commercial`) — FALLBACK for the `commercialPage` Sanity
@@ -198,62 +198,15 @@ export const defaultCommercialSections: LibrarySection[] = [
 ];
 
 /**
- * Array fields whose object members need `_type` + `_key` in Sanity, by the
- * schema's array-member name. `paragraphs` is a string array and needs none.
- */
-const CHILD_MEMBER_TYPE: Record<string, string> = {
-  credentials: "credential",
-  cards: "card",
-  benefits: "item",
-};
-
-/**
- * The same stack in SANITY shape, for anything that writes a document: nested
- * array members carry `_type`/`_key`, and the Q&A band becomes a REFERENCE to
- * the shared set rather than a copy of its questions.
+ * The same stack in SANITY shape, for anything that writes a document — the
+ * shared translation in `data/sectionLibrary.ts`, pointed at this page's set.
  *
  * Both the Studio prefill (`initialValue` in sanity/schemas/commercialPage.ts)
  * and scripts/seed-commercial-sections.ts go through this, so a document
- * created either way is identical. Without it the prefill would drop unkeyed
- * cards into Studio and leave the Q&A band pointing at nothing.
- *
- * The reference target only exists once the seeder has run (or the set has
- * been created by hand under FAQ Sets) — publishing the prefill first leaves
- * that one band pointing at a missing document until then.
+ * created either way is identical.
  */
 export function commercialSectionsForSanity(): Record<string, unknown>[] {
-  // JSON round-trip strips `undefined`s (the empty photo slots).
-  const stack = JSON.parse(
-    JSON.stringify(defaultCommercialSections),
-  ) as Record<string, unknown>[];
-
-  return stack.map((section) => {
-    if (section._type === "faqBand") {
-      return {
-        _type: "faqBand",
-        _key: section._key,
-        source: "set",
-        // `_weak` matches the schema's weak reference field, so a document
-        // written before the set exists saves instead of being rejected.
-        faqSet: { _type: "reference", _ref: COMMERCIAL_FAQ_SET_ID, _weak: true },
-        hidden: false,
-      };
-    }
-    for (const [field, memberType] of Object.entries(CHILD_MEMBER_TYPE)) {
-      const value = section[field];
-      if (!Array.isArray(value)) continue;
-      section[field] = value.map((entry, i) =>
-        entry && typeof entry === "object" && !Array.isArray(entry)
-          ? {
-              _type: memberType,
-              _key:
-                (entry as Record<string, unknown>)._key ??
-                `${section._key}-${field}-${i}`,
-              ...(entry as Record<string, unknown>),
-            }
-          : entry,
-      );
-    }
-    return section;
+  return sectionsForSanity(defaultCommercialSections, {
+    faqSetId: COMMERCIAL_FAQ_SET_ID,
   });
 }

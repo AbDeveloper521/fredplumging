@@ -93,6 +93,18 @@ export const structure: StructureResolver = (S) =>
             .schemaType("commercialPage")
             .documentId("commercialPage"),
         ),
+      // Sits under Commercial Page because /commercial/hydro-jetting sits
+      // under /commercial. It is the site's ONLY hydro jetting page — the
+      // Drain & Sewer and Specialty Services documents under Service Pages
+      // mention jetting but must not become second pages about it.
+      S.listItem()
+        .title("Hydro Jetting Page")
+        .id("hydroJettingPage")
+        .child(
+          S.document()
+            .schemaType("hydroJettingPage")
+            .documentId("hydroJettingPage"),
+        ),
       S.listItem()
         .title("Contact Page")
         .id("contactPage")

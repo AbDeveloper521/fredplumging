@@ -4,6 +4,7 @@ import { getServices } from "@/sanity/lib/getServices";
 import { getIndustries } from "@/sanity/lib/getIndustries";
 import { serviceHref } from "@/data/services";
 import { industryHref } from "@/data/industries";
+import { HYDRO_JETTING_PATH } from "@/data/hydroJettingPage";
 
 /** Static marketing routes (everything not driven by a CMS slug). */
 const STATIC_PATHS = [
@@ -16,6 +17,9 @@ const STATIC_PATHS = [
   "/areas-we-serve/dallas",
   "/areas-we-serve/fort-worth",
   "/commercial",
+  // The site's only hydro jetting URL, read from the one constant that
+  // defines it — the route, the canonical tag and this entry cannot diverge.
+  HYDRO_JETTING_PATH,
   "/contact",
   "/multifamily",
   "/services",
