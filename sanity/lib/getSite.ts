@@ -80,6 +80,14 @@ export async function getSite(
     return FALLBACK;
   }
 
+  const publishedHours =
+    result.hours
+      ?.filter(
+        (row): row is { days: string; hours: string } =>
+          Boolean(row.days) && Boolean(row.hours),
+      )
+      .map((row) => ({ days: row.days, hours: row.hours })) ?? [];
+
   const merged: SiteContent = {
     name: result.name ?? FALLBACK.name,
     legalName: result.legalName ?? FALLBACK.legalName,
@@ -89,6 +97,10 @@ export async function getSite(
     email: result.email ?? FALLBACK.email,
     emailHref: result.emailHref ?? FALLBACK.emailHref,
     serviceArea: result.serviceArea ?? FALLBACK.serviceArea,
+    // Rows missing either half are dropped rather than rendered half-blank;
+    // nothing usable left falls back, so the details column is never
+    // hours-less.
+    hours: publishedHours.length > 0 ? publishedHours : FALLBACK.hours,
     foundedYear: result.foundedYear ?? FALLBACK.foundedYear,
     // Sanity is a manual OVERRIDE; when empty the value derives from the
     // founding year (see derivedYears above).
@@ -119,6 +131,9 @@ export async function getSite(
     "mapHeading",
     "mapDescription",
     "mapEmbedUrl",
+    // Same deal: the shipped rows in data/site.ts ARE the real hours until
+    // the owner edits them in Studio, so unset is normal, not a gap.
+    "hours",
   ]);
   const missing = (
     Object.keys(result) as Array<keyof typeof result>

@@ -6,6 +6,12 @@ import { SITE_URL } from "@/lib/siteUrl";
  * which sources the `siteSettings` singleton from Sanity and falls back to
  * these values if the fetch fails or returns incomplete data.
  */
+/** One line of the opening-hours list, e.g. "Monday – Friday" / "7 AM – 6 PM". */
+export interface BusinessHoursRow {
+  days: string;
+  hours: string;
+}
+
 export interface Site {
   name: string;
   legalName: string;
@@ -15,6 +21,14 @@ export interface Site {
   email: string;
   emailHref: string;
   serviceArea: string;
+  /**
+   * Opening hours, shown wherever the site lists contact details (today: the
+   * details column beside the /contact form). A business fact, so it lives
+   * HERE with the phone and email rather than on a page section — the site
+   * has already had one three-way email/domain inconsistency, and hours
+   * retyped per page would be the next one.
+   */
+  hours: BusinessHoursRow[];
   foundedYear: number;
   /**
    * OPTIONAL manual override for the displayed years-in-business. When
@@ -68,6 +82,11 @@ export const site: Site = {
   email: "contact@fredsplumbing.com",
   emailHref: "mailto:contact@fredsplumbing.com",
   serviceArea: "Dallas–Fort Worth Metroplex",
+  // Verbatim from the hand-built /contact details column this replaces.
+  hours: [
+    { days: "Monday – Friday", hours: "7:00 AM – 6:00 PM" },
+    { days: "Emergencies", hours: "24/7, every day of the year" },
+  ],
   foundedYear: 1996,
   // yearsInBusiness deliberately unset — derived from foundedYear.
   url: SITE_URL,

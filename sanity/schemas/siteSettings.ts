@@ -1,4 +1,4 @@
-import { defineField, defineType } from "sanity";
+import { defineArrayMember, defineField, defineType } from "sanity";
 
 /**
  * Singleton mirroring `data/site.ts` exactly — same field names, same types.
@@ -71,6 +71,39 @@ export const siteSettings = defineType({
       description: "e.g. Dallas–Fort Worth Metroplex",
       type: "string",
       validation: (rule) => rule.required(),
+    }),
+    defineField({
+      name: "hours",
+      title: "Opening hours",
+      description:
+        "One row per line, shown wherever the site lists your contact details (today: beside the form on the Contact page). Edit them HERE and every page updates — hours are a business fact, not page copy, so there is deliberately nowhere else to type them.",
+      type: "array",
+      of: [
+        defineArrayMember({
+          name: "row",
+          title: "Row",
+          type: "object",
+          fields: [
+            defineField({
+              name: "days",
+              title: "Days",
+              description: "e.g. “Monday – Friday” or “Emergencies”.",
+              type: "string",
+              validation: (rule) =>
+                rule.required().error("A row needs the days it covers."),
+            }),
+            defineField({
+              name: "hours",
+              title: "Hours",
+              description: "e.g. “7:00 AM – 6:00 PM” or “24/7, every day of the year”.",
+              type: "string",
+              validation: (rule) =>
+                rule.required().error("A row needs its hours."),
+            }),
+          ],
+          preview: { select: { title: "days", subtitle: "hours" } },
+        }),
+      ],
     }),
     defineField({
       name: "foundedYear",

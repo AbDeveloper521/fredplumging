@@ -123,7 +123,7 @@ export const serviceHero = defineType({
       name: "credentials",
       title: "Credentials strip",
       description:
-        "The slim row of proof points under the buttons, e.g. “Licensed & Insured”. Three items look best.",
+        "The slim row of proof points under the buttons, e.g. “Licensed & Insured”. Three items look best. To show a detail from Site Settings rather than retyping it, write {license}, {years} or {phone} in the text — e.g. “Licensed · {license}”.",
       type: "array",
       of: [
         defineArrayMember({

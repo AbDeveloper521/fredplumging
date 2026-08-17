@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { Fragment, useRef, useState } from "react";
 import { useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CheckCircle2, PhoneCall } from "lucide-react";
@@ -15,6 +15,7 @@ import {
 } from "@/lib/validations";
 import { Button } from "@/components/ui/Button";
 import type { SiteContent } from "@/data/site";
+import type { ContactFormContent } from "@/data/contactPage";
 import { cn } from "@/lib/utils";
 
 const inputClasses =
@@ -38,13 +39,47 @@ function FieldError({ id, message }: { id: string; message?: string }) {
   );
 }
 
+/**
+ * Renders editor-written copy in which `{phone}` becomes a call link. Split
+ * into text nodes rather than injected as HTML — CMS text is never treated
+ * as markup.
+ */
+function withPhoneLink(
+  text: string,
+  site: SiteContent,
+  linkClassName: string,
+): React.ReactNode {
+  const parts = text.split("{phone}");
+  if (parts.length === 1) return text;
+  return parts.map((part, i) => (
+    <Fragment key={i}>
+      {part}
+      {i < parts.length - 1 && (
+        <a href={site.phoneHref} className={linkClassName}>
+          {site.phone}
+        </a>
+      )}
+    </Fragment>
+  ));
+}
+
 interface ContactQuoteFormProps {
   site: SiteContent;
   /** Service names from Sanity (with "Other" appended by the server page). */
   serviceOptions: string[];
+  /**
+   * Every string this form shows, from the `contactForm` CMS section. What
+   * the form COLLECTS and how it validates is deliberately not in here — see
+   * `sanity/schemas/contactSections.ts` for why.
+   */
+  copy: ContactFormContent;
 }
 
-export function ContactQuoteForm({ site, serviceOptions }: ContactQuoteFormProps) {
+export function ContactQuoteForm({
+  site,
+  serviceOptions,
+  copy,
+}: ContactQuoteFormProps) {
   const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
   // Honeypot lives outside react-hook-form so its value never enters the
   // schema — it is read directly off the DOM node at submit time.
@@ -88,22 +123,21 @@ export function ContactQuoteForm({ site, serviceOptions }: ContactQuoteFormProps
           <CheckCircle2 aria-hidden="true" className="size-7 text-red-600" />
         </span>
         <h3 className="text-2xl font-extrabold tracking-tight text-navy-900">
-          Request received
+          {copy.successHeading}
         </h3>
         <p className="max-w-sm text-[15px] leading-relaxed text-grey-500">
-          We typically respond within one business hour during business hours.
-          Need us sooner? Call{" "}
-          <a href={site.phoneHref} className="font-bold text-red-600 hover:underline">
-            {site.phone}
-          </a>{" "}
-          — we answer 24/7.
+          {withPhoneLink(
+            copy.successBody,
+            site,
+            "font-bold text-red-600 hover:underline",
+          )}
         </p>
         <button
           type="button"
           onClick={() => setStatus("idle")}
           className="mt-2 text-sm font-semibold text-navy-900 underline underline-offset-4 hover:text-red-600"
         >
-          Submit another request
+          {copy.successAgainLabel}
         </button>
       </div>
     );
@@ -143,11 +177,11 @@ export function ContactQuoteForm({ site, serviceOptions }: ContactQuoteFormProps
       </div>
 
       <fieldset className="rounded-2xl bg-white p-6 shadow-(--shadow-card-lg) sm:p-8">
-        <legend className={legendClasses}>About the work</legend>
+        <legend className={legendClasses}>{copy.workLegend}</legend>
         <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
           <div>
             <label htmlFor="contact-service" className={labelClasses}>
-              Service needed
+              {copy.serviceLabel}
             </label>
             <select
               id="contact-service"
@@ -156,7 +190,7 @@ export function ContactQuoteForm({ site, serviceOptions }: ContactQuoteFormProps
               className={inputClasses}
               {...register("service")}
             >
-              <option value="">Select a service…</option>
+              <option value="">{copy.servicePlaceholder}</option>
               {serviceOptions.map((option) => (
                 <option key={option} value={option}>
                   {option}
@@ -168,7 +202,7 @@ export function ContactQuoteForm({ site, serviceOptions }: ContactQuoteFormProps
 
           <div>
             <label htmlFor="contact-property-type" className={labelClasses}>
-              Property type <Optional />
+              {copy.propertyTypeLabel} <Optional />
             </label>
             <select
               id="contact-property-type"
@@ -186,7 +220,7 @@ export function ContactQuoteForm({ site, serviceOptions }: ContactQuoteFormProps
 
           <div className="sm:col-span-2">
             <label htmlFor="contact-location" className={labelClasses}>
-              City or property address <Optional />
+              {copy.locationLabel} <Optional />
             </label>
             <input
               id="contact-location"
@@ -203,7 +237,7 @@ export function ContactQuoteForm({ site, serviceOptions }: ContactQuoteFormProps
             className="sm:col-span-2"
           >
             <p id="contact-urgency-label" className={labelClasses}>
-              How soon do you need us?
+              {copy.urgencyLabel}
             </p>
             <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
               {URGENCY_OPTIONS.map((option) => (
@@ -228,12 +262,11 @@ export function ContactQuoteForm({ site, serviceOptions }: ContactQuoteFormProps
               >
                 <PhoneCall aria-hidden="true" className="mt-0.5 size-5 shrink-0 text-red-600" />
                 <p className="text-[14px] leading-relaxed font-semibold text-navy-900">
-                  For an active emergency, a form is the slow path — call{" "}
-                  <a href={site.phoneHref} className="font-extrabold text-red-600 underline underline-offset-2">
-                    {site.phone}
-                  </a>{" "}
-                  now. We dispatch 24/7. You can still submit this form for the
-                  paper trail.
+                  {withPhoneLink(
+                    copy.emergencyNotice,
+                    site,
+                    "font-extrabold text-red-600 underline underline-offset-2",
+                  )}
                 </p>
               </div>
             )}
@@ -241,7 +274,7 @@ export function ContactQuoteForm({ site, serviceOptions }: ContactQuoteFormProps
 
           <div className="sm:col-span-2">
             <label htmlFor="contact-message" className={labelClasses}>
-              Describe the work
+              {copy.messageLabel}
             </label>
             <textarea
               id="contact-message"
@@ -249,7 +282,7 @@ export function ContactQuoteForm({ site, serviceOptions }: ContactQuoteFormProps
               aria-invalid={!!errors.message}
               aria-describedby={errors.message ? "contact-message-error" : undefined}
               className={cn(inputClasses, "h-auto min-h-28 py-3")}
-              placeholder="What's happening, which building or units are affected, anything we should know before we call…"
+              placeholder={copy.messagePlaceholder}
               {...register("message")}
             />
             <FieldError id="contact-message-error" message={errors.message?.message} />
@@ -258,11 +291,11 @@ export function ContactQuoteForm({ site, serviceOptions }: ContactQuoteFormProps
       </fieldset>
 
       <fieldset className="rounded-2xl bg-white p-6 shadow-(--shadow-card-lg) sm:p-8">
-        <legend className={legendClasses}>How we reach you</legend>
+        <legend className={legendClasses}>{copy.contactLegend}</legend>
         <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
           <div>
             <label htmlFor="contact-name" className={labelClasses}>
-              Full name
+              {copy.nameLabel}
             </label>
             <input
               id="contact-name"
@@ -278,7 +311,7 @@ export function ContactQuoteForm({ site, serviceOptions }: ContactQuoteFormProps
 
           <div>
             <label htmlFor="contact-company" className={labelClasses}>
-              Company or property group <Optional />
+              {copy.companyLabel} <Optional />
             </label>
             <input
               id="contact-company"
@@ -291,7 +324,7 @@ export function ContactQuoteForm({ site, serviceOptions }: ContactQuoteFormProps
 
           <div>
             <label htmlFor="contact-phone" className={labelClasses}>
-              Phone
+              {copy.phoneLabel}
             </label>
             <input
               id="contact-phone"
@@ -308,7 +341,7 @@ export function ContactQuoteForm({ site, serviceOptions }: ContactQuoteFormProps
 
           <div>
             <label htmlFor="contact-email" className={labelClasses}>
-              Email
+              {copy.emailLabel}
             </label>
             <input
               id="contact-email"
@@ -329,7 +362,7 @@ export function ContactQuoteForm({ site, serviceOptions }: ContactQuoteFormProps
             className="sm:col-span-2"
           >
             <p id="contact-method-label" className={labelClasses}>
-              Preferred contact <Optional />
+              {copy.contactMethodLabel} <Optional />
             </p>
             <div className="grid grid-cols-3 gap-2">
               {CONTACT_METHOD_OPTIONS.map((option) => (
@@ -351,7 +384,7 @@ export function ContactQuoteForm({ site, serviceOptions }: ContactQuoteFormProps
 
           <div className="sm:col-span-2">
             <label htmlFor="contact-referral" className={labelClasses}>
-              How did you hear about us? <Optional />
+              {copy.referralLabel} <Optional />
             </label>
             <select
               id="contact-referral"
@@ -371,21 +404,36 @@ export function ContactQuoteForm({ site, serviceOptions }: ContactQuoteFormProps
 
       {status === "error" && (
         <p role="alert" className="text-sm font-medium text-red-600">
-          Something went wrong sending your request. Please try again, or call{" "}
-          <a href={site.phoneHref} className="font-bold underline underline-offset-2">
-            {site.phone}
-          </a>
-          .
+          {withPhoneLink(
+            copy.errorMessage,
+            site,
+            "font-bold underline underline-offset-2",
+          )}
         </p>
       )}
 
       <div>
         <Button type="submit" size="lg" loading={isSubmitting} className="w-full" withArrow>
-          {isSubmitting ? "Sending…" : "Request a Quote"}
+          {isSubmitting ? copy.submittingLabel : copy.submitLabel}
         </Button>
-        <p className="mt-3 text-center text-[14px] font-medium text-grey-500">
-          We typically respond within one business hour during business hours.
-        </p>
+        {copy.submitNote && (
+          <p className="mt-3 text-center text-[14px] font-medium text-grey-500">
+            {withPhoneLink(
+              copy.submitNote,
+              site,
+              "font-bold text-red-600 hover:underline",
+            )}
+          </p>
+        )}
+        {copy.consentLine && (
+          <p className="mt-2 text-center text-[13px] leading-relaxed text-grey-500">
+            {withPhoneLink(
+              copy.consentLine,
+              site,
+              "font-bold text-red-600 hover:underline",
+            )}
+          </p>
+        )}
       </div>
     </form>
   );

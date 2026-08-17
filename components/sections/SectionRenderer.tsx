@@ -46,6 +46,8 @@ import { HiringProcessSection } from "./HiringProcessSection";
 import { CareersCtaSection } from "./CareersCtaSection";
 import { CityCommunitiesSection } from "./CityCommunitiesSection";
 import { AssociationBadgeStrip } from "./AssociationBadgeStrip";
+import { ContactChannelsSection } from "./ContactChannelsSection";
+import { ContactFormSection } from "./ContactFormSection";
 
 /**
  * Stable in-page ids per section type on the ANCHOR scheme (service and
@@ -111,6 +113,8 @@ const SECTION_IDS: Record<LibrarySection["_type"], string> = {
   hiringProcess: "hiring-process",
   careersCta: "careers-cta",
   cityCommunities: "communities",
+  contactChannels: "contact-channels",
+  contactForm: "contact-form",
 };
 
 interface SectionRendererProps {
@@ -472,6 +476,27 @@ export function SectionRenderer({
           case "cityCommunities":
             return (
               <CityCommunitiesSection key={section._key} section={section} id={id} />
+            );
+
+          // ————— Contact bands —————
+          case "contactChannels":
+            return (
+              <ContactChannelsSection
+                key={section._key}
+                section={section}
+                site={site}
+                id={id}
+              />
+            );
+          case "contactForm":
+            return (
+              <ContactFormSection
+                key={section._key}
+                section={section}
+                site={site}
+                services={services}
+                id={id}
+              />
             );
 
           default:

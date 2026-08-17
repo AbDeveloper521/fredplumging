@@ -3,7 +3,7 @@ import { defineField } from "sanity";
 /**
  * THE shared section library, schema side: the one list of section types
  * every page document's `sections` array accepts, and the grouped "Add
- * item…" menu that keeps a 46-type library usable.
+ * item…" menu that keeps a 48-type library usable.
  *
  * Deliberately a list of type NAMES, not imported definitions — the object
  * types stay defined (and registered via schemas/index.ts) in their home
@@ -82,6 +82,11 @@ export const SECTION_LIBRARY_GROUPS = [
       "badgeStrip",
       "homeLocationMap",
     ],
+  },
+  {
+    name: "contact",
+    title: "Contact & forms",
+    of: ["contactForm", "contactChannels"],
   },
   {
     name: "closing",

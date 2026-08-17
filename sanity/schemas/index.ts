@@ -11,6 +11,7 @@ import { commercialPage } from "./commercialPage";
 import { contactPage } from "./contactPage";
 import { legalPage } from "./legalPage";
 import { cityPage, citySectionTypes } from "./cityPage";
+import { contactSectionTypes } from "./contactSections";
 import { reviewSettings } from "./reviewSettings";
 import { navigation } from "./navigation";
 import { faq } from "./faq";
@@ -51,4 +52,5 @@ export const schemaTypes: SchemaTypeDefinition[] = [
   ...partnersSectionTypes,
   ...careersSectionTypes,
   ...citySectionTypes,
+  ...contactSectionTypes,
 ];

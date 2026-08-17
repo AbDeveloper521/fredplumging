@@ -29,6 +29,18 @@ interface ServiceHeroSectionProps {
   subheadings?: string[];
 }
 
+/**
+ * Business facts a credential label may reference by token, so a strip like
+ * "Licensed · {license}" keeps the licence number in Site Settings instead of
+ * retyped into page content. Unknown tokens are left alone.
+ */
+function resolveCredential(label: string, site: SiteContent): string {
+  return label
+    .replace("{license}", site.licenseNumber)
+    .replace("{years}", site.yearsInBusiness)
+    .replace("{phone}", site.phone);
+}
+
 /** CSS-only entrance — the hero must never wait on JS hydration. */
 function Rise({
   delay = 0,
@@ -259,7 +271,7 @@ export function ServiceHeroSection({
                       aria-hidden="true"
                       className="size-[18px] text-red-500"
                     />
-                    {credential.label}
+                    {resolveCredential(credential.label, site)}
                   </li>
                 );
               })}

@@ -31,6 +31,7 @@ export const SITE_SETTINGS_QUERY = defineQuery(
     email,
     emailHref,
     serviceArea,
+    hours[]{ days, hours },
     foundedYear,
     yearsInBusiness,
     url,
@@ -234,14 +235,7 @@ export const COMMERCIAL_PAGE_QUERY = defineQuery(
 
 export const CONTACT_PAGE_QUERY = defineQuery(
   `*[_type == "contactPage" && _id == "contactPage"][0]{
-    heroEyebrow,
-    heroHeading,
-    heroIntro,
-    responsePromise,
-    hours[]{ days, hours },
-    emergencyHeading,
-    emergencyBody,
-    faqs[]{ question, answer }
+    ${SECTIONS_PROJECTION}
   }`,
 );
 

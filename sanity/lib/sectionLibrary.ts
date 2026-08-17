@@ -12,6 +12,7 @@ import { homePageDefaults } from "@/data/homePage";
 import { aboutPageDefaults } from "@/data/aboutPage";
 import { partnersPageDefaults } from "@/data/partnersPage";
 import { careersPageDefaults } from "@/data/careersPage";
+import { contactPageDefaults } from "@/data/contactPage";
 import { DEFAULT_FAQ_HEADING } from "@/data/faqSets";
 import type { LibrarySection } from "@/data/sectionLibrary";
 
@@ -1086,6 +1087,71 @@ export function toLibrarySection(
       };
     }
 
+    // ————— Contact bands (default fill — these must never drop) —————
+    case "contactChannels": {
+      const fb = contactPageDefaults.channels;
+      const cta = ctaPair(raw.quoteCtaLabel, raw.quoteCtaHref);
+      return {
+        _type: "contactChannels",
+        _key,
+        emergencyHeading: str(raw.emergencyHeading) ?? fb.emergencyHeading,
+        emergencyBody: str(raw.emergencyBody) ?? fb.emergencyBody,
+        emergencyNote: str(raw.emergencyNote) ?? fb.emergencyNote,
+        quoteHeading: str(raw.quoteHeading) ?? fb.quoteHeading,
+        quoteBody: str(raw.quoteBody) ?? fb.quoteBody,
+        quoteCtaLabel: cta?.label,
+        quoteCtaHref: cta?.href,
+      };
+    }
+    case "contactForm": {
+      // Default fill on EVERY field, and deliberately no render gate: this
+      // band is the site's lead capture. An owner who clears one label must
+      // get that label's shipped wording back, never a blank control and
+      // never a vanished form. Removing the form is a separate, explicit act
+      // (delete or hide the section) — and the document schema warns on it.
+      const fb = contactPageDefaults.form;
+      return {
+        _type: "contactForm",
+        _key,
+        heading: str(raw.heading) ?? fb.heading,
+        intro: str(raw.intro) ?? fb.intro,
+        workLegend: str(raw.workLegend) ?? fb.workLegend,
+        contactLegend: str(raw.contactLegend) ?? fb.contactLegend,
+        serviceLabel: str(raw.serviceLabel) ?? fb.serviceLabel,
+        servicePlaceholder: str(raw.servicePlaceholder) ?? fb.servicePlaceholder,
+        propertyTypeLabel: str(raw.propertyTypeLabel) ?? fb.propertyTypeLabel,
+        locationLabel: str(raw.locationLabel) ?? fb.locationLabel,
+        urgencyLabel: str(raw.urgencyLabel) ?? fb.urgencyLabel,
+        messageLabel: str(raw.messageLabel) ?? fb.messageLabel,
+        messagePlaceholder:
+          str(raw.messagePlaceholder) ?? fb.messagePlaceholder,
+        nameLabel: str(raw.nameLabel) ?? fb.nameLabel,
+        companyLabel: str(raw.companyLabel) ?? fb.companyLabel,
+        phoneLabel: str(raw.phoneLabel) ?? fb.phoneLabel,
+        emailLabel: str(raw.emailLabel) ?? fb.emailLabel,
+        contactMethodLabel: str(raw.contactMethodLabel) ?? fb.contactMethodLabel,
+        referralLabel: str(raw.referralLabel) ?? fb.referralLabel,
+        submitLabel: str(raw.submitLabel) ?? fb.submitLabel,
+        submittingLabel: str(raw.submittingLabel) ?? fb.submittingLabel,
+        submitNote: str(raw.submitNote) ?? fb.submitNote,
+        // The ONE field with no default fill: the shipped page carries no
+        // consent line, so "empty" is the real value, not a gap to patch.
+        consentLine: str(raw.consentLine),
+        emergencyNotice: str(raw.emergencyNotice) ?? fb.emergencyNotice,
+        successHeading: str(raw.successHeading) ?? fb.successHeading,
+        successBody: str(raw.successBody) ?? fb.successBody,
+        successAgainLabel: str(raw.successAgainLabel) ?? fb.successAgainLabel,
+        errorMessage: str(raw.errorMessage) ?? fb.errorMessage,
+        detailsHeading: str(raw.detailsHeading) ?? fb.detailsHeading,
+        phoneRowLabel: str(raw.phoneRowLabel) ?? fb.phoneRowLabel,
+        emailRowLabel: str(raw.emailRowLabel) ?? fb.emailRowLabel,
+        serviceAreaRowLabel:
+          str(raw.serviceAreaRowLabel) ?? fb.serviceAreaRowLabel,
+        hoursRowLabel: str(raw.hoursRowLabel) ?? fb.hoursRowLabel,
+        licenseRowLabel: str(raw.licenseRowLabel) ?? fb.licenseRowLabel,
+      };
+    }
+
     default:
       return null;
   }
@@ -1201,6 +1267,10 @@ export const SECTION_REQUIREMENTS: Record<
     ],
     arrays: [],
   },
+  // Never drop — every field default-fills. Listed so an unknown-type report
+  // can never mistake them for unregistered sections.
+  contactChannels: { strings: [], arrays: [] },
+  contactForm: { strings: [], arrays: [] },
 };
 
 export interface DroppedSection {

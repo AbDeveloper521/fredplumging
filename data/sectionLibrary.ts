@@ -4,6 +4,7 @@ import type { AboutSection } from "./aboutPage";
 import type { PartnersSection } from "./partnersPage";
 import type { CareersSection } from "./careersPage";
 import type { CitySection } from "./cities";
+import type { ContactSection } from "./contactPage";
 import type { FaqBandSection } from "./faqSets";
 
 /**
@@ -26,6 +27,7 @@ export type LibrarySection =
   | PartnersSection
   | CareersSection
   | CitySection
+  | ContactSection
   // Owned by no page: the shared Q&A band, which any stack may carry.
   | FaqBandSection;
 
@@ -41,6 +43,7 @@ const CHILD_MEMBER_TYPE: Record<string, string> = {
   benefits: "item",
   items: "item",
   steps: "step",
+  faqs: "faq",
 };
 
 /**
@@ -60,7 +63,8 @@ const CHILD_MEMBER_TYPE: Record<string, string> = {
  */
 export function sectionsForSanity(
   sections: LibrarySection[],
-  options: { faqSetId: string },
+  // Optional: a stack with no shared Q&A band needs no set to point at.
+  options: { faqSetId?: string } = {},
 ): Record<string, unknown>[] {
   // JSON round-trip strips `undefined`s (the empty photo slots).
   const stack = JSON.parse(JSON.stringify(sections)) as Record<
@@ -70,6 +74,14 @@ export function sectionsForSanity(
 
   return stack.map((section) => {
     if (section._type === "faqBand") {
+      if (!options.faqSetId) {
+        // A caller with a shared Q&A band MUST say which set it points at —
+        // writing the band with a dangling reference would publish a page
+        // whose questions silently never appear.
+        throw new Error(
+          `sectionsForSanity: section "${section._key}" is a faqBand but no faqSetId was given.`,
+        );
+      }
       return {
         _type: "faqBand",
         _key: section._key,
