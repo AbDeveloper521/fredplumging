@@ -1,37 +1,44 @@
 /**
- * Seeds the `hydroJettingPage` document's `sections[]` with the
- * /commercial/hydro-jetting stack from data/hydroJettingPage.ts, VERBATIM, and
- * creates the "Hydro Jetting FAQs" set the Q&A band references.
+ * Seeds the hydro jetting SERVICE document — `/services/hydro-jetting` — with
+ * the eight-band stack from data/hydroJettingService.ts, VERBATIM, and creates
+ * the "Hydro Jetting FAQs" set the Q&A band references.
  * Dry run:
- *   sanity exec scripts/seed-hydro-jetting-page.ts
+ *   npx sanity exec scripts/seed-hydro-jetting-page.ts
  * write pass (owner runs this after reading the plan):
- *   sanity exec scripts/seed-hydro-jetting-page.ts -- --confirm
+ *   npx sanity exec scripts/seed-hydro-jetting-page.ts -- --confirm
  *
  * ⚠️  BEFORE RUNNING --confirm: close (or hard-reload) every open Studio tab
- * showing Hydro Jetting Page. A stale tab holding an old draft that presses
- * Publish afterwards will overwrite the seeded document — this exact accident
- * happened with the About page.
+ * showing Service Pages. A stale tab holding an old draft that presses Publish
+ * afterwards will overwrite the seeded document — this exact accident happened
+ * with the About page.
+ *
+ * Hydro jetting is a SERVICE, not a page singleton: it lives in the Services
+ * collection with every other service and renders on the ordinary
+ * /services/[slug] template. There is exactly ONE hydro jetting page on this
+ * site, at /services/hydro-jetting. Jetting is mentioned on Drain & Sewer,
+ * Specialty Services and in two FAQ sets — none of those is a rival page, and
+ * the Commercial menu links to this same URL rather than to a twin.
  *
  * What it does, and ALL it can do:
- *  - Patches `hydroJettingPage`, and `drafts.hydroJettingPage` when a draft
- *    exists — same treatment, one transaction. When NO document exists at all
- *    it uses createIfNotExists({_id: "hydroJettingPage", _type:
- *    "hydroJettingPage"}) and then seeds it — creation, never replacement.
- *  - This page is NEW (the audit found no hydro jetting page anywhere on the
- *    site: no route, no service document, no sitemap entry), so this is a
- *    first seed rather than an expansion of an existing page. It has no old
- *    fixed-field shape and no leftover fields are expected; if a target
- *    document carries ANY unexpected field the script stops and reports rather
- *    than guessing.
- *  - It refuses outright on a non-empty `sections[]` — see `planFor`. There is
- *    no shipped-placeholder exception here, because this page never shipped a
- *    placeholder: anything already in that array was put there by a person.
+ *  - CREATE path (what the audit found: no hydro jetting service exists) —
+ *    creates the published `service-hydro-jetting` document with its identity
+ *    fields and the stack, via createIfNotExists + patch. Creation, never
+ *    replacement.
+ *  - EXPAND path — if the document already exists it is PATCHED, not replaced:
+ *    the stack is written, missing identity fields are filled in, and every
+ *    field already set by a person (including the slug) is left exactly as it
+ *    is. Published and draft get the same treatment, in one transaction.
+ *  - It refuses outright on a non-empty `sections[]` — see `planFor`. Anything
+ *    already in that array was put there by a person.
+ *  - It refuses if a DIFFERENT service document already covers hydro jetting.
+ *    Which URL is canonical, and the redirect a slug change needs, are the
+ *    owner's call, not this script's.
  *
  * The "Hydro Jetting FAQs" set is created if missing; one that already has
  * questions is left completely alone. The Multi-Family and Commercial sets are
  * separate documents and are never touched. The navigation document is NEVER
- * touched either: the Commercial → Hydro Jetting menu item is the owner's to
- * add in Studio.
+ * touched either: the Services → Hydro Jetting and Commercial → Hydro Jetting
+ * menu items are the owner's to add in Studio.
  *
  * THIS SCRIPT MUST NEVER DELETE ANYTHING — no document deletes, no asset
  * operations, no other document types, under any flag.
@@ -41,8 +48,9 @@
 import { getCliClient } from "sanity/cli";
 import {
   hydroJettingSectionsForSanity,
-  HYDRO_JETTING_PATH,
-} from "../data/hydroJettingPage";
+  HYDRO_JETTING_SLUG,
+} from "../data/hydroJettingService";
+import { serviceHref, services as fallbackServices } from "../data/services";
 import {
   HYDRO_JETTING_FAQ_SET,
   HYDRO_JETTING_FAQ_SET_ID,
@@ -52,19 +60,59 @@ import {
 
 type Raw = Record<string, unknown>;
 
-const PAGE_ID = "hydroJettingPage";
-const DRAFT_ID = `drafts.${PAGE_ID}`;
+const DOC_ID = `service-${HYDRO_JETTING_SLUG}`;
+const DRAFT_ID = `drafts.${DOC_ID}`;
+const PATH = serviceHref(HYDRO_JETTING_SLUG);
 
-/** Old fields this script may unset — none exist for this page. */
-const LEFTOVER_FIELDS: string[] = [];
+/** Where the card sits in the services grid; nudged if 70 is taken. */
+const PREFERRED_ORDER = 70;
+
+/** Every field the `service` schema defines. Anything else stops the script. */
+const KNOWN_SERVICE_FIELDS = [
+  "title",
+  "shortDescription",
+  "sections",
+  "body",
+  "photo",
+  "icon",
+  "featured",
+  "order",
+  "slug",
+  "seoTitle",
+  "seoDescription",
+];
 
 /**
- * The stack in Sanity shape. Shared with the Studio prefill (`initialValue` in
- * sanity/schemas/hydroJettingPage.ts) so a document created either way is
- * identical: nested card/item rows keyed, and the Q&A band written as a
- * REFERENCE to the shared set rather than a copy of its questions — the
- * fallback in data/ carries them inline because there is nothing to
- * dereference when Sanity is unreachable.
+ * The service's identity fields, taken from the fallback in data/services.ts
+ * so the published document and the fallback say the same thing. `sections`
+ * and `slug` are handled separately — the stack is written through the shared
+ * Sanity translation, and the slug is locked in the Studio once set.
+ */
+function identityFields(): Raw {
+  const fallback = fallbackServices.find((s) => s.slug === HYDRO_JETTING_SLUG);
+  if (!fallback) {
+    throw new Error(
+      `data/services.ts has no "${HYDRO_JETTING_SLUG}" entry — the fallback and ` +
+        "the seeder must describe the same service.",
+    );
+  }
+  return {
+    title: fallback.title,
+    shortDescription: fallback.shortDescription,
+    icon: fallback.icon,
+    featured: false,
+    ...(fallback.seoTitle ? { seoTitle: fallback.seoTitle } : {}),
+    ...(fallback.seoDescription
+      ? { seoDescription: fallback.seoDescription }
+      : {}),
+  };
+}
+
+/**
+ * The stack in Sanity shape: nested card/item rows keyed, and the Q&A band
+ * written as a REFERENCE to the shared set rather than a copy of its
+ * questions — the fallback in data/ carries them inline because there is
+ * nothing to dereference when Sanity is unreachable.
  */
 const preparedSections = (): Raw[] => hydroJettingSectionsForSanity();
 
@@ -89,38 +137,14 @@ function faqSetDocument(): Raw {
   };
 }
 
-/**
- * Collects every piece of real content inside a value: non-empty text on any
- * non-underscore path, and image asset references. Empty scaffolding does
- * not count.
- */
-function findContent(value: unknown, path: string, out: string[]): void {
-  if (typeof value === "string") {
-    if (value.trim() !== "") out.push(`${path} = ${JSON.stringify(value.slice(0, 80))}`);
-    return;
-  }
-  if (Array.isArray(value)) {
-    value.forEach((entry, i) => findContent(entry, `${path}[${i}]`, out));
-    return;
-  }
-  if (value && typeof value === "object") {
-    const asset = (value as Raw).asset as Raw | undefined;
-    if (asset && typeof asset === "object" && typeof asset._ref === "string") {
-      out.push(`${path}.asset._ref = ${asset._ref}`);
-    }
-    for (const [key, inner] of Object.entries(value as Raw)) {
-      if (key.startsWith("_")) continue;
-      findContent(inner, `${path}.${key}`, out);
-    }
-  }
-}
-
 interface Plan {
   id: string;
-  /** Leftover fields actually present on this document (to unset). */
-  unset: string[];
-  /** True when the published document must be created first. */
+  /** True when this document must be created before it can be patched. */
   create: boolean;
+  /** Identity fields missing on this document, which will be filled in. */
+  fill: string[];
+  /** Identity fields already set by a person, which are left alone. */
+  keep: string[];
 }
 
 /** Validates one existing document and returns its plan, or null to stop. */
@@ -131,15 +155,15 @@ function planFor(id: string, doc: Raw): Plan | null {
       `STOP: ${id} already has a non-empty sections array ` +
         `(${sections.length} item(s)) — so it is content someone built, and ` +
         "this script will not overwrite it. To add the hydro jetting bands to " +
-        "that page, add them in /studio (Hydro Jetting Page), or empty the " +
-        "sections list there first and re-run this. Nothing was changed.",
+        "that service, add them in /studio (Service Pages → Hydro Jetting), " +
+        "or empty the section list there first and re-run this. Nothing was " +
+        "changed.",
     );
     return null;
   }
 
-  const fields = Object.keys(doc).filter((key) => !key.startsWith("_"));
-  const unexpected = fields.filter(
-    (field) => field !== "sections" && !LEFTOVER_FIELDS.includes(field),
+  const unexpected = Object.keys(doc).filter(
+    (key) => !key.startsWith("_") && !KNOWN_SERVICE_FIELDS.includes(key),
   );
   if (unexpected.length > 0) {
     console.error(
@@ -150,28 +174,26 @@ function planFor(id: string, doc: Raw): Plan | null {
     return null;
   }
 
-  const present = LEFTOVER_FIELDS.filter(
-    (field) => doc[field] !== undefined && doc[field] !== null,
+  const wanted = identityFields();
+  const fill = Object.keys(wanted).filter(
+    (field) => doc[field] === undefined || doc[field] === null,
   );
-  const content: string[] = [];
-  for (const field of present) findContent(doc[field], `${id}.${field}`, content);
-  if (content.length > 0) {
-    console.error(
-      `STOP: leftover fields on ${id} still contain real content — ` +
-        "unsetting them would discard it:\n" +
-        content.map((line) => `  - ${line}`).join("\n") +
-        "\nNothing was changed.",
-    );
-    return null;
-  }
+  const keep = Object.keys(wanted).filter((field) => !fill.includes(field));
 
   console.log(
-    `${id}: sections is ${Array.isArray(sections) ? "empty" : "absent"}; ` +
-      (present.length
-        ? `leftover fields verified empty of content, will unset: ${present.join(", ")}`
-        : "no leftover fields present"),
+    `${id}: exists; sections is ${Array.isArray(sections) ? "empty" : "absent"} — ` +
+      "the stack will be written." +
+      (fill.length ? ` Missing field(s) filled in: ${fill.join(", ")}.` : "") +
+      (keep.length ? ` Left as-is (already set): ${keep.join(", ")}.` : ""),
   );
-  return { id, unset: present, create: false };
+  if (doc.body !== undefined && doc.body !== null) {
+    console.log(
+      `  note: ${id} also has “Page content” (body) prose. It is NOT deleted, ` +
+        "but once the section list has sections the template renders those " +
+        "instead and the body is ignored.",
+    );
+  }
+  return { id, create: false, fill, keep };
 }
 
 async function main() {
@@ -182,8 +204,11 @@ async function main() {
     console.error("SANITY_API_WRITE_TOKEN is not set (Editor scope, .env.local).");
     process.exit(1);
   }
+  // Writing needs the Editor token; the dry run only reads, so it settles for
+  // the read token (or CLI login) and still prints the full plan.
+  const token = writeToken ?? process.env.SANITY_API_READ_TOKEN;
   const client = getCliClient({ apiVersion: "2026-07-01" }).withConfig({
-    ...(writeToken ? { token: writeToken } : {}),
+    ...(token ? { token } : {}),
     useCdn: false,
   });
   const { projectId, dataset } = client.config();
@@ -191,48 +216,60 @@ async function main() {
     `${confirm ? "WRITE PASS" : "DRY RUN"} against ${projectId}/${dataset}\n`,
   );
   console.log(
-    "⚠️  Close or hard-reload any open Studio tab showing Hydro Jetting Page " +
+    "⚠️  Close or hard-reload any open Studio tab showing Service Pages " +
       "before --confirm — a stale tab pressing Publish afterwards overwrites " +
       "the seeded document (this happened with the About page).\n",
   );
 
-  // Audit guard: this page exists exactly once on the site. If a hydro jetting
-  // SERVICE document has appeared since, seeding a second page about the same
-  // service would split its ranking — stop and let a human decide.
+  // Audit guard: exactly one page on this site is about hydro jetting. If
+  // another service document already covers it at a different address,
+  // seeding this one would put two pages about the same service on one site,
+  // competing for the same ranking — stop and let a human decide.
   const rivals = await client.fetch<Array<{ _id: string; slug: string | null }>>(
-    `*[_type == "service" && (slug.current match "*jet*" || title match "*Jet*")]{_id, "slug": slug.current}`,
+    `*[_type == "service" && _id != $id && !(_id in path("drafts.**")) &&
+       (slug.current match "*jet*" || title match "*jet*")]{_id, "slug": slug.current}`,
+    { id: DOC_ID },
   );
   if (rivals.length > 0) {
     console.error(
-      "STOP: a hydro-jetting SERVICE document now exists in Sanity — " +
+      "STOP: another hydro-jetting SERVICE document already exists — " +
         rivals.map((r) => `${r._id} (/services/${r.slug})`).join(", ") +
-        `.\nSeeding ${HYDRO_JETTING_PATH} as well would put two hydro jetting ` +
-        "pages on one site, competing for the same search ranking. Decide " +
-        "which URL is canonical first (moving one needs a 301 redirect — the " +
-        "owner's call, not this script's). Nothing was changed.",
+        `.\nSeeding ${PATH} as well would put two hydro jetting pages on one ` +
+        "site. Expand the existing document instead, or decide which URL is " +
+        "canonical first — moving one needs a redirect, which is the owner's " +
+        "call, not this script's. Nothing was changed.",
     );
     process.exit(1);
   }
 
   const [doc, draft] = await Promise.all([
-    client.fetch<Raw | null>(`*[_id == $id][0]`, { id: PAGE_ID }),
+    client.fetch<Raw | null>(`*[_id == $id][0]`, { id: DOC_ID }),
     client.fetch<Raw | null>(`*[_id == $id][0]`, { id: DRAFT_ID }),
   ]);
+
+  // Keep the card out of an occupied slot in the services grid.
+  const takenOrders = await client.fetch<number[]>(
+    `*[_type == "service" && _id != $id && defined(order)].order`,
+    { id: DOC_ID },
+  );
+  const order = takenOrders.includes(PREFERRED_ORDER)
+    ? Math.max(...takenOrders) + 10
+    : PREFERRED_ORDER;
 
   const plans: Plan[] = [];
   if (!doc && !draft) {
     console.log(
-      `No ${PAGE_ID} document exists (published or draft) — the published ` +
-        "document will be CREATED and seeded. (Alternative without this " +
-        "script: open Hydro Jetting Page in /studio — it prefills with the " +
-        "same stack, but you must also create the “Hydro Jetting FAQs” set " +
-        "under FAQ Sets yourself, or the Q&A band points at nothing — and " +
-        "press Publish.)",
+      `No ${DOC_ID} document exists (published or draft) — the published ` +
+        "service will be CREATED and seeded. (Alternative without this " +
+        "script: add a Service in /studio by hand, set its web address to " +
+        `“${HYDRO_JETTING_SLUG}”, build all ${preparedSections().length} ` +
+        "bands, and create the “Hydro Jetting FAQs” set under FAQ Sets " +
+        "yourself, or the Q&A band points at nothing.)",
     );
-    plans.push({ id: PAGE_ID, unset: [], create: true });
+    plans.push({ id: DOC_ID, create: true, fill: Object.keys(identityFields()), keep: [] });
   } else {
     for (const [id, source] of [
-      [PAGE_ID, doc],
+      [DOC_ID, doc],
       [DRAFT_ID, draft],
     ] as const) {
       if (!source) continue;
@@ -275,6 +312,17 @@ async function main() {
       "not touched.",
   );
 
+  const identity = identityFields();
+  console.log(`\nService document (${PATH}):`);
+  console.log(`  • _id ${DOC_ID}, web address “${HYDRO_JETTING_SLUG}”`);
+  for (const [field, value] of Object.entries(identity)) {
+    console.log(`  • ${field}: ${JSON.stringify(value)}`);
+  }
+  console.log(
+    `  • order: ${order}${order === PREFERRED_ORDER ? "" : ` (${PREFERRED_ORDER} was taken)`} — ` +
+      "where its card sits in the services grid.",
+  );
+
   const sections = preparedSections();
   console.log(`\nSections to seed, in order (photo slots stay empty):`);
   sections.forEach((section, i) => {
@@ -285,6 +333,10 @@ async function main() {
         : ` — ${fields.join(", ")}`;
     console.log(`  ${i + 1}. ${section._type} (_key: ${section._key})${detail}`);
   });
+  console.log(
+    "  + the badge strip and the map band, which the service template closes " +
+      "every service page with — not part of the stack.",
+  );
   console.log(
     `\nTargets: ${plans
       .map((plan) => `${plan.id}${plan.create ? " (will be created)" : ""}`)
@@ -311,10 +363,8 @@ async function main() {
     return;
   }
 
-  // One transaction: create the published doc only if missing, then per
-  // target set the stack and drop any verified-empty leftovers. These are
-  // the only writes in the script, and they target only the hydroJettingPage
-  // ids and the hydro jetting FAQ set.
+  // One transaction. These are the only writes in the script, and they target
+  // only the hydro jetting service ids and the hydro jetting FAQ set.
   let transaction = client.transaction();
 
   if (!faqSetHasContent) {
@@ -338,27 +388,35 @@ async function main() {
   for (const plan of plans) {
     if (plan.create) {
       transaction = transaction.createIfNotExists({
-        _id: PAGE_ID,
-        _type: PAGE_ID,
+        _id: DOC_ID,
+        _type: "service",
       });
     }
-    transaction = transaction.patch(plan.id, (patch) => {
-      const withSections = patch.set({ sections });
-      return plan.unset.length ? withSections.unset(plan.unset) : withSections;
-    });
+    transaction = transaction.patch(plan.id, (patch) =>
+      patch
+        // Fields a person has already set — including the slug, which the
+        // Studio locks once it exists — are only supplied if missing.
+        .setIfMissing({
+          ...identity,
+          order,
+          slug: { _type: "slug", current: HYDRO_JETTING_SLUG },
+        })
+        .set({ sections }),
+    );
   }
   await transaction.commit();
 
   console.log(
     `\nDone. ${plans.map((plan) => plan.id).join(" and ")} now carr${plans.length === 1 ? "ies" : "y"} ` +
-      `the ${sections.length}-band ${HYDRO_JETTING_PATH} stack` +
+      `the ${sections.length}-band ${PATH} stack` +
       (faqSetHasContent ? "" : `, and “${HYDRO_JETTING_FAQ_SET.title}” exists under FAQ Sets`) +
-      ". Hard-reload /studio (Hydro Jetting Page shows the section list, no " +
-      `'Unknown fields found') and reload ${HYDRO_JETTING_PATH} — every band ` +
-      "should render, with the Q&A band reading from the shared set. Then add " +
-      "the banner and collage photos in Studio, and the nav link: under " +
-      "Navigation Menu → Commercial, add a dropdown item titled “Hydro " +
-      `Jetting” with the address “${HYDRO_JETTING_PATH}”.`,
+      ". Hard-reload /studio (Service Pages → Hydro Jetting shows the section " +
+      `list, no 'Unknown fields found') and reload ${PATH} — every band should ` +
+      "render, with the Q&A band reading from the shared set, and the card " +
+      "should appear in the /services grid. Then add the banner and collage " +
+      "photos in Studio, and the nav links: under Navigation Menu → Services " +
+      `add “Hydro Jetting” → “${PATH}”, and under Commercial add the same ` +
+      "title and the SAME address. One page, two menus — that is intended.",
   );
 }
 

@@ -2,19 +2,29 @@ import { hydroJettingFaqBand, HYDRO_JETTING_FAQ_SET_ID } from "./faqSets";
 import { sectionsForSanity, type LibrarySection } from "./sectionLibrary";
 
 /**
- * Hydro Jetting page (`/commercial/hydro-jetting`) — FALLBACK for the
- * `hydroJettingPage` Sanity singleton (see
- * `sanity/lib/getHydroJettingPage.ts`).
+ * Hydro Jetting (`/services/hydro-jetting`) — the section stack for the
+ * `service` document with slug `hydro-jetting`, spliced into the fallback
+ * list in ./services.ts.
+ *
+ * It is a SERVICE, so it is an ordinary service document on the ordinary
+ * /services/[slug] template — no page-specific document type, no route of its
+ * own, no bespoke layout. Kept in its own file only because the stack is long
+ * and carries the claims notes below; ./services.ts holds the service's
+ * identity fields next to every other service's.
  *
  * ONE page about hydro jetting exists on this site and this is it. Jetting is
  * mentioned on /services/drain-sewer, /services/specialty-services and in the
  * FAQ sets, but no other page ranks for it — a second hydro jetting page would
- * split its own ranking, so anything that wants to link to jetting links HERE.
+ * split its own ranking, so anything that wants to link to jetting links HERE,
+ * including the Commercial menu. (An earlier build put this page at
+ * /commercial/hydro-jetting; that URL is now a permanent redirect to this one —
+ * see next.config.ts.)
  *
- * Built on the SERVICE-PAGE rhythm, band for band, exactly as
- * `data/commercialPage.ts` is: banner → photo-collage band → cards → list →
- * cards → reviews → Q&A → closing CTA, every one of them an existing shared
- * library type. No new section type was added for this page.
+ * Eight bands on the SERVICE-PAGE rhythm, every one of them an existing shared
+ * library type: banner → photo-collage band → cards → list → cards → reviews →
+ * Q&A → closing CTA. No new section type was added for this page. The template
+ * closes every service page with the badge strip and the map band, so those
+ * are deliberately not in the stack.
  *
  * CLAIMS DISCIPLINE — read before editing:
  *  - NO equipment specifications. No PSI, GPM, hose length or nozzle type
@@ -26,14 +36,16 @@ import { sectionsForSanity, type LibrarySection } from "./sectionLibrary";
  *    COMMITMENT awaiting the client's confirmation — see
  *    `UNCONFIRMED_COMMITMENTS` in ./faqSets.
  */
-/**
- * THE canonical URL path for hydro jetting on this site — the route, the
- * page's canonical tag, the sitemap entry and the nav link the owner adds all
- * read it from here, so there is one address and it cannot drift into two.
- */
-export const HYDRO_JETTING_PATH = "/commercial/hydro-jetting";
 
-export const defaultHydroJettingSections: LibrarySection[] = [
+/**
+ * THE slug hydro jetting lives at. The fallback service, the seeder and the
+ * redirect from the old address all read it from here, so there is one
+ * address and it cannot drift into two. Its URL is `serviceHref(slug)` — the
+ * same derivation every other service uses.
+ */
+export const HYDRO_JETTING_SLUG = "hydro-jetting";
+
+export const hydroJettingSections: LibrarySection[] = [
   // 1 — banner. Photo slot stays empty until the owner uploads one in Studio;
   // the band renders its blueprint wash and the placeholder caption below.
   {
@@ -249,13 +261,13 @@ export const defaultHydroJettingSections: LibrarySection[] = [
  * The same stack in SANITY shape, for anything that writes a document — the
  * shared translation in ./sectionLibrary.ts, pointed at this page's set.
  *
- * Both the Studio prefill (`initialValue` in
- * sanity/schemas/hydroJettingPage.ts) and
- * scripts/seed-hydro-jetting-page.ts go through this, so a document created
- * either way is identical.
+ * scripts/seed-hydro-jetting-page.ts goes through this. There is no Studio
+ * prefill to keep in step: `service` is a collection, not a singleton, so a
+ * per-document `initialValue` would prefill EVERY new service with the hydro
+ * jetting stack.
  */
 export function hydroJettingSectionsForSanity(): Record<string, unknown>[] {
-  return sectionsForSanity(defaultHydroJettingSections, {
+  return sectionsForSanity(hydroJettingSections, {
     faqSetId: HYDRO_JETTING_FAQ_SET_ID,
   });
 }

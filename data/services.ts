@@ -1,5 +1,9 @@
 import type { NavIconName } from "./navigation";
 import type { LibrarySection } from "./sectionLibrary";
+import {
+  hydroJettingSections,
+  HYDRO_JETTING_SLUG,
+} from "./hydroJettingService";
 
 /** A resolved Sanity image: URL built server-side, alt from the CMS. */
 export interface CmsPhoto {
@@ -245,6 +249,25 @@ export const services: Service[] = [
         _key: "tpl-badges",
       },
     ],
+  },
+  {
+    // THE hydro jetting page — one page, one URL. Jetting is mentioned on
+    // Drain & Sewer, Specialty Services and in two FAQ sets; none of those is
+    // a rival page, and the Commercial menu links here rather than to a twin.
+    // Its eight bands live in ./hydroJettingService.ts, which also documents
+    // the claims that are deliberately NOT made on it.
+    title: "Hydro Jetting",
+    slug: HYDRO_JETTING_SLUG,
+    shortDescription:
+      "High-pressure jetting that scours grease, sludge, scale and roots out of commercial drain and sewer lines — camera inspected before and after.",
+    seoTitle: "Hydro Jetting in Dallas–Fort Worth | Fred's Plumbing",
+    seoDescription:
+      "High-pressure hydro jetting for commercial and multi-family drain and sewer lines across the Dallas–Fort Worth Metroplex — camera inspected before and after.",
+    image: "/images/service-hydro-jetting.webp",
+    imageAlt:
+      "High-pressure jetting hose fed into a cleanout at a commercial property",
+    icon: "waves",
+    sections: hydroJettingSections,
   },
   {
     title: "Senior Care Facilities",

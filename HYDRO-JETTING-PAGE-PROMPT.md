@@ -7,27 +7,33 @@ and fully editable in Sanity. The client has singled this one out as the most im
 the new Commercial section, so it gets real depth — but it still follows the existing service
 template rather than a bespoke layout.
 
-## Step 0 — settle the URL before writing anything
+## Step 0 — the URL
 
-**Audit first and report before creating any route.** Check whether a hydro jetting page
-already exists — likely `/services/hydro-jetting` or similar, since jetting already appears in
-service lists and in the Multi-Family FAQ.
+**The page lives under Services: `/services/hydro-jetting`.** It is a service, it belongs in the
+Services collection, and it is built exactly like every other `/services/[slug]` page — same
+document type, same section stack, same template. Do **not** create it under `/commercial/`.
 
-- **If a page already exists:** do **not** create a second one. Two pages about hydro jetting on
-  one site compete with each other in search and split their own ranking. Expand the existing
-  page with the content below, keep its current URL as canonical, and have the new Commercial
-  dropdown link to that same URL.
-- **If no page exists:** create it under the commercial section (`/commercial/hydro-jetting`),
-  matching where the client wants it in the nav.
+**Audit first and report before creating anything.** Check whether a hydro jetting service
+document already exists — jetting already appears in service lists and in the Multi-Family FAQ,
+so there may be one already.
 
-Report which case you found and the final URL. If the existing page has a URL the owner may
-want to move, **say so and stop** — a move needs a 301 and is his decision, not yours.
+- **If a service document already exists:** do **not** create a second one. Expand the existing
+  document with the content below, keeping its current slug.
+- **If none exists:** create a new service document with slug `hydro-jetting`.
+
+Either way there must be exactly **one** hydro jetting page on the site. The Commercial dropdown
+will simply link to `/services/hydro-jetting` — a nav item pointing at an existing page, not a
+duplicate page. Two pages on the same topic compete with each other in search and split their own
+ranking.
+
+If you find an existing document at a slug the owner might want changed, **say so and stop** — a
+slug change needs a redirect and is his decision, not yours.
 
 ## Structure
 
-Mirror an existing `/services/[slug]` page's section stack exactly — same types from the shared
-library, same order. Report the stack you mirrored. Eight bands, matching the Commercial page's
-length. No new section types.
+This **is** a service page, so it uses the existing service page template as-is — the same
+document type, the same section stack from the shared library, in the same order. Report the
+stack. Eight bands. No new section types, no page-specific route, no bespoke layout.
 
 **Do not visit, fetch, or scrape the competitor's site.** All copy is below and is original. The
 competitor page was used for topic coverage only — which questions to answer — and none of their
@@ -175,19 +181,23 @@ Whatever CTA band the service pages already end with. Phone and contact link fro
 
 ## Navigation
 
-**Do not add the nav link yourself.** The owner adds it in Studio. Give him the exact values in
-your report: the parent `Commercial` dropdown, child title `Hydro Jetting`, href = whichever URL
-step 0 settled on.
+**Do not add any nav link yourself.** The owner adds them in Studio. Give him the exact values in
+your report:
+
+- Under **Services**: child title `Hydro Jetting`, href `/services/hydro-jetting`
+- Under **Commercial**: child title `Hydro Jetting`, href `/services/hydro-jetting` — the **same**
+  URL. One page, reachable from two menus. That is correct and intentional; it is not a
+  duplicate.
 
 ## Seeding
 
 `scripts/seed-hydro-jetting-page.ts` — same safety spec as every other seeder: dry-run by
 default, `--confirm` to write, patches published **and** draft, refuses on a non-empty
-`sections[]` (or clearly handles the case where you're expanding an existing page — say which),
-never deletes a document or asset, prints the stale-Studio-tab warning. Creates the
+`sections[]` (or clearly handles the case where you're expanding an existing service document —
+say which), never deletes a document or asset, prints the stale-Studio-tab warning. Creates the
 `Hydro Jetting FAQs` set if absent; refuses to overwrite one that already has items.
 
-`data/` fallback carries the same stack so the page renders before seeding.
+The `data/` services fallback carries the same stack so the page renders before seeding.
 
 ## SEO
 
@@ -200,16 +210,20 @@ data of any kind.
    regenerated types committed. **No verification scaffolding left in `app/`.**
 2. The page renders the full stack on the fallback path before seeding.
 3. 375 / 768 / 1024 / 1440; the six cards balance correctly (3+3) at every width.
-4. **Confirm exactly one hydro jetting page exists on the site** — grep the routes and the
-   sitemap. This is the check that matters most.
+4. **Confirm exactly one hydro jetting page exists on the site, at `/services/hydro-jetting`** —
+   grep the routes and the sitemap, and confirm no `/commercial/hydro-jetting` route was created.
+   This is the check that matters most.
+5. The page appears correctly in the `/services` index grid alongside the other services, and the
+   balanced-row layout still works with the service count changed by one.
 5. FAQ reads from the referenced set; typegen shows a resolved `faqSet`, not a `_ref`.
 6. Every other page unchanged, including the other two FAQ sets.
 7. One commit; nothing uncommitted left behind.
 
 ## Report
 
-Which URL case you found in step 0 and the final canonical URL; the service-page stack you
-mirrored; confirmation that only one hydro jetting page exists; the "scheduled service" line
+Whether a hydro jetting service document already existed or you created one; confirmation the
+page is at `/services/hydro-jetting` and that **no** `/commercial/` route was created; the
+service-page stack used; the "scheduled service" line
 flagged for client confirmation; a note that equipment specs (PSI/GPM) were deliberately omitted
 and can be added if the owner supplies them; the dry-run plan, the confirm command, the stale-tab
 reminder, and the exact nav values for the owner to type.

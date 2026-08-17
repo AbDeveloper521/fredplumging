@@ -232,12 +232,6 @@ export const COMMERCIAL_PAGE_QUERY = defineQuery(
   }`,
 );
 
-export const HYDRO_JETTING_PAGE_QUERY = defineQuery(
-  `*[_type == "hydroJettingPage" && _id == "hydroJettingPage"][0]{
-    ${SECTIONS_PROJECTION}
-  }`,
-);
-
 export const CONTACT_PAGE_QUERY = defineQuery(
   `*[_type == "contactPage" && _id == "contactPage"][0]{
     heroEyebrow,

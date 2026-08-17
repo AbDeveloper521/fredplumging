@@ -93,18 +93,11 @@ export const structure: StructureResolver = (S) =>
             .schemaType("commercialPage")
             .documentId("commercialPage"),
         ),
-      // Sits under Commercial Page because /commercial/hydro-jetting sits
-      // under /commercial. It is the site's ONLY hydro jetting page — the
-      // Drain & Sewer and Specialty Services documents under Service Pages
+      // Hydro Jetting is deliberately NOT a page singleton here: it is a
+      // service, so it is edited under Service Pages with every other
+      // service, at /services/hydro-jetting. It is the site's ONLY hydro
+      // jetting page — the Drain & Sewer and Specialty Services documents
       // mention jetting but must not become second pages about it.
-      S.listItem()
-        .title("Hydro Jetting Page")
-        .id("hydroJettingPage")
-        .child(
-          S.document()
-            .schemaType("hydroJettingPage")
-            .documentId("hydroJettingPage"),
-        ),
       S.listItem()
         .title("Contact Page")
         .id("contactPage")

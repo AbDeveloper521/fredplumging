@@ -197,7 +197,7 @@ export const COMMERCIAL_FAQ_SET: FaqSet = {
 /**
  * The five hydro jetting questions, verbatim as approved.
  *
- * Its own set, referenced only by /commercial/hydro-jetting — deliberately not
+ * Its own set, referenced only by /services/hydro-jetting — deliberately not
  * appended to the Commercial or Multi-Family sets, which answer for the whole
  * business rather than for one service.
  *
@@ -272,7 +272,7 @@ export const UNCONFIRMED_COMMITMENTS: ReadonlyArray<{
   {
     commitment: "recurring / scheduled jetting on a regular cycle",
     where:
-      "/commercial/hydro-jetting → “How we approach a jetting job” → “Scheduled service where it makes sense”",
+      "/services/hydro-jetting → “How we approach a jetting job” → “Scheduled service where it makes sense”",
     confirmWithClient:
       "Does Fred's actually offer scheduled, recurring jetting (e.g. kitchen lines quarterly) as a standing arrangement? If not, drop that card in Studio before the page goes live. The FAQ answer about how often lines need jetting is descriptive and can stay either way.",
   },
