@@ -35,6 +35,22 @@ function rateLimited(ip: string): boolean {
 /** Minimum plausible time between page load and a human submitting a form. */
 const MIN_ELAPSED_MS = 3000;
 
+/**
+ * The page the form was submitted from. Same-origin only: a Referer from
+ * anywhere else is not this site's form and has no business being printed
+ * into the notification email.
+ */
+function refererUrl(req: NextRequest): string | undefined {
+  const referer = req.headers.get("referer");
+  if (!referer) return undefined;
+  try {
+    const url = new URL(referer);
+    return url.origin === req.nextUrl.origin ? url.toString() : undefined;
+  } catch {
+    return undefined;
+  }
+}
+
 export async function POST(req: NextRequest) {
   let body: Record<string, unknown>;
   try {
@@ -84,8 +100,17 @@ export async function POST(req: NextRequest) {
           String(value ?? ""),
         ]),
       ),
+      // Which page the form was submitted from. Taken from the Referer
+      // rather than added to the payload so the forms, their fields and
+      // their spam handling stay untouched — a same-origin fetch sends the
+      // full path under the default referrer policy.
+      pageUrl: refererUrl(req),
+      submittedAt: new Date(),
     });
   } catch {
+    // deliverLead has already written the full submission to the log under
+    // LEAD_DELIVERY_FAILED. The visitor gets a generic failure — never the
+    // provider's message, and never a false success.
     return NextResponse.json(
       { message: "We couldn't send your request — please call us." },
       { status: 502 },

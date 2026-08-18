@@ -179,8 +179,15 @@ export function QuoteRequestForm({ site }: { site: SiteContent }) {
 
         {status === "error" && (
           <p role="alert" className="text-sm font-medium text-red-600 sm:col-span-2">
-            Something went wrong sending your request. Please try again or call
-            us directly.
+            Something went wrong sending your request — it did not reach us.
+            Please try again, or call{" "}
+            <a
+              href={site.phoneHref}
+              className="font-bold underline underline-offset-2"
+            >
+              {site.phone}
+            </a>
+            .
           </p>
         )}
 

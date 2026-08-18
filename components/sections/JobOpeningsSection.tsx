@@ -11,9 +11,10 @@ import {
 import type { SiteContent } from "@/data/site";
 
 /**
- * ⚠️ DO NOT "improve" the apply actions into an application form. There is
- * no form backend — submitLead() in lib/validations.ts is a stub — and a
- * résumé upload that silently discards the file is far worse than no form:
+ * ⚠️ DO NOT "improve" the apply actions into an application form. The lead
+ * forms do deliver now (lib/leadDelivery.tsx emails every submission), but
+ * that path carries no file upload and no applicant tracking whatsoever, and
+ * a résumé upload that silently discards the file is far worse than no form:
  * the applicant loses a career move and the client a hire they never knew
  * applied. Apply routes stay mailto/external until a real backend exists
  * (see GO-LIVE.md).

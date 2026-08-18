@@ -13,6 +13,7 @@ npm run dev     # Start dev server (next dev)
 npm run build   # Production build
 npm run start   # Serve production build
 npm run lint    # ESLint (flat config, eslint.config.mjs)
+npm run email   # React Email preview server for emails/ (localhost:3001)
 ```
 
 There is no test suite. Verify changes with `npm run build` and `npm run lint`.
@@ -27,7 +28,8 @@ There is no test suite. Verify changes with `npm run build` and `npm run lint`.
 | Icons | `lucide-react` |
 | Forms | `react-hook-form` + `zod` (via `@hookform/resolvers`) |
 | Class merging | `cn()` from `lib/utils.ts` (`clsx` + `tailwind-merge`) |
-| Fonts | Google Fonts via `next/font` (Inter, Manrope) |
+| Fonts | Google Fonts via `next/font` (Inter, Manrope) — emails use a system stack, no web fonts |
+| Email | `resend` + `react-email` (`@react-email/components`); templates in `emails/` |
 
 Path alias: `@/*` maps to the repo root (e.g. `@/components/ui/Button`, `@/data/site`).
 
@@ -61,9 +63,17 @@ data/                       # All site content as typed constants
   navigation.ts             # Nav tree (CMS-shaped), footer nav, trust logos
   services.ts               # Service cards (title, slug, image, lucide icon, href)
   industries.ts, faqs.ts, testimonials.ts
+emails/                     # React Email templates — `npm run email` previews them
+  LeadNotificationEmail.tsx # The ONE email the site sends: new lead → the business
 lib/
   utils.ts                  # cn() class-merge helper
-  validations.ts            # zod schemas + submitLead() mock submission
+  validations.ts            # zod schemas + submitLead() → POST /api/contact
+  leadDelivery.tsx          # Lead transport: renders the email, sends it via Resend
+  email/
+    config.ts               # Env wiring (RESEND_API_KEY, LEAD_TO/FROM, asset origin)
+    lead.ts                 # Submission → subject, labelled rows, Central-time stamp
+    shell.tsx               # Shared email chrome (band, footer, CTA, detail table)
+    theme.ts                # Email brand tokens (hex + system fonts — no Tailwind)
 public/
   images/, logos/           # Placeholder dirs — real photography/logos not yet added
 ```
@@ -122,7 +132,7 @@ Shadow tokens: `shadow-card`, `shadow-card-lg` (soft corporate card shadows), `s
 - **No hardcoded copy for business facts.** Phone, email, name, years in business, cities all come from `data/site.ts`. Import it; never inline "972-564-9081" etc.
 - Navigation is CMS-shaped (mirrors a future Sanity document: `_key` on array members, `layout: "mega" | "list"` per group). Components must consume `getNavigation()`, never the `STATIC_NAVIGATION` constant directly.
 - Lists of services/industries/FAQs/testimonials live in `data/*.ts` as typed constants — add content there, not in components.
-- Forms validate with zod schemas in `lib/validations.ts`; submission currently goes through the mock `submitLead()` (replace its body when a real endpoint exists).
+- Forms validate with zod schemas in `lib/validations.ts`. `submitLead()` POSTs to `/api/contact`, which re-validates, filters spam (honeypot + timing + per-IP rate limit) and calls `deliverLead()` in `lib/leadDelivery.tsx`. That emails ONE notification to the business via Resend with `replyTo` set to the customer — the customer gets the on-page success state, **not** a confirmation email. Delivery either succeeds or throws: on any failure the whole submission is logged under `LEAD_DELIVERY_FAILED` and the visitor is shown an error with the phone number, never a false success.
 - `site.url` is a placeholder domain — confirm before anything canonical/SEO-critical.
 
 ## Coding Conventions

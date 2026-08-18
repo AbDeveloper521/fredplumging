@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
+    "email": "email dev --dir emails --port 3001",
     "typegen": "sanity schema extract --path=./sanity/extract.json --force && sanity typegen generate",
     "check:drift": "sanity exec scripts/check-fallback-drift.ts",
     "seed": "sanity exec scripts/seed-content.ts --",
@@ -15,6 +16,7 @@
   "dependencies": {
     "@hookform/resolvers": "^5.4.0",
     "@portabletext/react": "^7.0.1",
+    "@react-email/components": "^1.0.12",
     "@sanity/image-url": "^2.1.1",
     "@sanity/vision": "^6.6.0",
     "clsx": "^2.1.1",
@@ -25,6 +27,7 @@
     "react": "19.2.4",
     "react-dom": "19.2.4",
     "react-hook-form": "^7.82.0",
+    "resend": "^6.20.0",
     "sanity": "^6.6.0",
     "server-only": "^0.0.1",
     "styled-components": "^6.4.4",
@@ -32,12 +35,14 @@
     "zod": "^4.4.3"
   },
   "devDependencies": {
+    "@react-email/ui": "^6.9.2",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.2.11",
+    "react-email": "^6.9.2",
     "tailwindcss": "^4",
     "typescript": "^5"
   }
