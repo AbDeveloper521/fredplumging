@@ -6,6 +6,7 @@ import { getFooterNavigation } from "@/sanity/lib/getFooterNavigation";
 import { Logo } from "@/components/ui/Logo";
 import { Container } from "@/components/ui/Container";
 import { CopyrightYear } from "@/components/layout/CopyrightYear";
+import { SITE_CREDIT } from "@/data/credit";
 
 /** Single-path brand glyphs, 24×24 viewBox. */
 const SOCIAL_ICON_PATHS = {
@@ -129,26 +130,46 @@ export async function Footer() {
         </div>
       </Container>
 
-      {/* Bottom bar */}
+      {/*
+        Bottom bar — three groups on one desktop row (copyright · legal ·
+        build credit). Only the copyright is reordered on mobile (it drops
+        last); the two focusable groups keep DOM order = visual order at
+        every width, so tab order never diverges from what's on screen.
+      */}
       <div className="border-t border-white/8">
-        <Container className="flex flex-col items-center justify-between gap-4 py-6 text-[14px] sm:flex-row">
-          <p>
+        <Container className="flex flex-col items-center justify-between gap-1 py-4 text-center text-[14px] md:flex-row md:gap-6 md:text-left">
+          <p className="order-3 md:order-1">
             ©{" "}
             <Suspense fallback={null}>
               <CopyrightYear />
             </Suspense>{" "}
-            {site.legalName}. All rights reserved.
-            · Licensed &amp; Insured · TX Master Plumber License
+            {`${site.name} · Licensed & Insured`}
           </p>
-          <ul className="flex flex-wrap items-center gap-x-6 gap-y-2">
-            {footer.legal.map((link) => (
-              <li key={link._key}>
-                <Link href={link.href} className="transition-colors hover:text-white">
+          <ul className="order-1 flex flex-wrap items-center justify-center gap-x-3 md:order-2">
+            {footer.legal.map((link, index) => (
+              <li key={link._key} className="flex items-center gap-x-3">
+                {index > 0 && <span aria-hidden="true">·</span>}
+                <Link
+                  href={link.href}
+                  className="inline-flex min-h-11 items-center transition-colors hover:text-white md:min-h-0"
+                >
                   {link.label}
                 </Link>
               </li>
             ))}
           </ul>
+          <p className="order-2 flex min-h-11 items-center justify-center gap-x-1 md:order-3 md:min-h-0">
+            {SITE_CREDIT.prefix}
+            <a
+              href={SITE_CREDIT.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`${SITE_CREDIT.prefix} ${SITE_CREDIT.name} (opens in a new tab)`}
+              className="inline-flex min-h-11 items-center rounded-sm text-white hover:underline focus-visible:underline md:min-h-0"
+            >
+              {SITE_CREDIT.name}
+            </a>
+          </p>
         </Container>
       </div>
 
