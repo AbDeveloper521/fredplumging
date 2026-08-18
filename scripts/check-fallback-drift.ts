@@ -85,7 +85,7 @@ async function main() {
     {
       name: "siteSettings (data/site.ts)",
       fallback: { ...site, serviceAreaCities },
-      query: `*[_type=="siteSettings" && _id=="siteSettings"][0]{name,legalName,tagline,phone,phoneHref,email,emailHref,serviceArea,hours[]{days,hours},foundedYear,yearsInBusiness,url,licenseNumber,serviceAreaCities}`,
+      query: `*[_type=="siteSettings" && _id=="siteSettings"][0]{name,legalName,tagline,phone,phoneHref,email,emailHref,serviceArea,hours[]{days,hours},foundedYear,yearsInBusiness,url,licenseNumber,facebookUrl,linkedinUrl,serviceAreaCities}`,
     },
     {
       name: "navigation (data/navigation.ts)",

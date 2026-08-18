@@ -40,6 +40,8 @@ export const SITE_SETTINGS_QUERY = defineQuery(
     addressLocality,
     addressRegion,
     postalCode,
+    facebookUrl,
+    linkedinUrl,
     mapHeading,
     mapDescription,
     mapEmbedUrl,

@@ -5,6 +5,20 @@ import { defineArrayMember, defineField, defineType } from "sanity";
  * Every field that is required in TypeScript is required here: a missing
  * phone number should be impossible to publish, not a runtime undefined.
  */
+/**
+ * True when `value` is an https URL served by `domain` or a subdomain of it
+ * (www.facebook.com, uk.linkedin.com). Host-based rather than a string
+ * prefix so a lookalike such as facebook.com.example.net cannot pass.
+ */
+function isOnDomain(value: string, domain: string): boolean {
+  try {
+    const host = new URL(value).hostname.toLowerCase();
+    return host === domain || host.endsWith(`.${domain}`);
+  } catch {
+    return false;
+  }
+}
+
 export const siteSettings = defineType({
   name: "siteSettings",
   title: "Site Settings",
@@ -157,6 +171,36 @@ export const siteSettings = defineType({
       title: "ZIP code",
       description: "Part of the business address.",
       type: "string",
+    }),
+    defineField({
+      name: "facebookUrl",
+      title: "Facebook page",
+      description:
+        "Full address of your Facebook PAGE, e.g. https://www.facebook.com/fredsplumbingtx/. Leave empty to hide the Facebook icon in the footer — better an absent icon than one that goes nowhere.",
+      type: "url",
+      validation: (rule) =>
+        rule
+          .uri({ scheme: ["https"] })
+          .custom((value?: string) =>
+            !value || isOnDomain(value, "facebook.com")
+              ? true
+              : "This must be a facebook.com address. Paste the link from your Facebook page's address bar.",
+          ),
+    }),
+    defineField({
+      name: "linkedinUrl",
+      title: "LinkedIn page",
+      description:
+        "Full address of your LinkedIn COMPANY page, e.g. https://www.linkedin.com/company/fred-s-plumbing1996/. Leave empty to hide the LinkedIn icon in the footer.",
+      type: "url",
+      validation: (rule) =>
+        rule
+          .uri({ scheme: ["https"] })
+          .custom((value?: string) =>
+            !value || isOnDomain(value, "linkedin.com")
+              ? true
+              : "This must be a linkedin.com address. Paste the link from your LinkedIn company page's address bar.",
+          ),
     }),
     defineField({
       name: "mapHeading",

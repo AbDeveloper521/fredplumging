@@ -116,6 +116,8 @@ export async function getSite(
     addressLocality: result.addressLocality ?? FALLBACK.addressLocality,
     addressRegion: result.addressRegion ?? FALLBACK.addressRegion,
     postalCode: result.postalCode ?? FALLBACK.postalCode,
+    facebookUrl: result.facebookUrl ?? FALLBACK.facebookUrl,
+    linkedinUrl: result.linkedinUrl ?? FALLBACK.linkedinUrl,
     mapHeading: result.mapHeading ?? FALLBACK.mapHeading,
     mapDescription: result.mapDescription ?? FALLBACK.mapDescription,
     mapEmbedUrl: result.mapEmbedUrl ?? FALLBACK.mapEmbedUrl,

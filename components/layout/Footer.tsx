@@ -7,9 +7,28 @@ import { Logo } from "@/components/ui/Logo";
 import { Container } from "@/components/ui/Container";
 import { CopyrightYear } from "@/components/layout/CopyrightYear";
 
+/** Single-path brand glyphs, 24×24 viewBox. */
+const SOCIAL_ICON_PATHS = {
+  facebook:
+    "M13.5 21v-7h2.4l.4-3h-2.8V9.1c0-.9.3-1.5 1.6-1.5h1.3V4.9c-.3 0-1.1-.1-2-.1-2 0-3.4 1.2-3.4 3.5V11H8.5v3H11v7h2.5Z",
+  linkedin:
+    "M6.94 8.5H4.06V20h2.88V8.5ZM5.5 7.19a1.69 1.69 0 1 0 0-3.38 1.69 1.69 0 0 0 0 3.38ZM20 13.43c0-3.06-1.63-4.48-3.81-4.48-1.76 0-2.55.97-2.99 1.65V8.5H10.5V20h2.88v-6.09c0-1.61.31-3.17 2.3-3.17 1.97 0 1.44 2.36 1.44 3.28V20H20v-6.57Z",
+} as const;
+
 export async function Footer() {
   const [site, footer] = await Promise.all([getSite(), getFooterNavigation()]);
   const columns = footer.columns;
+  // Driven by siteSettings so the icons can never point somewhere dead:
+  // a profile with no URL is dropped rather than rendered as a link to the
+  // platform's own homepage, which is what the hardcoded hrefs used to do.
+  const profiles: Array<{ label: string; href?: string; path: string }> = [
+    { label: "Facebook", href: site.facebookUrl, path: SOCIAL_ICON_PATHS.facebook },
+    { label: "LinkedIn", href: site.linkedinUrl, path: SOCIAL_ICON_PATHS.linkedin },
+  ];
+  const socials = profiles.filter(
+    (social): social is { label: string; href: string; path: string } =>
+      Boolean(social.href),
+  );
   return (
     <footer className="bg-navy-950 text-grey-300">
       <Container className="grid grid-cols-1 gap-12 py-16 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr_1.2fr] lg:gap-8 lg:py-20">
@@ -21,36 +40,30 @@ export async function Footer() {
             managers and facilities across the Dallas–Fort Worth Metroplex
             since {site.foundedYear}.
           </p>
-          <div className="mt-6 flex gap-3">
-            <a
-              href="https://www.facebook.com"
-              aria-label={`${site.name} on Facebook`}
-              className="flex size-10 items-center justify-center rounded-lg border border-white/12 transition-colors hover:border-red-500 hover:text-white"
-            >
-              <svg
-                aria-hidden="true"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-                className="size-[18px]"
-              >
-                <path d="M13.5 21v-7h2.4l.4-3h-2.8V9.1c0-.9.3-1.5 1.6-1.5h1.3V4.9c-.3 0-1.1-.1-2-.1-2 0-3.4 1.2-3.4 3.5V11H8.5v3H11v7h2.5Z" />
-              </svg>
-            </a>
-            <a
-              href="https://www.linkedin.com"
-              aria-label={`${site.name} on LinkedIn`}
-              className="flex size-10 items-center justify-center rounded-lg border border-white/12 transition-colors hover:border-red-500 hover:text-white"
-            >
-              <svg
-                aria-hidden="true"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-                className="size-[18px]"
-              >
-                <path d="M6.94 8.5H4.06V20h2.88V8.5ZM5.5 7.19a1.69 1.69 0 1 0 0-3.38 1.69 1.69 0 0 0 0 3.38ZM20 13.43c0-3.06-1.63-4.48-3.81-4.48-1.76 0-2.55.97-2.99 1.65V8.5H10.5V20h2.88v-6.09c0-1.61.31-3.17 2.3-3.17 1.97 0 1.44 2.36 1.44 3.28V20H20v-6.57Z" />
-              </svg>
-            </a>
-          </div>
+          {socials.length > 0 && (
+            <ul className="mt-6 flex gap-3">
+              {socials.map((social) => (
+                <li key={social.label}>
+                  <a
+                    href={social.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`${site.name} on ${social.label} (opens in a new tab)`}
+                    className="flex size-10 items-center justify-center rounded-lg border border-white/12 transition-colors hover:border-red-500 hover:text-white"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                      className="size-[18px]"
+                    >
+                      <path d={social.path} />
+                    </svg>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
 
         {/* Link columns */}

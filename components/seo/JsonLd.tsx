@@ -180,6 +180,9 @@ export async function JobPostingJsonLd({ job }: { job: JobPosting }) {
  */
 export async function JsonLd() {
   const site = await getSite();
+  const sameAs = [site.facebookUrl, site.linkedinUrl].filter(
+    (url): url is string => Boolean(url),
+  );
   const data = {
     "@context": "https://schema.org",
     "@type": "Plumber",
@@ -191,6 +194,11 @@ export async function JsonLd() {
     description:
       "Commercial, multi-family, drain, sewer, maintenance, and 24/7 emergency plumbing services across the Dallas–Fort Worth Metroplex.",
     foundingDate: String(site.foundedYear),
+    // Verified social profiles. `sameAs` is how search engines confirm that
+    // this page and those profiles are the same business — the values come
+    // from siteSettings, so the schema can never claim a profile the footer
+    // does not also link to. Omitted entirely when neither is set.
+    ...(sameAs.length > 0 ? { sameAs } : {}),
     founder: { "@type": "Person", name: "Fredrick Lee Press" },
     areaServed: [
       { "@type": "AdministrativeArea", name: site.serviceArea },

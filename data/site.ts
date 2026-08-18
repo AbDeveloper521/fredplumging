@@ -53,6 +53,16 @@ export interface Site {
   addressLocality?: string;
   addressRegion?: string;
   postalCode?: string;
+  /**
+   * Public social profiles. Optional: an unset URL hides that icon in the
+   * footer rather than linking somewhere dead — the placeholder hrefs these
+   * replaced pointed at facebook.com / linkedin.com themselves, so every
+   * click left the site for a platform homepage. Also emitted as schema.org
+   * `sameAs` (components/seo/JsonLd.tsx), which is how search engines tie
+   * these profiles to the business entity.
+   */
+  facebookUrl?: string;
+  linkedinUrl?: string;
   /** Heading for the shared Google-map band (homepage + service pages). */
   mapHeading: string;
   /** One supporting line under the map-band heading. */
@@ -91,6 +101,8 @@ export const site: Site = {
   // yearsInBusiness deliberately unset — derived from foundedYear.
   url: SITE_URL,
   licenseNumber: "RMP 44890",
+  facebookUrl: "https://www.facebook.com/fredsplumbingtx/",
+  linkedinUrl: "https://www.linkedin.com/company/fred-s-plumbing1996/",
   mapHeading: "Serving the Dallas–Fort Worth Metroplex",
   mapDescription:
     "Commercial and multi-family plumbing teams dispatched across DFW, 24/7.",

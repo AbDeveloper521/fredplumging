@@ -3328,6 +3328,8 @@ export type SiteSettings = {
   addressLocality?: string;
   addressRegion?: string;
   postalCode?: string;
+  facebookUrl?: string;
+  linkedinUrl?: string;
   mapHeading?: string;
   mapDescription?: string;
   mapEmbedUrl?: string;
@@ -3520,7 +3522,7 @@ export type AllSanitySchemaTypes =
 
 // Source: sanity/queries.ts
 // Variable: SITE_SETTINGS_QUERY
-// Query: *[_type == "siteSettings" && _id == "siteSettings"][0]{    name,    legalName,    tagline,    phone,    phoneHref,    email,    emailHref,    serviceArea,    hours[]{ days, hours },    foundedYear,    yearsInBusiness,    url,    licenseNumber,    streetAddress,    addressLocality,    addressRegion,    postalCode,    mapHeading,    mapDescription,    mapEmbedUrl,    serviceAreaCities  }
+// Query: *[_type == "siteSettings" && _id == "siteSettings"][0]{    name,    legalName,    tagline,    phone,    phoneHref,    email,    emailHref,    serviceArea,    hours[]{ days, hours },    foundedYear,    yearsInBusiness,    url,    licenseNumber,    streetAddress,    addressLocality,    addressRegion,    postalCode,    facebookUrl,    linkedinUrl,    mapHeading,    mapDescription,    mapEmbedUrl,    serviceAreaCities  }
 export type SITE_SETTINGS_QUERY_RESULT = {
   name: string | null;
   legalName: string | null;
@@ -3542,6 +3544,8 @@ export type SITE_SETTINGS_QUERY_RESULT = {
   addressLocality: string | null;
   addressRegion: string | null;
   postalCode: string | null;
+  facebookUrl: string | null;
+  linkedinUrl: string | null;
   mapHeading: string | null;
   mapDescription: string | null;
   mapEmbedUrl: string | null;
@@ -19896,7 +19900,7 @@ export type FOOTER_NAVIGATION_QUERY_RESULT = {
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
-    '*[_type == "siteSettings" && _id == "siteSettings"][0]{\n    name,\n    legalName,\n    tagline,\n    phone,\n    phoneHref,\n    email,\n    emailHref,\n    serviceArea,\n    hours[]{ days, hours },\n    foundedYear,\n    yearsInBusiness,\n    url,\n    licenseNumber,\n    streetAddress,\n    addressLocality,\n    addressRegion,\n    postalCode,\n    mapHeading,\n    mapDescription,\n    mapEmbedUrl,\n    serviceAreaCities\n  }': SITE_SETTINGS_QUERY_RESULT;
+    '*[_type == "siteSettings" && _id == "siteSettings"][0]{\n    name,\n    legalName,\n    tagline,\n    phone,\n    phoneHref,\n    email,\n    emailHref,\n    serviceArea,\n    hours[]{ days, hours },\n    foundedYear,\n    yearsInBusiness,\n    url,\n    licenseNumber,\n    streetAddress,\n    addressLocality,\n    addressRegion,\n    postalCode,\n    facebookUrl,\n    linkedinUrl,\n    mapHeading,\n    mapDescription,\n    mapEmbedUrl,\n    serviceAreaCities\n  }': SITE_SETTINGS_QUERY_RESULT;
     '*[_type == "jobPosting" && open == true] | order(order asc){\n  title,\n  "slug": slug.current,\n  employmentType,\n  team,\n  shift,\n  openings,\n  summary,\n  responsibilities,\n  requirements,\n  compensationNote,\n  applyEmail,\n  applyUrl,\n  datePosted,\n  validThrough,\n  open\n}': JOB_POSTINGS_QUERY_RESULT;
     '*[_type == "jobPosting" && slug.current == $slug][0]{\n  title,\n  "slug": slug.current,\n  employmentType,\n  team,\n  shift,\n  openings,\n  summary,\n  responsibilities,\n  requirements,\n  compensationNote,\n  applyEmail,\n  applyUrl,\n  datePosted,\n  validThrough,\n  open\n}': JOB_POSTING_QUERY_RESULT;
     '*[_type == "navigation" && _id == "navigation"][0]{\n    items[]{\n      _key,\n      label,\n      href,\n      layout,\n      showServiceAreaCities,\n      children[]{\n        _key,\n        label,\n        href,\n        description,\n        icon\n      }\n    },\n    cta{ label, href }\n  }': NAVIGATION_QUERY_RESULT;
