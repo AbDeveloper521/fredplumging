@@ -64,15 +64,20 @@ data/                       # All site content as typed constants
   services.ts               # Service cards (title, slug, image, lucide icon, href)
   industries.ts, faqs.ts, testimonials.ts
 emails/                     # React Email templates — `npm run email` previews them
-  LeadNotificationEmail.tsx # The ONE email the site sends: new lead → the business
+  LeadNotificationEmail.tsx # To the business: a new lead, built for phone triage
+  CustomerConfirmationEmail.tsx # To the customer: what they sent + what happens next
 lib/
   utils.ts                  # cn() class-merge helper
   validations.ts            # zod schemas + submitLead() → POST /api/contact
-  leadDelivery.tsx          # Lead transport: renders the email, sends it via Resend
+  leadDelivery.tsx          # Lead transport: renders both emails, sends them via Resend
+  responseTime.ts           # The response-time commitment — EMPTY until the client approves one
+  yearsInBusiness.ts        # "30+" derived from foundedYear; site and emails share the rule
   email/
     config.ts               # Env wiring (RESEND_API_KEY, LEAD_TO/FROM, asset origin)
-    lead.ts                 # Submission → subject, labelled rows, Central-time stamp
-    shell.tsx               # Shared email chrome (band, footer, CTA, detail table)
+    lead.ts                 # Submission → subjects, labelled rows, Central-time stamp
+    reference.ts            # FP-XXXXX request reference, shared by both emails
+    dedupe.ts               # Double-submit guard (per-instance, best effort)
+    shell.tsx               # Shared design system: band, navy footer, CTA, panels, rows
     theme.ts                # Email brand tokens (hex + system fonts — no Tailwind)
 public/
   images/, logos/           # Placeholder dirs — real photography/logos not yet added
@@ -132,7 +137,7 @@ Shadow tokens: `shadow-card`, `shadow-card-lg` (soft corporate card shadows), `s
 - **No hardcoded copy for business facts.** Phone, email, name, years in business, cities all come from `data/site.ts`. Import it; never inline "972-564-9081" etc.
 - Navigation is CMS-shaped (mirrors a future Sanity document: `_key` on array members, `layout: "mega" | "list"` per group). Components must consume `getNavigation()`, never the `STATIC_NAVIGATION` constant directly.
 - Lists of services/industries/FAQs/testimonials live in `data/*.ts` as typed constants — add content there, not in components.
-- Forms validate with zod schemas in `lib/validations.ts`. `submitLead()` POSTs to `/api/contact`, which re-validates, filters spam (honeypot + timing + per-IP rate limit) and calls `deliverLead()` in `lib/leadDelivery.tsx`. That emails ONE notification to the business via Resend with `replyTo` set to the customer — the customer gets the on-page success state, **not** a confirmation email. Delivery either succeeds or throws: on any failure the whole submission is logged under `LEAD_DELIVERY_FAILED` and the visitor is shown an error with the phone number, never a false success.
+- Forms validate with zod schemas in `lib/validations.ts`. `submitLead()` POSTs to `/api/contact`, which re-validates, filters spam (honeypot + timing + per-IP rate limit) and calls `deliverLead()` in `lib/leadDelivery.tsx`. That sends TWO emails per submission, both carrying the same `FP-XXXXX` reference: first the notification to the business (`replyTo` the customer), then the confirmation to the customer (`replyTo` the business, skipped when no usable address was submitted). The business email is FATAL — if it fails, `deliverLead` throws, the whole submission is logged under `LEAD_DELIVERY_FAILED` and the visitor sees an error with the phone number, never a false success. The customer email is NON-FATAL — a failure is logged under `LEAD_CONFIRMATION_FAILED` and the lead still succeeds. Repeat submissions inside the window are suppressed by `lib/email/dedupe.ts`.
 - `site.url` is a placeholder domain — confirm before anything canonical/SEO-critical.
 
 ## Coding Conventions

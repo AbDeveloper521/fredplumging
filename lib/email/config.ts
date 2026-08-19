@@ -1,5 +1,6 @@
 import "server-only";
 import { site } from "@/data/site";
+import { derivedYearsInBusiness } from "@/lib/yearsInBusiness";
 import type { EmailBrand } from "./shell";
 
 /**
@@ -47,6 +48,11 @@ export function emailOrigin(): string {
 /**
  * A 360px-wide, 8 KB copy of the logo generated for email — the 417 KB
  * original in the site header is far too heavy for an inbox.
+ *
+ * Both templates use it TWICE (header band and footer). Neither placement is
+ * allowed to be load-bearing: images are blocked by default in a lot of
+ * inboxes, so the alt text is the business name and every fact around it is
+ * real text. See `EmailShell` in lib/email/shell.tsx.
  */
 export function emailLogoUrl(): string {
   return `${emailOrigin()}/logos/freds-plumbing-logo-email.png`;
@@ -62,6 +68,11 @@ export function emailBrand(): EmailBrand {
     siteUrl: emailOrigin(),
     logoUrl: emailLogoUrl(),
     serviceArea: site.serviceArea,
+    licenseNumber: site.licenseNumber,
+    // DERIVED, never written out as "30+": the same rule the site uses, so
+    // the figure in an inbox cannot drift from the figure on the page. An
+    // email is the worst place for a stale claim — nobody revisits it.
+    yearsInBusiness: derivedYearsInBusiness(site.foundedYear),
   };
 }
 

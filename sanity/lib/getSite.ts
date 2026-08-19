@@ -7,6 +7,7 @@ import {
 import { cacheLife } from "next/cache";
 import { logFallback } from "@/sanity/lib/fallbackLog";
 import { SITE_URL } from "@/lib/siteUrl";
+import { derivedYearsInBusiness } from "@/lib/yearsInBusiness";
 import { SITE_SETTINGS_QUERY } from "@/sanity/queries";
 import type { SITE_SETTINGS_QUERY_RESULT } from "@/sanity.types";
 import {
@@ -20,15 +21,16 @@ export const SITE_SETTINGS_TAG = "siteSettings";
 
 /**
  * "30+" derived from the founding year, so the display value can never
- * quietly age the way the old hardcoded "27+" did. Reading the current
- * year is only allowed inside a cache scope under Cache Components; the
- * "days" profile re-derives daily, which is plenty for a value that
- * changes once a year.
+ * quietly age the way the old hardcoded "27+" did. The rule itself lives in
+ * lib/yearsInBusiness.ts so the site and the transactional emails cannot
+ * disagree about it. Reading the current year is only allowed inside a cache
+ * scope under Cache Components; the "days" profile re-derives daily, which is
+ * plenty for a value that changes once a year.
  */
 async function derivedYears(foundedYear: number): Promise<string> {
   "use cache";
   cacheLife("days");
-  return `${new Date().getFullYear() - foundedYear}+`;
+  return derivedYearsInBusiness(foundedYear);
 }
 
 async function resolveFallback(): Promise<SiteContent> {

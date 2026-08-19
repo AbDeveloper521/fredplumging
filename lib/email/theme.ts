@@ -18,6 +18,12 @@ export const emailColors = {
   navy: "#0B1727",
   navyDeep: "#07111F",
   navyLine: "#1B3049",
+  /**
+   * Secondary text ON the navy bands (header chip, footer details). Pure
+   * white for everything flattens the hierarchy; this still clears 7:1
+   * against #0B1727, so it is readable rather than merely decorative.
+   */
+  onNavyMuted: "#9BA8B9",
   ink: "#111318",
   body: "#354052",
   muted: "#687383",
@@ -37,6 +43,12 @@ export const emailFont =
 /** Every email in this app is a single 600px column. */
 export const EMAIL_WIDTH = 600;
 
+/**
+ * Only the styles shared by more than one place. Anything that belongs to a
+ * single component (the card padding, the footer links) lives in that
+ * component in lib/email/shell.tsx — a token nobody reads is the start of two
+ * templates drifting apart.
+ */
 export const emailStyles = {
   body: {
     backgroundColor: emailColors.offwhite,
@@ -48,10 +60,6 @@ export const emailStyles = {
     width: "100%",
     maxWidth: `${EMAIL_WIDTH}px`,
     margin: "0 auto",
-  },
-  card: {
-    backgroundColor: emailColors.white,
-    padding: "28px 28px 8px",
   },
   heading: {
     color: emailColors.navy,
@@ -85,11 +93,5 @@ export const emailStyles = {
     letterSpacing: "1.2px",
     textTransform: "uppercase" as const,
     margin: "0 0 8px",
-  },
-  link: {
-    color: emailColors.brand,
-    fontFamily: emailFont,
-    fontWeight: 600,
-    textDecoration: "underline",
   },
 } as const;

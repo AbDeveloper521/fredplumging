@@ -1,8 +1,13 @@
-import { Hr, Section, Text } from "@react-email/components";
+import { Section, Text } from "@react-email/components";
 import {
   CallToAction,
+  Card,
   DetailTable,
+  Divider,
   EmailShell,
+  Eyebrow,
+  Panel,
+  PanelText,
   type DetailRow,
   type EmailBrand,
 } from "../lib/email/shell";
@@ -10,8 +15,18 @@ import { emailColors, emailFont, emailStyles } from "../lib/email/theme";
 
 /**
  * INTERNAL notification — the email Fred's Plumbing receives when someone
- * submits a form. Built for phone triage: who, how to reach them, how urgent,
- * then the detail. `replyTo` is set to the customer's address by the sender
+ * submits a form.
+ *
+ * Its job is TRIAGE SPEED, and that is the whole reason it is not just the
+ * customer confirmation with different words. Fred is reading this on a phone,
+ * possibly under a sink: who, where, what, how urgent, one tap to call. So it
+ * shares the confirmation's header band, footer, buttons, detail rows and
+ * panels — the visual system — and deliberately NONE of its reassurance
+ * furniture. No confirmation tick. No "what happens next". No "we'll be in
+ * touch shortly": he is the one being got in touch with. If a reassurance
+ * block ever turns up in here, it came from copy-paste, not from a decision.
+ *
+ * `replyTo` is set to the customer's address by the sender
  * (lib/leadDelivery.tsx), so hitting reply writes to the customer.
  *
  * Pure and props-driven so React Email's preview server can render it — see
@@ -20,6 +35,8 @@ import { emailColors, emailFont, emailStyles } from "../lib/email/theme";
 export interface LeadNotificationEmailProps {
   brand: EmailBrand;
   preheader: string;
+  /** Shared with the customer's confirmation for the same submission. */
+  reference: string;
   /** Best available display name for the person who submitted. */
   customerName: string;
   company?: string;
@@ -38,12 +55,14 @@ export interface LeadNotificationEmailProps {
   formLabel: string;
   /** The page it was submitted from, absolute URL when known. */
   pageUrl?: string;
-  pageLabel: string;
+  /** Path of that page. Undefined when the Referer did not say. */
+  pageLabel?: string;
 }
 
 export function LeadNotificationEmail({
   brand,
   preheader,
+  reference,
   customerName,
   company,
   isEmergency,
@@ -62,6 +81,7 @@ export function LeadNotificationEmail({
       preheader={preheader}
       brand={brand}
       bandLabel={isEmergency ? "Emergency request" : "New service request"}
+      reference={reference}
       footerNote="Sent automatically by the website contact forms. Reply to this email and your reply goes to the customer, not back to this inbox."
     >
       {isEmergency ? (
@@ -89,8 +109,8 @@ export function LeadNotificationEmail({
         </Section>
       ) : null}
 
-      <Section className="pad" style={{ ...emailStyles.card, padding: "28px 28px 4px" }}>
-        <Text style={emailStyles.eyebrow}>New lead</Text>
+      <Card padding="28px 28px 4px">
+        <Eyebrow>New lead</Eyebrow>
         <Text style={emailStyles.heading}>{customerName}</Text>
         {company ? (
           <Text
@@ -122,96 +142,59 @@ export function LeadNotificationEmail({
             />
           </Section>
         ) : null}
-      </Section>
+      </Card>
 
-      <Section className="pad" style={{ ...emailStyles.card, padding: "0 28px 4px" }}>
-        <Hr
-          style={{
-            border: "none",
-            borderTop: `1px solid ${emailColors.border}`,
-            margin: "6px 0 18px",
-          }}
-        />
-        <Text
-          style={{
-            ...emailStyles.eyebrow,
-            color: emailColors.navy,
-            margin: "0 0 14px",
-          }}
-        >
-          What they submitted
-        </Text>
+      <Card padding="0 28px 4px">
+        <Divider margin="6px 0 18px" />
+        <Eyebrow tone="navy">What they submitted</Eyebrow>
         <DetailTable rows={rows} />
 
         {messageParagraphs.length > 0 ? (
-          <Section
-            bgcolor={emailColors.offwhite}
-            style={{
-              backgroundColor: emailColors.offwhite,
-              borderLeft: `3px solid ${emailColors.brand}`,
-              margin: "18px 0 4px",
-              padding: "14px 16px",
-            }}
-          >
-            <Text
-              style={{
-                color: emailColors.muted,
-                fontFamily: emailFont,
-                fontSize: "13px",
-                fontWeight: 600,
-                lineHeight: "20px",
-                margin: "0 0 6px",
-              }}
-            >
-              Details
-            </Text>
+          <Panel title="Details">
             {messageParagraphs.map((paragraph, index) => (
-              <Text
+              <PanelText
                 key={index}
-                style={{
-                  color: emailColors.ink,
-                  fontFamily: emailFont,
-                  fontSize: "15px",
-                  lineHeight: "23px",
-                  margin:
-                    index === messageParagraphs.length - 1 ? 0 : "0 0 10px",
-                }}
+                margin={index === messageParagraphs.length - 1 ? "0" : "0 0 10px"}
               >
                 {paragraph}
-              </Text>
+              </PanelText>
             ))}
-          </Section>
+          </Panel>
         ) : null}
-      </Section>
+      </Card>
 
-      <Section className="pad" style={{ ...emailStyles.card, padding: "18px 28px 26px" }}>
-        <Hr
-          style={{
-            border: "none",
-            borderTop: `1px solid ${emailColors.border}`,
-            margin: "0 0 14px",
-          }}
-        />
+      <Card padding="18px 28px 26px">
+        <Divider margin="0 0 14px" />
+        <Text style={{ ...emailStyles.small, margin: "0 0 4px" }}>
+          Reference {reference}
+        </Text>
         <Text style={{ ...emailStyles.small, margin: "0 0 4px" }}>
           Submitted {submittedAt}
         </Text>
-        <Text style={{ ...emailStyles.small, margin: "0 0 4px" }}>
+        <Text style={{ ...emailStyles.small, margin: pageLabel ? "0 0 4px" : 0 }}>
           Form: {formLabel}
         </Text>
-        <Text style={{ ...emailStyles.small, margin: 0 }}>
-          Page:{" "}
-          {pageUrl ? (
-            <a
-              href={pageUrl}
-              style={{ color: emailColors.muted, textDecoration: "underline" }}
-            >
-              {pageLabel}
-            </a>
-          ) : (
-            pageLabel
-          )}
-        </Text>
-      </Section>
+        {/* Only when the Referer told us. Without it this row used to repeat
+            the form label under a second heading, which reads like a bug. */}
+        {pageLabel ? (
+          <Text style={{ ...emailStyles.small, margin: 0 }}>
+            Page:{" "}
+            {pageUrl ? (
+              <a
+                href={pageUrl}
+                style={{
+                  color: emailColors.muted,
+                  textDecoration: "underline",
+                }}
+              >
+                {pageLabel}
+              </a>
+            ) : (
+              pageLabel
+            )}
+          </Text>
+        ) : null}
+      </Card>
     </EmailShell>
   );
 }
@@ -232,9 +215,12 @@ LeadNotificationEmail.PreviewProps = {
     logoUrl:
       "https://fredplumging.vercel.app/logos/freds-plumbing-logo-email.png",
     serviceArea: "Dallas–Fort Worth Metroplex",
+    licenseNumber: "RMP 44890",
+    yearsInBusiness: "30+",
   },
   preheader:
     "214-555-0148 · Drain & sewer · Oakline Apartments, Plano · submitted 4:12 PM CDT",
+  reference: "FP-7K2QM",
   customerName: "Marissa Delgado",
   company: "Cardinal Property Group",
   isEmergency: true,

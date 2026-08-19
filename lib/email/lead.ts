@@ -1,16 +1,19 @@
 import { CONTACT_METHOD_OPTIONS, URGENCY_OPTIONS } from "@/lib/validations";
+import { responseTimeNote } from "@/lib/responseTime";
 import type { DetailRow, EmailBrand } from "./shell";
 import type { LeadNotificationEmailProps } from "@/emails/LeadNotificationEmail";
+import type { CustomerConfirmationEmailProps } from "@/emails/CustomerConfirmationEmail";
 
 /**
- * Turns a validated form submission into everything the notification email
- * needs.
+ * Turns a validated form submission into everything BOTH emails need.
  *
- * Scope, by decision: the site sends ONE email per submission — the internal
- * notification to Fred's Plumbing. The customer gets the on-page success
- * state, not a confirmation email. Do not add a customer-facing template
- * back without asking; an unrequested auto-reply is the client's reputation,
- * not a feature.
+ * Two emails go out per submission, and they do different jobs:
+ *   1. the internal notification to Fred's Plumbing — triage;
+ *   2. the confirmation to the customer — reassurance, and only when they
+ *      actually gave a usable email address.
+ * They carry the SAME reference so a phone call about "FP-7K2QM" means the
+ * same job to both of them. Ordering, failure handling and the double-send
+ * guard live in lib/leadDelivery.tsx; this module is content only.
  *
  * This module is the ONLY place that knows the shape of a lead, and it is
  * built from the fields the three live forms actually submit — see
@@ -30,11 +33,34 @@ export interface Lead {
   submittedAt: Date;
 }
 
-export interface PreparedLead {
+/** The internal notification: what to send, and to whom to reply. */
+export interface PreparedNotification {
   subject: string;
   /** The customer's address — set as the notification's replyTo. */
   replyTo?: string;
-  notification: LeadNotificationEmailProps;
+  props: LeadNotificationEmailProps;
+}
+
+/** The customer confirmation. Absent when no usable address was submitted. */
+export interface PreparedConfirmation {
+  to: string;
+  subject: string;
+  /** The business address — a reply to the confirmation reaches Fred. */
+  replyTo: string;
+  props: CustomerConfirmationEmailProps;
+}
+
+export interface PreparedLead {
+  /** Short reference, shared by both emails and the failure log. */
+  reference: string;
+  business: PreparedNotification;
+  /**
+   * `undefined` when the submission carried no usable email address. Every
+   * live form requires one today, but the endpoint accepts a union of
+   * schemas and a future form may not — a missing address skips the courtesy
+   * email silently rather than failing the lead.
+   */
+  customer?: PreparedConfirmation;
   /**
    * The whole submission as text, for the LEAD_DELIVERY_FAILED log line.
    * Includes empty fields as "(blank)" so the log is a complete record.
@@ -88,6 +114,14 @@ const FIELD_LABELS: Record<string, string> = {
 
 const FIELD_ORDER = Object.keys(FIELD_LABELS);
 
+/**
+ * Fields the confirmation does NOT read back to the customer. "How they found
+ * us" is answered for the business's benefit, not the customer's, and quoting
+ * it back reads like being profiled. Everything else they typed is echoed, so
+ * they can see exactly what landed.
+ */
+const CUSTOMER_HIDDEN_FIELDS = new Set(["referral"]);
+
 /** Which form it came from, in words the business will recognise. */
 const FORM_LABELS: Record<string, string> = {
   "contact-page": "Contact page — request a quote",
@@ -126,6 +160,23 @@ export function telHref(raw: string): string | undefined {
   return `tel:${trimmed.startsWith("+") ? "+" : ""}${digits}`;
 }
 
+/**
+ * Whether an address is worth handing to the email provider.
+ *
+ * Not a re-validation of the form — the zod schemas already did that, and
+ * every live form requires an email. This is the guard for the case the
+ * sending rules call out: a submission that arrives WITHOUT a usable address
+ * (a future form with an optional email field, or a lead replayed from a log)
+ * must skip the confirmation silently, never throw and never take the lead
+ * down with it. Deliberately conservative: one @, something either side, a
+ * dot in the domain, no whitespace.
+ */
+export function isSendableEmail(value: string | undefined): value is string {
+  const trimmed = (value ?? "").trim();
+  if (!trimmed || trimmed.length > 254) return false;
+  return /^[^\s@]+@[^\s@.]+(\.[^\s@.]+)+$/.test(trimmed);
+}
+
 function value(fields: Record<string, string>, key: string): string {
   return (fields[key] ?? "").trim();
 }
@@ -156,6 +207,18 @@ function displayName(fields: Record<string, string>): string {
     .join(" ");
 }
 
+/**
+ * First name only, for the confirmation's greeting. "Thanks, Marissa" reads
+ * like a person wrote it; "Thanks, Marissa Delgado" reads like a mail merge.
+ * Empty when nothing usable was submitted — the template drops the greeting
+ * rather than addressing someone as "there".
+ */
+function firstNameOf(fields: Record<string, string>): string | undefined {
+  const first = value(fields, "firstName") || displayName(fields).split(" ")[0];
+  const trimmed = (first ?? "").trim();
+  return trimmed.length > 0 && trimmed.length <= 40 ? trimmed : undefined;
+}
+
 /** Splits a free-text message into paragraphs; blank input yields none. */
 function paragraphsOf(message: string): string[] {
   return message
@@ -170,19 +233,32 @@ function truncate(text: string, max: number): string {
   return clean.length <= max ? clean : `${clean.slice(0, max - 1).trimEnd()}…`;
 }
 
-function buildRows(fields: Record<string, string>): DetailRow[] {
+/**
+ * The submitted fields as labelled rows.
+ *
+ * `audience: "customer"` drops the internal-only fields and strips the
+ * `tel:`/`mailto:` links: the business email exists to be acted on from a
+ * phone, but linking the customer's own number back at them just invites a
+ * misdial.
+ */
+function buildRows(
+  fields: Record<string, string>,
+  audience: "business" | "customer" = "business",
+): DetailRow[] {
   const name = displayName(fields);
   const rows: DetailRow[] = [];
   const rendered = new Set(["message", "firstName", "lastName"]);
+  const forCustomer = audience === "customer";
 
   for (const key of FIELD_ORDER) {
     const raw = key === "name" ? name : value(fields, key);
     if (!raw) continue;
     rendered.add(key);
+    if (forCustomer && CUSTOMER_HIDDEN_FIELDS.has(key)) continue;
     rows.push({
       label: FIELD_LABELS[key],
       value: displayValue(key, raw),
-      href: hrefFor(key, raw),
+      href: forCustomer ? undefined : hrefFor(key, raw),
     });
   }
 
@@ -202,27 +278,37 @@ function buildSubject(
   fields: Record<string, string>,
   name: string,
   isEmergency: boolean,
+  reference: string,
 ): string {
   // Phone triage: the words that matter go before the truncation point, so
-  // the lead is identifiable from a notification preview alone.
+  // the lead is identifiable from a notification preview alone. The reference
+  // goes last — it is what you quote once you are already on the call, not
+  // what you scan the inbox for.
   const qualifier =
     value(fields, "location") ||
     value(fields, "propertyType") ||
     value(fields, "service");
   const who = name || value(fields, "company") || "website enquiry";
   const lead = isEmergency ? "EMERGENCY service request" : "New service request";
-  return qualifier
+  const body = qualifier
     ? `${lead} — ${truncate(who, 40)}, ${truncate(qualifier, 45)}`
     : `${lead} — ${truncate(who, 60)}`;
+  return `${body} [${reference}]`;
 }
 
 /**
  * A complete, greppable text record of the submission. This is what gets
  * written to the log when delivery fails, so it has to be enough on its own
- * to call the customer back from — including the fields that came in blank.
+ * to call the customer back from — including the fields that came in blank,
+ * and the reference the customer may already be holding.
  */
-function buildPlainSummary(lead: Lead, name: string): string {
+function buildPlainSummary(
+  lead: Lead,
+  name: string,
+  reference: string,
+): string {
   return [
+    `reference: ${reference}`,
     // Only when the form did not submit a `name` field of its own (the
     // homepage hero splits it into firstName/lastName) — otherwise this
     // would print the same name twice.
@@ -238,7 +324,11 @@ function buildPlainSummary(lead: Lead, name: string): string {
     .join("\n");
 }
 
-export function prepareLead(lead: Lead, brand: EmailBrand): PreparedLead {
+export function prepareLead(
+  lead: Lead,
+  brand: EmailBrand,
+  reference: string,
+): PreparedLead {
   const { fields } = lead;
   const name = displayName(fields);
   const phone = value(fields, "phone");
@@ -247,8 +337,12 @@ export function prepareLead(lead: Lead, brand: EmailBrand): PreparedLead {
   const service = value(fields, "service");
   const isEmergency = value(fields, "urgency") === "emergency";
   const formLabel = FORM_LABELS[lead.source] ?? humaniseKey(lead.source);
+  const submittedAt = formatCentral(lead.submittedAt);
 
-  let pageLabel = formLabel;
+  // Left undefined when the Referer did not tell us which page it was: the
+  // notification then omits the row instead of printing the form label twice
+  // under two different headings.
+  let pageLabel: string | undefined;
   if (lead.pageUrl) {
     try {
       const parsed = new URL(lead.pageUrl);
@@ -267,13 +361,13 @@ export function prepareLead(lead: Lead, brand: EmailBrand): PreparedLead {
     .filter(Boolean)
     .join(" · ");
 
-  return {
-    subject: buildSubject(fields, name, isEmergency),
+  const business: PreparedNotification = {
+    subject: buildSubject(fields, name, isEmergency, reference),
     replyTo: email || undefined,
-    plainSummary: buildPlainSummary(lead, name),
-    notification: {
+    props: {
       brand,
       preheader,
+      reference,
       customerName: name || company || "Website enquiry",
       company: company || undefined,
       isEmergency,
@@ -282,10 +376,41 @@ export function prepareLead(lead: Lead, brand: EmailBrand): PreparedLead {
       customerEmail: email || undefined,
       rows: buildRows(fields),
       messageParagraphs: paragraphsOf(value(fields, "message")),
-      submittedAt: formatCentral(lead.submittedAt),
+      submittedAt,
       formLabel,
       pageUrl: lead.pageUrl,
       pageLabel,
     },
+  };
+
+  const customer: PreparedConfirmation | undefined = isSendableEmail(email)
+    ? {
+        to: email,
+        // Calm and recognisable: no "RE:", no manufactured urgency, nothing
+        // that reads as marketing. Someone who has just filled in a form
+        // should be able to tell at a glance that it worked.
+        subject: `We've received your request — ${brand.name}`,
+        replyTo: brand.email,
+        props: {
+          brand,
+          preheader: `We've got your request (${reference}) and someone from our team will be in touch. Emergency? Call ${brand.phone}.`,
+          reference,
+          firstName: firstNameOf(fields),
+          isEmergency,
+          rows: buildRows(fields, "customer"),
+          messageParagraphs: paragraphsOf(value(fields, "message")),
+          submittedAt,
+          // Empty until the client approves a figure — the panel renders
+          // without it. See lib/responseTime.ts.
+          responseTimeNote: responseTimeNote(),
+        },
+      }
+    : undefined;
+
+  return {
+    reference,
+    business,
+    customer,
+    plainSummary: buildPlainSummary(lead, name, reference),
   };
 }
