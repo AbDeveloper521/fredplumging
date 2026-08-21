@@ -88,12 +88,12 @@ site looks complete today.) Seed first; flip credentials second.
 - **The hiring-process section copy is unconfirmed** — the four steps in
   `components/sections/HiringProcessSection.tsx` are placeholders to be
   verified with the client.
-- **Production domain and inbox — CONFIRMED by the owner:**
+- **Production domain and inbox — CONFIRMED by the owner and now LIVE:**
   `https://fredsplumbing.com` and `contact@fredsplumbing.com`. The domain is
-  no longer a constant in `data/site.ts`: set `NEXT_PUBLIC_SITE_URL` on the
-  host (see `lib/siteUrl.ts` and `.env.example`). **Until DNS actually
-  resolves at fredsplumbing.com, set that variable to the Vercel origin** —
-  canonicals pointing at a domain that does not resolve hurt indexing.
+  not a constant in `data/site.ts`: set `NEXT_PUBLIC_SITE_URL` on the host
+  (see `lib/siteUrl.ts` and `.env.example`). DNS resolves, so that variable
+  should be the apex — never `www.` and never the Vercel alias, both of which
+  `proxy.ts` 308-redirects onto the apex.
 - **Site Settings in Sanity still holds wrong identity values** and Sanity
   wins over `data/site.ts` at runtime: `email`/`emailHref` are still
   `service@fredsplumbing.com`, and `foundedYear` is `1993` (every other source

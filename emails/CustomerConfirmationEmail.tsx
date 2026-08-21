@@ -167,9 +167,8 @@ CustomerConfirmationEmail.PreviewProps = {
     phone: "972-564-9081",
     phoneHref: "tel:+19725649081",
     email: "contact@fredsplumbing.com",
-    siteUrl: "https://fredplumging.vercel.app",
-    logoUrl:
-      "https://fredplumging.vercel.app/logos/freds-plumbing-logo-email.png",
+    siteUrl: "https://fredsplumbing.com",
+    logoUrl: "https://fredsplumbing.com/logos/freds-plumbing-logo-email.png",
     serviceArea: "Dallas–Fort Worth Metroplex",
     licenseNumber: "RMP 44890",
     yearsInBusiness: "30+",

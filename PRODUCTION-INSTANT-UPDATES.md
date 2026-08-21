@@ -11,10 +11,16 @@ is a hosting/runtime question, not a missing-code question.
 
 ## 1. Owner checklist — five minutes, no developer needed
 
-The site lives on Vercel, project **`fredplumging`** (note the spelling —
-there is no `b` before the `u`), at `https://fredplumging.vercel.app`. Every
-URL below uses that exact host; a webhook or CORS entry typed as
-`fredplumbing.vercel.app` will silently fail forever.
+The site lives on Vercel, in the project named **`fredplumging`** (note the
+spelling — there is no `b` before the `u`; that is the project NAME, and it
+is what you look for in the Vercel dashboard). The site itself is served at
+**`https://fredsplumbing.com`** — the apex, no `www`. Every URL below uses
+that domain.
+
+The old `*.vercel.app` deployment alias now 308-redirects to the real domain
+(`proxy.ts`), so it is no longer a second copy of the site. `/api/*` and
+`/studio` are deliberately excluded from that redirect — see the note under
+Q5 before you change anything about CORS.
 
 Work through these in order. Each has a yes/no answer; **stop at the first
 "no" — that is the problem.** Items Q2, Q4 and Q5 are also *blocking
@@ -57,7 +63,7 @@ shows it.
 **Q4. Does the publish webhook exist, and is its Attempts log green?**
 [sanity.io/manage](https://sanity.io/manage) → this project → **API →
 Webhooks**. Is there a webhook pointing at exactly
-`https://fredplumging.vercel.app/api/revalidate`, with its secret matching
+`https://fredsplumbing.com/api/revalidate`, with its secret matching
 `SANITY_REVALIDATE_SECRET` on Vercel? Create it per `WEBHOOK-SETUP.md` if
 not. Then **test it**: publish any small change in the Studio and open the
 webhook's **Attempts** log — is the newest delivery a green **200**? An
@@ -66,15 +72,22 @@ projection was set that shouldn't be; nothing arriving = Q3.)
 
 **Q5. Is the production domain a CORS origin in Sanity?**
 [sanity.io/manage](https://sanity.io/manage) → this project → **API → CORS
-origins**. Is `https://fredplumging.vercel.app` listed, with **Allow
-credentials** ticked? Both the embedded Studio at
-`https://fredplumging.vercel.app/studio` and the site's live-update
-connection talk to Sanity from the browser on that origin — without this
-entry the browser blocks them.
+origins**. Is `https://fredsplumbing.com` listed, with **Allow credentials**
+ticked? Both the embedded Studio at `https://fredsplumbing.com/studio` and
+the site's live-update connection talk to Sanity from the browser on that
+origin — without this entry the browser blocks them.
+
+⚠️ **At the time of the domain cutover this was NOT set up:** only the old
+`*.vercel.app` alias was a registered origin, and `https://fredsplumbing.com`
+was rejected outright. Instant updates therefore do not currently work for
+anyone browsing the real domain. **Add the apex as an origin.** Leave the old
+`*.vercel.app` entry in place until you have — it is what keeps the embedded
+Studio reachable in the meantime, and it is why `/studio` is excluded from
+the redirect.
 
 **Q6. What does the health check say?**
 Load
-`https://fredplumging.vercel.app/api/health/sanity?secret=<SANITY_REVALIDATE_SECRET>`
+`https://fredsplumbing.com/api/health/sanity?secret=<SANITY_REVALIDATE_SECRET>`
 in a browser. **Never paste that URL anywhere — it contains the secret.**
 Read four things:
 
@@ -153,11 +166,11 @@ instant-update connection cannot open in production at all.
    time. *(Blocking for Live: `SANITY_API_READ_TOKEN`.)*
 3. **Check Deployment Protection** (Q3): off for Production, or add a
    Protection Bypass for Automation to the webhook.
-4. **Add the CORS origin** (Q5): `https://fredplumging.vercel.app` with
-   credentials allowed, in sanity.io/manage → API → CORS origins.
-   *(Blocking for Live and for the embedded Studio.)*
+4. **Add the CORS origin** (Q5): `https://fredsplumbing.com` with credentials
+   allowed, in sanity.io/manage → API → CORS origins. Confirmed NOT done as
+   of the domain cutover. *(Blocking for Live and for the embedded Studio.)*
 5. **Create and test the publish webhook** (Q4) per `WEBHOOK-SETUP.md`,
-   targeting `https://fredplumging.vercel.app/api/revalidate` — still worth
+   targeting `https://fredsplumbing.com/api/revalidate` — still worth
    having after Sanity Live ships, as the independent second freshness path.
    Confirm a green 200 in the Attempts log after publishing something.
 6. **Read the health check** (Q6) and keep its URL private.

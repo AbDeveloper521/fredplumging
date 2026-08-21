@@ -1,5 +1,6 @@
 import "server-only";
 import { site } from "@/data/site";
+import { SITE_URL } from "@/lib/siteUrl";
 import { derivedYearsInBusiness } from "@/lib/yearsInBusiness";
 import type { EmailBrand } from "./shell";
 
@@ -20,18 +21,22 @@ import type { EmailBrand } from "./shell";
  *
  * Email clients cannot resolve a relative path or a bundler import, so the
  * logo has to be an absolute https URL on a host that is serving RIGHT NOW.
- * `SITE_URL`'s default (https://fredsplumbing.com) is the domain the site
- * will move to, which does not resolve yet — pointing email images there
- * would ship a permanently broken logo. So the order is:
+ * That constraint is why this used to hardcode the Vercel deployment alias:
+ * fredsplumbing.com did not resolve, and a logo pointed at a dead domain is
+ * broken in every inbox it lands in, permanently — nobody reloads an email.
  *
- *   1. EMAIL_ASSET_ORIGIN     — explicit override
- *   2. NEXT_PUBLIC_SITE_URL   — set once the real origin is known
- *   3. the Vercel deployment currently serving the site
+ * That is no longer true. fredsplumbing.com is live and serves this exact
+ * asset, so the origin is simply the canonical site origin:
  *
- * ⚠️ PLACEHOLDER: step 3 must be replaced at domain cutover by setting
- * NEXT_PUBLIC_SITE_URL (or EMAIL_ASSET_ORIGIN) to https://fredsplumbing.com.
+ *   1. EMAIL_ASSET_ORIGIN  — explicit override, for pointing email assets at
+ *                            a CDN or a staging host without moving the site
+ *   2. SITE_URL            — THE canonical origin (lib/siteUrl.ts), i.e.
+ *                            NEXT_PUBLIC_SITE_URL, defaulting to the real
+ *                            domain
+ *
+ * There is deliberately no third step. A silent fallback to some other host
+ * is exactly what let the emails drift away from the site in the first place.
  */
-const CURRENT_PUBLIC_ORIGIN = "https://fredplumging.vercel.app";
 
 function normaliseOrigin(value: string): string {
   return value.trim().replace(/\/+$/, "");
@@ -40,9 +45,7 @@ function normaliseOrigin(value: string): string {
 export function emailOrigin(): string {
   const override = process.env.EMAIL_ASSET_ORIGIN?.trim();
   if (override) return normaliseOrigin(override);
-  const configured = process.env.NEXT_PUBLIC_SITE_URL?.trim();
-  if (configured) return normaliseOrigin(configured);
-  return CURRENT_PUBLIC_ORIGIN;
+  return SITE_URL;
 }
 
 /**

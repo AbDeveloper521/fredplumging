@@ -65,9 +65,10 @@ lib/
    and click **Deploy** — Vercel auto-detects Next.js; no configuration or
    environment variables are required.
 
-3. Every push to `main` will redeploy automatically. Use the generated
-   `*.vercel.app` URL to share the site with the client, or attach a custom
-   domain in the Vercel project settings.
+3. Every push to `main` will redeploy automatically. The production domain is
+   https://fredsplumbing.com; the generated `*.vercel.app` alias 308-redirects
+   to it (`proxy.ts`), so share the real domain. Per-branch preview
+   deployments are deliberately left alone and still work.
 
 ## Key implementation notes
 
@@ -92,5 +93,6 @@ lib/
   obscured.
 - **SEO** — full metadata (Open Graph, Twitter, canonical placeholder) in
   `app/layout.tsx`; `Plumber` JSON-LD in `components/seo/JsonLd.tsx`. No street
-  address is published intentionally. Set the production domain in `data/site.ts`.
-# fredplumging
+  address is published intentionally. The production domain is NOT a constant in
+  `data/site.ts` — it comes from `NEXT_PUBLIC_SITE_URL` via `lib/siteUrl.ts`, and
+  `proxy.ts` 308-redirects every other host onto it.
