@@ -44,6 +44,7 @@ export function ContactChannelsSection({
           </p>
           <a
             href={site.phoneHref}
+            data-analytics-location="contact-emergency-card"
             className="mt-6 inline-flex items-center gap-3 text-[30px] font-extrabold text-white transition-colors hover:text-red-500 sm:text-[38px]"
           >
             <Phone aria-hidden="true" className="size-8 text-red-500" />

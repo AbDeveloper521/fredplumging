@@ -233,7 +233,12 @@ export function ServiceHeroSection({
           <Rise delay={0.24}>
             <div className="mt-9 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
               {phoneCtaLabel && (
-                <Button href={site.phoneHref} size="lg" withPhoneIcon>
+                <Button
+                  href={site.phoneHref}
+                  data-analytics-location="service-hero"
+                  size="lg"
+                  withPhoneIcon
+                >
                   {phoneCtaLabel}
                 </Button>
               )}

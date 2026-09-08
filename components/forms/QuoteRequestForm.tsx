@@ -69,7 +69,11 @@ export function QuoteRequestForm({ site }: { site: SiteContent }) {
         <p className="max-w-sm text-[15px] leading-relaxed text-grey-500">
           We received your request and will reach out to discuss next steps.
           Need us sooner? Call{" "}
-          <a href={site.phoneHref} className="font-bold text-red-600 hover:underline">
+          <a
+            href={site.phoneHref}
+            data-analytics-location="cta-form-success"
+            className="font-bold text-red-600 hover:underline"
+          >
             {site.phone}
           </a>
           .
@@ -183,6 +187,7 @@ export function QuoteRequestForm({ site }: { site: SiteContent }) {
             Please try again, or call{" "}
             <a
               href={site.phoneHref}
+              data-analytics-location="cta-form-error"
               className="font-bold underline underline-offset-2"
             >
               {site.phone}

@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { currentPagePath, trackEvent } from "@/lib/analytics";
 
 const phonePattern = /^[+()\-.\s\d]{7,20}$/;
 
@@ -128,21 +129,47 @@ const loadedAt = typeof window === "undefined" ? null : Date.now();
 /**
  * Sends a lead to /api/contact. Throws on any non-ok response — callers
  * already branch to their error state. `source` labels which form sent it.
+ *
+ * This is also where a lead reaches analytics, because it is the ONE
+ * success/failure path all three forms share: `generate_lead` fires only
+ * once the server has accepted the submission (never on click, never on a
+ * validation failure — that happens before this is called), and
+ * `lead_submit_failed` fires whenever the visitor is about to see the error
+ * state, so a broken lead pipeline (LEAD_DELIVERY_FAILED → 502) shows up in
+ * GA rather than only in the runtime log. Neither event is handed `data`:
+ * analytics learns which form and which page, never a field value.
  */
 export async function submitLead(
   data: Record<string, unknown>,
   source = "website-form",
 ): Promise<void> {
-  const response = await fetch("/api/contact", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      ...data,
-      source,
-      elapsedMs: loadedAt === null ? 0 : Date.now() - loadedAt,
-    }),
-  });
+  let response: Response;
+  try {
+    response = await fetch("/api/contact", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        ...data,
+        source,
+        elapsedMs: loadedAt === null ? 0 : Date.now() - loadedAt,
+      }),
+    });
+  } catch (error) {
+    // Network failure — the request never got an HTTP status.
+    trackEvent("lead_submit_failed", {
+      form_id: source,
+      page_path: currentPagePath(),
+      error_status: 0,
+    });
+    throw error;
+  }
   if (!response.ok) {
+    trackEvent("lead_submit_failed", {
+      form_id: source,
+      page_path: currentPagePath(),
+      error_status: response.status,
+    });
     throw new Error(`Lead submission failed with status ${response.status}`);
   }
+  trackEvent("generate_lead", { form_id: source, page_path: currentPagePath() });
 }

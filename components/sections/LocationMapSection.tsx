@@ -54,7 +54,12 @@ export function LocationMapSection({
               <Button href="/contact" withArrow>
                 Request Service
               </Button>
-              <Button href={site.phoneHref} variant="phone" withPhoneIcon>
+              <Button
+                href={site.phoneHref}
+                data-analytics-location="map-band"
+                variant="phone"
+                withPhoneIcon
+              >
                 Call {site.phone}
               </Button>
             </div>

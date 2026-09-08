@@ -35,7 +35,11 @@ function DetailsColumn({
           <Phone aria-hidden="true" className="mt-0.5 size-5 shrink-0 text-red-600" />
           <div>
             <p className="font-bold text-navy-900">{section.phoneRowLabel}</p>
-            <a href={site.phoneHref} className="text-grey-700 hover:text-red-600">
+            <a
+              href={site.phoneHref}
+              data-analytics-location="contact-form-aside"
+              className="text-grey-700 hover:text-red-600"
+            >
               {site.phone}
             </a>
           </div>
@@ -46,6 +50,7 @@ function DetailsColumn({
             <p className="font-bold text-navy-900">{section.emailRowLabel}</p>
             <a
               href={site.emailHref}
+              data-analytics-location="contact-form-aside"
               className="break-all text-grey-700 hover:text-red-600"
             >
               {site.email}

@@ -48,6 +48,7 @@ export function HeaderClient({ navigation, site }: HeaderClientProps) {
           <div className="flex items-center gap-6">
             <a
               href={site.emailHref}
+              data-analytics-location="top-bar"
               className="flex items-center gap-2 transition-colors hover:text-white"
             >
               <Mail aria-hidden="true" className="size-3.5 text-red-500" />
@@ -55,6 +56,7 @@ export function HeaderClient({ navigation, site }: HeaderClientProps) {
             </a>
             <a
               href={site.phoneHref}
+              data-analytics-location="top-bar"
               className="flex items-center gap-2 transition-colors hover:text-white"
             >
               <Phone aria-hidden="true" className="size-3.5 text-red-500" />
@@ -99,6 +101,7 @@ export function HeaderClient({ navigation, site }: HeaderClientProps) {
           <div className="hidden items-center gap-4 lg:flex">
             <a
               href={site.phoneHref}
+              data-analytics-location="header"
               className="hidden items-center gap-2 text-[15px] font-bold whitespace-nowrap text-white transition-colors hover:text-red-500 xl:flex"
             >
               <Phone aria-hidden="true" className="size-4 text-red-500" />
@@ -117,6 +120,7 @@ export function HeaderClient({ navigation, site }: HeaderClientProps) {
           <div className="flex items-center gap-2 lg:hidden">
             <a
               href={site.phoneHref}
+              data-analytics-location="header-mobile"
               aria-label={`Call ${site.name} at ${site.phone}`}
               className="flex size-11 items-center justify-center rounded-xl bg-red-600 text-white transition-colors hover:bg-red-500"
             >

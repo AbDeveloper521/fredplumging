@@ -57,7 +57,12 @@ export function ServiceFinalCtaSection({ section, site, id }: ServiceFinalCtaSec
                   className="availability-dot size-2 shrink-0 rounded-full bg-red-500"
                 />
               )}
-              <Button href={site.phoneHref} size="lg" withPhoneIcon>
+              <Button
+                href={site.phoneHref}
+                data-analytics-location="service-final-cta"
+                size="lg"
+                withPhoneIcon
+              >
                 {phoneCtaLabel}
               </Button>
             </span>

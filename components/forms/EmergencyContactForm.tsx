@@ -97,7 +97,11 @@ export function EmergencyContactForm({
         <p className="max-w-sm text-[15px] leading-relaxed text-grey-500">
           Thank you — our team will contact you shortly. If this is an active
           emergency, please call us now at{" "}
-          <a href={site.phoneHref} className="font-bold text-red-600 hover:underline">
+          <a
+            href={site.phoneHref}
+            data-analytics-location="hero-form-success"
+            className="font-bold text-red-600 hover:underline"
+          >
             {site.phone}
           </a>
           .
@@ -251,6 +255,7 @@ export function EmergencyContactForm({
             Please try again, or call{" "}
             <a
               href={site.phoneHref}
+              data-analytics-location="hero-form-error"
               className="font-bold underline underline-offset-2"
             >
               {site.phone}
@@ -271,7 +276,11 @@ export function EmergencyContactForm({
           <p className="mt-3.5 flex items-center justify-center gap-1.5 text-center text-[14px] font-medium text-grey-500">
             <Phone aria-hidden="true" className="size-3.5 text-red-600" />
             For urgent service, call{" "}
-            <a href={site.phoneHref} className="font-bold text-navy-900 hover:text-red-600">
+            <a
+              href={site.phoneHref}
+              data-analytics-location="hero-form-note"
+              className="font-bold text-navy-900 hover:text-red-600"
+            >
               {site.phone}
             </a>
           </p>

@@ -52,6 +52,7 @@ export function CareersCtaSection({
           <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
             <Button
               href={`mailto:${site.email}?subject=${encodeURIComponent("Application — Fred's Plumbing")}`}
+              data-analytics-location="careers-cta"
               size="lg"
             >
               <span className="inline-flex items-center gap-2.5">
@@ -59,7 +60,13 @@ export function CareersCtaSection({
                 Email {site.email}
               </span>
             </Button>
-            <Button href={site.phoneHref} variant="phone" size="lg" withPhoneIcon>
+            <Button
+              href={site.phoneHref}
+              data-analytics-location="careers-cta"
+              variant="phone"
+              size="lg"
+              withPhoneIcon
+            >
               Call {site.phone}
             </Button>
           </div>

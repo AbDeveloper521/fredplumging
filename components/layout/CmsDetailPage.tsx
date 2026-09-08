@@ -115,6 +115,7 @@ export async function CmsDetailPage({
                 </Button>
                 <Button
                   href={site.phoneHref}
+                  data-analytics-location="detail-hero"
                   variant="ghost"
                   size="lg"
                   withPhoneIcon

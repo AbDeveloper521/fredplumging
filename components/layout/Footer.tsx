@@ -97,6 +97,7 @@ export async function Footer() {
             <li>
               <a
                 href={site.phoneHref}
+                data-analytics-location="footer"
                 className="flex items-center gap-3 font-bold text-white transition-colors hover:text-red-500"
               >
                 <Phone aria-hidden="true" className="size-4 shrink-0 text-red-500" />
@@ -106,6 +107,7 @@ export async function Footer() {
             <li>
               <a
                 href={site.emailHref}
+                data-analytics-location="footer"
                 className="flex items-center gap-3 transition-colors hover:text-white"
               >
                 <Mail aria-hidden="true" className="size-4 shrink-0 text-red-500" />

@@ -70,6 +70,7 @@ export function EmergencySection({
           <Reveal delay={0.2}>
             <a
               href={site.phoneHref}
+              data-analytics-location="emergency-band"
               className="group mt-8 inline-flex items-center gap-4 rounded-2xl bg-white px-6 py-4 shadow-(--shadow-card-lg) transition-transform duration-200 hover:-translate-y-0.5 sm:gap-5 sm:px-8 sm:py-5"
             >
               <span className="flex size-12 items-center justify-center rounded-xl bg-red-600 transition-transform duration-200 group-hover:scale-105 sm:size-14">

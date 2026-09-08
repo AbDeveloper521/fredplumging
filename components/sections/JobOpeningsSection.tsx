@@ -73,6 +73,7 @@ export function JobOpeningsSection({
               <div className="mt-7">
                 <Button
                   href={`mailto:${site.email}?subject=${encodeURIComponent("Application — general")}`}
+                  data-analytics-location="job-openings"
                   withArrow
                 >
                   Email {site.email}
@@ -96,7 +97,10 @@ export function JobOpeningsSection({
                       {job.summary}
                     </p>
                     <div className="mt-7">
-                      <Button href={applyHref(job, site.email)}>
+                      <Button
+                        href={applyHref(job, site.email)}
+                        data-analytics-location="job-card"
+                      >
                         <span className="inline-flex items-center gap-2.5">
                           <Mail aria-hidden="true" className="size-[18px]" />
                           {applyLabel}

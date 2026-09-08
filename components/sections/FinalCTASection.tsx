@@ -63,7 +63,13 @@ export function FinalCTASection({
               <Button href="/contact" size="lg" withArrow>
                 Request Service
               </Button>
-              <Button href={site.phoneHref} variant="phone" size="lg" withPhoneIcon>
+              <Button
+                href={site.phoneHref}
+                data-analytics-location="final-cta"
+                variant="phone"
+                size="lg"
+                withPhoneIcon
+              >
                 Call {site.phone}
               </Button>
             </div>
@@ -80,6 +86,7 @@ export function FinalCTASection({
                   <>
                     <a
                       href={site.phoneHref}
+                      data-analytics-location="final-cta-reassurance"
                       className="font-bold text-white underline-offset-4 hover:underline"
                     >
                       {site.phone}

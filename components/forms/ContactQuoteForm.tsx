@@ -48,6 +48,8 @@ function withPhoneLink(
   text: string,
   site: SiteContent,
   linkClassName: string,
+  /** Analytics label: where on the form this call link sits. */
+  location: string,
 ): React.ReactNode {
   const parts = text.split("{phone}");
   if (parts.length === 1) return text;
@@ -55,7 +57,11 @@ function withPhoneLink(
     <Fragment key={i}>
       {part}
       {i < parts.length - 1 && (
-        <a href={site.phoneHref} className={linkClassName}>
+        <a
+          href={site.phoneHref}
+          data-analytics-location={location}
+          className={linkClassName}
+        >
           {site.phone}
         </a>
       )}
@@ -130,6 +136,7 @@ export function ContactQuoteForm({
             copy.successBody,
             site,
             "font-bold text-red-600 hover:underline",
+            "contact-form-success",
           )}
         </p>
         <button
@@ -266,6 +273,7 @@ export function ContactQuoteForm({
                     copy.emergencyNotice,
                     site,
                     "font-extrabold text-red-600 underline underline-offset-2",
+                    "contact-form-emergency-notice",
                   )}
                 </p>
               </div>
@@ -408,6 +416,7 @@ export function ContactQuoteForm({
             copy.errorMessage,
             site,
             "font-bold underline underline-offset-2",
+            "contact-form-error",
           )}
         </p>
       )}
@@ -422,6 +431,7 @@ export function ContactQuoteForm({
               copy.submitNote,
               site,
               "font-bold text-red-600 hover:underline",
+              "contact-form-note",
             )}
           </p>
         )}
@@ -431,6 +441,7 @@ export function ContactQuoteForm({
               copy.consentLine,
               site,
               "font-bold text-red-600 hover:underline",
+              "contact-form-consent",
             )}
           </p>
         )}

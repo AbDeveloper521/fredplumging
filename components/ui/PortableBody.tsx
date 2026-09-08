@@ -78,7 +78,11 @@ export function PortableBody({ value, site }: PortableBodyProps) {
           </p>
           {callout.showPhoneButton !== false && (
             <div className="mt-4">
-              <Button href={site.phoneHref} withPhoneIcon>
+              <Button
+                href={site.phoneHref}
+                data-analytics-location="body-callout"
+                withPhoneIcon
+              >
                 Call {site.phone}
               </Button>
             </div>

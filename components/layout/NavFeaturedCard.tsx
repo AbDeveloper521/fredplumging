@@ -35,6 +35,7 @@ export function NavFeaturedCard({ site, className, onNavigate }: NavFeaturedCard
       </div>
       <Button
         href={site.phoneHref}
+        data-analytics-location="nav-menu-card"
         size="md"
         withPhoneIcon
         className="w-full whitespace-nowrap"

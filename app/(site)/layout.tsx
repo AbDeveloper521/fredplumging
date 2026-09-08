@@ -4,13 +4,16 @@ import { Footer } from "@/components/layout/Footer";
 import { MobileCallBar } from "@/components/layout/MobileCallBar";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { SanityLive } from "@/sanity/lib/live";
+import { Analytics } from "@/components/analytics/Analytics";
 
 /**
  * Marketing-site chrome. Lives in the (site) route group so the embedded
  * Sanity Studio at /studio renders without header/footer/call bar — and,
  * for the same reason, this is the ONE place <SanityLive> renders: the
- * Studio route never mounts a second copy. `draftMode()` is the only
- * dynamic API allowed in a prerendered layout body.
+ * Studio route never mounts a second copy. Same for <Analytics>: it lives
+ * here rather than in the root layout so editing sessions in the Studio
+ * never count as site traffic. `draftMode()` is the only dynamic API
+ * allowed in a prerendered layout body.
  * The bottom padding compensates for the fixed MobileCallBar.
  */
 export default async function SiteLayout({
@@ -35,6 +38,7 @@ export default async function SiteLayout({
       <MobileCallBar />
       <JsonLd />
       <SanityLive includeDrafts={isDraftMode} />
+      <Analytics />
     </div>
   );
 }

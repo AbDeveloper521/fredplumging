@@ -16,6 +16,7 @@ export async function MobileCallBar() {
       </p>
       <a
         href={site.phoneHref}
+        data-analytics-location="sticky-mobile-bar"
         className="flex h-12 items-center gap-2.5 rounded-xl bg-red-600 px-6 text-[15px] font-bold text-white transition-colors hover:bg-red-500"
       >
         <Phone aria-hidden="true" className="size-[18px]" />

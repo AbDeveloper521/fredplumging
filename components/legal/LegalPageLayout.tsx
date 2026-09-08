@@ -173,6 +173,7 @@ export function LegalPageLayout({
                         </span>{" "}
                         <a
                           href={telHref(content.contact.phoneDisplay)}
+                          data-analytics-location="legal-contact-card"
                           className="font-semibold text-navy-900 underline decoration-red-600/60 underline-offset-4 transition-colors hover:text-red-600"
                         >
                           <Phone

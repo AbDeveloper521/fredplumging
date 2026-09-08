@@ -230,7 +230,11 @@ export default async function JobPage({
                 </p>
                 <div className="mt-6 flex flex-col gap-3">
                   {job.open ? (
-                    <Button href={applyHref(job, site.email)} className="w-full">
+                    <Button
+                      href={applyHref(job, site.email)}
+                      data-analytics-location="job-sidebar"
+                      className="w-full"
+                    >
                       <span className="inline-flex items-center gap-2.5">
                         <Mail aria-hidden="true" className="size-[18px]" />
                         Apply Now
@@ -244,7 +248,12 @@ export default async function JobPage({
                       </span>
                     </Button>
                   )}
-                  <Button href={site.phoneHref} variant="secondary" className="w-full">
+                  <Button
+                    href={site.phoneHref}
+                    data-analytics-location="job-sidebar"
+                    variant="secondary"
+                    className="w-full"
+                  >
                     Call {site.phone}
                   </Button>
                 </div>

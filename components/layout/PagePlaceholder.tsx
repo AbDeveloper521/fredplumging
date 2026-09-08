@@ -75,6 +75,7 @@ export async function PagePlaceholder({
               team is ready to help — call{" "}
               <a
                 href={site.phoneHref}
+                data-analytics-location="placeholder-intro"
                 className="font-semibold text-navy-900 underline underline-offset-4 hover:text-red-600"
               >
                 {site.phone}

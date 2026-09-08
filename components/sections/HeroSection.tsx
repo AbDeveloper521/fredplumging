@@ -164,6 +164,7 @@ export function HeroSection({
                 {phoneCtaLabel && (
                   <Button
                     href={site.phoneHref}
+                    data-analytics-location="hero"
                     variant="phone"
                     size="lg"
                     withPhoneIcon
