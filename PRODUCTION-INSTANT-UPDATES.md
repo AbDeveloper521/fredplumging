@@ -131,7 +131,7 @@ Read four things:
    `sanity/lib/cacheOptions.ts`.
 3. **The real fix — Sanity Live:** migrate data fetching to `next-sanity`'s
    `defineLive`/`sanityFetch` with Next.js Cache Components, per the
-   repo skill `.claude/skills/sanity-live-cache-components/`. The deployed
+   internal reference notes. The deployed
    site then holds a live connection to Sanity and refreshes cached content
    the moment a publish happens — no webhook, no timer, no reload-twice.
    The webhook remains as a second, independent freshness path.

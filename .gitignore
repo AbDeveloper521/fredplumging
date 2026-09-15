@@ -52,13 +52,38 @@ next-env.d.ts
 Thumbs.db
 Desktop.ini
 
-# AI assistant local settings (machine-specific)
-.claude/settings.local.json
 
 # logs
 *.log
 
-CLAUDE.MD
 
 # react-email preview server build output
 /.react-email/
+
+# ---------------------------------------------------------------------------
+# Internal working files — not part of the deliverable
+# ---------------------------------------------------------------------------
+
+# Internal task briefs and working notes
+*-PROMPT.md
+*-PROMPT.MD
+/SANITY-IMAGE-AUDIT.md
+/SERVICE-SECTIONS-AUDIT.md
+/CLAUDE.md
+/AGENTS.md
+
+# Local tooling config (machine-specific, not shared)
+.claude/
+.agents/
+.cursor/
+.continue/
+.windsurf/
+.aider*
+
+# Scratch and backup files
+/tmp/
+/scratch/
+*.bak
+*.orig
+*.rej
+*~
