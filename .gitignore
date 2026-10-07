@@ -87,3 +87,42 @@ Desktop.ini
 *.orig
 *.rej
 *~
+
+# Assistant / tool output folders (any name, any depth)
+Claude outputs/
+*outputs/
+*-outputs/
+.outputs/
+
+# Working notes, audits, briefs, handover drafts
+*-AUDIT.md
+*-NOTES.md
+*-BRIEF.md
+/notes/
+/docs-internal/
+
+# Stray archives, exports and screenshots dropped in the project
+*.zip
+*.rar
+*.7z
+*.tar
+*.tar.gz
+/screenshots/
+/Screenshots/
+*.screenshot.png
+
+# Reference material that is not part of the build
+/reference/
+/references/
+/inspiration/
+/client-files/
+
+# Saved page dumps / scraped HTML used while debugging
+/careers.html
+/careers_check.html
+/detail.html
+/*-check.html
+/*_check.html
+
+# Tooling lockfiles that are not part of the build
+skills-lock.json
